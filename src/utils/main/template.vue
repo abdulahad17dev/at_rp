@@ -1,0 +1,32 @@
+<template>
+  <div class="app" v-if="this.$route.name !== 'login'">
+    <div class="scroll" id="scroll">
+      <div class="container-fluid">
+        <div class="content-app">
+          <div class="card shadow mt-3 mb-3 border-0">
+            <div class="card-body zoom">
+              <slot />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <Router_back
+    v-if="this.$route.name !== 'menu' && this.$route.name !== 'login'"
+  />
+
+  <login v-if="this.$route.name == 'login'" />
+</template>
+
+<script>
+import Login from "../template/login/Login.vue";
+import Router_back from "../../views/settings/router_back.vue";
+export default {
+  components: { Login, Router_back },
+};
+</script>
+
+<style lang="scss">
+@import url(./../../main.scss);
+</style>

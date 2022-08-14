@@ -1,0 +1,105 @@
+<template>
+  <div class="table-responsive mt-3" v-if="data != ''">
+    <table class="table table-sm table-hover table-bordered">
+      <thead class="">
+        <tr>
+          <th>#ИД</th>
+          <th>Исм</th>
+          <th>Телефон рақам</th>
+          <th>Ихтисослиги</th>
+          <th>Статус</th>
+          <th>Ўзгартириш</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in data || []" :key="item">
+          <td>{{ item.id }}</td>
+          <td>{{ item.name }}</td>
+          <td>
+            <a
+              :href="`tel:+998${item.phone}`"
+              class="text-decoration-none text-dark"
+            >
+              +998 {{ item.phone }}</a
+            >
+          </td>
+          <td>{{ item.role }}</td>
+          <td>
+            <span
+              v-if="item.status == true"
+              class="badge rounded-pill bg-success"
+              >фаол</span
+            >
+            <span v-else class="badge rounded-pill bg-danger">нофаол</span>
+          </td>
+          <td>
+            <button
+              class="btn btn-sm btn-warning"
+              data-bs-toggle="modal"
+              data-bs-target="#user_put"
+              @click="items(item)"
+            >
+              <i class="fa fa-edit text-white"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <User_put :object="item" @put="put" />
+</template>
+
+<script>
+import { user_put } from "@/utils/request/request";
+import User_put from "./user_put.vue";
+import { catchError, success } from "@/utils/request/handle_api_err";
+export default {
+  name: "UserItem",
+  props: { data: Array },
+  emits: ["get_users"],
+  components: { User_put },
+  data() {
+    return {
+      item: {},
+    };
+  },
+  methods: {
+    items(e) {
+      this.item = {
+        id: e.id,
+        name: e.name,
+        username: e.username,
+        password: "",
+        role: e.role,
+        phone: e.phone,
+        status: e.status,
+      };
+    },
+    put(e) {
+      this.$store.dispatch("setLoading", { isLoading: true });
+      document.getElementById("user_disabled_put").disabled = true;
+      user_put(e)
+        .then((res) => {
+          success(res);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("user_disabled_put").disabled = false;
+          document.getElementById("user_put").click();
+          this.$emit("get_users");
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("user_disabled_put").disabled = false;
+        });
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+table {
+  min-width: 700px;
+  width: 100%;
+}
+</style>
