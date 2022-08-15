@@ -19,7 +19,7 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
-                <label for="balance"> Баланс: </label>
+                <label for="balance"> Сумма: </label>
                 <div class="input-group input-group-sm">
                   <input
                     id="balance"
@@ -84,7 +84,7 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
-                <label for="balance"> Баланс: </label>
+                <label for="balance"> Сумма: </label>
                 <div class="input-group input-group-sm">
                   <input
                     id="balance"

@@ -111,7 +111,7 @@ export default {
       lat: "",
       long: "",
       status: "",
-      roles: ["admin", "prorap"],
+      role: localStorage.getItem("role"),
     };
   },
   watch: {

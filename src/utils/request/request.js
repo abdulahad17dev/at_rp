@@ -200,3 +200,40 @@ export function transfer_history_get(page, limit, from, to, type) {
     );
   }
 }
+
+// expences
+
+// expence fixed
+
+export function fixed_expence_get() {
+  return instance.get(`get_fixed_expenses`);
+}
+
+export function fixed_expence_add(data) {
+  return instance.post(`create_fixed_expense`, data);
+}
+
+export function fixed_expence_put(data) {
+  return instance.put(`update_fixed_expense/${data.id}`, data);
+}
+
+// variable
+
+export function get_variable_expenses(page, limit, bank_account_id) {
+  // return instance.get(`get_variable_expenses`);
+  if (bank_account_id) {
+    return instance.get(
+      `get_variable_expenses?bank_account_id=${bank_account_id}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(`get_variable_expenses?page=${page}&limit=${limit}`);
+  }
+}
+
+export function pay_for_variable_expense(data) {
+  return instance.post(`pay_for_variable_expense`, data);
+}
+
+export function pay_for_fixed_expense(data) {
+  return instance.post(`pay_for_fixed_expense`, data);
+}

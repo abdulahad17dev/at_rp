@@ -12,7 +12,81 @@
           <th></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody v-if="role == 'prorap' || role == 'omborchi'">
+        <tr v-for="item in data" :key="item">
+          <td>{{ item.building.id }}</td>
+          <td>{{ item.building.name }}</td>
+          <td>{{ item.building.address }}</td>
+          <td>{{ new Date(item.building.start_date).toLocaleDateString() }}</td>
+          <td>{{ new Date(item.building.end_date).toLocaleDateString() }}</td>
+          <td>
+            <span
+              class="badge rounded-pill bg-warning"
+              v-if="item.building.status == 'wait'"
+              >кутилмоқда</span
+            >
+            <span
+              class="badge rounded-pill bg-primary"
+              v-else-if="item.building.status == 'start'"
+              >қурилмоқда</span
+            >
+            <span
+              class="badge rounded-pill bg-success"
+              v-else-if="item.building.status == 'end'"
+              >якунланди</span
+            >
+          </td>
+          <td>
+            <button
+              class="btn btn-sm btn-warning mx-1"
+              data-bs-toggle="modal"
+              data-bs-target="#building_put"
+              @click="items(item.building)"
+              v-if="item.building.status == 'wait' && role == 'pto'"
+            >
+              <i class="fa fa-edit text-white"></i>
+            </button>
+
+            <button
+              class="btn btn-sm btn-success mx-1"
+              v-else-if="item.building.status == 'start' && role == 'pto'"
+              @click="finish(item.building)"
+            >
+              <i class="fa-solid fa-flag-checkered"></i>
+            </button>
+            <button
+              class="btn btn-sm btn-primary mx-1"
+              data-bs-toggle="modal"
+              data-bs-target="#foremans_warehousemans"
+              @click="select_id(item.building.id)"
+              v-if="role == 'admin' || role == 'pto'"
+            >
+              <i class="fa-solid fa-users"></i>
+            </button>
+            <a
+              target="_blank"
+              :href="`https://www.google.com/maps/@${item.building.map_lat},${item.building.map_long},8z`"
+              class="btn btn-sm btn-primary mx-1"
+            >
+              <i class="fa-solid fa-location-dot"></i>
+            </a>
+            <router-link
+              :to="{ name: 'smeta', query: { id: item.building.id } }"
+              class="btn btn-sm btn-primary mx-1"
+            >
+              <i class="fa-solid fa-right-long"></i>
+            </router-link>
+            <button
+              class="btn btn-sm btn-primary mx-1 d-block mt-1"
+              v-if="item.building.status == 'wait' && role == 'pto'"
+              @click="start(item.building)"
+            >
+              бошлаш
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tbody v-else>
         <tr v-for="item in data" :key="item">
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
@@ -59,6 +133,7 @@
               data-bs-toggle="modal"
               data-bs-target="#foremans_warehousemans"
               @click="select_id(item.id)"
+              v-if="role == 'admin' || role == 'pto'"
             >
               <i class="fa-solid fa-users"></i>
             </button>
