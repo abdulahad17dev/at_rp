@@ -53,7 +53,7 @@
   <Data_notfound v-if="users == ''" />
 
   <nav aria-label="Page navigation example" class="mt-2" v-if="users != ''">
-    <ul class="pagination justify-content-end">
+    <ul class="pagination pagination-sm justify-content-end">
       <li class="page-item">
         <button class="page-link" @click="page = 0" :disabled="page == 0">
           <i class="fa-solid fa-angles-left text-dark"></i>

@@ -45,7 +45,7 @@
     class="mt-2"
     v-if="bank_accounts != ''"
   >
-    <ul class="pagination justify-content-end">
+    <ul class="pagination pagination-sm justify-content-end">
       <li class="page-item">
         <button class="page-link" @click="page = 0" :disabled="page == 0">
           <i class="fa-solid fa-angles-left text-dark"></i>

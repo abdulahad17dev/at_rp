@@ -41,7 +41,7 @@
     class="mt-1"
     v-if="hisob_raqamiga_qabul_qilingan_pullar != ''"
   >
-    <ul class="pagination justify-content-end">
+    <ul class="pagination pagination-sm justify-content-end">
       <li class="page-item">
         <button class="page-link" @click="page = 0" :disabled="page == 0">
           <i class="fa-solid fa-angles-left text-dark"></i>
@@ -130,6 +130,8 @@ export default {
 th select {
   width: 80px;
   height: 30px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
 }
 
 .table-responsive {

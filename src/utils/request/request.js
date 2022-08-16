@@ -206,7 +206,7 @@ export function transfer_history_get(page, limit, from, to, type) {
 // expence fixed
 
 export function fixed_expence_get() {
-  return instance.get(`get_fixed_expenses`);
+  return instance.get(`fixed_expenses`);
 }
 
 export function fixed_expence_add(data) {
@@ -217,17 +217,18 @@ export function fixed_expence_put(data) {
   return instance.put(`update_fixed_expense/${data.id}`, data);
 }
 
+export function get_fixed_history(page, limit, from_, to_, user_id) {
+  return instance.get(
+    `get_fixed_expenses?to_=${to_}&from_=${from_}&user_id=${user_id}&page=${page}&limit=${limit}`
+  );
+}
+
 // variable
 
-export function get_variable_expenses(page, limit, bank_account_id) {
-  // return instance.get(`get_variable_expenses`);
-  if (bank_account_id) {
-    return instance.get(
-      `get_variable_expenses?bank_account_id=${bank_account_id}&page=${page}&limit=${limit}`
-    );
-  } else {
-    return instance.get(`get_variable_expenses?page=${page}&limit=${limit}`);
-  }
+export function get_variable_history(page, limit, from_, user_id) {
+  return instance.get(
+    `get_variable_expenses?from_=${from_}&user_id=${user_id}&page=${page}&limit=${limit}`
+  );
 }
 
 export function pay_for_variable_expense(data) {
