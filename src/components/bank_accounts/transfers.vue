@@ -147,7 +147,8 @@
 <script>
 export default {
   name: "TransferItem",
-  props: { items: Array, id: Number, name: String },
+  props: ["items", "id", "name"],
+  emits: ["transfer_to", "transfer_me"],
   watch: {
     id(e) {
       this.data.to_ = e;

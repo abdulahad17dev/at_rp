@@ -305,6 +305,7 @@
 export default {
   name: "PayExpenses",
   props: ["data", "accounts"],
+  emits: ["pay_f_expense", "pay_v_expense", "add_fixed_expense", "edit"],
   data() {
     return {
       body: {

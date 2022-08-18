@@ -13,30 +13,6 @@
           <th style="width: 25%">Сумма</th>
           <th style="width: 25%">Сана</th>
           <th style="width: 30%">Изох</th>
-          <th class="d-flex">
-            <select
-              class="form-control form-control-sm form-select"
-              v-model="limit"
-            >
-              <option value="25">25</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-            </select>
-            <select
-              @click="get_bank_accounts"
-              class="form-control form-control-sm form-select mx-1"
-              v-model="to"
-            >
-              <option value="">барчаси</option>
-              <option
-                :value="item.id"
-                v-for="item in bank_accounts"
-                :key="item"
-              >
-                {{ item.name }}
-              </option>
-            </select>
-          </th>
         </tr>
       </thead>
       <tbody>
@@ -56,6 +32,16 @@
     v-if="hisob_raqamidan_otkazilgan_pullar != ''"
   >
     <ul class="pagination pagination-sm justify-content-end">
+      <div class="page-item">
+        <select
+          class="form-control form-control-sm form-select mx-1"
+          v-model="limit"
+        >
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
       <li class="page-item">
         <button class="page-link" @click="page = 0" :disabled="page == 0">
           <i class="fa-solid fa-angles-left text-dark"></i>
@@ -91,10 +77,7 @@
 
 <script>
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
-import {
-  bank_account_get,
-  transfer_history_get,
-} from "@/utils/request/request";
+import { transfer_history_get } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
 export default {
   name: "TransferMoney",
@@ -105,10 +88,9 @@ export default {
       pages: null,
       hisob_raqamidan_otkazilgan_pullar: [],
       from: this.$route.query.id,
-      to: "",
+      to: 0,
       type: "hisob_raqamidan_otkazilgan_pullar",
       id: this.$route.query.id,
-      bank_accounts: [],
     };
   },
   watch: {
@@ -119,10 +101,6 @@ export default {
     page(e) {
       this.transfer_money(e, this.limit, this.from, this.to, this.type);
       document.getElementById("scroll").scrollTop = 0;
-    },
-    to(e) {
-      this.page = 0;
-      this.transfer_money(this.page, this.limit, this.from, e, this.type);
     },
   },
   methods: {
@@ -140,19 +118,6 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
-    get_bank_accounts() {
-      if (this.bank_accounts != "") {
-        return this.bank_accounts;
-      } else {
-        bank_account_get(0, 100)
-          .then((res) => {
-            this.bank_accounts = res.data.data;
-          })
-          .catch((err) => {
-            catchError(err);
-          });
-      }
-    },
   },
   beforeMount() {
     this.transfer_money(this.page, this.limit, this.from, this.to, this.type);
@@ -162,14 +127,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-th select {
+.page-item select {
   width: 80px;
   height: 30px;
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
 }
 
-th select:nth-child(2) {
+th select {
   width: 170px;
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;

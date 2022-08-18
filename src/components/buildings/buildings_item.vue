@@ -249,11 +249,11 @@ export default {
       document.getElementById("building_disabled_put").disabled = true;
       building_put(e)
         .then((res) => {
-          success(res);
-          this.$store.dispatch("setLoading", { isLoading: false });
-          document.getElementById("building_disabled_put").disabled = false;
           document.getElementById("buildings_put").click();
-          this.$emit("get_buildings");
+          document.getElementById("building_disabled_put").disabled = false;
+          success(res).then(() => {
+            this.$emit("get_buildings");
+          });
         })
         .catch((err) => {
           catchError(err);
@@ -291,9 +291,9 @@ export default {
           e.status = "start";
           building_put(e)
             .then((res) => {
-              success(res);
-              this.$store.dispatch("setLoading", { isLoading: false });
-              this.$emit("get_buildings");
+              success(res).then(() => {
+                this.$emit("get_buildings");
+              });
             })
             .catch((err) => {
               catchError(err);
@@ -309,9 +309,9 @@ export default {
       e.status = "end";
       building_put(e)
         .then((res) => {
-          success(res);
-          this.$store.dispatch("setLoading", { isLoading: false });
-          this.$emit("get_buildings");
+          success(res).then(() => {
+            this.$emit("get_buildings");
+          });
         })
         .catch((err) => {
           catchError(err);

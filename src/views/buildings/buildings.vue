@@ -173,19 +173,19 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       building_add(e)
         .then((res) => {
-          success(res);
           document.getElementById("buildings_add").click();
-          this.$store.dispatch("setLoading", { isLoading: false });
-          this.get_buildings(this.page, this.limit, this.search, this.status);
           document.getElementById("building_disabled").disabled = false;
-          e.name = "";
-          e.address = "";
-          e.budget = null;
-          e.start_date = "";
-          e.end_date = "";
-          e.map_long = "";
-          e.map_lat = "";
-          e.status = "wait";
+          success(res).then(() => {
+            this.get_buildings(this.page, this.limit, this.search, this.status);
+            e.name = "";
+            e.address = "";
+            e.budget = null;
+            e.start_date = "";
+            e.end_date = "";
+            e.map_long = "";
+            e.map_lat = "";
+            e.status = "wait";
+          });
         })
         .catch((err) => {
           catchError(err);

@@ -183,19 +183,20 @@ export default {
       this.$store.dispatch("setLoading2", { isLoading2: true });
       smeta_add(e, this.building_id)
         .then((res) => {
-          success(res);
           this.$store.dispatch("setLoading2", { isLoading2: false });
-          this.get_smeta(
-            this.page,
-            this.limit,
-            this.search,
-            this.status,
-            this.building_id
-          );
           document.getElementById("smeta_disabled").disabled = false;
-          document.getElementById("file-6").value = null;
-          document.getElementById("file_name").innerHTML = "";
-          e.file = "";
+          success(res).then(() => {
+            this.get_smeta(
+              this.page,
+              this.limit,
+              this.search,
+              this.status,
+              this.building_id
+            );
+            e.file = "";
+            document.getElementById("file-6").value = null;
+            document.getElementById("file_name").innerHTML = "";
+          });
         })
         .catch((err) => {
           catchError(err);
@@ -210,16 +211,16 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       smeta_remove(id, "smeta_id")
         .then((res) => {
-          success(res);
-          this.$store.dispatch("setLoading", { isLoading: false });
-          this.get_smeta(
-            this.page,
-            this.limit,
-            this.search,
-            this.status,
-            this.building_id
-          );
           document.getElementById("remove_smeta").disabled = false;
+          success(res).then(() => {
+            this.get_smeta(
+              this.page,
+              this.limit,
+              this.search,
+              this.status,
+              this.building_id
+            );
+          });
         })
         .catch((err) => {
           catchError(err);
@@ -255,15 +256,15 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: true });
           smeta_remove(this.building_id, "building_id")
             .then((res) => {
-              success(res);
-              this.$store.dispatch("setLoading", { isLoading: false });
-              this.get_smeta(
-                this.page,
-                this.limit,
-                this.search,
-                this.status,
-                this.building_id
-              );
+              success(res).then(() => {
+                this.get_smeta(
+                  this.page,
+                  this.limit,
+                  this.search,
+                  this.status,
+                  this.building_id
+                );
+              });
             })
             .catch((err) => {
               catchError(err);

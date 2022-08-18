@@ -188,11 +188,11 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       fixed_expence_add(e)
         .then((res) => {
-          success(res);
-          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("fixed_expense_disabled").disabled = false;
-          this.get_fixed_expenses();
-          e.name = "";
+          success(res).then(() => {
+            this.get_fixed_expenses();
+            e.name = "";
+          });
         })
         .catch((err) => {
           catchError(err);
@@ -219,10 +219,10 @@ export default {
       document.getElementById("disabled" + e.id).disabled = true;
       fixed_expence_put(e)
         .then((res) => {
-          success(res);
-          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("disabled" + e.id).disabled = false;
-          this.get_fixed_expenses();
+          success(res).then(() => {
+            this.get_fixed_expenses();
+          });
         })
         .catch((err) => {
           catchError(err);
@@ -255,21 +255,21 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       pay_for_fixed_expense(e)
         .then((res) => {
-          success(res);
           document.getElementById("pay_f").click();
-          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("pay_f_e_disabled").disabled = false;
-          e.money = null;
-          e.from_ = null;
-          e.to_ = null;
-          e.comment = "";
-          this.fixed_history_get(
-            this.page,
-            this.limit,
-            this.from,
-            this.to,
-            this.user_id
-          );
+          success(res).then(() => {
+            this.fixed_history_get(
+              this.page,
+              this.limit,
+              this.from,
+              this.to,
+              this.user_id
+            );
+            e.money = null;
+            e.from_ = null;
+            e.to_ = null;
+            e.comment = "";
+          });
         })
         .catch((err) => {
           catchError(err);
@@ -282,13 +282,14 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       pay_for_variable_expense(e)
         .then((res) => {
-          success(res);
           document.getElementById("pay_v").click();
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("pay_v_e_disabled").disabled = false;
-          e.money = null;
-          e.from_ = null;
-          e.comment = "";
+          success(res).then(() => {
+            e.money = null;
+            e.from_ = null;
+            e.comment = "";
+          });
         })
         .catch((err) => {
           catchError(err);

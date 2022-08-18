@@ -81,11 +81,11 @@ export default {
       document.getElementById("user_disabled_put").disabled = true;
       user_put(e)
         .then((res) => {
-          success(res);
-          this.$store.dispatch("setLoading", { isLoading: false });
-          document.getElementById("user_disabled_put").disabled = false;
           document.getElementById("user_put").click();
-          this.$emit("get_users");
+          document.getElementById("user_disabled_put").disabled = false;
+          success(res).then(() => {
+            this.$emit("get_users");
+          });
         })
         .catch((err) => {
           catchError(err);

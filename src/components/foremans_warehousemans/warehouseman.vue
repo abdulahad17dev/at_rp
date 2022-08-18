@@ -125,12 +125,12 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       warehouseman_add(this.body)
         .then((res) => {
-          success(res);
-          this.$emit("get", this.building_id);
-          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("send_btn2").disabled = true;
           this.body.user_id = null;
           this.text = "прорап танлаш";
+          success(res).then(() => {
+            this.$emit("get", this.building_id);
+          });
         })
         .catch((err) => {
           catchError(err);
@@ -145,10 +145,10 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       warehouseman_remove(e)
         .then((res) => {
-          success(res);
-          this.$emit("get", this.building_id);
-          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_warehouseman").disabled = false;
+          success(res).then(() => {
+            this.$emit("get", this.building_id);
+          });
         })
         .catch((err) => {
           catchError(err);

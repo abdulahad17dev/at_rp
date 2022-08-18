@@ -13,16 +13,6 @@
           <th style="width: 30%">Сумма</th>
           <th style="width: 30%">Сана</th>
           <th style="width: 35%">Изох</th>
-          <th>
-            <select
-              class="form-control form-control-sm form-select"
-              v-model="limit"
-            >
-              <option value="25">25</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-            </select>
-          </th>
         </tr>
       </thead>
       <tbody>
@@ -30,7 +20,7 @@
           <td>{{ item.id }}</td>
           <td>{{ new Intl.NumberFormat().format(item.money) }} сўм</td>
           <td>{{ new Date(item.time).toLocaleDateString() }}</td>
-          <td colspan="2">{{ item.comment }}</td>
+          <td>{{ item.comment }}</td>
         </tr>
       </tbody>
     </table>
@@ -42,6 +32,16 @@
     v-if="hisob_raqamiga_qabul_qilingan_pullar != ''"
   >
     <ul class="pagination pagination-sm justify-content-end">
+      <div class="page-item">
+        <select
+          class="form-control form-control-sm form-select mx-1"
+          v-model="limit"
+        >
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
       <li class="page-item">
         <button class="page-link" @click="page = 0" :disabled="page == 0">
           <i class="fa-solid fa-angles-left text-dark"></i>
@@ -127,7 +127,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-th select {
+.page-item select {
   width: 80px;
   height: 30px;
   padding: 0.25rem 0.5rem;

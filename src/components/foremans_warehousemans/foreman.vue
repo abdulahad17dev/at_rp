@@ -121,12 +121,12 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       foreman_add(this.body)
         .then((res) => {
-          success(res);
-          this.$emit("get", this.building_id);
-          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("send_btn").disabled = true;
           this.body.user_id = null;
           this.text = "прорап танлаш";
+          success(res).then(() => {
+            this.$emit("get", this.building_id);
+          });
         })
         .catch((err) => {
           catchError(err);
@@ -141,10 +141,10 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       foreman_remove(e)
         .then((res) => {
-          success(res);
-          this.$emit("get", this.building_id);
-          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_foreman").disabled = false;
+          success(res).then(() => {
+            this.$emit("get", this.building_id);
+          });
         })
         .catch((err) => {
           catchError(err);

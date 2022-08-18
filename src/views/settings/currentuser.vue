@@ -96,10 +96,10 @@ export default {
 
       user_put(this.user)
         .then((res) => {
-          success(res);
-          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("current_user").disabled = false;
-          this.get();
+          success(res).then(() => {
+            this.get();
+          });
         })
         .catch((err) => {
           catchError(err);

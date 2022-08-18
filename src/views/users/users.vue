@@ -154,17 +154,17 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       user_add(e)
         .then((res) => {
-          success(res);
           document.getElementById("user_add").click();
-          this.$store.dispatch("setLoading", { isLoading: false });
-          this.get_users(this.page, this.limit, this.search, this.role);
           document.getElementById("user_disabled").disabled = false;
-          e.name = "";
-          e.username = "";
-          e.password = "";
-          e.role = "";
-          e.phone = null;
-          e.status = "true";
+          success(res).then(() => {
+            this.get_users(this.page, this.limit, this.search, this.role);
+            e.name = "";
+            e.username = "";
+            e.password = "";
+            e.role = "";
+            e.phone = null;
+            e.status = "true";
+          });
         })
         .catch((err) => {
           catchError(err);

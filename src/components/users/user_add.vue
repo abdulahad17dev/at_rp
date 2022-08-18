@@ -17,10 +17,10 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
-                <label for="ism"> Исм: </label>
+                <label for="ism1"> Исм: </label>
                 <input
                   type="text"
-                  id="ism"
+                  id="ism1"
                   class="form-control form-control-sm"
                   v-model="data.name"
                   required
@@ -28,12 +28,12 @@
                 />
               </div>
               <div class="col-10 mx-auto">
-                <label for="tel"> Телефон рақам: </label>
+                <label for="tel1"> Телефон рақам: </label>
                 <div class="input-group input-group-sm">
                   <span class="input-group-text bg-white">+998</span>
                   <input
                     type="tel"
-                    id="tel"
+                    id="tel1"
                     class="form-control form-control-sm"
                     v-model="data.phone"
                     required
@@ -44,10 +44,10 @@
                 </div>
               </div>
               <div class="col-10 mx-auto">
-                <label for="username"> Логин: </label>
+                <label for="username1"> Логин: </label>
                 <input
                   type="text"
-                  id="username"
+                  id="username1"
                   class="form-control form-control-sm"
                   v-model="data.username"
                   required
@@ -55,20 +55,21 @@
                 />
               </div>
               <div class="col-10 mx-auto">
-                <label for="password"> Парол: </label>
+                <label for="password1"> Парол: </label>
                 <input
                   type="password"
-                  id="password"
+                  id="password1"
                   class="form-control form-control-sm"
                   v-model="data.password"
                   required
                   placeholder="Парол"
+                  autocomplete="true"
                 />
               </div>
               <div class="col-10 mx-auto">
-                <label for="role"> Ихтисослиги: </label>
+                <label for="role1"> Ихтисослиги: </label>
                 <select
-                  id="role"
+                  id="role1"
                   class="form-control form-control-sm"
                   v-model="data.role"
                   required
