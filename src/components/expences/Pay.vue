@@ -177,7 +177,15 @@
                 </select>
               </div>
               <div class="col-10 mx-auto">
-                <label for="summa">Сумма: </label>
+                <label for="summa"
+                  >Сумма:
+                  <span class="text-primary"
+                    >{{
+                      new Intl.NumberFormat().format(pay_body.money)
+                    }}
+                    сўм</span
+                  ></label
+                >
                 <div class="input-group input-group-sm">
                   <input
                     type="number"
@@ -256,7 +264,15 @@
                 </select>
               </div>
               <div class="col-10 mx-auto">
-                <label for="summa">Сумма: </label>
+                <label for="summa"
+                  >Сумма:
+                  <span class="text-primary"
+                    >{{
+                      new Intl.NumberFormat().format(pay2_body.money)
+                    }}
+                    сўм</span
+                  ></label
+                >
                 <div class="input-group input-group-sm">
                   <input
                     type="number"

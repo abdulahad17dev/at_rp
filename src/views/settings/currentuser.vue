@@ -96,10 +96,9 @@ export default {
 
       user_put(this.user)
         .then((res) => {
+          this.get();
+          success(res);
           document.getElementById("current_user").disabled = false;
-          success(res).then(() => {
-            this.get();
-          });
         })
         .catch((err) => {
           catchError(err);

@@ -47,7 +47,7 @@
           v-for="item in data"
           :key="item"
         >
-          <small>{{ item.user.name }}</small>
+          <small>{{ item.user }}</small>
           <button
             class="btn btn-danger btn-sm float-end"
             v-if="role_item == 'pto'"
@@ -121,12 +121,11 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       foreman_add(this.body)
         .then((res) => {
+          this.$emit("get", this.building_id);
+          success(res);
           document.getElementById("send_btn").disabled = true;
           this.body.user_id = null;
           this.text = "прорап танлаш";
-          success(res).then(() => {
-            this.$emit("get", this.building_id);
-          });
         })
         .catch((err) => {
           catchError(err);
@@ -141,10 +140,9 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       foreman_remove(e)
         .then((res) => {
+          this.$emit("get", this.building_id);
+          success(res);
           document.getElementById("remove_foreman").disabled = false;
-          success(res).then(() => {
-            this.$emit("get", this.building_id);
-          });
         })
         .catch((err) => {
           catchError(err);

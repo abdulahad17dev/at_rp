@@ -92,11 +92,10 @@ export default {
       document.getElementById("bank_put_disabled").disabled = true;
       bank_account_put(e.id, e)
         .then((res) => {
-          document.getElementById("bank_put_disabled").disabled = false;
+          this.$emit("get");
+          success(res);
           document.getElementById("bank_put").click();
-          success(res).then(() => {
-            this.$emit("get");
-          });
+          document.getElementById("bank_put_disabled").disabled = false;
         })
         .catch((err) => {
           catchError(err);
@@ -113,15 +112,14 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       transfers(e)
         .then((res) => {
+          this.$emit("get");
+          success(res);
           document.getElementById("transfer_add").click();
           document.getElementById("transfer_disabled").disabled = false;
-          success(res).then(() => {
-            this.$emit("get");
-            e.money = null;
-            e.from_ = 0;
-            e.to_ = this.id;
-            e.comment = "";
-          });
+          e.money = null;
+          e.from_ = 0;
+          e.to_ = this.id;
+          e.comment = "";
         })
         .catch((err) => {
           catchError(err);
@@ -134,15 +132,14 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       transfers(e)
         .then((res) => {
+          this.$emit("get");
+          success(res);
           document.getElementById("transfer_to").click();
           document.getElementById("transfer_to_disabled").disabled = false;
-          success(res).then(() => {
-            this.$emit("get");
-            e.money = null;
-            e.from_ = this.id;
-            e.to_ = null;
-            e.comment = "";
-          });
+          e.money = null;
+          e.from_ = this.id;
+          e.to_ = null;
+          e.comment = "";
         })
         .catch((err) => {
           catchError(err);

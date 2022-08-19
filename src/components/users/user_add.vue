@@ -63,7 +63,7 @@
                   v-model="data.password"
                   required
                   placeholder="Парол"
-                  autocomplete="true"
+                  autocomplete="on"
                 />
               </div>
               <div class="col-10 mx-auto">

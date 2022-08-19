@@ -72,6 +72,7 @@
                   placeholder="Ҳажми"
                   v-model="body.quantity"
                   required
+                  min="0.5"
                 />
               </div>
               <div class="col">
@@ -180,13 +181,12 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       product_composition_add(this.body)
         .then((res) => {
+          this.select_id(this.product_id, this.product_item);
+          success(res);
           document.getElementById("composition_disabled").disabled = false;
-          success(res).then(() => {
-            this.select_id(this.product_id, this.product_item);
-            this.body.name = "";
-            this.body.quantity = null;
-            this.body.olchov_birligi = "";
-          });
+          this.body.name = "";
+          this.body.quantity = null;
+          this.body.olchov_birligi = "";
         })
         .catch((err) => {
           catchError(err);
@@ -199,10 +199,9 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       product_composition_remove(e)
         .then((res) => {
+          this.select_id(this.product_id, this.product_item);
+          success(res);
           document.getElementById("remove").disabled = false;
-          success(res).then(() => {
-            this.select_id(this.product_id, this.product_item);
-          });
         })
         .catch((err) => {
           catchError(err);

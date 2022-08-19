@@ -19,7 +19,12 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
-                <label for="balance"> Сумма: </label>
+                <label for="balance">
+                  Сумма:
+                  <span class="text-primary"
+                    >{{ new Intl.NumberFormat().format(data.money) }} сўм</span
+                  ></label
+                >
                 <div class="input-group input-group-sm">
                   <input
                     id="balance"
@@ -84,7 +89,12 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
-                <label for="balance"> Сумма: </label>
+                <label for="balance">
+                  Сумма:
+                  <span class="text-primary"
+                    >{{ new Intl.NumberFormat().format(to.money) }} сўм</span
+                  ></label
+                >
                 <div class="input-group input-group-sm">
                   <input
                     id="balance"

@@ -22,7 +22,10 @@
         <option value="end">якунланди</option>
       </select>
     </div>
-    <div class="col mt-2 d-flex align-items-center justify-content-end">
+    <div
+      class="col mt-2 d-flex align-items-center justify-content-end"
+      v-if="role != 'prorap' || role != 'omborchi'"
+    >
       <span>Қидириш: </span>
       <div class="input-group input-group-sm mx-2">
         <input
@@ -173,19 +176,18 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       building_add(e)
         .then((res) => {
+          this.get_buildings(this.page, this.limit, this.search, this.status);
+          success(res);
           document.getElementById("buildings_add").click();
           document.getElementById("building_disabled").disabled = false;
-          success(res).then(() => {
-            this.get_buildings(this.page, this.limit, this.search, this.status);
-            e.name = "";
-            e.address = "";
-            e.budget = null;
-            e.start_date = "";
-            e.end_date = "";
-            e.map_long = "";
-            e.map_lat = "";
-            e.status = "wait";
-          });
+          e.name = "";
+          e.address = "";
+          e.budget = null;
+          e.start_date = "";
+          e.end_date = "";
+          e.map_long = "";
+          e.map_lat = "";
+          e.status = "wait";
         })
         .catch((err) => {
           catchError(err);

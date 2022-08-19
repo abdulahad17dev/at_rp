@@ -11,16 +11,22 @@
         <tr>
           <th style="width: 5%">#ИД</th>
           <th style="width: 25%">Сумма</th>
-          <th style="width: 25%">Сана</th>
-          <th style="width: 30%">Изох</th>
+          <th style="width: 20%">Сана</th>
+          <th style="width: 20%">Изох</th>
+          <th style="width: 20%">Хисоб рақам</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in hisob_raqamidan_otkazilgan_pullar" :key="item">
-          <td>{{ item.id }}</td>
-          <td>{{ new Intl.NumberFormat().format(item.money) }} сўм</td>
-          <td>{{ new Date(item.time).toLocaleDateString() }}</td>
-          <td colspan="2">{{ item.comment }}</td>
+          <td>{{ item.Transfers.id }}</td>
+          <td>
+            {{ new Intl.NumberFormat().format(item.Transfers.money) }} сўм
+          </td>
+          <td>{{ new Date(item.Transfers.time).toLocaleDateString() }}</td>
+          <td>{{ item.Transfers.comment }}</td>
+          <td>
+            <b class="text-primary">{{ item.name }}</b>
+          </td>
         </tr>
       </tbody>
     </table>

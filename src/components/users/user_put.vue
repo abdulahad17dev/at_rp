@@ -62,7 +62,7 @@
                   class="form-control form-control-sm"
                   v-model="data.password"
                   placeholder="Парол"
-                  autocomplete="true"
+                  autocomplete="on"
                 />
               </div>
               <div class="col-10 mx-auto">

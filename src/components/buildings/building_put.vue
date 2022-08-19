@@ -28,7 +28,12 @@
                 />
               </div>
               <div class="col-10 mx-auto">
-                <label for="budget"> Бюджет: </label>
+                <label for="budget">
+                  Бюджет:
+                  <span class="text-primary"
+                    >{{ new Intl.NumberFormat().format(data.budget) }} сўм</span
+                  ></label
+                >
                 <div class="input-group input-group-sm">
                   <input
                     type="number"
@@ -37,6 +42,7 @@
                     v-model="data.budget"
                     required
                     placeholder="Бюджет"
+                    min="1"
                   />
                   <span class="input-group-text bg-white">сўм</span>
                 </div>
