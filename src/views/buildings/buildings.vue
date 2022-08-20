@@ -176,18 +176,19 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       building_add(e)
         .then((res) => {
-          this.get_buildings(this.page, this.limit, this.search, this.status);
-          success(res);
           document.getElementById("buildings_add").click();
           document.getElementById("building_disabled").disabled = false;
-          e.name = "";
-          e.address = "";
-          e.budget = null;
-          e.start_date = "";
-          e.end_date = "";
-          e.map_long = "";
-          e.map_lat = "";
-          e.status = "wait";
+          success(res).then(() => {
+            this.get_buildings(this.page, this.limit, this.search, this.status);
+            e.name = "";
+            e.address = "";
+            e.budget = null;
+            e.start_date = "";
+            e.end_date = "";
+            e.map_long = "";
+            e.map_lat = "";
+            e.status = "wait";
+          });
         })
         .catch((err) => {
           catchError(err);
@@ -196,7 +197,7 @@ export default {
         });
     },
   },
-  beforeMount() {
+  created() {
     this.get_buildings(this.page, this.limit, this.search, this.status);
   },
   components: { Buildings_item, Building_add, Data_notfound, Header_item },

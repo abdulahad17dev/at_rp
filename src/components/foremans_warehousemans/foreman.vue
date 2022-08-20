@@ -10,11 +10,15 @@
             type="button"
             id="dropdownMenuButton1"
             data-bs-toggle="dropdown"
+            data-bs-auto-close="outside"
             aria-expanded="false"
           >
             {{ text }}
           </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <ul
+            class="dropdown-menu border-top-0"
+            aria-labelledby="dropdownMenuButton1"
+          >
             <li>
               <input
                 type="search"
@@ -23,12 +27,68 @@
                 v-model="search"
               />
             </li>
-            <li
-              v-for="item in users_prorap"
-              :key="item"
-              @click="select(item.id, item.name)"
-            >
-              <a class="dropdown-item">{{ item.name }}</a>
+            <li>
+              <ul class="dropdown-items">
+                <li
+                  v-for="item in users_prorap"
+                  :key="item"
+                  @click="select(item.id, item.name)"
+                >
+                  <a class="dropdown-item">{{ item.name }}</a>
+                </li>
+              </ul>
+            </li>
+            <li v-if="users_omborchi != ''"><hr class="dropdown-divider" /></li>
+            <li>
+              <nav
+                aria-label="Page navigation example"
+                class="mt-2"
+                v-if="users_prorap != ''"
+              >
+                <ul class="pagination pagination-sm justify-content-end">
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="page = 0"
+                      :disabled="page == 0"
+                    >
+                      <i class="fa-solid fa-angles-left text-dark"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="page--"
+                      :disabled="page == 0"
+                    >
+                      <i class="fa-solid fa-angle-left text-dark"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button class="page-link text-dark" disabled>
+                      {{ page + 1 }}
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="page++"
+                      :disabled="page == pages - 1"
+                    >
+                      <i class="fa-solid fa-angle-right text-dark"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="page = pages - 1"
+                      :disabled="page == pages - 1"
+                    >
+                      <i class="fa-solid fa-angles-right text-dark"></i>
+                    </button>
+                  </li>
+                </ul>
+              </nav>
             </li>
           </ul>
         </div>
@@ -71,7 +131,7 @@ export default {
   emits: ["get"],
   data() {
     return {
-      limit: 100,
+      limit: 25,
       page: 0,
       pages: null,
       users_prorap: [],
@@ -94,6 +154,10 @@ export default {
         this.page = 0;
       }
     },
+    page(e) {
+      this.get_prorap(e, this.limit, this.search, this.role);
+      document.getElementById("scroll").scrollTop = 0;
+    },
   },
   methods: {
     get_prorap(page, limit, search, role) {
@@ -114,6 +178,7 @@ export default {
       this.body.user_id = id;
       this.text = name;
       document.getElementById("send_btn").disabled = false;
+      document.getElementById("dropdownMenuButton1").click();
     },
     add(e) {
       this.body.building_id = e;
@@ -121,11 +186,12 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       foreman_add(this.body)
         .then((res) => {
-          this.$emit("get", this.building_id);
-          success(res);
           document.getElementById("send_btn").disabled = true;
-          this.body.user_id = null;
-          this.text = "прорап танлаш";
+          success(res).then(() => {
+            this.$emit("get", this.building_id);
+            this.body.user_id = null;
+            this.text = "прорап танлаш";
+          });
         })
         .catch((err) => {
           catchError(err);
@@ -140,9 +206,10 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       foreman_remove(e)
         .then((res) => {
-          this.$emit("get", this.building_id);
-          success(res);
           document.getElementById("remove_foreman").disabled = false;
+          success(res).then(() => {
+            this.$emit("get", this.building_id);
+          });
         })
         .catch((err) => {
           catchError(err);
@@ -151,10 +218,8 @@ export default {
         });
     },
   },
-  beforeMount() {
-    if (this.role_item == "pto") {
-      this.get_prorap(this.page, this.limit, this.search, this.role);
-    }
+  created() {
+    this.get_prorap(this.page, this.limit, this.search, this.role);
   },
 };
 </script>
@@ -162,8 +227,11 @@ export default {
 <style lang="scss" scoped>
 .dropdown-menu {
   padding: 0;
+}
+.dropdown-items {
+  padding: 0;
   border-top: none;
-  max-height: 200px;
+  max-height: 192px;
   overflow: auto;
 }
 

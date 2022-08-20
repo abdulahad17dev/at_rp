@@ -154,16 +154,17 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       user_add(e)
         .then((res) => {
-          this.get_users(this.page, this.limit, this.search, this.role);
-          success(res);
           document.getElementById("user_add").click();
           document.getElementById("user_disabled").disabled = false;
-          e.name = "";
-          e.username = "";
-          e.password = "";
-          e.role = "";
-          e.phone = null;
-          e.status = "true";
+          success(res).then(() => {
+            this.get_users(this.page, this.limit, this.search, this.role);
+            e.name = "";
+            e.username = "";
+            e.password = "";
+            e.role = "";
+            e.phone = null;
+            e.status = "true";
+          });
         })
         .catch((err) => {
           catchError(err);
@@ -172,7 +173,7 @@ export default {
         });
     },
   },
-  beforeMount() {
+  created() {
     this.get_users(this.page, this.limit, this.search, this.role);
   },
   components: { User_item, User_add, Data_notfound, Header_item },

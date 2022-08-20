@@ -251,10 +251,11 @@ export default {
       document.getElementById("building_disabled_put").disabled = true;
       building_put(e)
         .then((res) => {
-          this.$emit("get_buildings");
-          success(res);
           document.getElementById("buildings_put").click();
           document.getElementById("building_disabled_put").disabled = false;
+          success(res).then(() => {
+            this.$emit("get_buildings");
+          });
         })
         .catch((err) => {
           catchError(err);
@@ -292,8 +293,9 @@ export default {
           e.status = "start";
           building_put(e)
             .then((res) => {
-              this.$emit("get_buildings");
-              success(res);
+              success(res).then(() => {
+                this.$emit("get_buildings");
+              });
             })
             .catch((err) => {
               catchError(err);
@@ -309,8 +311,9 @@ export default {
       e.status = "end";
       building_put(e)
         .then((res) => {
-          this.$emit("get_buildings");
-          success(res);
+          success(res).then(() => {
+            this.$emit("get_buildings");
+          });
         })
         .catch((err) => {
           catchError(err);

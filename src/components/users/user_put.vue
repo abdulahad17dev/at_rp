@@ -73,16 +73,16 @@
                   v-model="data.role"
                   required
                 >
-                  <option value="admin">admin</option>
-                  <option value="omborchi">omborchi</option>
-                  <option value="taminotchi">taminotchi</option>
-                  <option value="prorap">prorap</option>
-                  <option value="pto">pto</option>
-                  <option value="kassir">kassir</option>
-                  <option value="bugalter">bugalter</option>
-                  <option value="ish_yurituvchi">ish_yurituvchi</option>
-                  <option value="bazachi">bazachi</option>
-                  <option value="zakupshik">zakupshik</option>
+                  <option value="admin">админ</option>
+                  <option value="omborchi">омборчи</option>
+                  <option value="taminotchi">таминотчи</option>
+                  <option value="prorap">прорап</option>
+                  <option value="pto">пто</option>
+                  <option value="kassir">кассир</option>
+                  <option value="bugalter">бугалтер</option>
+                  <option value="ish_yurituvchi">иш_юритувчи</option>
+                  <option value="bazachi">базачи</option>
+                  <option value="zakupshik">закупшик</option>
                 </select>
               </div>
 

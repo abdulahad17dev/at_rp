@@ -81,10 +81,11 @@ export default {
       document.getElementById("user_disabled_put").disabled = true;
       user_put(e)
         .then((res) => {
-          this.$emit("get_users");
-          success(res);
           document.getElementById("user_put").click();
           document.getElementById("user_disabled_put").disabled = false;
+          success(res).then(() => {
+            this.$emit("get_users");
+          });
         })
         .catch((err) => {
           catchError(err);

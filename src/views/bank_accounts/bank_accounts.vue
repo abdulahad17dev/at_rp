@@ -144,11 +144,12 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       bank_account_add(e)
         .then((res) => {
-          this.bank_accounts_get(this.page, this.limit, this.search);
-          success(res);
           document.getElementById("bank_add").click();
           document.getElementById("bank_disabled").disabled = false;
-          e.name = "";
+          success(res).then(() => {
+            this.bank_accounts_get(this.page, this.limit, this.search);
+            e.name = "";
+          });
         })
         .catch((err) => {
           catchError(err);
@@ -157,7 +158,7 @@ export default {
         });
     },
   },
-  beforeMount() {
+  created() {
     this.bank_accounts_get(this.page, this.limit, this.search);
   },
 };

@@ -117,7 +117,7 @@ export default {
         });
     },
   },
-  beforeMount() {
+  created() {
     this.get_products(this.page, this.limit, this.search);
   },
 };
