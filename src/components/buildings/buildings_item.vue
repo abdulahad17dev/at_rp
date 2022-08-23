@@ -134,7 +134,7 @@
               class="btn btn-sm btn-primary mx-1"
               data-bs-toggle="modal"
               data-bs-target="#foremans_warehousemans"
-              @click="select_id(item.id)"
+              @click="select_id(item.id, item.name, 1)"
               v-if="role == 'admin' || role == 'pto'"
             >
               <i class="fa-solid fa-users"></i>
@@ -146,12 +146,22 @@
             >
               <i class="fa-solid fa-location-dot"></i>
             </a>
+            <button
+              class="btn btn-sm btn-primary mx-1"
+              data-bs-toggle="modal"
+              data-bs-target="#building_document"
+              v-if="role == 'pto'"
+              @click="select_id(item.id, item.name, 2)"
+            >
+              <i class="fa-solid fa-file-arrow-up"></i>
+            </button>
             <router-link
               :to="{ name: 'smeta', query: { id: item.id } }"
               class="btn btn-sm btn-primary mx-1"
             >
               <i class="fa-solid fa-right-long"></i>
             </router-link>
+
             <button
               class="btn btn-sm btn-primary mx-1 d-block mt-1"
               v-if="item.status == 'wait' && role == 'pto'"
@@ -165,6 +175,15 @@
     </table>
   </div>
   <Building_put :object="item" @put="put" />
+
+  <Building_documents
+    v-if="role == 'pto'"
+    :id="building_id"
+    :name="building_name"
+    @document_add="document_add"
+    :data="documents"
+    @remove="remove"
+  />
 
   <!-- Modal -->
 
@@ -210,6 +229,9 @@
 
 <script>
 import {
+  building_d_add,
+  building_d_get,
+  building_d_remove,
   building_put,
   foreman_get,
   warehouseman_get,
@@ -219,6 +241,7 @@ import { catchError, success } from "@/utils/request/handle_api_err";
 import Swal from "sweetalert2";
 import Foreman from "../foremans_warehousemans/foreman.vue";
 import Warehouseman from "../foremans_warehousemans/warehouseman.vue";
+import Building_documents from "./building_documents.vue";
 export default {
   name: "BuildingItem",
   props: { data: Array },
@@ -229,7 +252,9 @@ export default {
       foremans: [],
       warehousemans: [],
       building_id: null,
+      building_name: "",
       role: localStorage.getItem("role"),
+      documents: [],
     };
   },
   methods: {
@@ -320,19 +345,33 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
-    select_id(e) {
-      this.building_id = e;
-      this.$store.dispatch("setLoading", { isLoading: true });
-      foreman_get(e)
-        .then((res) => {
-          this.foremans = res.data;
-          this.$store.dispatch("setLoading", { isLoading: false });
-          this.get_warehousemans(e);
-        })
-        .catch((err) => {
-          catchError(err);
-          this.$store.dispatch("setLoading", { isLoading: false });
-        });
+    select_id(id, name, nm) {
+      this.building_id = id;
+      this.building_name = name;
+      if (nm == 1) {
+        this.$store.dispatch("setLoading", { isLoading: true });
+        foreman_get(id)
+          .then((res) => {
+            this.foremans = res.data;
+            this.$store.dispatch("setLoading", { isLoading: false });
+            this.get_warehousemans(id);
+          })
+          .catch((err) => {
+            catchError(err);
+            this.$store.dispatch("setLoading", { isLoading: false });
+          });
+      } else {
+        this.$store.dispatch("setLoading", { isLoading: true });
+        building_d_get(id)
+          .then((res) => {
+            this.documents = res.data;
+            this.$store.dispatch("setLoading", { isLoading: false });
+          })
+          .catch((err) => {
+            catchError(err);
+            this.$store.dispatch("setLoading", { isLoading: false });
+          });
+      }
     },
     get_warehousemans(e) {
       this.$store.dispatch("setLoading", { isLoading: true });
@@ -346,8 +385,45 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
+    document_add(e) {
+      document.getElementById("document_button").disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      building_d_add(e, this.building_id)
+        .then((res) => {
+          document.getElementById("document_button").disabled = false;
+          success(res).then(() => {
+            this.select_id(this.building_id, this.building_name, 2);
+            e.file = "";
+            e.comment = "";
+            document.getElementById("txt").innerHTML = "файл юклаш";
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("txt").innerHTML = "файл юклаш";
+          e.file = "";
+          e.comment = "";
+        });
+    },
+    remove(e) {
+      document.getElementById("remove_document").disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      building_d_remove(e)
+        .then((res) => {
+          document.getElementById("remove_document").disabled = false;
+          success(res).then(() => {
+            this.select_id(this.building_id, this.building_name, 2);
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("remove_document").disabled = false;
+        });
+    },
   },
-  components: { Building_put, Foreman, Warehouseman },
+  components: { Building_put, Foreman, Warehouseman, Building_documents },
 };
 </script>
 

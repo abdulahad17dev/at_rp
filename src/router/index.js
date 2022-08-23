@@ -124,7 +124,7 @@ let routes = [
   },
   // expences
   {
-    path: "/expences",
+    path: "/expenses",
     name: "expences",
     meta: {
       requiresAuth: true,

@@ -1,12 +1,48 @@
 <template>
   <details>
-    <summary @click="transfer_me(page, limit, from, to, type)">
-      <div class="">
-        <span class="text-primary"> {{ this.$route.query.name }} </span> ҳисоб
-        рақамига қабул қилинган пуллар
-      </div>
+    <summary
+      @click="transfer_me(page, limit, from, to, type, from_time, to_time)"
+    >
+      ҳисоб рақамига қабул қилинган пуллар
     </summary>
 
+    <form @submit.prevent="time">
+      <div class="row m-1">
+        <div class="col">
+          <input
+            type="date"
+            class="form-control form-control-sm"
+            v-model="from_time"
+            required
+          />
+        </div>
+        <div class="col">
+          <input
+            type="date"
+            class="form-control form-control-sm"
+            v-model="to_time"
+            required
+          />
+        </div>
+        <div class="col">
+          <div class="btn-group w-100">
+            <button
+              class="btn btn-outline-primary btn-sm w-80"
+              :disabled="from_time == '' || to_time == ''"
+            >
+              <i class="fa-solid fa-circle-check"></i>
+            </button>
+            <button
+              class="btn btn-outline-danger btn-sm w-20"
+              @click="reset"
+              v-if="from_time && to_time"
+            >
+              <i class="fa-solid fa-circle-xmark"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
     <div class="table-responsive">
       <table class="table table-sm table-hover">
         <thead>
@@ -99,23 +135,41 @@ export default {
       to: this.$route.query.id,
       type: "hisob_raqamiga_qabul_qilingan_pullar",
       id: this.$route.query.id,
+      from_time: "",
+      to_time: "",
     };
   },
   watch: {
     limit(e) {
       this.page = 0;
-      this.transfer_me(this.page, e, this.from, this.to, this.type);
+      this.transfer_me(
+        this.page,
+        e,
+        this.from,
+        this.to,
+        this.type,
+        this.from_time,
+        this.to_time
+      );
     },
     page(e) {
-      this.transfer_me(e, this.limit, this.from, this.to, this.type);
+      this.transfer_me(
+        e,
+        this.limit,
+        this.from,
+        this.to,
+        this.type,
+        this.from_time,
+        this.to_time
+      );
       document.getElementById("scroll").scrollTop = 0;
     },
   },
   methods: {
-    transfer_me(page, limit, from, to, type) {
+    transfer_me(page, limit, from, to, type, from_time, to_time) {
       this.$store.dispatch("setLoading", { isLoading: true });
 
-      transfer_history_get(page, limit, from, to, type)
+      transfer_history_get(page, limit, from, to, type, from_time, to_time)
         .then((res) => {
           this.hisob_raqamiga_qabul_qilingan_pullar = res.data.data;
           this.pages = res.data.pages;
@@ -126,10 +180,33 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
+    time() {
+      this.transfer_me(
+        this.page,
+        this.limit,
+        this.from,
+        this.to,
+        this.type,
+        this.from_time,
+        this.to_time
+      );
+      this.page = 0;
+    },
+    reset() {
+      this.from_time = "";
+      this.to_time = "";
+      this.transfer_me(
+        this.page,
+        this.limit,
+        this.from,
+        this.to,
+        this.type,
+        this.from_time,
+        this.to_time
+      );
+      this.page = 0;
+    },
   },
-  // created() {
-  //   this.transfer_me(this.page, this.limit, this.from, this.to, this.type);
-  // },
 };
 </script>
 
@@ -148,22 +225,5 @@ export default {
 table {
   width: 100%;
   min-width: 700px;
-}
-
-summary {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  list-style: none;
-  padding: 10px;
-  outline: none !important;
-}
-
-details {
-  border: 1px solid rgb(0, 0, 0, 0.2);
-}
-
-details[open] summary {
-  border-bottom: 1px solid rgb(0, 0, 0, 0.2);
 }
 </style>

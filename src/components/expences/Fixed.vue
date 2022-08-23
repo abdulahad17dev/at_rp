@@ -323,21 +323,4 @@ table {
   width: 100%;
   min-width: 900px;
 }
-
-summary {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  list-style: none;
-  padding: 10px;
-  outline: none !important;
-}
-
-details {
-  border: 1px solid rgb(0, 0, 0, 0.2);
-}
-
-details[open] summary {
-  border-bottom: 1px solid rgb(0, 0, 0, 0.2);
-}
 </style>

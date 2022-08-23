@@ -85,89 +85,147 @@
             id="transfer_to"
           ></button>
         </div>
-        <form @submit.prevent="$emit('transfer_to', to)">
-          <div class="modal-body">
-            <div class="row gap-2">
-              <div class="col-10 mx-auto">
-                <label for="balance">
-                  Сумма:
-                  <span class="text-primary"
-                    >{{ new Intl.NumberFormat().format(to.money) }} сўм</span
-                  ></label
-                >
-                <div class="input-group input-group-sm">
-                  <input
-                    id="balance"
-                    type="number"
-                    step="any"
-                    class="form-control"
-                    v-model="to.money"
-                    required
-                    min="1"
-                  />
-                  <span class="input-group-text bg-white">сўм</span>
+        <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="btn btn-sm w-100 active"
+              id="pills-home-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-home"
+              type="button"
+              role="tab"
+              aria-controls="pills-home"
+              aria-selected="true"
+            >
+              ҳисоб рақамига пул ўтказиш
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="btn btn-sm w-100"
+              id="pills-profile-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-profile"
+              type="button"
+              role="tab"
+              aria-controls="pills-profile"
+              aria-selected="false"
+            >
+              кассага пул ўтказиш
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+          <div
+            class="tab-pane fade show active"
+            id="pills-home"
+            role="tabpanel"
+            aria-labelledby="pills-home-tab"
+          >
+            <Transfer_bank_account_body @transfer_to="transfer_to" :id="id" />
+          </div>
+          <div
+            class="tab-pane fade"
+            id="pills-profile"
+            role="tabpanel"
+            aria-labelledby="pills-profile-tab"
+          >
+            <form @submit.prevent="$emit('transfer_to_cashier', cashier)">
+              <div class="modal-body">
+                <div class="row gap-2">
+                  <div class="col-10 mx-auto">
+                    <label for="balance">
+                      Сумма:
+                      <span class="text-primary"
+                        >{{
+                          new Intl.NumberFormat().format(cashier.money)
+                        }}
+                        сўм</span
+                      ></label
+                    >
+                    <div class="input-group input-group-sm">
+                      <input
+                        id="balance"
+                        type="number"
+                        step="any"
+                        class="form-control"
+                        v-model="cashier.money"
+                        required
+                        min="1"
+                      />
+                      <span class="input-group-text bg-white">сўм</span>
+                    </div>
+                  </div>
+                  <div class="col-10 mx-auto">
+                    <label for="to"> Кассирлар: </label>
+                    <select
+                      id="to"
+                      class="form-select form-select-sm"
+                      v-model="cashier.to_"
+                      @click="get_cashier"
+                      required
+                    >
+                      <option
+                        :value="item.id"
+                        v-for="item in cashiers"
+                        :key="item"
+                      >
+                        {{ item.name }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-10 mx-auto">
+                    <label for="comment"> Изох: </label>
+                    <textarea
+                      id="comment"
+                      class="form-control"
+                      v-model="cashier.comment"
+                      required
+                    ></textarea>
+                  </div>
                 </div>
               </div>
-              <div class="col-10 mx-auto">
-                <label for="to"> Ҳисоблар: </label>
-                <select
-                  id="to"
-                  class="form-select form-select-sm"
-                  v-model="to.to_"
-                  required
+              <div class="modal-footer">
+                <button
+                  type="submit"
+                  class="btn btn-outline-primary btn-sm"
+                  id="transfer_to_cashier"
                 >
-                  <option :value="item.id" v-for="item in items" :key="item">
-                    {{ item.name }}
-                  </option>
-                </select>
+                  <i class="fas fa-circle-check"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger btn-sm"
+                  data-bs-dismiss="modal"
+                >
+                  <i class="fa-solid fa-circle-xmark"></i>
+                </button>
               </div>
-              <div class="col-10 mx-auto">
-                <label for="comment"> Изох: </label>
-                <textarea
-                  id="comment"
-                  class="form-control"
-                  v-model="to.comment"
-                  required
-                ></textarea>
-              </div>
-            </div>
+            </form>
           </div>
-          <div class="modal-footer">
-            <button
-              type="submit"
-              class="btn btn-outline-primary btn-sm"
-              id="transfer_to_disabled"
-            >
-              <i class="fas fa-circle-check"></i>
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-danger btn-sm"
-              data-bs-dismiss="modal"
-            >
-              <i class="fa-solid fa-circle-xmark"></i>
-            </button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { user_get } from "@/utils/request/request";
+import { catchError } from "@/utils/request/handle_api_err";
+import Transfer_bank_account_body from "../transfer/transfer_bank_account_body.vue";
 export default {
   name: "TransferItem",
-  props: ["items", "id", "name"],
-  emits: ["transfer_to", "transfer_me"],
+  props: ["id", "name"],
+  emits: ["transfer_to", "transfer_me", "transfer_to_cashier"],
   watch: {
     id(e) {
       this.data.to_ = e;
-      this.to.from_ = e;
+      this.cashier.from_ = e;
       this.data.money = null;
       this.data.comment = "";
-      this.to.money = null;
-      this.to.comment = "";
-      this.to.to_ = null;
+      this.cashier.money = null;
+      this.cashier.comment = "";
+      this.cashier.to_ = null;
     },
   },
   data() {
@@ -178,16 +236,45 @@ export default {
         to_: null,
         comment: "",
       },
-      to: {
+      cashier: {
         money: null,
         from_: null,
         to_: null,
         comment: "",
       },
+      limit: 100,
+      page: 0,
+      search: "",
+      cashiers: [],
+      role: "kassir",
     };
   },
+  methods: {
+    get_cashier() {
+      if (this.cashiers == "") {
+        this.$store.dispatch("setLoading", { isLoading: true });
+        user_get(this.page, this.limit, this.search, this.role)
+          .then((res) => {
+            this.cashiers = res.data.data;
+            this.$store.dispatch("setLoading", { isLoading: false });
+          })
+          .catch((err) => {
+            catchError(err);
+            this.$store.dispatch("setLoading", { isLoading: false });
+          });
+      }
+    },
+    transfer_to(e) {
+      this.$emit("transfer_to", e);
+    },
+  },
+  components: { Transfer_bank_account_body },
 };
 </script>
 
-<!-- <style lang="scss" scoped>
-</style> -->
+<style lang="scss" scoped>
+button.active {
+  background: #6c757d !important;
+  color: #fff;
+}
+</style>

@@ -1,38 +1,55 @@
 .scroll {
-    max-height: 100vh;
-    overflow: auto;
-    scroll-behavior: smooth;
+  max-height: 100vh;
+  overflow: auto;
+  scroll-behavior: smooth;
 }
 
 .scroll::-webkit-scrollbar {
-    width: 5px !important;
-    height: 5px !important;
-    transition: 1s;
+  width: 5px !important;
+  height: 5px !important;
+  transition: 1s;
 }
 
 .scroll::-webkit-scrollbar-track {
-    background: rgba(211, 211, 211, 0.8);
-    border-radius: 10px;
-    transition: 0.5s;
+  background: rgba(211, 211, 211, 0.8);
+  border-radius: 10px;
+  transition: 0.5s;
 }
 
 .scroll::-webkit-scrollbar-thumb {
-    background: gray;
-    border-radius: 5px;
-    transition: 0.5s;
+  background: gray;
+  border-radius: 5px;
+  transition: 0.5s;
 }
 
 @media (max-width: 500px) {
-    .zoom {
-        zoom: 70%;
-    }
+  .zoom {
+    zoom: 70%;
+  }
 }
 
 .row .col select {
-    padding: 0.25rem 0.5rem;
-        font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
 }
 
 .swal2-container {
-    z-index: 1111;
+  z-index: 1111;
+}
+
+summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  padding: 10px;
+  outline: none !important;
+}
+
+details {
+  border: 1px solid rgb(0, 0, 0, 0.2);
+}
+
+details[open] summary {
+  border-bottom: 1px solid rgb(0, 0, 0, 0.2);
 }

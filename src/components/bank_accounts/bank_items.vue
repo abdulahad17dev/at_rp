@@ -56,16 +56,20 @@
 
   <Bank_item_put :item="item" @put="put" />
   <Transfers
-    :items="data"
     :id="id"
     :name="name"
     @transfer_me="transfer_me"
     @transfer_to="transfer_to"
+    @transfer_to_cashier="transfer_to_cashier"
   />
 </template>
 
 <script>
-import { bank_account_put, transfers } from "@/utils/request/request";
+import {
+  bank_account_put,
+  transfers,
+  transfer_to_cashiers,
+} from "@/utils/request/request";
 import Bank_item_put from "./bank_item_put.vue";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Transfers from "./transfers.vue";
@@ -142,12 +146,35 @@ export default {
             e.from_ = this.id;
             e.to_ = null;
             e.comment = "";
+            document.getElementById("bank_account_text").innerHTML =
+              "ҳисоб рақамлар";
           });
         })
         .catch((err) => {
           catchError(err);
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("transfer_to_disabled").disabled = false;
+        });
+    },
+    transfer_to_cashier(e) {
+      document.getElementById("transfer_to_cashier").disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      transfer_to_cashiers(e)
+        .then((res) => {
+          document.getElementById("transfer_to").click();
+          document.getElementById("transfer_to_cashier").disabled = false;
+          success(res).then(() => {
+            this.$emit("get");
+            e.money = null;
+            e.from_ = this.id;
+            e.to_ = null;
+            e.comment = "";
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("transfer_to_cashier").disabled = false;
         });
     },
   },

@@ -38,7 +38,7 @@
                 </li>
               </ul>
             </li>
-            <li v-if="users_omborchi != ''"><hr class="dropdown-divider" /></li>
+            <li v-if="users_prorap != ''"><hr class="dropdown-divider" /></li>
             <li>
               <nav
                 aria-label="Page navigation example"

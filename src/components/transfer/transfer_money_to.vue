@@ -1,11 +1,49 @@
 <template>
   <details class="my-2">
-    <summary @click="transfer_money(page, limit, from, to, type)">
-      <div class="">
-        <span class="text-primary"> {{ this.$route.query.name }} </span> ҳисоб
-        рақамидан отказилган пуллар
-      </div>
+    <summary
+      @click="
+        transfer_money_to(page, limit, from, to, type, from_time, to_time)
+      "
+    >
+      ҳисоб рақамига ўтказилган пуллар
     </summary>
+    <form @submit.prevent="time">
+      <div class="row m-1">
+        <div class="col">
+          <input
+            type="date"
+            class="form-control form-control-sm"
+            v-model="from_time"
+            required
+          />
+        </div>
+        <div class="col">
+          <input
+            type="date"
+            class="form-control form-control-sm"
+            v-model="to_time"
+            required
+          />
+        </div>
+        <div class="col">
+          <div class="btn-group w-100">
+            <button
+              class="btn btn-outline-primary btn-sm w-80"
+              :disabled="from_time == '' || to_time == ''"
+            >
+              <i class="fa-solid fa-circle-check"></i>
+            </button>
+            <button
+              class="btn btn-outline-danger btn-sm w-20"
+              @click="reset"
+              v-if="from_time && to_time"
+            >
+              <i class="fa-solid fa-circle-xmark"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
     <div class="table-responsive">
       <table class="table table-sm table-hover">
         <thead>
@@ -99,27 +137,45 @@ export default {
       page: 0,
       pages: null,
       hisob_raqamidan_otkazilgan_pullar: [],
-      from: this.$route.query.id,
-      to: 0,
+      from: 0,
+      to: this.$route.query.id,
       type: "hisob_raqamidan_otkazilgan_pullar",
       id: this.$route.query.id,
+      from_time: "",
+      to_time: "",
     };
   },
   watch: {
     limit(e) {
       this.page = 0;
-      this.transfer_money(this.page, e, this.from, this.to, this.type);
+      this.transfer_money_to(
+        this.page,
+        e,
+        this.from,
+        this.to,
+        this.type,
+        this.from_time,
+        this.to_time
+      );
     },
     page(e) {
-      this.transfer_money(e, this.limit, this.from, this.to, this.type);
+      this.transfer_money_to(
+        e,
+        this.limit,
+        this.from,
+        this.to,
+        this.type,
+        this.from_time,
+        this.to_time
+      );
       document.getElementById("scroll").scrollTop = 0;
     },
   },
   methods: {
-    transfer_money(page, limit, from, to, type) {
+    transfer_money_to(page, limit, from, to, type, from_time, to_time) {
       this.$store.dispatch("setLoading", { isLoading: true });
 
-      transfer_history_get(page, limit, from, to, type)
+      transfer_history_get(page, limit, from, to, type, from_time, to_time)
         .then((res) => {
           this.hisob_raqamidan_otkazilgan_pullar = res.data.data;
           this.pages = res.data.pages;
@@ -130,10 +186,33 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
+    time() {
+      this.transfer_money_to(
+        this.page,
+        this.limit,
+        this.from,
+        this.to,
+        this.type,
+        this.from_time,
+        this.to_time
+      );
+      this.page = 0;
+    },
+    reset() {
+      this.from_time = "";
+      this.to_time = "";
+      this.transfer_money_to(
+        this.page,
+        this.limit,
+        this.from,
+        this.to,
+        this.type,
+        this.from_time,
+        this.to_time
+      );
+      this.page = 0;
+    },
   },
-  // created() {
-  //   this.transfer_money(this.page, this.limit, this.from, this.to, this.type);
-  // },
   components: { Data_notfound },
 };
 </script>
@@ -159,22 +238,5 @@ th select {
 table {
   width: 100%;
   min-width: 900px;
-}
-
-summary {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  list-style: none;
-  padding: 10px;
-  outline: none !important;
-}
-
-details {
-  border: 1px solid rgb(0, 0, 0, 0.2);
-}
-
-details[open] summary {
-  border-bottom: 1px solid rgb(0, 0, 0, 0.2);
 }
 </style>

@@ -57,7 +57,7 @@ export default {
           role: ["bugalter"],
         },
         {
-          to: "/expences",
+          to: "/expenses",
           icon: "fa-solid fa-box fa-2x",
           title: "Чиқимлар",
           role: ["bugalter"],

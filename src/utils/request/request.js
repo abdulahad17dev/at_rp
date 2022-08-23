@@ -189,14 +189,46 @@ export function transfers(data) {
   return instance.post("acceptance_money_to_bank_account", data);
 }
 
-export function transfer_history_get(page, limit, from, to, type) {
-  if (to) {
+export function transfer_to_cashiers(data) {
+  return instance.post("transfer_money_to_cashier", data);
+}
+
+export function transfer_history_get(
+  page,
+  limit,
+  from,
+  to,
+  type,
+  from_time,
+  to_time
+) {
+  if (from_time && to_time) {
     return instance.get(
-      `money_transfered_to_bank_accounts?from_=${from}&to_=${to}&type=${type}&page=${page}&limit=${limit}`
+      `money_transfered_to_bank_accounts?from_time=${from_time}&to_time=${to_time}&from_=${from}&to_=${to}&type=${type}&page=${page}&limit=${limit}`
     );
   } else {
     return instance.get(
-      `money_transfered_to_bank_accounts?from_=${from}&type=${type}&page=${page}&limit=${limit}`
+      `money_transfered_to_bank_accounts?from_=${from}&to_=${to}&type=${type}&page=${page}&limit=${limit}`
+    );
+  }
+}
+
+export function transfer_cashier_get(
+  page,
+  limit,
+  from,
+  to,
+  status,
+  from_time,
+  to_time
+) {
+  if (from_time && to_time) {
+    return instance.get(
+      `money_to_cashier?from_time=${from_time}&to_time=${to_time}&from_=${from}&to_=${to}&status=${status}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(
+      `money_to_cashier?from_=${from}&to_=${to}&status=${status}&page=${page}&limit=${limit}`
     );
   }
 }
@@ -237,4 +269,18 @@ export function pay_for_variable_expense(data) {
 
 export function pay_for_fixed_expense(data) {
   return instance.post(`pay_for_fixed_expense`, data);
+}
+
+// Building documents
+
+export function building_d_get(id) {
+  return instance.get(`get_building_documents/${id}`);
+}
+
+export function building_d_add(data, id) {
+  return file.post(`create_building_document?building_id=${id}`, data);
+}
+
+export function building_d_remove(id) {
+  return instance.delete(`remove_building_document/${id}`);
 }
