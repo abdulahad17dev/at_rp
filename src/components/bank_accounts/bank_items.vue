@@ -169,6 +169,7 @@ export default {
             e.from_ = this.id;
             e.to_ = null;
             e.comment = "";
+            document.getElementById("cashier_text").innerHTML = "кассирлар";
           });
         })
         .catch((err) => {

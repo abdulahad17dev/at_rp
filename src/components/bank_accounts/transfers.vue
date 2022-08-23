@@ -130,78 +130,10 @@
             role="tabpanel"
             aria-labelledby="pills-profile-tab"
           >
-            <form @submit.prevent="$emit('transfer_to_cashier', cashier)">
-              <div class="modal-body">
-                <div class="row gap-2">
-                  <div class="col-10 mx-auto">
-                    <label for="balance">
-                      Сумма:
-                      <span class="text-primary"
-                        >{{
-                          new Intl.NumberFormat().format(cashier.money)
-                        }}
-                        сўм</span
-                      ></label
-                    >
-                    <div class="input-group input-group-sm">
-                      <input
-                        id="balance"
-                        type="number"
-                        step="any"
-                        class="form-control"
-                        v-model="cashier.money"
-                        required
-                        min="1"
-                      />
-                      <span class="input-group-text bg-white">сўм</span>
-                    </div>
-                  </div>
-                  <div class="col-10 mx-auto">
-                    <label for="to"> Кассирлар: </label>
-                    <select
-                      id="to"
-                      class="form-select form-select-sm"
-                      v-model="cashier.to_"
-                      @click="get_cashier"
-                      required
-                    >
-                      <option
-                        :value="item.id"
-                        v-for="item in cashiers"
-                        :key="item"
-                      >
-                        {{ item.name }}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="col-10 mx-auto">
-                    <label for="comment"> Изох: </label>
-                    <textarea
-                      id="comment"
-                      class="form-control"
-                      v-model="cashier.comment"
-                      required
-                    ></textarea>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="submit"
-                  class="btn btn-outline-primary btn-sm"
-                  id="transfer_to_cashier"
-                >
-                  <i class="fas fa-circle-check"></i>
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-outline-danger btn-sm"
-                  data-bs-dismiss="modal"
-                >
-                  <i class="fa-solid fa-circle-xmark"></i>
-                </button>
-              </div>
-            </form>
+            <Transfer_cashier_body
+              @transfer_to_cashier="transfer_to_cashier"
+              :id="id"
+            />
           </div>
         </div>
       </div>
@@ -210,9 +142,8 @@
 </template>
 
 <script>
-import { user_get } from "@/utils/request/request";
-import { catchError } from "@/utils/request/handle_api_err";
 import Transfer_bank_account_body from "../transfer/transfer_bank_account_body.vue";
+import Transfer_cashier_body from "../transfer/transfer_cashier_body.vue";
 export default {
   name: "TransferItem",
   props: ["id", "name"],
@@ -220,12 +151,8 @@ export default {
   watch: {
     id(e) {
       this.data.to_ = e;
-      this.cashier.from_ = e;
       this.data.money = null;
       this.data.comment = "";
-      this.cashier.money = null;
-      this.cashier.comment = "";
-      this.cashier.to_ = null;
     },
   },
   data() {
@@ -236,39 +163,17 @@ export default {
         to_: null,
         comment: "",
       },
-      cashier: {
-        money: null,
-        from_: null,
-        to_: null,
-        comment: "",
-      },
-      limit: 100,
-      page: 0,
-      search: "",
-      cashiers: [],
-      role: "kassir",
     };
   },
   methods: {
-    get_cashier() {
-      if (this.cashiers == "") {
-        this.$store.dispatch("setLoading", { isLoading: true });
-        user_get(this.page, this.limit, this.search, this.role)
-          .then((res) => {
-            this.cashiers = res.data.data;
-            this.$store.dispatch("setLoading", { isLoading: false });
-          })
-          .catch((err) => {
-            catchError(err);
-            this.$store.dispatch("setLoading", { isLoading: false });
-          });
-      }
-    },
     transfer_to(e) {
       this.$emit("transfer_to", e);
     },
+    transfer_to_cashier(e) {
+      this.$emit("transfer_to_cashier", e);
+    },
   },
-  components: { Transfer_bank_account_body },
+  components: { Transfer_bank_account_body, Transfer_cashier_body },
 };
 </script>
 
