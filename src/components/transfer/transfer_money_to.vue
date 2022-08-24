@@ -233,6 +233,7 @@ th select {
 
 .table-responsive {
   max-height: 400px;
+  min-height: 400px;
 }
 
 table {

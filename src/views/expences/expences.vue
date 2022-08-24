@@ -27,9 +27,9 @@
     </div>
   </div>
 
-  <Fixed :accounts="bank_account" :data="fixed_expenses" />
+  <Fixed :data="fixed_expenses" />
 
-  <Variable :accounts="bank_account" />
+  <Variable />
 
   <!-- Modal -->
   <div

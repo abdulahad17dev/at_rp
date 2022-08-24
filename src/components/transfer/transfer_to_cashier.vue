@@ -54,16 +54,84 @@
             <th style="width: 20%">Изох</th>
             <th style="width: 20%">Кассирлар</th>
             <th>
-              <select
-                class="form-control form-control-sm"
-                @click="get_cashier"
-                v-model="to"
-              >
-                <option value="0">барчаси</option>
-                <option :value="item.id" v-for="item in cashiers" :key="item">
-                  {{ item.name }}
-                </option>
-              </select>
+              <div class="dropdown">
+                <button
+                  class="btn btn-light btn-sm dropdown-toggle"
+                  type="button"
+                  id="cashier_text"
+                  data-bs-toggle="dropdown"
+                  data-bs-auto-close="outside"
+                  aria-expanded="false"
+                  @click="
+                    get_cashier(user_page, user_limit, user_search, user_role)
+                  "
+                >
+                  {{ text }}
+                </button>
+                <ul
+                  class="dropdown-menu border-top-0"
+                  aria-labelledby="bank_account"
+                >
+                  <li>
+                    <input
+                      type="search"
+                      class="form-control form-control-sm"
+                      placeholder="қидириш ..."
+                      v-model="user_search"
+                    />
+                  </li>
+                  <li>
+                    <ul class="dropdown-items">
+                      <li @click="select(0, 'барчаси')">
+                        <a class="dropdown-item">барчаси</a>
+                      </li>
+                      <li
+                        v-for="item in cashiers"
+                        :key="item"
+                        @click="select(item.id, item.name)"
+                      >
+                        <a class="dropdown-item">{{ item.name }}</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li v-if="cashiers != ''">
+                    <hr class="dropdown-divider m-0" />
+                  </li>
+                  <li>
+                    <nav
+                      aria-label="Page navigation example"
+                      class="mt-2"
+                      v-if="cashiers != ''"
+                    >
+                      <ul class="pagination pagination-sm justify-content-end">
+                        <li class="page-item">
+                          <button
+                            class="page-link"
+                            @click="user_page--"
+                            :disabled="user_page == 0"
+                          >
+                            <i class="fa-solid fa-angle-left text-dark"></i>
+                          </button>
+                        </li>
+                        <li class="page-item">
+                          <button class="page-link text-dark" disabled>
+                            {{ user_page + 1 }}
+                          </button>
+                        </li>
+                        <li class="page-item">
+                          <button
+                            class="page-link"
+                            @click="user_page++"
+                            :disabled="user_page == user_pages - 1"
+                          >
+                            <i class="fa-solid fa-angle-right text-dark"></i>
+                          </button>
+                        </li>
+                      </ul>
+                    </nav>
+                  </li>
+                </ul>
+              </div>
             </th>
             <th>
               <select class="form-control form-control-sm" v-model="status">
@@ -163,8 +231,12 @@ export default {
       from_time: "",
       to_time: "",
       cashiers: [],
-      search: "",
-      role: "kassir",
+      user_search: "",
+      user_role: "kassir",
+      user_limit: 25,
+      user_page: 0,
+      user_pages: null,
+      text: "кассирлар",
     };
   },
   watch: {
@@ -216,6 +288,32 @@ export default {
         this.to_time
       );
     },
+    user_limit(e) {
+      this.page = 0;
+      this.get_cashier(this.user_page, e, this.user_search, this.user_role);
+    },
+    user_page(e) {
+      this.get_cashier(e, this.user_limit, this.user_search, this.user_role);
+      document.getElementById("scroll").scrollTop = 0;
+    },
+    user_search(e) {
+      if (e.length > 0) {
+        this.get_cashier(
+          this.user_page,
+          this.user_limit,
+          this.user_search,
+          this.user_role
+        );
+      } else if (e.length == 0) {
+        this.get_cashier(
+          this.user_page,
+          this.user_limit,
+          this.user_search,
+          this.user_role
+        );
+        this.page = 0;
+      }
+    },
   },
   methods: {
     transfer_to_cashier(page, limit, from, to, status, from_time, to_time) {
@@ -257,20 +355,24 @@ export default {
       );
       this.page = 0;
     },
-    get_cashier() {
-      if (this.cashiers == "") {
-        this.$store.dispatch("setLoading", { isLoading: true });
+    get_cashier(user_page, user_limit, user_search, user_role) {
+      this.$store.dispatch("setLoading", { isLoading: true });
 
-        user_get(0, 100, this.search, this.role)
-          .then((res) => {
-            this.cashiers = res.data.data;
-            this.$store.dispatch("setLoading", { isLoading: false });
-          })
-          .catch((err) => {
-            catchError(err);
-            this.$store.dispatch("setLoading", { isLoading: false });
-          });
-      }
+      user_get(user_page, user_limit, user_search, user_role)
+        .then((res) => {
+          this.cashiers = res.data.data;
+          this.user_pages = res.data.pages;
+          this.$store.dispatch("setLoading", { isLoading: false });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        });
+    },
+    select(id, name) {
+      this.to = id;
+      this.text = name;
+      document.getElementById("cashier_text").click();
     },
   },
   components: { Data_notfound },
@@ -293,10 +395,29 @@ th select {
 
 .table-responsive {
   max-height: 400px;
+  min-height: 400px;
 }
 
 table {
   width: 100%;
   min-width: 900px;
+}
+.dropdown-menu {
+  padding: 0;
+  width: 100%;
+  position: absolute;
+  inset: auto auto 0px 0px;
+  offset: 50px 50px -175px 0px;
+  transform: translate3d(0px, -32.8px, 0px);
+}
+.dropdown-items {
+  padding: 0;
+  border-top: none;
+  max-height: 150px;
+  overflow: auto;
+}
+
+.dropdown-toggle {
+  width: 100%;
 }
 </style>

@@ -12,7 +12,7 @@
             <th style="width: 20%">Сана</th>
             <th style="width: 30%">Изох</th>
             <th>
-              <select
+              <!-- <select
                 class="form-control form-control-sm form-select mx-1"
                 v-model="from"
               >
@@ -20,7 +20,7 @@
                 <option :value="item.id" v-for="item in accounts" :key="item">
                   {{ item.name }}
                 </option>
-              </select>
+              </select> -->
             </th>
           </tr>
         </thead>
@@ -112,71 +112,7 @@
             id="pay_v"
           ></button>
         </div>
-        <form @submit.prevent="pay_v_expense">
-          <div class="modal-body">
-            <div class="row gap-2">
-              <div class="col-10 mx-auto">
-                <label for="from">Банк ҳисоб: </label>
-                <select
-                  id="from"
-                  class="form-control form-control-sm"
-                  v-model="pay_body.from_"
-                  required
-                >
-                  <option :value="item.id" v-for="item in accounts" :key="item">
-                    {{ item.name }}
-                  </option>
-                </select>
-              </div>
-              <div class="col-10 mx-auto">
-                <label for="summa"
-                  >Сумма:
-                  <span class="text-primary"
-                    >{{
-                      new Intl.NumberFormat().format(pay_body.money)
-                    }}
-                    сўм</span
-                  ></label
-                >
-                <div class="input-group input-group-sm">
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="summa"
-                    v-model="pay_body.money"
-                    required
-                    min="1"
-                  />
-                  <span class="input-group-text bg-white">сўм</span>
-                </div>
-              </div>
-              <div class="col-10 mx-auto">
-                <label for="comment">Изох: </label>
-                <textarea
-                  id="comment"
-                  class="form-control form-control-sm"
-                  v-model="pay_body.comment"
-                ></textarea>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="submit"
-              class="btn btn-outline-primary btn-sm"
-              id="pay_v_e_disabled"
-            >
-              <i class="fas fa-circle-check"></i>
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-danger btn-sm"
-              data-bs-dismiss="modal"
-            >
-              <i class="fa-solid fa-circle-xmark"></i>
-            </button>
-          </div>
-        </form>
+        <VariableBody @pay_v_expense="pay_v_expense" />
       </div>
     </div>
   </div>
@@ -189,17 +125,11 @@ import {
   pay_for_variable_expense,
 } from "@/utils/request/request";
 import { catchError, success } from "@/utils/request/handle_api_err";
+import VariableBody from "./VariableBody.vue";
 export default {
   name: "VariableItem",
-  props: ["accounts"],
   data() {
     return {
-      pay_body: {
-        money: null,
-        from_: null,
-        to_: 0,
-        comment: "",
-      },
       limit: 25,
       page: 0,
       pages: null,
@@ -223,10 +153,10 @@ export default {
     },
   },
   methods: {
-    pay_v_expense() {
+    pay_v_expense(e) {
       document.getElementById("pay_v_e_disabled").disabled = true;
       this.$store.dispatch("setLoading", { isLoading: true });
-      pay_for_variable_expense(this.pay_body)
+      pay_for_variable_expense(e)
         .then((res) => {
           document.getElementById("pay_v").click();
           this.$store.dispatch("setLoading", { isLoading: false });
@@ -238,9 +168,11 @@ export default {
               this.from,
               this.user_id
             );
-            this.pay_body.money = null;
-            this.pay_body.from_ = null;
-            this.pay_body.comment = "";
+            e.money = null;
+            e.from_ = null;
+            e.comment = "";
+            document.getElementById("bank_account_text2").innerHTML =
+              "ҳисоб рақамлар";
           });
         })
         .catch((err) => {
@@ -263,7 +195,7 @@ export default {
         });
     },
   },
-  components: { Data_notfound },
+  components: { Data_notfound, VariableBody },
 };
 </script>
 

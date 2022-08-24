@@ -12,15 +12,88 @@
             <th style="width: 20%">Сана</th>
             <th style="width: 40%">Изох</th>
             <th>
-              <select
-                class="form-control form-control-sm form-select mx-1"
-                v-model="from"
-              >
-                <option value="0">барча хисоблар</option>
-                <option :value="item.id" v-for="item in accounts" :key="item">
-                  {{ item.name }}
-                </option>
-              </select>
+              <div class="dropdown">
+                <button
+                  class="btn btn-light btn-sm dropdown-toggle"
+                  type="button"
+                  id="bank_account_text3"
+                  data-bs-toggle="dropdown"
+                  data-bs-auto-close="outside"
+                  aria-expanded="false"
+                  @click="
+                    bank_accounts_get(
+                      page_account,
+                      limit_account,
+                      search_account
+                    )
+                  "
+                >
+                  {{ text_account }}
+                </button>
+                <ul
+                  class="dropdown-menu border-top-0"
+                  aria-labelledby="bank_account"
+                >
+                  <li>
+                    <input
+                      type="search"
+                      class="form-control form-control-sm"
+                      placeholder="қидириш ..."
+                      v-model="search_account"
+                    />
+                  </li>
+                  <li>
+                    <ul class="dropdown-items">
+                      <li @click="select(0, 'барчаси')">
+                        <a class="dropdown-item">барчаси</a>
+                      </li>
+                      <li
+                        v-for="item in bank_accounts"
+                        :key="item"
+                        @click="select(item.id, item.name)"
+                      >
+                        <a class="dropdown-item">{{ item.name }}</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li v-if="bank_accounts != ''">
+                    <hr class="dropdown-divider m-0" />
+                  </li>
+                  <li>
+                    <nav
+                      aria-label="Page navigation example"
+                      class="mt-2"
+                      v-if="bank_accounts != ''"
+                    >
+                      <ul class="pagination pagination-sm justify-content-end">
+                        <li class="page-item">
+                          <button
+                            class="page-link"
+                            @click="page_account--"
+                            :disabled="page_account == 0"
+                          >
+                            <i class="fa-solid fa-angle-left text-dark"></i>
+                          </button>
+                        </li>
+                        <li class="page-item">
+                          <button class="page-link text-dark" disabled>
+                            {{ page_account + 1 }}
+                          </button>
+                        </li>
+                        <li class="page-item">
+                          <button
+                            class="page-link"
+                            @click="page_account++"
+                            :disabled="page_account == pages_account - 1"
+                          >
+                            <i class="fa-solid fa-angle-right text-dark"></i>
+                          </button>
+                        </li>
+                      </ul>
+                    </nav>
+                  </li>
+                </ul>
+              </div>
             </th>
             <th>
               <select
@@ -127,84 +200,8 @@
             id="pay_f"
           ></button>
         </div>
-        <form @submit.prevent="pay_f_expense">
-          <div class="modal-body">
-            <div class="row gap-2">
-              <div class="col-10 mx-auto">
-                <label for="from">Банк ҳисоб: </label>
-                <select
-                  id="from"
-                  class="form-control form-control-sm"
-                  v-model="pay_body.from_"
-                  required
-                >
-                  <option :value="item.id" v-for="item in accounts" :key="item">
-                    {{ item.name }}
-                  </option>
-                </select>
-              </div>
-              <div class="col-10 mx-auto">
-                <label for="to">Чиқим тури: </label>
-                <select
-                  id="to"
-                  class="form-control form-control-sm"
-                  v-model="pay_body.to_"
-                  required
-                >
-                  <option :value="item.id" v-for="item in data" :key="item">
-                    {{ item.name }}
-                  </option>
-                </select>
-              </div>
-              <div class="col-10 mx-auto">
-                <label for="summa"
-                  >Сумма:
-                  <span class="text-primary"
-                    >{{
-                      new Intl.NumberFormat().format(pay_body.money)
-                    }}
-                    сўм</span
-                  ></label
-                >
-                <div class="input-group input-group-sm">
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="summa"
-                    v-model="pay_body.money"
-                    required
-                    min="1"
-                  />
-                  <span class="input-group-text bg-white">сўм</span>
-                </div>
-              </div>
-              <div class="col-10 mx-auto">
-                <label for="comment">Изох: </label>
-                <textarea
-                  id="comment"
-                  class="form-control form-control-sm"
-                  v-model="pay_body.comment"
-                ></textarea>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="submit"
-              class="btn btn-outline-primary btn-sm"
-              id="pay_f_e_disabled"
-            >
-              <i class="fas fa-circle-check"></i>
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-danger btn-sm"
-              data-bs-dismiss="modal"
-            >
-              <i class="fa-solid fa-circle-xmark"></i>
-            </button>
-          </div>
-        </form>
+
+        <FixedBody @pay_f_expense="pay_f_expense" :data="data" />
       </div>
     </div>
   </div>
@@ -212,22 +209,18 @@
 
 <script>
 import {
+  bank_account_get,
   get_fixed_history,
   pay_for_fixed_expense,
 } from "@/utils/request/request";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
+import FixedBody from "./FixedBody.vue";
 export default {
   name: "FixedItem",
-  props: ["data", "accounts"],
+  props: ["data"],
   data() {
     return {
-      pay_body: {
-        money: null,
-        from_: null,
-        to_: null,
-        comment: "",
-      },
       limit: 25,
       page: 0,
       pages: null,
@@ -235,6 +228,12 @@ export default {
       from: 0,
       to: 0,
       user_id: 0,
+      page_account: 0,
+      pages_account: null,
+      limit_account: 25,
+      search_account: "",
+      bank_accounts: [],
+      text_account: "ҳисоб рақамлар",
     };
   },
   watch: {
@@ -254,12 +253,36 @@ export default {
       this.page = 0;
       this.fixed_history_get(this.page, this.limit, this.from, e, this.user_id);
     },
+    limit_account(e) {
+      this.page_account = 0;
+      this.bank_accounts_get(this.page_account, e, this.search_account);
+    },
+    page_account(e) {
+      this.bank_accounts_get(e, this.limit_account, this.search_account);
+      document.getElementById("scroll").scrollTop = 0;
+    },
+    search_account(e) {
+      if (e.length > 0) {
+        this.bank_accounts_get(
+          this.page_account,
+          this.limit_account,
+          this.search_account
+        );
+      } else if (e.length == 0) {
+        this.bank_accounts_get(
+          this.page_account,
+          this.limit_account,
+          this.search_account
+        );
+        this.page_account = 0;
+      }
+    },
   },
   methods: {
-    pay_f_expense() {
+    pay_f_expense(e) {
       document.getElementById("pay_f_e_disabled").disabled = true;
       this.$store.dispatch("setLoading", { isLoading: true });
-      pay_for_fixed_expense(this.pay_body)
+      pay_for_fixed_expense(e)
         .then((res) => {
           document.getElementById("pay_f").click();
           document.getElementById("pay_f_e_disabled").disabled = false;
@@ -271,11 +294,13 @@ export default {
               this.to,
               this.user_id
             );
-            this.pay_body.money = null;
-            this.pay_body.from_ = null;
-            this.pay_body.to_ = null;
-            this.pay_body.comment = "";
+            e.money = null;
+            e.from_ = null;
+            e.to_ = null;
+            e.comment = "";
           });
+          document.getElementById("bank_account_text3").innerHTML =
+            "ҳисоб рақамлар";
         })
         .catch((err) => {
           catchError(err);
@@ -296,8 +321,27 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
+    bank_accounts_get(page_account, limit_account, search_account) {
+      this.$store.dispatch("setLoading", { isLoading: true });
+
+      bank_account_get(page_account, limit_account, search_account)
+        .then((res) => {
+          this.bank_accounts = res.data.data;
+          this.pages_account = res.data.pages;
+          this.$store.dispatch("setLoading", { isLoading: false });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        });
+    },
+    select(id, name) {
+      this.from = id;
+      this.text_account = name;
+      document.getElementById("bank_account_text3").click();
+    },
   },
-  components: { Data_notfound },
+  components: { Data_notfound, FixedBody },
 };
 </script>
 
@@ -322,5 +366,24 @@ th select {
 table {
   width: 100%;
   min-width: 900px;
+}
+
+.dropdown-menu {
+  padding: 0;
+  width: 100%;
+  position: absolute;
+  inset: auto auto 0px 0px;
+  offset: 50px 50px -175px 0px;
+  transform: translate3d(0px, -32.8px, 0px);
+}
+.dropdown-items {
+  padding: 0;
+  border-top: none;
+  max-height: 190px;
+  overflow: auto;
+}
+
+.dropdown-toggle {
+  width: 100%;
 }
 </style>
