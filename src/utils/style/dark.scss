@@ -1,0 +1,97 @@
+:root {
+    --dark: rgb(63, 68, 73)
+}
+
+.dark .app {
+    color: white;
+    background: rgb(60, 65, 70);
+}
+
+.dark .content-app .card {
+    background: var(--dark);
+}
+
+.dark .login_card {
+    background: var(--dark) !important;
+}
+
+.dark .login_card .card-body {
+    color: white !important;
+}
+
+.dark a,
+.dark .content-app .card .card-body {
+    color: white !important;
+}
+
+.dark table {
+    color: white;
+}
+
+.dark table tbody tr:hover {
+    color: white !important;
+}
+
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+    background: var(--dark);
+    border: 1px solid lightgray !important;
+}
+
+.dark input,
+.dark textarea,
+.dark select {
+    border: 1px solid gray;
+    background: rgb(211, 211, 211, 0.1);
+    color: lightgray !important;
+}
+
+.dark input[disabled] {
+    background: var(--item-hover);
+    border: 1px solid gray;
+    background: rgb(211, 211, 211, 0.1);
+    color: lightgray !important;
+}
+
+.dark .input-group-text {
+    background: var(--dark) !important;
+    color: lightgray;
+    border: 1px solid gray;
+}
+
+.dark .input-group-prepend .input-group-text {
+    border-right: none;
+}
+
+.dark .btn {
+    color: white;
+}
+
+.dark .list-group-item {
+    background: var(--dark);
+    color: white;
+}
+
+.dark .list-group-item:hover {
+    background: rgb(60, 65, 70);
+    color: white;
+}
+
+.dark .list-group-item:active {
+    background: rgb(60, 65, 70);
+    color: white;
+}
+
+.dark .nav-link {
+    color: white;
+}
+
+.dark .nav-link:hover {
+    color: lightgray;
+}
+
+.dark .modal-content {
+    background: var(--dark);
+}
+

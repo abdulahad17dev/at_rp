@@ -195,23 +195,5 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.dropdown-menu {
-  padding: 0;
-  width: 100%;
-  position: absolute;
-  inset: auto auto 0px 0px;
-  offset: 50px 50px -175px 0px;
-  transform: translate3d(0px, -32.8px, 0px);
-}
-.dropdown-items {
-  padding: 0;
-  border-top: none;
-  max-height: 190px;
-  overflow: auto;
-}
-
-.dropdown-toggle {
-  width: 100%;
-}
-</style>
+<!-- <style lang="scss" scoped>
+</style> -->

@@ -1,7 +1,7 @@
 <template>
   <div id="notfound">
     <img
-      src="./../../assets/notsearch2.jpg"
+      src="./../../assets/notsearch2_low.png"
       width="180"
       height="180"
       alt="img_notfound"

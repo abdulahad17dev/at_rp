@@ -24,7 +24,7 @@
                     id="floatingInput"
                     placeholder="Логин"
                     v-model="username"
-                    autocomplete="on"
+                    autocomplete="off"
                     required
                   />
                   <label for="floatingInput">Логин</label>
@@ -36,7 +36,7 @@
                     id="floatingPassword"
                     placeholder="Парол"
                     v-model="password"
-                    autocomplete="on"
+                    autocomplete="off"
                     required
                   />
                   <label for="floatingPassword">Парол</label>

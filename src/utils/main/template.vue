@@ -24,9 +24,24 @@ import Login from "../template/login/Login.vue";
 import Router_back from "../../views/settings/router_back.vue";
 export default {
   components: { Login, Router_back },
+  data() {
+    return {
+      nightMode: localStorage.getItem("nightMode"),
+    };
+  },
+  created() {
+    if (this.nightMode == true) {
+      localStorage.setItem("nightMode", this.nightMode);
+      document.querySelector("#app").classList.remove("dark");
+    } else {
+      localStorage.setItem("nightMode", this.nightMode);
+      document.querySelector("#app").classList.add("dark");
+    }
+  },
 };
 </script>
 
 <style lang="scss">
 @import url(./../../main.scss);
+@import url(./../style/dark.scss);
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <details open>
-    <summary><strong>Шахсий маълумотлар</strong></summary>
+  <details>
+    <summary @click="get"><strong>Шахсий маълумотлар</strong></summary>
     <form @submit.prevent="put()">
       <div class="row gap-2 m-3">
         <div class="col-5 mx-auto">
@@ -14,7 +14,7 @@
         </div>
         <div class="col-5 mx-auto">
           <label>Телефон рақам: </label>
-          <div class="input-group">
+          <div class="input-group input-group-sm">
             <span class="input-group-text bg-white">+998</span>
             <input
               type="tel"
@@ -108,9 +108,9 @@ export default {
         });
     },
   },
-  created() {
-    this.get();
-  },
+  // created() {
+  //   this.get();
+  // },
 };
 </script>
 

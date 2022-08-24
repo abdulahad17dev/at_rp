@@ -12,15 +12,88 @@
             <th style="width: 20%">Сана</th>
             <th style="width: 30%">Изох</th>
             <th>
-              <!-- <select
-                class="form-control form-control-sm form-select mx-1"
-                v-model="from"
-              >
-                <option value="0">барча хисоблар</option>
-                <option :value="item.id" v-for="item in accounts" :key="item">
-                  {{ item.name }}
-                </option>
-              </select> -->
+              <div class="dropdown">
+                <button
+                  class="btn btn-light btn-sm dropdown-toggle"
+                  type="button"
+                  id="bank_account_text4"
+                  data-bs-toggle="dropdown"
+                  data-bs-auto-close="outside"
+                  aria-expanded="false"
+                  @click="
+                    bank_accounts_get(
+                      page_account,
+                      limit_account,
+                      search_account
+                    )
+                  "
+                >
+                  {{ text_account }}
+                </button>
+                <ul
+                  class="dropdown-menu border-top-0"
+                  aria-labelledby="bank_account"
+                >
+                  <li>
+                    <input
+                      type="search"
+                      class="form-control form-control-sm"
+                      placeholder="қидириш ..."
+                      v-model="search_account"
+                    />
+                  </li>
+                  <li>
+                    <ul class="dropdown-items">
+                      <li @click="select(0, 'барчаси')">
+                        <a class="dropdown-item">барчаси</a>
+                      </li>
+                      <li
+                        v-for="item in bank_accounts"
+                        :key="item"
+                        @click="select(item.id, item.name)"
+                      >
+                        <a class="dropdown-item">{{ item.name }}</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li v-if="bank_accounts != ''">
+                    <hr class="dropdown-divider m-0" />
+                  </li>
+                  <li>
+                    <nav
+                      aria-label="Page navigation example"
+                      class="mt-2"
+                      v-if="bank_accounts != ''"
+                    >
+                      <ul class="pagination pagination-sm justify-content-end">
+                        <li class="page-item">
+                          <button
+                            class="page-link"
+                            @click="page_account--"
+                            :disabled="page_account == 0"
+                          >
+                            <i class="fa-solid fa-angle-left text-dark"></i>
+                          </button>
+                        </li>
+                        <li class="page-item">
+                          <button class="page-link text-dark" disabled>
+                            {{ page_account + 1 }}
+                          </button>
+                        </li>
+                        <li class="page-item">
+                          <button
+                            class="page-link"
+                            @click="page_account++"
+                            :disabled="page_account == pages_account - 1"
+                          >
+                            <i class="fa-solid fa-angle-right text-dark"></i>
+                          </button>
+                        </li>
+                      </ul>
+                    </nav>
+                  </li>
+                </ul>
+              </div>
             </th>
           </tr>
         </thead>
@@ -121,6 +194,7 @@
 <script>
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import {
+  bank_account_get,
   get_variable_history,
   pay_for_variable_expense,
 } from "@/utils/request/request";
@@ -136,6 +210,12 @@ export default {
       variable_history: [],
       from: 0,
       user_id: 0,
+      page_account: 0,
+      pages_account: null,
+      limit_account: 25,
+      search_account: "",
+      bank_accounts: [],
+      text_account: "ҳисоб рақамлар",
     };
   },
   watch: {
@@ -150,6 +230,30 @@ export default {
     from(e) {
       this.page = 0;
       this.variable_history_get(this.page, this.limit, e, this.user_id);
+    },
+    limit_account(e) {
+      this.page_account = 0;
+      this.bank_accounts_get(this.page_account, e, this.search_account);
+    },
+    page_account(e) {
+      this.bank_accounts_get(e, this.limit_account, this.search_account);
+      document.getElementById("scroll").scrollTop = 0;
+    },
+    search_account(e) {
+      if (e.length > 0) {
+        this.bank_accounts_get(
+          this.page_account,
+          this.limit_account,
+          this.search_account
+        );
+      } else if (e.length == 0) {
+        this.bank_accounts_get(
+          this.page_account,
+          this.limit_account,
+          this.search_account
+        );
+        this.page_account = 0;
+      }
     },
   },
   methods: {
@@ -194,6 +298,25 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
+    bank_accounts_get(page_account, limit_account, search_account) {
+      this.$store.dispatch("setLoading", { isLoading: true });
+
+      bank_account_get(page_account, limit_account, search_account)
+        .then((res) => {
+          this.bank_accounts = res.data.data;
+          this.pages_account = res.data.pages;
+          this.$store.dispatch("setLoading", { isLoading: false });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        });
+    },
+    select(id, name) {
+      this.from = id;
+      this.text_account = name;
+      document.getElementById("bank_account_text4").click();
+    },
   },
   components: { Data_notfound, VariableBody },
 };
@@ -215,6 +338,7 @@ th select {
 
 .table-responsive {
   max-height: 400px;
+  min-height: 400px;
 }
 
 table {
