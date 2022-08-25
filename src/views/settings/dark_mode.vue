@@ -38,7 +38,7 @@ export default {
         localStorage.setItem("nightMode", JSON.stringify(this.nightMode));
         document.querySelector("#app").classList.remove("dark");
         document.querySelector("#checked").checked = false;
-      } else {
+      } else if (this.nightMode == false) {
         localStorage.setItem("nightMode", JSON.stringify(this.nightMode));
         document.querySelector("#app").classList.add("dark");
         document.querySelector("#checked").checked = true;

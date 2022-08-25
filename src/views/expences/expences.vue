@@ -124,16 +124,16 @@
             <div class="modal-body">
               <div class="row gap-2">
                 <div class="col-10 mx-auto">
-                  <div class="input-group">
+                  <div class="input-group input-group-sm">
                     <input
                       type="search"
                       v-model="search"
                       placeholder="Қидириш ..."
-                      class="form-control form-control-sm"
+                      class="form-control"
                     />
                     <div class="input-group-append border-start-0">
                       <select
-                        class="form-control form-control-sm form-select"
+                        class="form-select form-select-sm"
                         v-model="limit"
                       >
                         <option value="25">25</option>

@@ -35,11 +35,10 @@ export default {
     if (this.nightMode == true) {
       localStorage.setItem("nightMode", this.nightMode);
       document.querySelector("#app").classList.remove("dark");
-    } else {
+    } else if (this.nightMode == false) {
       localStorage.setItem("nightMode", this.nightMode);
       document.querySelector("#app").classList.add("dark");
     }
-    console.log(this.nightMode);
   },
 };
 </script>
