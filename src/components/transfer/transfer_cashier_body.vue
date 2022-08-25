@@ -32,7 +32,9 @@
               data-bs-toggle="dropdown"
               data-bs-auto-close="outside"
               aria-expanded="false"
-              @click="get_cashier(page, limit, search, role)"
+              @click="
+                cashiers.length ? '' : get_cashier(page, limit, search, role)
+              "
             >
               {{ text }}
             </button>

@@ -15,7 +15,7 @@
         >
           <td colspan="11">{{ item.Smeta.name }}</td>
         </tr>
-        <tr v-if="item.Smeta.type == 'grafik'" style="color: #cc00cc">
+        <tr v-if="item.Smeta.type == 'grafik'" class="grafik">
           <td style="width: 5%">{{ item.Smeta.shnk }}</td>
           <td style="width: 20%">{{ item.Smeta.name }}</td>
           <td style="width: 5%">{{ item.Smeta.olchov_birligi }}</td>
@@ -61,7 +61,7 @@
         </tr>
         <tr
           v-if="item.Smeta.type == 'allotted_time_for_worker'"
-          style="color: #660066"
+          class="allotted_time_for_worker"
         >
           <td></td>
           <td>{{ item.Smeta.name }}</td>
@@ -77,7 +77,7 @@
         </tr>
         <tr
           v-if="item.Smeta.type == 'allotted_time_for_machine'"
-          style="color: #003300"
+          class="allotted_time_for_machine"
         >
           <td></td>
           <td>{{ item.Smeta.name }}</td>
@@ -91,7 +91,7 @@
             <span v-else>0</span> сўм
           </td>
         </tr>
-        <tr v-if="item.Smeta.type == 'product'" style="color: #000080">
+        <tr v-if="item.Smeta.type == 'product'" class="product">
           <td></td>
           <td>{{ item.product_name }}</td>
           <td>{{ item.product_olchov_birligi }}</td>

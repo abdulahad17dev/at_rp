@@ -129,6 +129,7 @@ export default {
 .login_card {
   opacity: 0.9;
   background-color: #f8f9fa !important;
+  position: absolute;
 }
 
 .img-responsive {

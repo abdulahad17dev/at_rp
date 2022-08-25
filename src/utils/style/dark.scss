@@ -1,5 +1,5 @@
 :root {
-    --dark: rgb(63, 68, 73)
+    --dark: rgb(63, 68, 73);
 }
 
 .dark .app {
@@ -95,3 +95,67 @@
     background: var(--dark);
 }
 
+.dark nav ul li button,
+.dark nav ul li button:disabled,
+.dark nav ul li button:hover,
+.dark nav ul li button:active,
+.dark nav ul li button:focus {
+    background: rgb(71, 77, 82);
+    color: white !important;
+}
+
+.dark nav ul li button svg {
+    color: white !important;
+}
+
+.grafik,
+.dark .table-responsive table tbody tr.grafik {
+    color: #cc00cc !important;
+}
+
+.allotted_time_for_worker {
+    color: #660066;
+}
+
+.dark .table-responsive table tbody tr.allotted_time_for_worker {
+    color: #ffa1ff !important;
+}
+
+.allotted_time_for_machine {
+    color: #003300;
+}
+
+.dark .table-responsive table tbody tr.allotted_time_for_machine {
+    color: #00b100 !important;
+}
+
+.product {
+    color: #000080;
+}
+
+.dark .table-responsive table tbody tr.product {
+    color: #3b3bef !important;
+}
+
+.dark .dropdown button,
+.dark .dropdown button:focus,
+.dark .dropdown button:active,
+.dark .dropdown button:hover,
+.dark .dropdown .dropdown-menu {
+    background: rgb(71, 77, 82);
+    color: white !important;
+}
+
+.dark input::placeholder {
+    color: white !important;
+}
+
+.dark ul.dropdown-items li {
+    background: rgb(71, 77, 82);
+}
+
+.dark ul.dropdown-items li .dropdown-item:active,
+.dark ul.dropdown-items li .dropdown-item:hover,
+.dark ul.dropdown-items li .dropdown-item:focus {
+    background: rgb(60, 65, 70);
+}

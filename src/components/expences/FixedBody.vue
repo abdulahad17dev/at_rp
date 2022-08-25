@@ -13,7 +13,13 @@
               data-bs-auto-close="outside"
               aria-expanded="false"
               @click="
-                bank_accounts_get(page_account, limit_account, search_account)
+                bank_accounts.length
+                  ? ''
+                  : bank_accounts_get(
+                      page_account,
+                      limit_account,
+                      search_account
+                    )
               "
             >
               {{ text_account }}

@@ -43,7 +43,6 @@ export default {
         document.querySelector("#app").classList.add("dark");
         document.querySelector("#checked").checked = true;
       }
-      console.log(localStorage.getItem("nightMode"));
     },
   },
   created() {

@@ -8,14 +8,19 @@
           <button
             class="btn btn-light btn-sm dropdown-toggle"
             type="button"
-            id="dropdownMenuButton2"
+            id="dropdownMenu2"
             data-bs-toggle="dropdown"
             data-bs-auto-close="outside"
             aria-expanded="false"
+            @click="
+              users_omborchi.length
+                ? ''
+                : get_omborchi(page, limit, search, role)
+            "
           >
             {{ text }}
           </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
             <li>
               <input
                 type="search"
@@ -179,7 +184,7 @@ export default {
       this.body.user_id = id;
       this.text = name;
       document.getElementById("send_btn2").disabled = false;
-      document.getElementById("dropdownMenuButton2").click();
+      document.getElementById("dropdownMenu2").click();
     },
     add(e) {
       this.body.building_id = e;
@@ -189,7 +194,7 @@ export default {
         .then((res) => {
           document.getElementById("send_btn2").disabled = true;
           success(res).then(() => {
-            this.$emit("get", this.building_id);
+            this.$emit("get", this.building_id, "", 1);
             this.body.user_id = null;
             this.text = "прорап танлаш";
           });
@@ -209,7 +214,7 @@ export default {
         .then((res) => {
           document.getElementById("remove_warehouseman").disabled = false;
           success(res).then(() => {
-            this.$emit("get", this.building_id);
+            this.$emit("get", this.building_id, "", 1);
           });
         })
         .catch((err) => {
@@ -218,9 +223,6 @@ export default {
           document.getElementById("remove_warehouseman").disabled = false;
         });
     },
-  },
-  created() {
-    this.get_omborchi(this.page, this.limit, this.search, this.role);
   },
 };
 </script>

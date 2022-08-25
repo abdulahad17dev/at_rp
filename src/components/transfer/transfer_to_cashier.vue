@@ -63,7 +63,14 @@
                   data-bs-auto-close="outside"
                   aria-expanded="false"
                   @click="
-                    get_cashier(user_page, user_limit, user_search, user_role)
+                    cashiers.length
+                      ? ''
+                      : get_cashier(
+                          user_page,
+                          user_limit,
+                          user_search,
+                          user_role
+                        )
                   "
                 >
                   {{ text }}

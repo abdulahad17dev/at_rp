@@ -8,16 +8,19 @@
           <button
             class="btn btn-light btn-sm dropdown-toggle"
             type="button"
-            id="dropdownMenuButton1"
+            id="dropdownMenu1"
             data-bs-toggle="dropdown"
             data-bs-auto-close="outside"
             aria-expanded="false"
+            @click="
+              users_prorap.length ? '' : get_prorap(page, limit, search, role)
+            "
           >
             {{ text }}
           </button>
           <ul
             class="dropdown-menu border-top-0"
-            aria-labelledby="dropdownMenuButton1"
+            aria-labelledby="dropdownMenu1"
           >
             <li>
               <input
@@ -178,7 +181,7 @@ export default {
       this.body.user_id = id;
       this.text = name;
       document.getElementById("send_btn").disabled = false;
-      document.getElementById("dropdownMenuButton1").click();
+      document.getElementById("dropdownMenu1").click();
     },
     add(e) {
       this.body.building_id = e;
@@ -188,7 +191,7 @@ export default {
         .then((res) => {
           document.getElementById("send_btn").disabled = true;
           success(res).then(() => {
-            this.$emit("get", this.building_id);
+            this.$emit("get", this.building_id, "", 1);
             this.body.user_id = null;
             this.text = "прорап танлаш";
           });
@@ -208,7 +211,7 @@ export default {
         .then((res) => {
           document.getElementById("remove_foreman").disabled = false;
           success(res).then(() => {
-            this.$emit("get", this.building_id);
+            this.$emit("get", this.building_id, "", 1);
           });
         })
         .catch((err) => {
@@ -217,9 +220,6 @@ export default {
           document.getElementById("remove_foreman").disabled = false;
         });
     },
-  },
-  created() {
-    this.get_prorap(this.page, this.limit, this.search, this.role);
   },
 };
 </script>

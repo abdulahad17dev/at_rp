@@ -169,7 +169,6 @@
 import Header_item from "@/components/header/header_item.vue";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import {
-  bank_account_get,
   fixed_expence_add,
   fixed_expence_get,
   fixed_expence_put,
@@ -213,7 +212,6 @@ export default {
         .then((res) => {
           this.fixed_expenses = res.data;
           this.$store.dispatch("setLoading", { isLoading: false });
-          this.get_bank_account();
         })
         .catch((err) => {
           catchError(err);
@@ -234,19 +232,6 @@ export default {
           catchError(err);
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("disabled" + e.id).disabled = false;
-        });
-    },
-    get_bank_account() {
-      this.$store.dispatch("setLoading", { isLoading: true });
-
-      bank_account_get(0, 100)
-        .then((res) => {
-          this.bank_account = res.data.data;
-          this.$store.dispatch("setLoading", { isLoading: false });
-        })
-        .catch((err) => {
-          catchError(err);
-          this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
   },
