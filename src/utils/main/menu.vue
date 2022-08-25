@@ -63,6 +63,18 @@ export default {
           role: ["bugalter"],
         },
         {
+          to: "/main_warehouses",
+          icon: "fa-solid fa-users-line fa-2x",
+          title: "Базачилар",
+          role: ["bazachi"],
+        },
+        {
+          to: "/money_launderers",
+          icon: "fa-solid fa-hand-holding-dollar fa-2x",
+          title: "Пул ювувчилар",
+          role: ["kassir"],
+        },
+        {
           to: "/settings",
           icon: "fa-solid fa-screwdriver-wrench fa-2x",
           title: "Созламалар",

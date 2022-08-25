@@ -23,6 +23,7 @@
               class="form-control form-control-sm"
               v-model="user.phone"
               required
+              @keypress="onlyNumber"
             />
           </div>
         </div>
@@ -107,10 +108,14 @@ export default {
           document.getElementById("current_user").disabled = false;
         });
     },
+
+    onlyNumber($event) {
+      let keyCode = $event.keyCode ? $event.keyCode : $event.which;
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
+        $event.preventDefault();
+      }
+    },
   },
-  // created() {
-  //   this.get();
-  // },
 };
 </script>
 

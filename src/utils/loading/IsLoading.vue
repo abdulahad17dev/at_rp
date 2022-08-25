@@ -23,7 +23,7 @@ export default {
   width: 100%;
   height: 100vh;
   backdrop-filter: blur(3px);
-  z-index: 1111;
+  z-index: 9999;
 }
 
 #loader {

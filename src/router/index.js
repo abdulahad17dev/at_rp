@@ -7,6 +7,8 @@ import smeta from "../views/smeta/smeta.vue";
 import bank_acoounts from "../views/bank_accounts/bank_accounts.vue";
 import transfers_history from "../views/transfer_history/transfer_history.vue";
 import expences from "../views/expences/expences.vue";
+import main_warehouses from "../views/main_warehouses/main_warehouses.vue";
+import money_launderers from "../views/money_launderers/money_launderers.vue";
 import menu from "./../utils/main/menu.vue";
 import notfound from "./../utils/notfound/notfound.vue";
 import settings from "../views/settings/settings.vue";
@@ -133,6 +135,30 @@ let routes = [
       role: ["bugalter"],
     },
     component: expences,
+  },
+  // main warehouses
+  {
+    path: "/main_warehouses",
+    name: "main_warehouses",
+    meta: {
+      requiresAuth: true,
+      title: "Базачилар",
+      icon: "fa-solid fa-users-line",
+      role: ["bazachi"],
+    },
+    component: main_warehouses,
+  },
+  // money launderers
+  {
+    path: "/money_launderers",
+    name: "main_warehouses",
+    meta: {
+      requiresAuth: true,
+      title: "Пул ювувчилар",
+      icon: "fa-solid fa-hand-holding-dollar",
+      role: ["kassir"],
+    },
+    component: money_launderers,
   },
 ];
 

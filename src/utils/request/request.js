@@ -290,3 +290,43 @@ export function building_d_add(data, id) {
 export function building_d_remove(id) {
   return instance.delete(`remove_building_document/${id}`);
 }
+
+// main warehouses
+
+export function main_warehouses_get(page, limit, search) {
+  if (search) {
+    return instance.get(
+      `get_main_warehouses?search=${search}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(`get_main_warehouses?page=${page}&limit=${limit}`);
+  }
+}
+
+export function main_warehouses_add(data) {
+  return instance.post(`create_main_warehouse`, data);
+}
+
+export function main_warehouses_put(data) {
+  return instance.put(`update_main_warehouse/${data.id}`, data);
+}
+
+// money launderers
+
+export function money_launderers_get(page, limit, search) {
+  if (search) {
+    return instance.get(
+      `get_money_launderers?search=${search}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(`get_money_launderers?page=${page}&limit=${limit}`);
+  }
+}
+
+export function money_launderers_add(data) {
+  return instance.post(`create_money_launderer`, data);
+}
+
+export function money_launderers_put(data) {
+  return instance.put(`update_money_launderer/${data.id}`, data);
+}

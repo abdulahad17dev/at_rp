@@ -40,6 +40,7 @@
                     placeholder="Телефон рақам"
                     maxlength="9"
                     minlength="9"
+                    @keypress="onlyNumber"
                   />
                 </div>
               </div>
@@ -125,6 +126,14 @@ export default {
         status: "true",
       },
     };
+  },
+  methods: {
+    onlyNumber($event) {
+      let keyCode = $event.keyCode ? $event.keyCode : $event.which;
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
+        $event.preventDefault();
+      }
+    },
   },
 };
 </script>
