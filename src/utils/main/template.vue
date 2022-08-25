@@ -39,6 +39,7 @@ export default {
       localStorage.setItem("nightMode", this.nightMode);
       document.querySelector("#app").classList.add("dark");
     }
+    console.log(this.nightMode);
   },
 };
 </script>

@@ -30,7 +30,8 @@ export default {
     logout() {
       this.$router.push("/");
       console.clear();
-      localStorage.clear();
+      localStorage.removeItem("role");
+      localStorage.removeItem("access_token");
     },
   },
 };

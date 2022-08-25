@@ -100,7 +100,8 @@ export default {
   },
   mounted() {
     console.clear();
-    localStorage.clear();
+    localStorage.removeItem("role");
+    localStorage.removeItem("access_token");
   },
 };
 </script>
@@ -129,7 +130,6 @@ export default {
 .login_card {
   opacity: 0.9;
   background-color: #f8f9fa !important;
-  position: absolute;
 }
 
 .img-responsive {
