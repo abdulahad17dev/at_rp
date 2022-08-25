@@ -127,6 +127,12 @@
         type="submit"
         class="btn btn-outline-primary btn-sm"
         id="pay_f_e_disabled"
+        :disabled="
+          !pay_body.money ||
+          !pay_body.comment ||
+          !pay_body.from_ ||
+          !pay_body.to_
+        "
       >
         <i class="fas fa-circle-check"></i>
       </button>
@@ -164,9 +170,6 @@ export default {
     };
   },
   watch: {
-    id(e) {
-      this.to.from_ = e;
-    },
     limit_account(e) {
       this.page_account = 0;
       this.bank_accounts_get(this.page_account, e, this.search_account);

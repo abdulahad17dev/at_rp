@@ -114,6 +114,7 @@
         type="submit"
         class="btn btn-outline-primary btn-sm"
         id="pay_v_e_disabled"
+        :disabled="!pay_body.from_ || !pay_body.money || !pay_body.comment"
       >
         <i class="fas fa-circle-check"></i>
       </button>

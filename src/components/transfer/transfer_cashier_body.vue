@@ -114,6 +114,7 @@
         type="submit"
         class="btn btn-outline-primary btn-sm"
         id="transfer_to_cashier"
+        :disabled="!cashier.money || !cashier.comment || !cashier.to_"
       >
         <i class="fas fa-circle-check"></i>
       </button>

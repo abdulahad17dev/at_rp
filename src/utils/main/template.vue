@@ -30,7 +30,10 @@ export default {
     };
   },
   created() {
+    this.nightMode = JSON.parse(localStorage.getItem("nightMode"));
+
     if (this.nightMode == true) {
+      console.log(this.nightMode);
       localStorage.setItem("nightMode", this.nightMode);
       document.querySelector("#app").classList.remove("dark");
     } else {

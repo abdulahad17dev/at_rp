@@ -116,6 +116,7 @@
         type="submit"
         class="btn btn-outline-primary btn-sm"
         id="transfer_to_disabled"
+        :disabled="!to.money || !to.from_ || !to.comment"
       >
         <i class="fas fa-circle-check"></i>
       </button>
