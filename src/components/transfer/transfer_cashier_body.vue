@@ -73,6 +73,7 @@
                   <ul class="pagination pagination-sm justify-content-end">
                     <li class="page-item">
                       <button
+                        type="button"
                         class="page-link"
                         @click="page--"
                         :disabled="page == 0"
@@ -81,12 +82,17 @@
                       </button>
                     </li>
                     <li class="page-item">
-                      <button class="page-link text-dark" disabled>
+                      <button
+                        type="button"
+                        class="page-link text-dark"
+                        disabled
+                      >
                         {{ page + 1 }}
                       </button>
                     </li>
                     <li class="page-item">
                       <button
+                        type="button"
                         class="page-link"
                         @click="page++"
                         :disabled="page == pages - 1"

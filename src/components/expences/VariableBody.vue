@@ -59,6 +59,7 @@
                   <ul class="pagination pagination-sm justify-content-end">
                     <li class="page-item">
                       <button
+                        type="button"
                         class="page-link"
                         @click="page_account--"
                         :disabled="page_account == 0"
@@ -67,12 +68,17 @@
                       </button>
                     </li>
                     <li class="page-item">
-                      <button class="page-link text-dark" disabled>
+                      <button
+                        type="button"
+                        class="page-link text-dark"
+                        disabled
+                      >
                         {{ page_account + 1 }}
                       </button>
                     </li>
                     <li class="page-item">
                       <button
+                        type="button"
                         class="page-link"
                         @click="page_account++"
                         :disabled="page_account == pages_account - 1"

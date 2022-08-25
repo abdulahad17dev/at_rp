@@ -237,8 +237,14 @@ export function transfer_cashier_get(
 
 // expence fixed
 
-export function fixed_expence_get() {
-  return instance.get(`fixed_expenses`);
+export function fixed_expence_get(page, limit, search) {
+  if (search) {
+    return instance.get(
+      `fixed_expenses?search=${search}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(`fixed_expenses?page=${page}&limit=${limit}`);
+  }
 }
 
 export function fixed_expence_add(data) {

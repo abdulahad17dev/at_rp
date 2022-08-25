@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <Fixed :data="fixed_expenses" />
+  <Fixed />
 
   <Variable />
 
@@ -70,6 +70,7 @@
               role="tab"
               aria-controls="pills-profile"
               aria-selected="false"
+              @click="get_fixed_expenses(page, limit, search)"
             >
               Чиқим турлари
             </button>
@@ -122,6 +123,26 @@
           >
             <div class="modal-body">
               <div class="row gap-2">
+                <div class="col-10 mx-auto">
+                  <div class="input-group">
+                    <input
+                      type="search"
+                      v-model="search"
+                      placeholder="Қидириш ..."
+                      class="form-control form-control-sm"
+                    />
+                    <div class="input-group-append border-start-0">
+                      <select
+                        class="form-control form-control-sm form-select"
+                        v-model="limit"
+                      >
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
                 <div
                   class="col-10 mx-auto"
                   v-for="item in fixed_expenses"
@@ -146,6 +167,57 @@
                       </div>
                     </div>
                   </form>
+                </div>
+                <div class="col-10 mx-auto">
+                  <nav
+                    aria-label="Page navigation example"
+                    class="mt-1"
+                    v-if="fixed_expenses != ''"
+                  >
+                    <ul class="pagination pagination-sm justify-content-end">
+                      <li class="page-item">
+                        <button
+                          class="page-link"
+                          @click="page = 0"
+                          :disabled="page == 0"
+                        >
+                          <i class="fa-solid fa-angles-left text-dark"></i>
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button
+                          class="page-link"
+                          @click="page--"
+                          :disabled="page == 0"
+                        >
+                          <i class="fa-solid fa-angle-left text-dark"></i>
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button class="page-link text-dark" disabled>
+                          {{ page + 1 }}
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button
+                          class="page-link"
+                          @click="page++"
+                          :disabled="page == pages - 1"
+                        >
+                          <i class="fa-solid fa-angle-right text-dark"></i>
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button
+                          class="page-link"
+                          @click="page = pages - 1"
+                          :disabled="page == pages - 1"
+                        >
+                          <i class="fa-solid fa-angles-right text-dark"></i>
+                        </button>
+                      </li>
+                    </ul>
+                  </nav>
                 </div>
               </div>
             </div>
@@ -185,7 +257,29 @@ export default {
       body: {
         name: "",
       },
+      search: "",
+      limit: 25,
+      page: 0,
+      pages: null,
     };
+  },
+  watch: {
+    limit(e) {
+      this.page = 0;
+      this.get_fixed_expenses(this.page, e, this.search);
+    },
+    page(e) {
+      this.get_fixed_expenses(e, this.limit, this.search);
+      document.getElementById("scroll").scrollTop = 0;
+    },
+    search(e) {
+      if (e.length > 0) {
+        this.get_fixed_expenses(this.page, this.limit, this.search);
+      } else if (e.length == 0) {
+        this.get_fixed_expenses(this.page, this.limit, this.search);
+        this.page = 0;
+      }
+    },
   },
   methods: {
     add_fixed_expense() {
@@ -195,7 +289,7 @@ export default {
         .then((res) => {
           document.getElementById("fixed_expense_disabled").disabled = false;
           success(res).then(() => {
-            this.get_fixed_expenses();
+            this.get_fixed_expenses(this.page, this.limit, this.search);
             this.body.name = "";
           });
         })
@@ -205,12 +299,13 @@ export default {
           document.getElementById("fixed_expense_disabled").disabled = false;
         });
     },
-    get_fixed_expenses() {
+    get_fixed_expenses(page, limit, search) {
       this.$store.dispatch("setLoading", { isLoading: true });
 
-      fixed_expence_get()
+      fixed_expence_get(page, limit, search)
         .then((res) => {
-          this.fixed_expenses = res.data;
+          this.fixed_expenses = res.data.data;
+          this.pages = res.data.pages;
           this.$store.dispatch("setLoading", { isLoading: false });
         })
         .catch((err) => {
@@ -225,7 +320,7 @@ export default {
         .then((res) => {
           document.getElementById("disabled" + e.id).disabled = false;
           success(res).then(() => {
-            this.get_fixed_expenses();
+            this.get_fixed_expenses(this.page, this.limit, this.search);
           });
         })
         .catch((err) => {
@@ -234,9 +329,6 @@ export default {
           document.getElementById("disabled" + e.id).disabled = false;
         });
     },
-  },
-  created() {
-    this.get_fixed_expenses();
   },
 };
 </script>
