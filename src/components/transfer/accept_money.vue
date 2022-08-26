@@ -1,7 +1,11 @@
 <template>
   <details>
     <summary
-      @click="transfer_me(page, limit, from, to, type, from_time, to_time)"
+      @click="
+        hisob_raqamiga_qabul_qilingan_pullar.length
+          ? ''
+          : transfer_me(page, limit, from, to, type, from_time, to_time)
+      "
     >
       ҳисоб рақамига қабул қилинган пуллар
     </summary>
@@ -80,6 +84,17 @@
             <option value="100">100</option>
           </select>
         </div>
+        <li class="page-item">
+          <button
+            type="button"
+            class="page-link"
+            @click="
+              transfer_me(page, limit, from, to, type, from_time, to_time)
+            "
+          >
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </li>
         <li class="page-item">
           <button class="page-link" @click="page = 0" :disabled="page == 0">
             <i class="fa-solid fa-angles-left text-dark"></i>

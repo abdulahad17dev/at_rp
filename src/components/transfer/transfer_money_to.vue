@@ -2,7 +2,9 @@
   <details class="my-2">
     <summary
       @click="
-        transfer_money_to(page, limit, from, to, type, from_time, to_time)
+        hisob_raqamidan_otkazilgan_pullar.length
+          ? ''
+          : transfer_money_to(page, limit, from, to, type, from_time, to_time)
       "
     >
       ҳисоб рақамига ўтказилган пуллар
@@ -87,6 +89,17 @@
             <option value="100">100</option>
           </select>
         </div>
+        <li class="page-item">
+          <button
+            type="button"
+            class="page-link"
+            @click="
+              transfer_money_to(page, limit, from, to, type, from_time, to_time)
+            "
+          >
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </li>
         <li class="page-item">
           <button class="page-link" @click="page = 0" :disabled="page == 0">
             <i class="fa-solid fa-angles-left text-dark"></i>

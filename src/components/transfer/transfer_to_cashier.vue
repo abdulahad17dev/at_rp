@@ -2,7 +2,17 @@
   <details class="my-2">
     <summary
       @click="
-        transfer_to_cashier(page, limit, from, to, status, from_time, to_time)
+        transfer_cashier.length
+          ? ''
+          : transfer_to_cashier(
+              page,
+              limit,
+              from,
+              to,
+              status,
+              from_time,
+              to_time
+            )
       "
     >
       кассирга ўтказилган пуллар
@@ -203,6 +213,25 @@
             <option value="100">100</option>
           </select>
         </div>
+        <li class="page-item">
+          <button
+            type="button"
+            class="page-link"
+            @click="
+              transfer_to_cashier(
+                page,
+                limit,
+                from,
+                to,
+                status,
+                from_time,
+                to_time
+              )
+            "
+          >
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </li>
         <li class="page-item">
           <button class="page-link" @click="page = 0" :disabled="page == 0">
             <i class="fa-solid fa-angles-left text-dark"></i>

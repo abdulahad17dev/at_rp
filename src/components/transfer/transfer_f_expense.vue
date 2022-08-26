@@ -1,6 +1,12 @@
 <template>
   <details>
-    <summary @click="fixed_history_get(page, limit, from, to, user_id)">
+    <summary
+      @click="
+        fixed_history.length
+          ? ''
+          : fixed_history_get(page, limit, from, to, user_id)
+      "
+    >
       доимий чиқим тарихи
     </summary>
     <div class="table-responsive">
@@ -145,6 +151,15 @@
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
+        </li>
+        <li class="page-item">
+          <button
+            type="button"
+            class="page-link"
+            @click="fixed_history_get(page, limit, from, to, user_id)"
+          >
+            <i class="fa-solid fa-rotate"></i>
+          </button>
         </li>
         <li class="page-item">
           <button class="page-link" @click="page = 0" :disabled="page == 0">

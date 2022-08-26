@@ -1,6 +1,12 @@
 <template>
   <details class="my-2">
-    <summary @click="variable_history_get(page, limit, from, user_id)">
+    <summary
+      @click="
+        variable_history.length
+          ? ''
+          : variable_history_get(page, limit, from, user_id)
+      "
+    >
       Бир марталик чиқим тарихи
     </summary>
     <div class="table-responsive">
@@ -152,6 +158,15 @@
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
+        </li>
+        <li class="page-item">
+          <button
+            type="button"
+            class="page-link"
+            @click="variable_history_get(page, limit, from, user_id)"
+          >
+            <i class="fa-solid fa-rotate"></i>
+          </button>
         </li>
         <li class="page-item">
           <button class="page-link" @click="page = 0" :disabled="page == 0">
