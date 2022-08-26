@@ -61,6 +61,21 @@
                       <button
                         type="button"
                         class="page-link"
+                        @click="
+                          bank_accounts_get(
+                            page_account,
+                            limit_account,
+                            search_account
+                          )
+                        "
+                      >
+                        <i class="fa-solid fa-rotate"></i>
+                      </button>
+                    </li>
+                    <li class="page-item">
+                      <button
+                        type="button"
+                        class="page-link"
                         @click="page_account--"
                         :disabled="page_account == 0"
                       >
@@ -143,6 +158,21 @@
                   v-if="expenses != ''"
                 >
                   <ul class="pagination pagination-sm justify-content-end">
+                    <li class="page-item">
+                      <button
+                        type="button"
+                        class="page-link"
+                        @click="
+                          expense_get(
+                            page_expense,
+                            limit_expense,
+                            search_expense
+                          )
+                        "
+                      >
+                        <i class="fa-solid fa-rotate"></i>
+                      </button>
+                    </li>
                     <li class="page-item">
                       <button
                         type="button"

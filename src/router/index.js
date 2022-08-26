@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import login from "./../utils/template/login/Login.vue";
 import users from "../views/users/users.vue";
 import building from "../views/buildings/buildings.vue";
+import proche_sorovlar from "../views/buildings/proche_sorovlar.vue";
 import product from "../views/product/product.vue";
 import smeta from "../views/smeta/smeta.vue";
 import bank_acoounts from "../views/bank_accounts/bank_accounts.vue";
@@ -87,6 +88,18 @@ let routes = [
       role: ["pto", "admin", "prorap"],
     },
     component: smeta,
+  },
+  // proche sorovlar
+  {
+    path: "/buildings/product_request",
+    name: "proche_sorovlar",
+    meta: {
+      requiresAuth: true,
+      title: "Проче сўровлар",
+      icon: "fa-solid fa-rectangle-list",
+      role: ["prorap"],
+    },
+    component: proche_sorovlar,
   },
   // products
   {

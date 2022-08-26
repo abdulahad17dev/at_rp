@@ -12,16 +12,6 @@
             <th style="width: 20%">Сана</th>
             <th style="width: 40%">Изох</th>
             <th>
-              <!-- <select
-                class="form-control form-control-sm form-select mx-1"
-                v-model="to"
-                @click="get_expenses"
-              >
-                <option value="0">барча чиқимлар</option>
-                <option :value="item.id" v-for="item in expenses" :key="item">
-                  {{ item.name }}
-                </option>
-              </select> -->
               <div class="dropdown">
                 <button
                   class="btn btn-light btn-sm dropdown-toggle"
@@ -71,6 +61,21 @@
                       v-if="expenses != ''"
                     >
                       <ul class="pagination pagination-sm justify-content-end">
+                        <li class="page-item">
+                          <button
+                            type="button"
+                            class="page-link"
+                            @click="
+                              expense_get(
+                                page_expense,
+                                limit_expense,
+                                search_expense
+                              )
+                            "
+                          >
+                            <i class="fa-solid fa-rotate"></i>
+                          </button>
+                        </li>
                         <li class="page-item">
                           <button
                             type="button"

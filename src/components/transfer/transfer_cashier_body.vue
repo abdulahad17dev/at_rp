@@ -75,6 +75,15 @@
                       <button
                         type="button"
                         class="page-link"
+                        @click="get_cashier(page, limit, search, role)"
+                      >
+                        <i class="fa-solid fa-rotate"></i>
+                      </button>
+                    </li>
+                    <li class="page-item">
+                      <button
+                        type="button"
+                        class="page-link"
                         @click="page--"
                         :disabled="page == 0"
                       >

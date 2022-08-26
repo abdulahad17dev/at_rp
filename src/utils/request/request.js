@@ -330,3 +330,27 @@ export function money_launderers_add(data) {
 export function money_launderers_put(data) {
   return instance.put(`update_money_launderer/${data.id}`, data);
 }
+
+// proche sorovlar
+
+export function proche_s_get(page, limit, building_id, status) {
+  if (status) {
+    return instance.get(
+      `get_product_request?building_id=${building_id}&status=${status}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(
+      `get_product_request?building_id=${building_id}&page=${page}&limit=${limit}`
+    );
+  }
+}
+
+export function proche_s_add(data) {
+  return instance.post(`product_request`, data);
+}
+
+export function proche_s_put(p_s_id, status, t_id, quantity) {
+  return instance.put(
+    `confirm_or_reject_product_request/${p_s_id}?status=${status}&taminotchi_id=${t_id}&quantity=${quantity}`
+  );
+}

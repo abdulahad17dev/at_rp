@@ -78,6 +78,15 @@
             >
               <i class="fa-solid fa-right-long"></i>
             </router-link>
+            <router-link
+              :to="{
+                name: 'proche_sorovlar',
+                query: { id: item.Buildings.id },
+              }"
+              class="btn btn-sm btn-primary mx-1"
+            >
+              <i class="fa-solid fa-rectangle-list"></i>
+            </router-link>
             <button
               class="btn btn-sm btn-primary mx-1 d-block mt-1"
               v-if="item.Buildings.status == 'wait' && role == 'pto'"
