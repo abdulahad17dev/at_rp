@@ -75,6 +75,24 @@ export default {
           role: ["kassir"],
         },
         {
+          to: "/wallets",
+          icon: "fa-solid fa-wallet fa-2x",
+          title: "Ҳамён",
+          role: ["kassir"],
+        },
+        {
+          to: "/markets",
+          icon: "fa-solid fa-shop fa-2x",
+          title: "Таминот олиш",
+          role: ["taminotchi"],
+        },
+        {
+          to: "/money_from_bugalter",
+          icon: "fa-solid fa-money-bill-transfer fa-2x",
+          title: "Бугалтер ўтказган пуллар",
+          role: ["kassir"],
+        },
+        {
           to: "/settings",
           icon: "fa-solid fa-screwdriver-wrench fa-2x",
           title: "Созламалар",

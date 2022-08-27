@@ -86,7 +86,7 @@
               </div>
               <div class="col">
                 <button
-                  class="btn btn-primary btn-sm btn-block w-100"
+                  class="btn btn-primary btn-sm w-100"
                   type="submit"
                   id="composition_disabled"
                 >

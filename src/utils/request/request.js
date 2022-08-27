@@ -233,6 +233,12 @@ export function transfer_cashier_get(
   }
 }
 
+export function accept_money_in_cashier(id, money_l_id, percent, comment) {
+  return instance.put(
+    `acceptance_or_remove_transfered_money/${id}?money_launderer_id=${money_l_id}&percent=${percent}&comment=${comment}`
+  );
+}
+
 // expences
 
 // expence fixed
@@ -353,4 +359,24 @@ export function proche_s_put(p_s_id, status, t_id, quantity) {
   return instance.put(
     `confirm_or_reject_product_request/${p_s_id}?status=${status}&taminotchi_id=${t_id}&quantity=${quantity}`
   );
+}
+
+// wallets
+
+export function wallets_get(page, limit, search) {
+  if (search) {
+    return instance.get(
+      `get_wallets?search=${search}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(`get_wallets?page=${page}&limit=${limit}`);
+  }
+}
+
+export function wallet_add(data) {
+  return instance.post(`create_wallet`, data);
+}
+
+export function wallet_put(data) {
+  return instance.put(`update_wallet/${data.id}`, data);
 }

@@ -46,7 +46,7 @@
         </div>
         <div class="col-5 mx-auto mt-4">
           <button
-            class="btn btn-primary btn-sm btn-block w-100"
+            class="btn btn-primary btn-sm w-100"
             type="submit"
             id="current_user"
           >

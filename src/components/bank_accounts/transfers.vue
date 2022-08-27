@@ -111,7 +111,7 @@
               aria-controls="pills-profile"
               aria-selected="false"
             >
-              кассага пул ўтказиш
+              кассирга пул ўтказиш
             </button>
           </li>
         </ul>

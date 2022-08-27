@@ -33,7 +33,7 @@
               class="btn btn-outline-primary btn-sm w-80"
               :disabled="from_time == '' || to_time == ''"
             >
-              <i class="fa-solid fa-circle-check"></i>
+              <i class="fa-solid fa-search"></i>
             </button>
             <button
               class="btn btn-outline-danger btn-sm w-20"
@@ -71,8 +71,8 @@
           </tr>
         </tbody>
       </table>
+      <Data_notfound v-if="hisob_raqamidan_otkazilgan_pullar == ''" />
     </div>
-    <Data_notfound v-if="hisob_raqamidan_otkazilgan_pullar == ''" />
     <nav
       aria-label="Page navigation example"
       class="mt-1"

@@ -26,7 +26,6 @@
           type="button"
           data-bs-toggle="modal"
           data-bs-target="#money_launderer_add"
-          @click="get_position"
         >
           <i class="fa-solid fa-user-plus"></i>
         </button>

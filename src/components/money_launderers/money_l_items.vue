@@ -1,10 +1,11 @@
 <template>
-  <div class="table-responsive mt-3" v-if="data != ''">
+  <div class="table-responsive mt-3">
     <table class="table table-sm table-hover table-bordered">
       <thead class="">
         <tr>
           <th>#ИД</th>
           <th>Исм</th>
+          <th>Баланс</th>
           <th>Телефон рақам</th>
         </tr>
       </thead>
@@ -12,6 +13,7 @@
         <tr v-for="item in data || []" :key="item">
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
+          <td>{{ item.balance }}</td>
           <td>
             <a
               :href="`tel:+998${item.phone}`"

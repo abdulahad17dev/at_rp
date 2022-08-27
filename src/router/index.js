@@ -10,6 +10,9 @@ import transfers_history from "../views/transfer_history/transfer_history.vue";
 import expences from "../views/expences/expences.vue";
 import main_warehouses from "../views/main_warehouses/main_warehouses.vue";
 import money_launderers from "../views/money_launderers/money_launderers.vue";
+import wallets from "../views/wallets/wallets.vue";
+import markets from "../views/markets/markets.vue";
+import money_from_bugalter from "../views/transfer_history/money_from_bugalter.vue";
 import menu from "./../utils/main/menu.vue";
 import notfound from "./../utils/notfound/notfound.vue";
 import settings from "../views/settings/settings.vue";
@@ -172,6 +175,42 @@ let routes = [
       role: ["kassir"],
     },
     component: money_launderers,
+  },
+  // wallets
+  {
+    path: "/wallets",
+    name: "wallets",
+    meta: {
+      requiresAuth: true,
+      title: "Ҳамён",
+      icon: "fa-solid fa-wallet",
+      role: ["kassir"],
+    },
+    component: wallets,
+  },
+  // wallets
+  {
+    path: "/markets",
+    name: "markets",
+    meta: {
+      requiresAuth: true,
+      title: "Таминот олиш",
+      icon: "fa-solid fa-shop",
+      role: ["taminotchi"],
+    },
+    component: markets,
+  },
+  // money from bugalter
+  {
+    path: "/money_from_bugalter",
+    name: "money_from_bugalter",
+    meta: {
+      requiresAuth: true,
+      title: "Бугалтер ўтказган пуллар",
+      icon: "fa-solid fa-money-bill-transfer",
+      role: ["kassir"],
+    },
+    component: money_from_bugalter,
   },
 ];
 

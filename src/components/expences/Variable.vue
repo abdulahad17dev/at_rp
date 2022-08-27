@@ -140,9 +140,9 @@
           </tr>
         </tbody>
       </table>
+      <Data_notfound v-if="variable_history == ''" />
     </div>
 
-    <Data_notfound v-if="variable_history == ''" />
     <nav
       aria-label="Page navigation example"
       class="mt-1"
