@@ -191,7 +191,16 @@
             <td colspan="2">
               <b class="text-primary">{{ item.name }}</b>
             </td>
-            <td></td>
+            <td>
+              <button
+                class="btn btn-danger btn-sm"
+                :id="'remove_money' + item.Transfers.id"
+                v-if="item.Transfers.status == false"
+                @click="remove(item.Transfers.id)"
+              >
+                <i class="fa-solid fa-circle-xmark"></i>
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -271,8 +280,12 @@
 </template>
 
 <script>
-import { transfer_cashier_get, user_get } from "@/utils/request/request";
-import { catchError } from "@/utils/request/handle_api_err";
+import {
+  accept_money_in_cashier,
+  transfer_cashier_get,
+  user_get,
+} from "@/utils/request/request";
+import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 export default {
   name: "TransferToCashier",
@@ -431,6 +444,30 @@ export default {
       this.to = id;
       this.text = name;
       document.getElementById("cashier_text").click();
+    },
+    remove(e) {
+      this.$store.dispatch("setLoading", { isLoading: true });
+      document.getElementById(`remove_money${e}`).disabled = true;
+      accept_money_in_cashier(e, 0, 0, "")
+        .then((res) => {
+          document.getElementById(`remove_money${e}`).disabled = false;
+          success(res).then(() => {
+            this.transfer_to_cashier(
+              this.page,
+              this.limit,
+              this.from,
+              this.to,
+              this.status,
+              this.from_time,
+              this.to_time
+            );
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById(`remove_money${e}`).disabled = false;
+        });
     },
   },
   components: { Data_notfound },

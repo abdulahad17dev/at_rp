@@ -33,7 +33,11 @@
     </div>
   </div>
 
-  <Money_l_items :data="money_launderers" @item="item_get" />
+  <Money_l_items
+    :data="money_launderers"
+    @item="item_get"
+    @get_l_id="get_l_id"
+  />
 
   <Data_notfound v-if="money_launderers == ''" />
 
@@ -77,6 +81,7 @@
 
   <Money_l_add @add="add" />
   <Money_l_update :item="item" @put="put" />
+  <Take_money_to_launderer :id="l_id" :name="l_name" @take_money="take_money" />
 </template>
 
 <script>
@@ -87,10 +92,12 @@ import {
   money_launderers_add,
   money_launderers_get,
   money_launderers_put,
+  take_money_to_launderer,
 } from "@/utils/request/request";
 import Money_l_items from "../../components/money_launderers/money_l_items.vue";
 import Money_l_add from "@/components/money_launderers/money_l_add.vue";
 import Money_l_update from "../../components/money_launderers/money_l_update.vue";
+import Take_money_to_launderer from "@/components/money_launderers/take_money_to_launderer.vue";
 export default {
   name: "MoneyLaunderers",
   components: {
@@ -99,6 +106,7 @@ export default {
     Money_l_items,
     Money_l_add,
     Money_l_update,
+    Take_money_to_launderer,
   },
   data() {
     return {
@@ -108,6 +116,8 @@ export default {
       search: "",
       money_launderers: [],
       item: {},
+      l_id: null,
+      l_name: "",
     };
   },
   watch: {
@@ -184,6 +194,31 @@ export default {
           catchError(err);
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("money_l_disabled2").disabled = false;
+        });
+    },
+    get_l_id(id, name) {
+      this.l_id = id;
+      this.l_name = name;
+    },
+    take_money(e) {
+      document.getElementById("take_m_disabled").disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      take_money_to_launderer(e)
+        .then((res) => {
+          document.getElementById("take_money_close").click();
+          document.getElementById("take_m_disabled").disabled = false;
+          success(res).then(() => {
+            this.get_money_launderers(this.page, this.limit, this.search);
+            e.money = null;
+            e.from_ = this.l_id;
+            e.to_ = null;
+            e.comment = "";
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("take_m_disabled").disabled = false;
         });
     },
   },

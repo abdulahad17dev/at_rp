@@ -239,6 +239,10 @@ export function accept_money_in_cashier(id, money_l_id, percent, comment) {
   );
 }
 
+export function take_money_to_launderer(data) {
+  return instance.post("take_money_from_money_launderer", data);
+}
+
 // expences
 
 // expence fixed
