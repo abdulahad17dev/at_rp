@@ -11,13 +11,15 @@
       </thead>
       <tbody>
         <tr v-for="item in data" :key="item">
-          <td>{{ item.id }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ new Intl.NumberFormat().format(item.balance) }} сўм</td>
+          <td>{{ item.Bank_accounts.id }}</td>
+          <td>{{ item.Bank_accounts.name }}</td>
+          <td>
+            {{ new Intl.NumberFormat().format(item.Bank_accounts.balance) }} сўм
+          </td>
           <td>
             <button
               class="btn btn-primary btn-sm mx-1"
-              @click="select_id(item.id, item.name)"
+              @click="select_id(item.Bank_accounts.id, item.Bank_accounts.name)"
               data-bs-toggle="modal"
               data-bs-target="#transfer_me_add"
             >
@@ -25,7 +27,7 @@
             </button>
             <button
               class="btn btn-primary btn-sm mx-1"
-              @click="select_id(item.id, item.name)"
+              @click="select_id(item.Bank_accounts.id, item.Bank_accounts.name)"
               data-bs-toggle="modal"
               data-bs-target="#transfer_to_add"
             >
@@ -34,7 +36,10 @@
             <router-link
               :to="{
                 name: 'transfers_history',
-                query: { id: item.id, name: item.name },
+                query: {
+                  id: item.Bank_accounts.id,
+                  name: item.Bank_accounts.name,
+                },
               }"
               class="btn btn-secondary btn-sm mx-1"
             >
@@ -44,7 +49,7 @@
               class="btn btn-warning btn-sm mx-1"
               data-bs-toggle="modal"
               data-bs-target="#bank_account_put"
-              @click="send_data(item)"
+              @click="send_data(item.Bank_accounts)"
             >
               <i class="fa-solid fa-edit text-white"></i>
             </button>

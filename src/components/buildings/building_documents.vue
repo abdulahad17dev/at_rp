@@ -75,15 +75,17 @@
               <tbody>
                 <tr v-for="(item, idx) in data" :key="item">
                   <td style="width: 10%">{{ idx + 1 }}</td>
-                  <td style="width: 40%">{{ item.file }}</td>
-                  <td style="width: 35%">{{ item.comment }}</td>
+                  <td style="width: 40%">{{ item.Building_documents.file }}</td>
+                  <td style="width: 35%">
+                    {{ item.Building_documents.comment }}
+                  </td>
                   <td style="width: 15%">
                     <button class="btn btn-sm btn-primary mx-1">
                       <i class="fa-solid fa-download"></i>
                     </button>
                     <button
                       class="btn btn-sm btn-danger"
-                      @click="$emit('remove', item.id)"
+                      @click="$emit('remove', item.Building_documents.id)"
                       id="remove_document"
                     >
                       <i class="fa-solid fa-circle-xmark"></i>

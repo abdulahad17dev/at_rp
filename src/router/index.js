@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import login from "./../utils/template/login/Login.vue";
 import users from "../views/users/users.vue";
 import building from "../views/buildings/buildings.vue";
+import building_inner from "../views/buildings/building_inner_page.vue";
 import proche_sorovlar from "../views/buildings/proche_sorovlar.vue";
 import product from "../views/product/product.vue";
 import smeta from "../views/smeta/smeta.vue";
@@ -81,6 +82,17 @@ let routes = [
       role: ["pto", "admin", "prorap"],
     },
     component: building,
+  },
+  {
+    path: "/building",
+    name: "building",
+    meta: {
+      requiresAuth: true,
+      title: "Обйект",
+      icon: "fa-solid fa-building",
+      role: ["admin"],
+    },
+    component: building_inner,
   },
   // smeta
   {

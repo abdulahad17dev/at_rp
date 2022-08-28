@@ -135,6 +135,11 @@ table.smeta {
 }
 
 .table-responsive {
-  max-height: 590px;
+  max-height: 70vh;
+}
+@media (max-width: 500px) {
+  .table-responsive {
+    max-height: 100vh;
+  }
 }
 </style>
