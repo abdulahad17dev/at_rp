@@ -10,7 +10,9 @@ import transfers_history from "../views/transfer_history/transfer_history.vue";
 import expences from "../views/expences/expences.vue";
 import main_warehouses from "../views/main_warehouses/main_warehouses.vue";
 import money_launderers from "../views/money_launderers/money_launderers.vue";
+import money_laundered_history from "../views/money_launderers/money_from_money_launderer.vue";
 import wallets from "../views/wallets/wallets.vue";
+import wallets_history from "../views/wallets/wallets_money_history.vue";
 import markets from "../views/markets/markets.vue";
 import money_from_bugalter from "../views/transfer_history/money_from_bugalter.vue";
 import menu from "./../utils/main/menu.vue";
@@ -211,6 +213,30 @@ let routes = [
       role: ["kassir"],
     },
     component: money_from_bugalter,
+  },
+  // money from money launderer history
+  {
+    path: "/money_launderer_history",
+    name: "money_launderer_history",
+    meta: {
+      requiresAuth: true,
+      title: "Ўтаказилган ва қабул қилинган пуллар тарихи",
+      icon: "fa-solid fa-clock-rotate-left",
+      role: ["kassir"],
+    },
+    component: money_laundered_history,
+  },
+  // wallets transfer money history
+  {
+    path: "/wallet_transfer_history",
+    name: "wallet_transfer_history",
+    meta: {
+      requiresAuth: true,
+      title: "Ўтаказилган ва қабул қилинган пуллар тарихи",
+      icon: "fa-solid fa-clock-rotate-left",
+      role: ["kassir"],
+    },
+    component: wallets_history,
   },
 ];
 

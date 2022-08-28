@@ -33,7 +33,7 @@
     </div>
   </div>
 
-  <Wallet_item :data="wallets" @item="item_get" />
+  <Wallet_item :data="wallets" @item="item_get" @get_w_id="get_w_id" />
 
   <Data_notfound v-if="wallets == ''" />
 
@@ -73,16 +73,29 @@
 
   <Wallet_add @add="add" />
   <Wallet_put :item="item" @put="put" />
+  <Take_money_to_wallets
+    :id="w_id"
+    :name="w_name"
+    @take_money="take_money"
+    @give_money="give_money"
+  />
 </template>
 
 <script>
 import Header_item from "@/components/header/header_item.vue";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
-import { wallets_get, wallet_add, wallet_put } from "@/utils/request/request";
+import {
+  take_money_from_wallets,
+  transfer_money_to_wallets,
+  wallets_get,
+  wallet_add,
+  wallet_put,
+} from "@/utils/request/request";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Wallet_item from "@/components/wallets/wallet_item.vue";
 import Wallet_add from "@/components/wallets/wallet_add.vue";
 import Wallet_put from "@/components/wallets/wallet_put.vue";
+import Take_money_to_wallets from "../../components/wallets/take_money_to_wallets.vue";
 export default {
   name: "WalletsItem",
   components: {
@@ -91,6 +104,7 @@ export default {
     Wallet_item,
     Wallet_add,
     Wallet_put,
+    Take_money_to_wallets,
   },
   data() {
     return {
@@ -100,6 +114,8 @@ export default {
       wallets: [],
       search: "",
       item: {},
+      w_id: null,
+      w_name: "",
     };
   },
   watch: {
@@ -174,6 +190,52 @@ export default {
           catchError(err);
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("wallet_disabled2").disabled = false;
+        });
+    },
+    get_w_id(id, name) {
+      this.w_id = id;
+      this.w_name = name;
+    },
+    take_money(e) {
+      document.getElementById("take_m_disabled").disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      take_money_from_wallets(e)
+        .then((res) => {
+          document.getElementById("take_money_close").click();
+          document.getElementById("take_m_disabled").disabled = false;
+          success(res).then(() => {
+            this.get_wallets(this.page, this.limit, this.search);
+            e.money = null;
+            e.from_ = this.w_id;
+            e.to_ = null;
+            e.comment = "";
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("take_m_disabled").disabled = false;
+        });
+    },
+    give_money(e) {
+      document.getElementById("take_m_disabled2").disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      transfer_money_to_wallets(e)
+        .then((res) => {
+          document.getElementById("take_money_close").click();
+          document.getElementById("take_m_disabled2").disabled = false;
+          success(res).then(() => {
+            this.get_wallets(this.page, this.limit, this.search);
+            e.money = null;
+            e.to_ = this.w_id;
+            e.from_ = null;
+            e.comment = "";
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("take_m_disabled2").disabled = false;
         });
     },
   },

@@ -121,6 +121,7 @@
               id="summa"
               v-model="pay_body.money"
               required
+              step="any"
               min="1"
             />
             <span class="input-group-text bg-white">сўм</span>

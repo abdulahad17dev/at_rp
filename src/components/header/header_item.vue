@@ -10,10 +10,10 @@
       </router-link>
     </div>
     <div class="col">
-      <h4 class="card-title text-center mb-3">
+      <h5 class="card-title text-center mb-3">
         <span :class="this.$route.meta.icon"></span>
         {{ this.$route.meta.title }}
-      </h4>
+      </h5>
     </div>
     <div class="col"></div>
   </div>

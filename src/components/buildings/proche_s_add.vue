@@ -18,6 +18,7 @@
           type="number"
           id="body_quantity"
           class="form-control form-control-sm"
+          step="any"
           placeholder="Ҳажми"
           v-model="body.quantity"
           required

@@ -5,7 +5,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">
-            {{ name }} га пул ўтказиш
+            <b class="text-primary"> {{ name }} </b> дан пул олиш
           </h5>
           <button
             type="button"
@@ -69,7 +69,7 @@
 
 <script>
 export default {
-  name: "TakeMoney",
+  name: "TakeMoneyToLaunderer",
   props: ["id", "name"],
   watch: {
     id(e) {

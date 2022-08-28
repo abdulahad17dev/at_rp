@@ -41,6 +41,7 @@
                     class="form-control form-control-sm"
                     v-model="data.budget"
                     required
+                    step="any"
                     placeholder="Бюджет"
                     min="1"
                   />

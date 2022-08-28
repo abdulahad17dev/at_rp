@@ -32,7 +32,9 @@
           <td style="width: 20%">{{ item.name }}</td>
           <td style="width: 20%">{{ item.quantity }}</td>
           <td style="width: 20%">{{ item.olchov_birligi }}</td>
-          <td style="width: 20%">{{ item.time.replace("T", " ") }}</td>
+          <td style="width: 20%">
+            {{ new Date(item.time).toLocaleDateString() }}
+          </td>
           <td style="width: 20%">{{ item.comment }}</td>
           <td>
             <button

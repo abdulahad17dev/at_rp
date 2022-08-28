@@ -3,16 +3,19 @@
     <table class="table table-sm table-hover table-bordered">
       <thead class="">
         <tr>
-          <th>#ИД</th>
-          <th>Исм</th>
-          <th>Баланс</th>
+          <th style="width: 10%">#ИД</th>
+          <th style="width: 30%">Исм</th>
+          <th style="width: 30%">Баланс</th>
+          <th style="width: 30%"></th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in data || []" :key="item">
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
-          <td>{{ item.balance }}</td>
+          <td :class="item.balance > 0 ? 'text-success' : ''">
+            {{ item.balance }} сўм
+          </td>
           <td>
             <button
               class="btn btn-sm btn-warning"
@@ -22,6 +25,23 @@
             >
               <i class="fa fa-edit text-white"></i>
             </button>
+            <button
+              class="btn btn-sm btn-primary mx-1"
+              @click="$emit('get_w_id', item.id, item.name)"
+              data-bs-toggle="modal"
+              data-bs-target="#take_money_wallet"
+            >
+              <i class="fa-solid fa-money-bill-transfer text-white"></i>
+            </button>
+            <router-link
+              :to="{
+                name: 'wallet_transfer_history',
+                query: { id: item.id, name: item.name },
+              }"
+              class="btn btn-sm btn-secondary mx-1"
+            >
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </router-link>
           </td>
         </tr>
       </tbody>
@@ -33,13 +53,13 @@
 export default {
   name: "WalletItem",
   props: ["data"],
-  emits: ["item"],
+  emits: ["item", "get_w_id"],
 };
 </script>
 
 <style lang="scss" scoped>
 table {
-  min-width: 500px;
+  min-width: 600px;
   width: 100%;
 }
 </style>

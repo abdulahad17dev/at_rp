@@ -243,6 +243,74 @@ export function take_money_to_launderer(data) {
   return instance.post("take_money_from_money_launderer", data);
 }
 
+export function take_money_from_wallets(data) {
+  return instance.post("transfer_money_from_wallet", data);
+}
+
+export function transfer_money_to_wallets(data) {
+  return instance.post("transfer_money_to_wallet", data);
+}
+
+export function money_from_launderer_get(
+  page,
+  limit,
+  from,
+  from_time,
+  to_time
+) {
+  if (from_time && to_time) {
+    return instance.get(
+      `money_from_money_launderer?from_time=${from_time}&to_time=${to_time}&from_=${from}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(
+      `money_from_money_launderer?from_=${from}&page=${page}&limit=${limit}`
+    );
+  }
+}
+
+export function money_to_launderer_get(page, limit, to, from_time, to_time) {
+  if (from_time && to_time) {
+    return instance.get(
+      `money_to_money_launderer?from_time=${from_time}&to_time=${to_time}&to_=${to}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(
+      `money_to_money_launderer?to_=${to}&page=${page}&limit=${limit}`
+    );
+  }
+}
+
+export function transfer_from_w_history_get(
+  page,
+  limit,
+  from,
+  from_time,
+  to_time
+) {
+  if (from_time && to_time) {
+    return instance.get(
+      `transfered_money_from_wallet?from_time=${from_time}&to_time=${to_time}&from_=${from}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(
+      `transfered_money_from_wallet?from_=${from}&page=${page}&limit=${limit}`
+    );
+  }
+}
+
+export function transfer_to_w_history_get(page, limit, to, from_time, to_time) {
+  if (from_time && to_time) {
+    return instance.get(
+      `transfered_money_to_wallet?from_time=${from_time}&to_time=${to_time}&to_=${to}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(
+      `transfered_money_to_wallet?to_=${to}&page=${page}&limit=${limit}`
+    );
+  }
+}
+
 // expences
 
 // expence fixed

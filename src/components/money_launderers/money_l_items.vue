@@ -14,7 +14,7 @@
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
           <td :class="item.balance >= 0 ? 'text-success' : 'text-danger'">
-            {{ item.balance }}
+            {{ item.balance }} сўм
           </td>
           <td>
             <a
@@ -41,6 +41,15 @@
             >
               <i class="fa-solid fa-money-bill-transfer text-white"></i>
             </button>
+            <router-link
+              :to="{
+                name: 'money_launderer_history',
+                query: { id: item.id, name: item.name },
+              }"
+              class="btn btn-sm btn-secondary mx-1"
+            >
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </router-link>
           </td>
         </tr>
       </tbody>
@@ -58,7 +67,7 @@ export default {
 
 <style lang="scss" scoped>
 table {
-  min-width: 600px;
+  min-width: 700px;
   width: 100%;
 }
 </style>

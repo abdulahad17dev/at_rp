@@ -220,6 +220,7 @@
               type="number"
               class="form-control"
               id="summa"
+              step="any"
               v-model="pay_body.money"
               required
               min="1"
