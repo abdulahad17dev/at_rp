@@ -48,6 +48,15 @@
   >
     <ul class="pagination pagination-sm justify-content-end">
       <li class="page-item">
+        <button
+          type="button"
+          class="page-link"
+          @click="get_money_launderers(page, limit, search)"
+        >
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+      </li>
+      <li class="page-item">
         <button class="page-link" @click="page = 0" :disabled="page == 0">
           <i class="fa-solid fa-angles-left text-dark"></i>
         </button>

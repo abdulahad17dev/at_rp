@@ -28,6 +28,15 @@
         </select>
       </li>
       <li class="page-item">
+        <button
+          type="button"
+          class="page-link"
+          @click="get_proche_s(page, limit, building_id, status)"
+        >
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+      </li>
+      <li class="page-item">
         <button class="page-link" @click="page = 0" :disabled="page == 0">
           <i class="fa-solid fa-angles-left text-dark"></i>
         </button>

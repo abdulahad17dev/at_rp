@@ -1,94 +1,292 @@
 <template>
-  <Header_item />
+  <div v-if="role != 'admin'">
+    <Header_item />
 
-  <div class="row">
-    <div class="col mt-1 d-flex align-items-center">
-      <span>Лимит</span>
-      <select
-        class="form-control form-control-sm mx-2 form-select smeta_sort"
-        v-model="limit"
-      >
-        <option value="100">100</option>
-        <option value="500">500</option>
-        <option value="1000">1000</option>
-      </select>
-      <select
-        class="form-control form-control-sm mx-2 form-select smeta_sort"
-        v-model="status"
-      >
-        <option value="">барчаси</option>
-        <option value="removed">ўчирилган</option>
-        <option value="finished">якунланган</option>
-      </select>
-    </div>
-    <div class="col mt-2 d-flex align-items-center justify-content-end">
-      <span>Қидириш: </span>
-      <div class="input-group input-group-sm mx-2">
-        <input
-          type="search"
-          v-model="search"
-          class="form-control form-control-sm"
-        />
-        <div class="" v-if="role == 'pto'">
-          <button
-            class="btn btn-danger btn-sm"
-            @click="remove_all_smeta"
-            v-if="smeta != ''"
-          >
-            <i class="fa-solid fa-trash-can"></i>
-          </button>
-          <button
-            v-else
-            class="btn btn-outline-secondary"
-            type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#smeta_add"
-          >
-            <i class="fa-solid fa-circle-plus"></i>
-          </button>
+    <div class="row">
+      <div class="col mt-1 d-flex align-items-center">
+        <span>Лимит</span>
+        <select
+          class="form-control form-control-sm mx-2 form-select smeta_sort"
+          v-model="limit"
+        >
+          <option value="100">100</option>
+          <option value="500">500</option>
+          <option value="1000">1000</option>
+        </select>
+        <select
+          class="form-control form-control-sm mx-2 form-select smeta_sort"
+          v-model="status"
+        >
+          <option value="">барчаси</option>
+          <option value="removed">ўчирилган</option>
+          <option value="finished">якунланган</option>
+        </select>
+      </div>
+      <div class="col mt-2 d-flex align-items-center justify-content-end">
+        <span>Қидириш: </span>
+        <div class="input-group input-group-sm mx-2">
+          <input
+            type="search"
+            v-model="search"
+            class="form-control form-control-sm"
+          />
+          <div class="" v-if="role == 'pto'">
+            <button
+              class="btn btn-danger btn-sm"
+              @click="remove_all_smeta"
+              v-if="smeta != ''"
+            >
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+            <button
+              v-else
+              class="btn btn-outline-secondary"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#smeta_add"
+            >
+              <i class="fa-solid fa-circle-plus"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>
+
+    <Smeta_item :data="smeta" @remove_smeta="remove" />
+    <Data_notfound v-if="smeta == ''" />
+
+    <nav aria-label="Page navigation example" class="mt-2" v-if="smeta != ''">
+      <ul class="pagination pagination-sm justify-content-end">
+        <li class="page-item">
+          <button
+            type="button"
+            class="page-link"
+            @click="get_smeta(page, limit, search, status, building_id)"
+          >
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </li>
+        <li class="page-item">
+          <button class="page-link" @click="page = 0" :disabled="page == 0">
+            <i class="fa-solid fa-angles-left text-dark"></i>
+          </button>
+        </li>
+        <li class="page-item">
+          <button class="page-link" @click="page--" :disabled="page == 0">
+            <i class="fa-solid fa-angle-left text-dark"></i>
+          </button>
+        </li>
+        <li class="page-item">
+          <button class="page-link text-dark" disabled>
+            {{ page + 1 }}
+          </button>
+        </li>
+        <li class="page-item">
+          <button
+            class="page-link"
+            @click="page++"
+            :disabled="page == pages - 1"
+          >
+            <i class="fa-solid fa-angle-right text-dark"></i>
+          </button>
+        </li>
+        <li class="page-item">
+          <button
+            class="page-link"
+            @click="page = pages - 1"
+            :disabled="page == pages - 1"
+          >
+            <i class="fa-solid fa-angles-right text-dark"></i>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <Smeta_add @add="add" />
   </div>
 
-  <Smeta_item :data="smeta" @remove_smeta="remove" />
-  <Data_notfound v-if="smeta == ''" />
-
-  <nav aria-label="Page navigation example" class="mt-2" v-if="smeta != ''">
-    <ul class="pagination pagination-sm justify-content-end">
-      <li class="page-item">
-        <button class="page-link" @click="page = 0" :disabled="page == 0">
-          <i class="fa-solid fa-angles-left text-dark"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button class="page-link" @click="page--" :disabled="page == 0">
-          <i class="fa-solid fa-angle-left text-dark"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button class="page-link text-dark" disabled>
-          {{ page + 1 }}
-        </button>
-      </li>
-      <li class="page-item">
-        <button class="page-link" @click="page++" :disabled="page == pages - 1">
-          <i class="fa-solid fa-angle-right text-dark"></i>
-        </button>
-      </li>
-      <li class="page-item">
+  <div v-else>
+    <h5 class="text-center">
+      <b class="text-secondary"> {{ name }}</b>
+    </h5>
+    <ul class="nav nav-pills nav-fill mb-3" id="pills-tab" role="tablist">
+      <li class="nav-item" role="presentation">
         <button
-          class="page-link"
-          @click="page = pages - 1"
-          :disabled="page == pages - 1"
+          class="btn btn-sm w-100 btn-light"
+          id="pills-home-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-home"
+          type="button"
+          role="tab"
+          aria-controls="pills-home"
+          aria-selected="true"
+          @click="
+            smeta.length
+              ? ''
+              : get_smeta(page, limit, search, status, building_id)
+          "
         >
-          <i class="fa-solid fa-angles-right text-dark"></i>
+          Смета
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="btn btn-sm w-100 btn-light"
+          id="pills-profile-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-profile"
+          type="button"
+          role="tab"
+          aria-controls="pills-profile"
+          aria-selected="false"
+        >
+          Profile
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="btn btn-sm w-100 btn-light"
+          id="pills-contact-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-contact"
+          type="button"
+          role="tab"
+          aria-controls="pills-contact"
+          aria-selected="false"
+        >
+          Contact
         </button>
       </li>
     </ul>
-  </nav>
+    <div class="tab-content" id="pills-tabContent">
+      <div
+        class="tab-pane fade show"
+        id="pills-home"
+        role="tabpanel"
+        aria-labelledby="pills-home-tab"
+      >
+        <div class="row">
+          <div class="col mt-1 d-flex align-items-center">
+            <span>Лимит</span>
+            <select
+              class="form-control form-control-sm mx-2 form-select smeta_sort"
+              v-model="limit"
+            >
+              <option value="100">100</option>
+              <option value="500">500</option>
+              <option value="1000">1000</option>
+            </select>
+            <select
+              class="form-control form-control-sm mx-2 form-select smeta_sort"
+              v-model="status"
+            >
+              <option value="">барчаси</option>
+              <option value="removed">ўчирилган</option>
+              <option value="finished">якунланган</option>
+            </select>
+          </div>
+          <div class="col mt-2 d-flex align-items-center justify-content-end">
+            <span>Қидириш: </span>
+            <div class="input-group input-group-sm mx-2">
+              <input
+                type="search"
+                v-model="search"
+                class="form-control form-control-sm"
+              />
+              <div class="" v-if="role == 'pto'">
+                <button
+                  class="btn btn-danger btn-sm"
+                  @click="remove_all_smeta"
+                  v-if="smeta != ''"
+                >
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+                <button
+                  v-else
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#smeta_add"
+                >
+                  <i class="fa-solid fa-circle-plus"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  <Smeta_add @add="add" />
+        <Smeta_item :data="smeta" @remove_smeta="remove" />
+        <Data_notfound v-if="smeta == ''" />
+
+        <nav
+          aria-label="Page navigation example"
+          class="mt-2"
+          v-if="smeta != ''"
+        >
+          <ul class="pagination pagination-sm justify-content-end">
+            <li class="page-item">
+              <button
+                type="button"
+                class="page-link"
+                @click="get_smeta(page, limit, search, status, building_id)"
+              >
+                <i class="fa-solid fa-rotate"></i>
+              </button>
+            </li>
+            <li class="page-item">
+              <button class="page-link" @click="page = 0" :disabled="page == 0">
+                <i class="fa-solid fa-angles-left text-dark"></i>
+              </button>
+            </li>
+            <li class="page-item">
+              <button class="page-link" @click="page--" :disabled="page == 0">
+                <i class="fa-solid fa-angle-left text-dark"></i>
+              </button>
+            </li>
+            <li class="page-item">
+              <button class="page-link text-dark" disabled>
+                {{ page + 1 }}
+              </button>
+            </li>
+            <li class="page-item">
+              <button
+                class="page-link"
+                @click="page++"
+                :disabled="page == pages - 1"
+              >
+                <i class="fa-solid fa-angle-right text-dark"></i>
+              </button>
+            </li>
+            <li class="page-item">
+              <button
+                class="page-link"
+                @click="page = pages - 1"
+                :disabled="page == pages - 1"
+              >
+                <i class="fa-solid fa-angles-right text-dark"></i>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="pills-profile"
+        role="tabpanel"
+        aria-labelledby="pills-profile-tab"
+      >
+        ...
+      </div>
+      <div
+        class="tab-pane fade"
+        id="pills-contact"
+        role="tabpanel"
+        aria-labelledby="pills-contact-tab"
+      >
+        ...
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -111,6 +309,7 @@ export default {
       search: "",
       status: "",
       role: localStorage.getItem("role"),
+      name: this.$route.query.name,
     };
   },
   watch: {
@@ -277,13 +476,15 @@ export default {
     },
   },
   created() {
-    this.get_smeta(
-      this.page,
-      this.limit,
-      this.search,
-      this.status,
-      this.building_id
-    );
+    if (this.role != "admin") {
+      this.get_smeta(
+        this.page,
+        this.limit,
+        this.search,
+        this.status,
+        this.building_id
+      );
+    }
   },
   components: { Smeta_add, Smeta_item, Data_notfound, Header_item },
 };
@@ -313,5 +514,10 @@ export default {
   .row .col select {
     width: 50%;
   }
+}
+
+button.active {
+  background: #6c757d !important;
+  color: #fff;
 }
 </style>

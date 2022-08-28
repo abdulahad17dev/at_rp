@@ -128,12 +128,13 @@ export default {
 </script>
 
 <style lang="scss">
-// .table-sm > :not(caption) > * > * {
-// padding: 0 !important;
-// }
 table.smeta {
   min-width: 2000px;
   width: 100%;
   zoom: 65%;
+}
+
+.table-responsive {
+  max-height: 590px;
 }
 </style>
