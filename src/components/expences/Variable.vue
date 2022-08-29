@@ -300,6 +300,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       pay_for_variable_expense(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("pay_v").click();
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("pay_v_e_disabled").disabled = false;

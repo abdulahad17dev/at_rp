@@ -97,6 +97,13 @@
             >
               бошлаш
             </button>
+            <router-link
+              :to="{ name: 'workers', query: { id: item.Buildings.id } }"
+              class="btn btn-sm btn-primary mx-1"
+              v-if="role == 'prorap'"
+            >
+              <i class="fa-solid fa-users"></i>
+            </router-link>
           </td>
         </tr>
       </tbody>
@@ -180,7 +187,6 @@
             >
               <i class="fa-solid fa-right-long"></i>
             </router-link>
-
             <button
               class="btn btn-sm btn-primary mx-1 d-block mt-1"
               v-if="item.status == 'wait' && role == 'pto'"
@@ -295,6 +301,7 @@ export default {
       document.getElementById("building_disabled_put").disabled = true;
       building_put(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("buildings_put").click();
           document.getElementById("building_disabled_put").disabled = false;
           success(res).then(() => {
@@ -337,6 +344,7 @@ export default {
           e.status = "start";
           building_put(e)
             .then((res) => {
+              this.$store.dispatch("setLoading", { isLoading: false });
               success(res).then(() => {
                 this.$emit("get_buildings");
               });
@@ -355,6 +363,7 @@ export default {
       e.status = "end";
       building_put(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           success(res).then(() => {
             this.$emit("get_buildings");
           });
@@ -409,6 +418,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       building_d_add(e, this.building_id)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("document_button").disabled = false;
           success(res).then(() => {
             this.select_id(this.building_id, this.building_name, 2);
@@ -430,6 +440,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       building_d_remove(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_document").disabled = false;
           success(res).then(() => {
             this.select_id(this.building_id, this.building_name, 2);

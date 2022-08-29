@@ -448,6 +448,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       pay_for_fixed_expense(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("pay_f").click();
           document.getElementById("pay_f_e_disabled").disabled = false;
           success(res).then(() => {

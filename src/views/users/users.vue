@@ -163,6 +163,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       user_add(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("user_add").click();
           document.getElementById("user_disabled").disabled = false;
           success(res).then(() => {

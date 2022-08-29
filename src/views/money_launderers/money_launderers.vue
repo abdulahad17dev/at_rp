@@ -167,6 +167,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       money_launderers_add(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("money_l_add").click();
           document.getElementById("money_l_disabled").disabled = false;
           success(res).then(() => {
@@ -193,6 +194,7 @@ export default {
       document.getElementById("money_l_disabled2").disabled = true;
       money_launderers_put(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("money_l_put").click();
           document.getElementById("money_l_disabled2").disabled = false;
           success(res).then(() => {
@@ -214,6 +216,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       take_money_to_launderer(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("take_money_close").click();
           document.getElementById("take_m_disabled").disabled = false;
           success(res).then(() => {

@@ -274,6 +274,7 @@ export default {
         e.comment
       )
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("accept_money").click();
           document.getElementById("accept_m_disabled").disabled = false;
           success(res).then(() => {

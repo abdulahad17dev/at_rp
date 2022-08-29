@@ -185,6 +185,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       warehouseman_add(this.body)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("send_btn2").disabled = true;
           success(res).then(() => {
             this.$emit("get", this.building_id, "", 1);
@@ -205,6 +206,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       warehouseman_remove(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_warehouseman").disabled = false;
           success(res).then(() => {
             this.$emit("get", this.building_id, "", 1);

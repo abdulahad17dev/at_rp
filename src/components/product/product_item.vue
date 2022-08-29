@@ -181,6 +181,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       product_composition_add(this.body)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("composition_disabled").disabled = false;
           success(res).then(() => {
             this.select_id(this.product_id, this.product_item);
@@ -196,10 +197,11 @@ export default {
         });
     },
     remove(e) {
-      document.getElementById("remove").disabled = true;
       this.$store.dispatch("setLoading", { isLoading: true });
+      document.getElementById("remove").disabled = true;
       product_composition_remove(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove").disabled = false;
           success(res).then(() => {
             this.select_id(this.product_id, this.product_item);

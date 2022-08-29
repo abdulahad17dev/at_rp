@@ -220,6 +220,8 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       smeta_remove(id, "smeta_id")
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
+
           success(res).then(() => {
             this.get_smeta(
               this.page,
@@ -265,6 +267,7 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: true });
           smeta_remove(this.building_id, "building_id")
             .then((res) => {
+              this.$store.dispatch("setLoading", { isLoading: false });
               success(res).then(() => {
                 this.get_smeta(
                   this.page,

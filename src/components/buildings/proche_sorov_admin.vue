@@ -1,5 +1,5 @@
 <template>
-  <div class="table-responsive m-2">
+  <div class="table-responsive m-2" id="table-responsive">
     <table class="table table-sm table-hover table-bordered">
       <thead class="">
         <tr>
@@ -31,31 +31,40 @@
           <td style="width: 10%">{{ item.id }}</td>
           <td style="width: 20%">{{ item.name }}</td>
           <td style="width: 20%">
-            <div class="input-group" v-if="item.status == 'adminda_proche'">
-              <input
-                type="number"
-                class="form-control form-control-sm"
-                :id="`id${item.id}`"
-                step="any"
-                :disabled="proche_id != item.id"
-                v-model="item.quantity"
-              />
-              <button
-                v-if="proche_id != item.id"
-                class="btn btn-sm btn-warning"
-                @click="update_quantity(item.id)"
-              >
-                <i class="fa-solid fa-edit text-white"></i>
-              </button>
-              <button
-                v-else-if="proche_id == item.id"
-                class="btn btn-sm btn-danger"
-                @click="remove_quantity(item.id)"
-              >
-                <i class="fa-solid fa-circle-xmark text-white"></i>
-              </button>
-            </div>
-            <span v-else>{{ item.quantity }}</span>
+            <form
+              :id="`form${item.id}`"
+              @submit.prevent="accept(item.id, item.quantity, true)"
+            >
+              <div class="input-group" v-if="item.status == 'adminda_proche'">
+                <input
+                  type="number"
+                  class="form-control form-control-sm"
+                  :id="`id${item.id}`"
+                  step="any"
+                  :disabled="proche_id != item.id"
+                  v-model="item.quantity"
+                  required
+                  min="1"
+                />
+                <button
+                  v-if="proche_id != item.id"
+                  class="btn btn-sm btn-warning"
+                  @click="update_quantity(item.id)"
+                  type="button"
+                >
+                  <i class="fa-solid fa-edit text-white"></i>
+                </button>
+                <button
+                  v-else-if="proche_id == item.id"
+                  class="btn btn-sm btn-danger"
+                  @click="remove_quantity(item.id)"
+                  type="button"
+                >
+                  <i class="fa-solid fa-circle-xmark text-white"></i>
+                </button>
+              </div>
+              <span v-else>{{ item.quantity }}</span>
+            </form>
           </td>
           <td style="width: 20%">{{ item.olchov_birligi }}</td>
           <td style="width: 20%">
@@ -64,10 +73,10 @@
           <td style="width: 20%">{{ item.comment }}</td>
           <td>
             <button
+              :form="`form${item.id}`"
               class="btn btn-sm btn-success"
               :id="`accept_proche${item.id}`"
               v-if="item.status == 'adminda_proche'"
-              @click="accept(item.id, item.quantity, true)"
             >
               <i class="fa-solid fa-circle-check text-white"></i>
             </button>
@@ -84,7 +93,6 @@
       </tbody>
     </table>
   </div>
-
   <Data_notfound v-if="product_requests == ''" />
 
   <nav
@@ -205,6 +213,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       proche_s_put(id, status, 0, quantity)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById(`remove_proche${id}`).disabled = false;
           success(res).then(() => {
             this.get_proche_s(
@@ -228,13 +237,16 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       proche_s_put(id, status, 0, 0)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById(`remove_proche${id}`).disabled = false;
-          this.get_proche_s(
-            this.page,
-            this.limit,
-            this.building_id,
-            this.status
-          );
+          success(res).then(() => {
+            this.get_proche_s(
+              this.page,
+              this.limit,
+              this.building_id,
+              this.status
+            );
+          });
         })
         .catch((err) => {
           catchError(err);
@@ -272,6 +284,16 @@ th select {
   }
   .row .col select {
     width: 100%;
+  }
+}
+
+.table-responsive {
+  max-height: 75vh;
+}
+
+@media (max-width: 500px) {
+  .table-responsive {
+    max-height: 115vh;
   }
 }
 

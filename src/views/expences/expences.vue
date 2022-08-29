@@ -296,6 +296,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       fixed_expence_add(this.body)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("fixed_expense_disabled").disabled = false;
           success(res).then(() => {
             this.get_fixed_expenses(this.page, this.limit, this.search);
@@ -327,6 +328,7 @@ export default {
       document.getElementById("disabled" + e.id).disabled = true;
       fixed_expence_put(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("disabled" + e.id).disabled = false;
           success(res).then(() => {
             this.get_fixed_expenses(this.page, this.limit, this.search);

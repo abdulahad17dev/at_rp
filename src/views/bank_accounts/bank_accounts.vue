@@ -153,6 +153,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       bank_account_add(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("bank_add").click();
           document.getElementById("bank_disabled").disabled = false;
           success(res).then(() => {

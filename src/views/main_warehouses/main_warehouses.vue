@@ -178,6 +178,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       main_warehouses_add(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("main_w_add").click();
           document.getElementById("main_w_disabled").disabled = false;
           success(res).then(() => {
@@ -210,6 +211,7 @@ export default {
       document.getElementById("main_w_disabled2").disabled = true;
       main_warehouses_put(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("main_w_put").click();
           document.getElementById("main_w_disabled2").disabled = false;
           success(res).then(() => {

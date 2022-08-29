@@ -165,6 +165,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       wallet_add(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("wallet_add").click();
           document.getElementById("wallet_disabled").disabled = false;
           success(res).then(() => {
@@ -189,6 +190,7 @@ export default {
       document.getElementById("wallet_disabled2").disabled = true;
       wallet_put(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("wallet_put").click();
           document.getElementById("wallet_disabled2").disabled = false;
           success(res).then(() => {
@@ -210,6 +212,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       take_money_from_wallets(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("take_money_close").click();
           document.getElementById("take_m_disabled").disabled = false;
           success(res).then(() => {
@@ -231,6 +234,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       transfer_money_to_wallets(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("take_money_close").click();
           document.getElementById("take_m_disabled2").disabled = false;
           success(res).then(() => {

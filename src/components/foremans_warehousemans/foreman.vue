@@ -182,6 +182,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       foreman_add(this.body)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("send_btn").disabled = true;
           success(res).then(() => {
             this.$emit("get", this.building_id, "", 1);
@@ -202,6 +203,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       foreman_remove(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_foreman").disabled = false;
           success(res).then(() => {
             this.$emit("get", this.building_id, "", 1);

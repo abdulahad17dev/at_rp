@@ -3,6 +3,7 @@ import login from "./../utils/template/login/Login.vue";
 import users from "../views/users/users.vue";
 import building from "../views/buildings/buildings.vue";
 import building_inner from "../views/buildings/building_inner_page.vue";
+import workers from "../views/buildings/workers.vue";
 import proche_sorovlar from "../views/buildings/proche_sorovlar.vue";
 import product from "../views/product/product.vue";
 import smeta from "../views/smeta/smeta.vue";
@@ -105,6 +106,18 @@ let routes = [
       role: ["pto", "admin", "prorap"],
     },
     component: smeta,
+  },
+  // workers
+  {
+    path: "/buildings/workers",
+    name: "workers",
+    meta: {
+      requiresAuth: true,
+      title: "Усталар",
+      icon: "fa-solid fa-users",
+      role: ["prorap"],
+    },
+    component: workers,
   },
   // proche sorovlar
   {

@@ -127,6 +127,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       proche_s_add(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("proche_sorov_disabled").disabled = false;
           success(res).then(() => {
             this.get_proche_s(
@@ -153,6 +154,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       proche_s_put(e, "false", 0, 0)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_proche").disabled = false;
           success(res).then(() => {
             this.get_proche_s(

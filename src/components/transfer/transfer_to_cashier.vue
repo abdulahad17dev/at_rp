@@ -450,6 +450,7 @@ export default {
       document.getElementById(`remove_money${e}`).disabled = true;
       accept_money_in_cashier(e, 0, 0, "")
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById(`remove_money${e}`).disabled = false;
           success(res).then(() => {
             this.transfer_to_cashier(

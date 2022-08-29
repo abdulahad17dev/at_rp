@@ -81,6 +81,7 @@ export default {
       document.getElementById("user_disabled_put").disabled = true;
       user_put(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("user_put").click();
           document.getElementById("user_disabled_put").disabled = false;
           success(res).then(() => {

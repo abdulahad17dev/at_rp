@@ -31,7 +31,11 @@
     </div>
   </div>
 
-  <div class="table-responsive mt-3" style="overflow: auto">
+  <div
+    class="table-responsive mt-3"
+    id="table-responsive"
+    style="overflow: auto"
+  >
     <table class="table table-sm table-hover table-bordered smeta">
       <tbody v-for="item in smeta" :key="item">
         <tr v-if="!item.Smeta.grafik_id" class="bg-dark text-white text-center">
@@ -138,9 +142,8 @@
         </tr>
       </tbody>
     </table>
+    <Data_notfound v-if="smeta == ''" />
   </div>
-
-  <Data_notfound v-if="smeta == ''" />
 
   <nav aria-label="Page navigation example" class="mt-2" v-if="smeta != ''">
     <ul class="pagination pagination-sm justify-content-end">

@@ -97,6 +97,7 @@ export default {
 
       user_put(this.user)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("current_user").disabled = false;
           success(res).then(() => {
             this.get();

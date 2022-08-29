@@ -101,6 +101,7 @@ export default {
       document.getElementById("bank_put_disabled").disabled = true;
       bank_account_put(e.id, e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("bank_put").click();
           document.getElementById("bank_put_disabled").disabled = false;
           success(res).then(() => {
@@ -122,6 +123,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       transfers(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("transfer_add").click();
           document.getElementById("transfer_disabled").disabled = false;
           success(res).then(() => {
@@ -143,6 +145,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       transfers(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("transfer_to").click();
           document.getElementById("transfer_to_disabled").disabled = false;
           success(res).then(() => {
@@ -166,6 +169,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       transfer_to_cashiers(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("transfer_to").click();
           document.getElementById("transfer_to_cashier").disabled = false;
           success(res).then(() => {

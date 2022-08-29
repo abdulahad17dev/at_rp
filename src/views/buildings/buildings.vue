@@ -185,6 +185,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       building_add(e)
         .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("buildings_add").click();
           document.getElementById("building_disabled").disabled = false;
           success(res).then(() => {

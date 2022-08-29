@@ -452,3 +452,35 @@ export function wallet_add(data) {
 export function wallet_put(data) {
   return instance.put(`update_wallet/${data.id}`, data);
 }
+
+// workers
+
+export function workers_get(page, limit, search, building_id) {
+  if (search) {
+    return instance.get(
+      `get_workers?building_id=${building_id}&search=${search}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(
+      `get_workers?building_id=${building_id}&page=${page}&limit=${limit}`
+    );
+  }
+}
+
+export function worker_add(data) {
+  return instance.post(`create_worker`, data);
+}
+
+export function worker_put(data) {
+  return instance.put(`update_worker/${data.id}`, data);
+}
+
+// worker specialities
+
+export function worker_speciality_add(data) {
+  return instance.post(`create_worker_specialty`, data);
+}
+
+export function worker_speciality_remove(id) {
+  return instance.delete(`remove_worker_specialty/${id}`);
+}
