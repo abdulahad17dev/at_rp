@@ -83,7 +83,7 @@ export default {
         {
           to: "/markets",
           icon: "fa-solid fa-shop fa-2x",
-          title: "Таминот олиш",
+          title: "Таминот",
           role: ["taminotchi"],
         },
         {

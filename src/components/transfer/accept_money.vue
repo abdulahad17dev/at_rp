@@ -47,8 +47,8 @@
         </div>
       </div>
     </form>
-    <div class="table-responsive">
-      <table class="table table-sm table-hover">
+    <div class="table-responsive m-1">
+      <table class="table table-sm table-hover table-bordered">
         <thead>
           <tr>
             <th style="width: 5%">#ИД</th>
@@ -61,7 +61,20 @@
           <tr v-for="item in hisob_raqamiga_qabul_qilingan_pullar" :key="item">
             <td>{{ item.id }}</td>
             <td>{{ new Intl.NumberFormat().format(item.money) }} сўм</td>
-            <td>{{ new Date(item.time).toLocaleDateString() }}</td>
+            <td>
+              {{
+                new Date(item.time)
+                  .toLocaleDateString("en-us", {
+                    year: "numeric",
+                    month: "numeric",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: false,
+                  })
+                  .slice(0, 16)
+              }}
+            </td>
             <td>{{ item.comment }}</td>
           </tr>
         </tbody>

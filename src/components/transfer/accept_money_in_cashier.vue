@@ -148,7 +148,7 @@
                 !body.money_laundered_id || !body.percent || !body.comment
               "
             >
-              <i class="fas fa-circle-check"></i>
+              <i class="fa-solid fa-circle-check"></i>
             </button>
             <button
               type="button"

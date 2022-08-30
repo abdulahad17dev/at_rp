@@ -63,7 +63,7 @@
 
 <script>
 import { catchError } from "@/utils/request/handle_api_err";
-import { instance } from "./../../request/request";
+import { login } from "./../../request/request";
 export default {
   name: "LoginItem",
   data() {
@@ -79,8 +79,7 @@ export default {
       let params = new URLSearchParams();
       params.append("username", this.username);
       params.append("password", this.password);
-      instance
-        .post("token", params)
+      login(params)
         .then((res) => {
           localStorage.setItem("access_token", res.data.access_token);
           localStorage.setItem("role", res.data.role);
@@ -119,7 +118,6 @@ export default {
 .btn-login {
   font-size: 0.9rem;
   letter-spacing: 0.05rem;
-  padding: 0.75rem 1rem;
 }
 .login_container {
   position: fixed;

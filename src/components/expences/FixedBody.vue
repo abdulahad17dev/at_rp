@@ -250,7 +250,7 @@
           !pay_body.to_
         "
       >
-        <i class="fas fa-circle-check"></i>
+        <i class="fa-solid fa-circle-check"></i>
       </button>
       <button
         type="button"

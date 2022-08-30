@@ -54,8 +54,8 @@
         </div>
       </div>
     </form>
-    <div class="table-responsive">
-      <table class="table table-sm table-hover">
+    <div class="table-responsive m-1">
+      <table class="table table-sm table-hover table-bordered">
         <thead>
           <tr>
             <th style="width: 5%">#ИД</th>
@@ -186,7 +186,20 @@
             <td>
               {{ new Intl.NumberFormat().format(item.Transfers.money) }} сўм
             </td>
-            <td>{{ new Date(item.Transfers.time).toLocaleDateString() }}</td>
+            <td>
+              {{
+                new Date(item.Transfers.time)
+                  .toLocaleDateString("en-us", {
+                    year: "numeric",
+                    month: "numeric",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: false,
+                  })
+                  .slice(0, 16)
+              }}
+            </td>
             <td>{{ item.Transfers.comment }}</td>
             <td colspan="2">
               <b class="text-primary">{{ item.name }}</b>

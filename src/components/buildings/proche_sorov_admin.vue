@@ -1,5 +1,5 @@
 <template>
-  <div class="table-responsive m-2" id="table-responsive">
+  <div class="table-responsive m-2">
     <table class="table table-sm table-hover table-bordered">
       <thead class="">
         <tr>
@@ -29,11 +29,40 @@
       <tbody>
         <tr v-for="item in product_requests || []" :key="item">
           <td style="width: 10%">{{ item.id }}</td>
-          <td style="width: 20%">{{ item.name }}</td>
+          <td style="width: 20%">
+            <div class="input-group" v-if="item.status == 'adminda_proche'">
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                :id="`name${item.id}`"
+                step="any"
+                :disabled="proche_name != item.id"
+                v-model="item.name"
+                required
+              />
+              <button
+                v-if="proche_name != item.id"
+                class="btn btn-sm btn-warning"
+                @click="update_name(item.id)"
+                type="button"
+              >
+                <i class="fa-solid fa-edit text-white"></i>
+              </button>
+              <button
+                v-else-if="proche_name == item.id"
+                class="btn btn-sm btn-danger"
+                @click="remove_name(item.id)"
+                type="button"
+              >
+                <i class="fa-solid fa-circle-xmark text-white"></i>
+              </button>
+            </div>
+            <span v-else>{{ item.name }}</span>
+          </td>
           <td style="width: 20%">
             <form
               :id="`form${item.id}`"
-              @submit.prevent="accept(item.id, item.quantity, true)"
+              @submit.prevent="accept(item.id, item.quantity, true, item.name)"
             >
               <div class="input-group" v-if="item.status == 'adminda_proche'">
                 <input
@@ -68,7 +97,18 @@
           </td>
           <td style="width: 20%">{{ item.olchov_birligi }}</td>
           <td style="width: 20%">
-            {{ new Date(item.time).toLocaleDateString() }}
+            {{
+              new Date(item.time)
+                .toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false,
+                })
+                .slice(0, 16)
+            }}
           </td>
           <td style="width: 20%">{{ item.comment }}</td>
           <td>
@@ -169,6 +209,7 @@ export default {
       building_id: this.$route.query.id,
       status: "adminda_proche",
       proche_id: null,
+      proche_name: "",
     };
   },
   watch: {
@@ -208,10 +249,18 @@ export default {
       this.proche_id = null;
       document.getElementById(`id${id}`).disabled = true;
     },
-    accept(id, quantity, status) {
+    update_name(id) {
+      this.proche_name = id;
+      document.getElementById(`name${id}`).disabled = false;
+    },
+    remove_name(id) {
+      this.proche_name = null;
+      document.getElementById(`name${id}`).disabled = true;
+    },
+    accept(id, quantity, status, name) {
       document.getElementById(`remove_proche${id}`).disabled = true;
       this.$store.dispatch("setLoading", { isLoading: true });
-      proche_s_put(id, status, 0, quantity)
+      proche_s_put(id, status, 0, quantity, name)
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById(`remove_proche${id}`).disabled = false;
@@ -235,7 +284,7 @@ export default {
     remove(id, status) {
       document.getElementById(`remove_proche${id}`).disabled = true;
       this.$store.dispatch("setLoading", { isLoading: true });
-      proche_s_put(id, status, 0, 0)
+      proche_s_put(id, status, 0, 0, "")
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById(`remove_proche${id}`).disabled = false;

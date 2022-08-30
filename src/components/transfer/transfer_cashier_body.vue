@@ -133,7 +133,7 @@
         id="transfer_to_cashier"
         :disabled="!cashier.money || !cashier.comment || !cashier.to_"
       >
-        <i class="fas fa-circle-check"></i>
+        <i class="fa-solid fa-circle-check"></i>
       </button>
       <button
         type="button"

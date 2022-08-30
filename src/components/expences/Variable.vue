@@ -9,8 +9,8 @@
     >
       Бир марталик чиқим тарихи
     </summary>
-    <div class="table-responsive">
-      <table class="table table-sm table-hover">
+    <div class="table-responsive m-1">
+      <table class="table table-sm table-hover table-bordered">
         <thead>
           <tr>
             <th style="width: 5%">#ИД</th>
@@ -132,7 +132,20 @@
             <td>
               {{ new Intl.NumberFormat().format(item.Expenses.money) }} сўм
             </td>
-            <td>{{ new Date(item.Expenses.time).toLocaleDateString() }}</td>
+            <td>
+              {{
+                new Date(item.Expenses.time)
+                  .toLocaleDateString("en-us", {
+                    year: "numeric",
+                    month: "numeric",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: false,
+                  })
+                  .slice(0, 16)
+              }}
+            </td>
             <td>{{ item.Expenses.comment }}</td>
             <td>
               <b class="text-primary"> {{ item.name }}</b>

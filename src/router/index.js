@@ -57,7 +57,7 @@ let routes = [
     meta: {
       requiresAuth: true,
       title: "Бош меню",
-      icon: "fas fa-home",
+      icon: "fa-solid fa-home",
     },
     component: menu,
   },
@@ -221,7 +221,7 @@ let routes = [
     name: "markets",
     meta: {
       requiresAuth: true,
-      title: "Таминот олиш",
+      title: "Таминот",
       icon: "fa-solid fa-shop",
       role: ["taminotchi"],
     },

@@ -66,10 +66,32 @@
           </td>
           <td style="width: 5%">{{ item.Smeta.muddat }} кун</td>
           <td style="width: 10%">
-            {{ new Date(item.Smeta.start_date).toLocaleDateString() }}
+            {{
+              new Date(item.Smeta.start_date)
+                .toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false,
+                })
+                .slice(0, 16)
+            }}
           </td>
           <td style="width: 10%">
-            {{ new Date(item.Smeta.end_date).toLocaleDateString() }}
+            {{
+              new Date(item.Smeta.end_date)
+                .toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false,
+                })
+                .slice(0, 16)
+            }}
           </td>
           <td style="width: 5%">
             <button

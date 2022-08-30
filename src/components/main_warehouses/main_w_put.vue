@@ -5,7 +5,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">
-            {{ body.name }}ни таҳрирлаш
+            {{ body.name }} маълумотларини таҳрирлаш
           </h5>
           <button
             type="button"
@@ -87,7 +87,7 @@
               class="btn btn-outline-primary btn-sm"
               id="main_w_disabled2"
             >
-              <i class="fas fa-circle-check"></i>
+              <i class="fa-solid fa-circle-check"></i>
             </button>
             <button
               type="button"

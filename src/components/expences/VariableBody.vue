@@ -144,7 +144,7 @@
         id="pay_v_e_disabled"
         :disabled="!pay_body.from_ || !pay_body.money || !pay_body.comment"
       >
-        <i class="fas fa-circle-check"></i>
+        <i class="fa-solid fa-circle-check"></i>
       </button>
       <button
         type="button"

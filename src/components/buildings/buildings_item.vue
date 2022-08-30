@@ -18,9 +18,33 @@
           <td>{{ item.Buildings.name }}</td>
           <td>{{ item.Buildings.address }}</td>
           <td>
-            {{ new Date(item.Buildings.start_date).toLocaleDateString() }}
+            {{
+              new Date(item.Buildings.start_date)
+                .toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false,
+                })
+                .slice(0, 16)
+            }}
           </td>
-          <td>{{ new Date(item.Buildings.end_date).toLocaleDateString() }}</td>
+          <td>
+            {{
+              new Date(item.Buildings.end_date)
+                .toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false,
+                })
+                .slice(0, 16)
+            }}
+          </td>
           <td>
             <span
               class="badge rounded-pill bg-warning"
@@ -112,8 +136,34 @@
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.address }}</td>
-          <td>{{ new Date(item.start_date).toLocaleDateString() }}</td>
-          <td>{{ new Date(item.end_date).toLocaleDateString() }}</td>
+          <td>
+            {{
+              new Date(item.start_date)
+                .toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false,
+                })
+                .slice(0, 16)
+            }}
+          </td>
+          <td>
+            {{
+              new Date(item.end_date)
+                .toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false,
+                })
+                .slice(0, 16)
+            }}
+          </td>
           <td>
             <span
               class="badge rounded-pill bg-warning"

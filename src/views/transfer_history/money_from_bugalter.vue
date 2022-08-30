@@ -60,7 +60,20 @@
           <td>
             {{ new Intl.NumberFormat().format(item.Transfers.money) }} сўм
           </td>
-          <td>{{ new Date(item.Transfers.time).toLocaleDateString() }}</td>
+          <td>
+            {{
+              new Date(item.Transfers.time)
+                .toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false,
+                })
+                .slice(0, 16)
+            }}
+          </td>
           <td>{{ item.Transfers.comment }}</td>
           <td>
             <button

@@ -43,7 +43,7 @@
                 class="rating"
                 max="5"
                 oninput="this.style.setProperty('--value', `${this.valueAsNumber}`)"
-                step="0.5"
+                step="0.1"
                 :style="'--value:' + item.rating"
                 type="range"
                 disabled

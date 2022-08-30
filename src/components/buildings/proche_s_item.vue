@@ -33,11 +33,23 @@
           <td style="width: 20%">{{ item.quantity }}</td>
           <td style="width: 20%">{{ item.olchov_birligi }}</td>
           <td style="width: 20%">
-            {{ new Date(item.time).toLocaleDateString() }}
+            {{
+              new Date(item.time)
+                .toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false,
+                })
+                .slice(0, 16)
+            }}
           </td>
           <td style="width: 20%">{{ item.comment }}</td>
           <td>
             <button
+              v-if="item.status == 'adminda_proche'"
               class="btn btn-sm btn-danger"
               @click="$emit('remove', item.id)"
               id="remove_proche"
@@ -63,6 +75,11 @@ table {
   min-width: 1150px;
   width: 100%;
 }
+
+.table-responsive {
+  max-height: 62vh;
+}
+
 th select {
   width: 170px;
   padding: 0.25rem 0.5rem;

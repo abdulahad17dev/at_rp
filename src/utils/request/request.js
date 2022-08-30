@@ -19,6 +19,12 @@ export const file = axios.create({
   },
 });
 
+// login
+
+export function login(data) {
+  return instance.post("token", data);
+}
+
 // user
 
 export function user_get(page, limit, search, role) {
@@ -427,9 +433,9 @@ export function proche_s_add(data) {
   return instance.post(`product_request`, data);
 }
 
-export function proche_s_put(p_s_id, status, t_id, quantity) {
+export function proche_s_put(p_s_id, status, t_id, quantity, name) {
   return instance.put(
-    `confirm_or_reject_product_request/${p_s_id}?status=${status}&taminotchi_id=${t_id}&quantity=${quantity}`
+    `confirm_or_reject_product_request/${p_s_id}?status=${status}&taminotchi_id=${t_id}&quantity=${quantity}&name=${name}`
   );
 }
 
@@ -483,4 +489,20 @@ export function worker_speciality_add(data) {
 
 export function worker_speciality_remove(id) {
   return instance.delete(`remove_worker_specialty/${id}`);
+}
+
+// markets
+
+export function markets_get(page, limit, search) {
+  if (search) {
+    return instance.get(
+      `get_markets?search=${search}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(`get_markets?page=${page}&limit=${limit}`);
+  }
+}
+
+export function market_put(data) {
+  return instance.put(`update_market/${data.id}`, data);
 }
