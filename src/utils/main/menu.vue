@@ -60,7 +60,7 @@ export default {
           to: "/expenses",
           icon: "fa-solid fa-box fa-2x",
           title: "Чиқимлар",
-          role: ["bugalter"],
+          role: ["bugalter", "admin"],
         },
         {
           to: "/main_warehouses",
@@ -90,6 +90,12 @@ export default {
           to: "/money_from_bugalter",
           icon: "fa-solid fa-money-bill-transfer fa-2x",
           title: "Бугалтер ўтказган пуллар",
+          role: ["kassir"],
+        },
+        {
+          to: "/transfer_money_to_users",
+          icon: "fa-solid fa-users fa-2x",
+          title: "Ҳодимлар",
           role: ["kassir"],
         },
         {

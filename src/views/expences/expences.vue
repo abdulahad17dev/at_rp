@@ -7,13 +7,15 @@
         class="btn btn-sm btn-secondary mx-1"
         data-bs-toggle="modal"
         data-bs-target="#fixed_expense"
+        v-if="role == 'admin'"
       >
-        <i class="fa-solid fa-list"></i>
+        <i class="fa-solid fa-list"></i> Доимий чиқим қўшиш
       </button>
       <button
         class="btn btn-sm btn-secondary"
         data-bs-toggle="modal"
         data-bs-target="#pay_for_fixed_expense"
+        v-if="role != 'admin'"
       >
         Доимий <i class="fa-solid fa-circle-plus"></i>
       </button>
@@ -21,6 +23,7 @@
         class="btn btn-sm btn-secondary mx-1"
         data-bs-toggle="modal"
         data-bs-target="#pay_for_variable_expense"
+        v-if="role != 'admin'"
       >
         Бир марталик <i class="fa-solid fa-circle-plus"></i>
       </button>
@@ -38,6 +41,7 @@
     tabindex="-1"
     aria-labelledby="fixed_expenses"
     aria-hidden="true"
+    v-if="role == 'admin'"
   >
     <div class="modal-dialog">
       <div class="modal-content border-0">
@@ -270,6 +274,7 @@ export default {
       limit: 25,
       page: 0,
       pages: null,
+      role: localStorage.getItem("role"),
     };
   },
   watch: {

@@ -9,6 +9,7 @@ import product from "../views/product/product.vue";
 import smeta from "../views/smeta/smeta.vue";
 import bank_acoounts from "../views/bank_accounts/bank_accounts.vue";
 import transfers_history from "../views/transfer_history/transfer_history.vue";
+import transfers_to_users from "../views/transfer_history/money_to_users_from_cashier.vue";
 import expences from "../views/expences/expences.vue";
 import main_warehouses from "../views/main_warehouses/main_warehouses.vue";
 import money_launderers from "../views/money_launderers/money_launderers.vue";
@@ -167,6 +168,18 @@ let routes = [
     },
     component: transfers_history,
   },
+  // transfer money to users from cashier
+  {
+    path: "/transfer_money_to_users",
+    name: "transfer_money_to_users",
+    meta: {
+      requiresAuth: true,
+      title: "Ҳодимга пул бериш ва олиш",
+      icon: "fa-solid fa-users",
+      role: ["kassir"],
+    },
+    component: transfers_to_users,
+  },
   // expences
   {
     path: "/expenses",
@@ -175,7 +188,7 @@ let routes = [
       requiresAuth: true,
       title: "Чиқимлар",
       icon: "fa-solid fa-box",
-      role: ["bugalter"],
+      role: ["bugalter", "admin"],
     },
     component: expences,
   },

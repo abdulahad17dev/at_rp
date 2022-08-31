@@ -1,5 +1,5 @@
 <template>
-  <div class="table-responsive mt-3" v-if="data != ''">
+  <div class="table-responsive mt-3">
     <table class="table table-sm table-hover table-bordered table_products">
       <thead class="">
         <tr>
@@ -96,10 +96,7 @@
             </div>
           </form>
 
-          <div
-            class="table-responsive mt-3 table_product_composition"
-            v-if="product_composition != ''"
-          >
+          <div class="table-responsive mt-3 table_product_composition">
             <table class="table table-sm table-bordered table-hover product_c">
               <thead>
                 <tr>
@@ -228,6 +225,12 @@ table.product_c {
 }
 
 div.table_product_composition {
-  max-height: 550px;
+  max-height: 66vh;
+}
+
+@media (max-width: 500px) {
+  div.table_product_composition {
+    max-height: 90vh;
+  }
 }
 </style>

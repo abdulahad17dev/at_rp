@@ -88,6 +88,16 @@ table {
   width: 100%;
 }
 
+.table-responsive {
+  max-height: 66vh;
+}
+
+@media (max-width: 500px) {
+  .table-responsive {
+    max-height: 85vh;
+  }
+}
+
 // rating
 
 .rating {

@@ -157,7 +157,7 @@ table.smeta {
 }
 
 .table-responsive {
-  max-height: 70vh;
+  max-height: 67vh;
 }
 
 @media (max-width: 500px) {

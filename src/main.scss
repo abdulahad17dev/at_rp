@@ -1,4 +1,4 @@
-.scroll {
+.zoom {
   max-height: 100vh;
   overflow: auto;
   scroll-behavior: smooth;
@@ -23,7 +23,7 @@
 }
 
 @media (max-width: 500px) {
-  .zoom {
+  .table-responsive {
     zoom: 70%;
   }
 }
