@@ -1,112 +1,95 @@
 <template>
-  <details class="my-2">
-    <summary
-      @click="
-        variable_history.length
-          ? ''
-          : variable_history_get(page, limit, from, user_id)
-      "
-    >
-      бир марталик чиқим тарихи
-    </summary>
-    <div class="table-responsive m-1">
-      <table class="table table-sm table-hover table-bordered">
-        <thead>
-          <tr>
-            <th style="width: 5%">#ИД</th>
-            <th style="width: 35%">Сумма</th>
-            <th style="width: 20%">Сана</th>
-            <th style="width: 30%">Изох</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in variable_history" :key="item">
-            <td>{{ item.Expenses.id }}</td>
-            <td>
-              {{ new Intl.NumberFormat().format(item.Expenses.money) }} сўм
-            </td>
-            <td>
-              {{
-                new Date(item.Expenses.time)
-                  .toLocaleDateString("en-us", {
-                    year: "numeric",
-                    month: "numeric",
-                    day: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
-                    hour12: false,
-                  })
-                  .slice(0, 16)
-              }}
-            </td>
-            <td>{{ item.Expenses.comment }}</td>
-          </tr>
-        </tbody>
-      </table>
-      <Data_notfound v-if="variable_history == ''" />
-    </div>
+  <div class="table-responsive m-1">
+    <table class="table table-sm table-hover table-bordered">
+      <thead>
+        <tr>
+          <th style="width: 5%">#ИД</th>
+          <th style="width: 35%">Сумма</th>
+          <th style="width: 20%">Сана</th>
+          <th style="width: 30%">Изох</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in variable_history" :key="item">
+          <td>{{ item.Expenses.id }}</td>
+          <td>{{ new Intl.NumberFormat().format(item.Expenses.money) }} сўм</td>
+          <td>
+            {{
+              new Date(item.Expenses.time)
+                .toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false,
+                })
+                .slice(0, 16)
+            }}
+          </td>
+          <td>{{ item.Expenses.comment }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <Data_notfound v-if="variable_history == ''" />
+  </div>
 
-    <nav
-      aria-label="Page navigation example"
-      class="mt-1"
-      v-if="variable_history != ''"
-    >
-      <ul class="pagination pagination-sm justify-content-end">
-        <li class="page-item">
-          <select
-            class="form-control form-control-sm form-select mx-1"
-            v-model="limit"
-          >
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select>
-        </li>
-        <li class="page-item">
-          <button
-            type="button"
-            class="page-link"
-            @click="variable_history_get(page, limit, from, user_id)"
-          >
-            <i class="fa-solid fa-rotate"></i>
-          </button>
-        </li>
-        <li class="page-item">
-          <button class="page-link" @click="page = 0" :disabled="page == 0">
-            <i class="fa-solid fa-angles-left text-dark"></i>
-          </button>
-        </li>
-        <li class="page-item">
-          <button class="page-link" @click="page--" :disabled="page == 0">
-            <i class="fa-solid fa-angle-left text-dark"></i>
-          </button>
-        </li>
-        <li class="page-item">
-          <button class="page-link text-dark" disabled>
-            {{ page + 1 }}
-          </button>
-        </li>
-        <li class="page-item">
-          <button
-            class="page-link"
-            @click="page++"
-            :disabled="page == pages - 1"
-          >
-            <i class="fa-solid fa-angle-right text-dark"></i>
-          </button>
-        </li>
-        <li class="page-item">
-          <button
-            class="page-link"
-            @click="page = pages - 1"
-            :disabled="page == pages - 1"
-          >
-            <i class="fa-solid fa-angles-right text-dark"></i>
-          </button>
-        </li>
-      </ul>
-    </nav>
-  </details>
+  <nav
+    aria-label="Page navigation example"
+    class="mt-1"
+    v-if="variable_history != ''"
+  >
+    <ul class="pagination pagination-sm justify-content-end">
+      <li class="page-item">
+        <select
+          class="form-control form-control-sm form-select mx-1"
+          v-model="limit"
+        >
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </li>
+      <li class="page-item">
+        <button
+          type="button"
+          class="page-link"
+          @click="variable_history_get(page, limit, from, user_id)"
+        >
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+      </li>
+      <li class="page-item">
+        <button class="page-link" @click="page = 0" :disabled="page == 0">
+          <i class="fa-solid fa-angles-left text-dark"></i>
+        </button>
+      </li>
+      <li class="page-item">
+        <button class="page-link" @click="page--" :disabled="page == 0">
+          <i class="fa-solid fa-angle-left text-dark"></i>
+        </button>
+      </li>
+      <li class="page-item">
+        <button class="page-link text-dark" disabled>
+          {{ page + 1 }}
+        </button>
+      </li>
+      <li class="page-item">
+        <button class="page-link" @click="page++" :disabled="page == pages - 1">
+          <i class="fa-solid fa-angle-right text-dark"></i>
+        </button>
+      </li>
+      <li class="page-item">
+        <button
+          class="page-link"
+          @click="page = pages - 1"
+          :disabled="page == pages - 1"
+        >
+          <i class="fa-solid fa-angles-right text-dark"></i>
+        </button>
+      </li>
+    </ul>
+  </nav>
 </template>
 
 <script>
@@ -153,6 +136,9 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
+  },
+  created() {
+    this.variable_history_get(this.page, this.limit, this.from, this.user_id);
   },
   components: { Data_notfound },
 };

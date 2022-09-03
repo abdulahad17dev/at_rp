@@ -257,6 +257,10 @@ export function transfer_money_to_wallets(data) {
   return instance.post("transfer_money_to_wallet", data);
 }
 
+export function transfer_money_to_users(data) {
+  return instance.post("transfer_money_to_users_from_cashier", data);
+}
+
 export function money_from_launderer_get(
   page,
   limit,

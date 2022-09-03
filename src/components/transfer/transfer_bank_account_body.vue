@@ -61,9 +61,11 @@
                   <li
                     v-for="item in bank_accounts"
                     :key="item"
-                    @click="select(item.id, item.name)"
+                    @click="
+                      select(item.Bank_accounts.id, item.Bank_accounts.name)
+                    "
                   >
-                    <a class="dropdown-item">{{ item.name }}</a>
+                    <a class="dropdown-item">{{ item.Bank_accounts.name }}</a>
                   </li>
                 </ul>
               </li>
