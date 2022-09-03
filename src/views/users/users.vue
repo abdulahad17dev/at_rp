@@ -112,8 +112,8 @@ export default {
       limit: 25,
       page: 0,
       pages: null,
-      users: [],
       search: "",
+      users: [],
       role: "",
     };
   },
@@ -127,6 +127,7 @@ export default {
       document.getElementById("scroll").scrollTop = 0;
     },
     search(e) {
+      this.page = 0;
       if (e.length > 0) {
         this.get_users(this.page, this.limit, this.search, this.role);
       } else if (e.length == 0) {

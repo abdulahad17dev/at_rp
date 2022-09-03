@@ -239,6 +239,26 @@ export function transfer_cashier_get(
   }
 }
 
+export function transfer_users_get(
+  page,
+  limit,
+  from,
+  to,
+  status,
+  from_time,
+  to_time
+) {
+  if (from_time && to_time) {
+    return instance.get(
+      `transfered_money_to_users_from_cashier?from_time=${from_time}&to_time=${to_time}&from_=${from}&to_=${to}&status=${status}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(
+      `transfered_money_to_users_from_cashier?from_=${from}&to_=${to}&status=${status}&page=${page}&limit=${limit}`
+    );
+  }
+}
+
 export function accept_money_in_cashier(id, money_l_id, percent, comment) {
   return instance.put(
     `acceptance_or_remove_transfered_money/${id}?money_launderer_id=${money_l_id}&percent=${percent}&comment=${comment}`

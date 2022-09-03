@@ -240,6 +240,7 @@ export default {
       document.getElementById("scroll").scrollTop = 0;
     },
     search_expense(e) {
+      this.page_expense = 0;
       if (e.length > 0) {
         this.expense_get(
           this.page_expense,
@@ -318,6 +319,13 @@ th select {
 .table-responsive {
   max-height: 400px;
   min-height: 400px;
+}
+
+@media (max-width: 480px) {
+  .table-responsive {
+    max-height: 500px;
+    min-height: 500px;
+  }
 }
 
 table {

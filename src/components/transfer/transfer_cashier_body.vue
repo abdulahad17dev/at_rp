@@ -182,6 +182,7 @@ export default {
       document.getElementById("scroll").scrollTop = 0;
     },
     search(e) {
+      this.page = 0;
       if (e.length > 0) {
         this.get_cashier(this.page, this.limit, this.search, this.role);
       } else if (e.length == 0) {

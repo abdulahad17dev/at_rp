@@ -174,7 +174,7 @@ let routes = [
     name: "transfer_money_to_users",
     meta: {
       requiresAuth: true,
-      title: "Ҳодимга пул бериш ва олиш",
+      title: "Ҳодимга пул ўтказиш",
       icon: "fa-solid fa-users",
       role: ["kassir"],
     },

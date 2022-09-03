@@ -3,7 +3,10 @@ import Swal from "sweetalert2";
 export let link = "https://constructionproject.crud.uz/uploaded_files/";
 
 export function catchError(error) {
-  if (error.response.status == 401) {
+  if (
+    error.response.status == 401 ||
+    error.response.data.detail == "Inactive user"
+  ) {
     console.clear();
     localStorage.clear();
     Swal.mixin({
@@ -19,7 +22,7 @@ export function catchError(error) {
     })
       .fire({
         icon: "error",
-        title: "Login yoki parolda xatolik",
+        title: "Логин ёки паролда хатолик",
       })
       .then(() => {
         if (window.location.pathname == "/") {
@@ -41,7 +44,7 @@ export function catchError(error) {
       },
     }).fire({
       icon: "warning",
-      title: "Server bilan aloqa mavjud emas !",
+      title: "Сервер билан алоқа мавжуд эмас",
     });
   } else if (error.response.status == 422) {
     return Swal.mixin({
@@ -56,7 +59,7 @@ export function catchError(error) {
       },
     }).fire({
       icon: "warning",
-      title: "Ma'lumot to'liq emas !",
+      title: "Маълумот тўлиқ эмас",
     });
   } else if (error.response.status == 404) {
     return Swal.mixin({
@@ -71,7 +74,7 @@ export function catchError(error) {
       },
     }).fire({
       icon: "error",
-      title: "URL manzili noto'g'ri !",
+      title: "УРЛ манзил нотўғри !",
     });
   } else if (error.response.status == 400) {
     return Swal.mixin({
@@ -89,6 +92,7 @@ export function catchError(error) {
       title: error.response.data.detail,
     });
   }
+  console.clear();
 }
 
 export function success(res) {
@@ -122,7 +126,7 @@ export function position_err(err) {
       },
     }).fire({
       icon: "error",
-      title: "Foydalanuvchi Geolokatsiyani rad etdi",
+      title: "Фойдаланувчи Геолокацияни рад этди",
     });
   }
 }

@@ -163,6 +163,13 @@ th select {
   min-height: 400px;
 }
 
+@media (max-width: 480px) {
+  .table-responsive {
+    max-height: 500px;
+    min-height: 500px;
+  }
+}
+
 table {
   width: 100%;
   min-width: 900px;

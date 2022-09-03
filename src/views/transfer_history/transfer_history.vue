@@ -10,7 +10,7 @@
     id="pills-tab"
     role="tablist"
   >
-    <li class="nav-item" role="presentation">
+    <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
       <button
         class="btn btn-sm btn-light w-100"
         id="pills-home-tab"
@@ -25,7 +25,7 @@
         ҳисоб рақамига қабул қилинган пуллар
       </button>
     </li>
-    <li class="nav-item" role="presentation">
+    <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
       <button
         class="btn btn-sm btn-light w-100"
         id="pills-profile-tab"
@@ -40,7 +40,7 @@
         ҳисоб рақамидан ўтказилган пуллар
       </button>
     </li>
-    <li class="nav-item" role="presentation">
+    <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
       <button
         class="btn btn-sm btn-light w-100"
         id="pills-contact-tab"
@@ -55,13 +55,7 @@
         ҳисоб рақамига ўтказилган пуллар
       </button>
     </li>
-  </ul>
-  <u
-    class="nav nav-pills nav-fill nav-justified mb-3 row"
-    id="pills-tab"
-    role="tablist"
-  >
-    <li class="nav-item" role="presentation">
+    <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
       <button
         class="btn btn-sm btn-light w-100"
         id="pills-home-tab2"
@@ -76,7 +70,7 @@
         кассирга ўтказилган пуллар
       </button>
     </li>
-    <li class="nav-item" role="presentation">
+    <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
       <button
         class="btn btn-sm btn-light w-100"
         id="pills-profile-tab2"
@@ -91,7 +85,7 @@
         доимий чиқим тарихи
       </button>
     </li>
-    <li class="nav-item" role="presentation">
+    <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
       <button
         class="btn btn-sm btn-light w-100"
         id="pills-contact-tab2"
@@ -106,7 +100,7 @@
         бир марталик чиқим тарихи
       </button>
     </li>
-  </u>
+  </ul>
   <div class="tab-content" id="pills-tabContent">
     <div
       class="tab-pane fade"
@@ -194,5 +188,19 @@ export default {
 button.active {
   background: #6c757d !important;
   color: #fff;
+}
+
+@media (max-width: 920px) {
+  ul.nav {
+    zoom: 75%;
+  }
+  ul li {
+    width: 50%;
+  }
+}
+@media (max-width: 480px) {
+  ul li {
+    width: 100%;
+  }
 }
 </style>

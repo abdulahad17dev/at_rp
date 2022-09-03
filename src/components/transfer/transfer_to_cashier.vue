@@ -345,7 +345,7 @@ export default {
       );
     },
     user_limit(e) {
-      this.page = 0;
+      this.user_page = 0;
       this.get_cashier(this.user_page, e, this.user_search, this.user_role);
     },
     user_page(e) {
@@ -353,6 +353,7 @@ export default {
       document.getElementById("scroll").scrollTop = 0;
     },
     user_search(e) {
+      this.user_page = 0;
       if (e.length > 0) {
         this.get_cashier(
           this.user_page,
@@ -367,7 +368,7 @@ export default {
           this.user_search,
           this.user_role
         );
-        this.page = 0;
+        this.user_page = 0;
       }
     },
   },
@@ -488,6 +489,13 @@ th select {
 .table-responsive {
   max-height: 400px;
   min-height: 400px;
+}
+
+@media (max-width: 480px) {
+  .table-responsive {
+    max-height: 500px;
+    min-height: 500px;
+  }
 }
 
 table {

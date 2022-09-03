@@ -1,7 +1,8 @@
 <template>
-  <button class="btn btn-dark rounded-circle back btn-lg" @click="back()">
+  <button class="btn btn-dark back btn-lg rounded-circle" @click="back()">
     <i class="fa-solid fa-arrow-left"></i>
   </button>
+
   <button
     class="btn btn-dark rounded-circle to_up btn-lg"
     id="top"
@@ -39,7 +40,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .back {
   position: fixed;
   bottom: 10px;

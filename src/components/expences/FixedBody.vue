@@ -302,6 +302,7 @@ export default {
       document.getElementById("scroll").scrollTop = 0;
     },
     search_account(e) {
+      this.page_account = 0;
       if (e.length > 0) {
         this.bank_accounts_get(
           this.page_account,
@@ -326,6 +327,7 @@ export default {
       document.getElementById("scroll").scrollTop = 0;
     },
     search_expense(e) {
+      this.page_expense = 0;
       if (e.length > 0) {
         this.expense_get(
           this.page_expense,

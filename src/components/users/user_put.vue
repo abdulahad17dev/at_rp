@@ -87,7 +87,7 @@
                 </select>
               </div>
 
-              <div class="col-10 mx-auto">
+              <div class="col-10 mx-auto" v-if="user_id != data.id">
                 <label for="status"> Статус: </label>
                 <select
                   id="status"
@@ -127,6 +127,11 @@
 export default {
   name: "UserPutItem",
   props: ["object"],
+  data() {
+    return {
+      user_id: localStorage.getItem("user_id"),
+    };
+  },
   computed: {
     data() {
       return this.object;
