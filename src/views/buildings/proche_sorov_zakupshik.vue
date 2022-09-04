@@ -122,7 +122,7 @@
 import Header_item from "@/components/header/header_item.vue";
 import { proche_s_get, proche_s_put } from "@/utils/request/request";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
-import { catchError } from "@/utils/request/handle_api_err";
+import { catchError, success } from "@/utils/request/handle_api_err";
 import Accept_request from "@/components/buildings/accept_request.vue";
 export default {
   name: "ProcheSorovZakupshik",
