@@ -42,7 +42,7 @@ export default {
           to: "/buildings",
           icon: "fa-solid fa-building fa-2x",
           title: "Обйектлар",
-          role: ["pto", "admin", "prorap"],
+          role: ["pto", "admin", "prorap", "zakupshik"],
         },
         {
           to: "/products",
@@ -98,6 +98,12 @@ export default {
           title: "Ҳодимлар",
           role: ["kassir"],
         },
+        // {
+        //   to: "/product_request",
+        //   icon: "fa-solid fa-rectangle-list fa-2x",
+        //   title: "Проче сўровлар",
+        //   role: ["zakupshik"],
+        // },
         {
           to: "/settings",
           icon: "fa-solid fa-screwdriver-wrench fa-2x",

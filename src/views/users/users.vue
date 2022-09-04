@@ -49,7 +49,7 @@
     </div>
   </div>
 
-  <User_item :data="users" @get_users="get_users(page, limit, search)" />
+  <User_item :data="users" @get_users="get_users(page, limit, search, role)" />
   <Data_notfound v-if="users == ''" />
 
   <nav aria-label="Page navigation example" class="mt-2" v-if="users != ''">

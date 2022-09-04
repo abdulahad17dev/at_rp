@@ -225,14 +225,31 @@
               <i class="fa-solid fa-file-arrow-up"></i>
             </button>
             <router-link
-              :to="
-                role == 'admin'
-                  ? {
-                      name: 'building',
-                      query: { id: item.id, name: item.name },
-                    }
-                  : { name: 'smeta', query: { id: item.id } }
-              "
+              v-if="role == 'admin'"
+              :to="{
+                name: 'building',
+                query: { id: item.id, name: item.name },
+              }"
+              class="btn btn-sm btn-primary mx-1"
+            >
+              <i class="fa-solid fa-right-long"></i>
+            </router-link>
+            <router-link
+              v-else-if="role == 'zakupshik'"
+              :to="{
+                name: 'proche_sorov_zakupshik',
+                query: { id: item.id, name: item.name },
+              }"
+              class="btn btn-sm btn-primary mx-1"
+            >
+              <i class="fa-solid fa-right-long"></i>
+            </router-link>
+            <router-link
+              v-else
+              :to="{
+                name: 'smeta',
+                query: { id: item.id, name: item.name },
+              }"
               class="btn btn-sm btn-primary mx-1"
             >
               <i class="fa-solid fa-right-long"></i>

@@ -39,7 +39,7 @@
           </button>
           <button
             v-else
-            class="btn btn-outline-secondary"
+            class="btn btn-outline-secondary btn-sm"
             type="button"
             data-bs-toggle="modal"
             data-bs-target="#smeta_add"

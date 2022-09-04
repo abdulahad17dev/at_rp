@@ -5,6 +5,7 @@ import building from "../views/buildings/buildings.vue";
 import building_inner from "../views/buildings/building_inner_page.vue";
 import workers from "../views/buildings/workers.vue";
 import proche_sorovlar from "../views/buildings/proche_sorovlar.vue";
+import proche_sorov_zakupshik from "../views/buildings/proche_sorov_zakupshik.vue";
 import product from "../views/product/product.vue";
 import smeta from "../views/smeta/smeta.vue";
 import bank_acoounts from "../views/bank_accounts/bank_accounts.vue";
@@ -81,7 +82,7 @@ let routes = [
       requiresAuth: true,
       title: "Обйектлар",
       icon: "fa-solid fa-building",
-      role: ["pto", "admin", "prorap"],
+      role: ["pto", "admin", "prorap", "zakupshik"],
     },
     component: building,
   },
@@ -131,6 +132,18 @@ let routes = [
       role: ["prorap"],
     },
     component: proche_sorovlar,
+  },
+  // proche sorovlar
+  {
+    path: "/buildings/product_request_zakupshik",
+    name: "proche_sorov_zakupshik",
+    meta: {
+      requiresAuth: true,
+      title: "Проче сўровлар",
+      icon: "fa-solid fa-rectangle-list",
+      role: ["zakupshik"],
+    },
+    component: proche_sorov_zakupshik,
   },
   // products
   {

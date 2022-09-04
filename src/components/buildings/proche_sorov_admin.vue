@@ -311,13 +311,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.page-item select {
-  width: 80px;
-  height: 30px;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
-}
-
 th select {
   width: 170px;
   padding: 0.25rem 0.5rem;
@@ -337,22 +330,17 @@ th select {
 }
 
 .table-responsive {
-  max-height: 75vh;
+  max-height: 76vh;
 }
 
 @media (max-width: 500px) {
   .table-responsive {
-    max-height: 115vh;
+    max-height: 105vh;
   }
 }
 
 table {
   min-width: 1150px;
   width: 100%;
-}
-th select {
-  width: 170px;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
 }
 </style>

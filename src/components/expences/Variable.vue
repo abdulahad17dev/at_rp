@@ -364,13 +364,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.page-item select {
-  width: 80px;
-  height: 30px;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
-}
-
 th select {
   width: 170px;
   padding: 0.25rem 0.5rem;

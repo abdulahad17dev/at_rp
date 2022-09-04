@@ -2,11 +2,14 @@
   <router-link
     v-if="this.$route.name != 'menu'"
     :to="{ name: 'menu' }"
-    class="btn btn-dark btn-sm flex-start"
+    class="btn btn-dark btn-sm flex-start back_home"
   >
     <i class="fa-solid fa-home"></i>
   </router-link>
-  <h5 class="card-title text-center mb-3">
+  <h5
+    class="card-title text-center mb-3"
+    :style="this.$route.name != 'menu' ? 'margin-top: -30px' : ''"
+  >
     <span :class="this.$route.meta.icon"></span>
     {{ this.$route.meta.title }}
     <br />
@@ -30,10 +33,5 @@ export default {
   .row {
     zoom: 75%;
   }
-}
-
-.flex-start {
-  position: absolute;
-  z-index: 10;
 }
 </style>
