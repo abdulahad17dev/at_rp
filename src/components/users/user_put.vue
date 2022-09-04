@@ -66,7 +66,7 @@
                   autocomplete="on"
                 />
               </div>
-              <div class="col-10 mx-auto">
+              <div class="col-10 mx-auto" v-if="user_id != data.id">
                 <label for="role"> Ихтисослиги: </label>
                 <select
                   id="role"

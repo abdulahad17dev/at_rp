@@ -48,9 +48,6 @@
             >
               <i class="fa-solid fa-circle-check text-white"></i>
             </button>
-            <button class="btn btn-sm btn-danger mx-1">
-              <i class="fa-solid fa-circle-xmark text-white"></i>
-            </button>
           </td>
         </tr>
       </tbody>

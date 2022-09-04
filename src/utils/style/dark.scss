@@ -7,7 +7,14 @@
     background: rgb(60, 65, 70);
 }
 
-.dark .content-app .card {
+.dark button.btn-light {
+    color: black;
+}
+.dark button.btn-light.active {
+    color: white;
+}
+
+.dark .container-fluid .card {
     background: var(--dark);
 }
 
@@ -20,7 +27,7 @@
 }
 
 .dark a,
-.dark .content-app .card .card-body {
+.dark .container-fluid .card .card-body {
     color: white !important;
 }
 

@@ -1,12 +1,10 @@
 <template>
   <div class="app" v-if="this.$route.name !== 'login'">
     <div class="scroll" id="scroll">
-      <div class="container-fluid">
-        <div class="content-app">
-          <div class="card shadow mt-3 mb-3 border-0">
-            <div class="card-body zoom">
-              <slot />
-            </div>
+      <div class="container-fluid pt-3">
+        <div class="card shadow mb-3 border-0">
+          <div class="card-body zoom">
+            <slot />
           </div>
         </div>
       </div>
