@@ -235,16 +235,6 @@
               <i class="fa-solid fa-right-long"></i>
             </router-link>
             <router-link
-              v-else-if="role == 'zakupshik'"
-              :to="{
-                name: 'proche_sorov_zakupshik',
-                query: { id: item.id, name: item.name },
-              }"
-              class="btn btn-sm btn-primary mx-1"
-            >
-              <i class="fa-solid fa-right-long"></i>
-            </router-link>
-            <router-link
               v-else
               :to="{
                 name: 'smeta',

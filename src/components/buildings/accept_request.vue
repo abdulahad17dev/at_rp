@@ -20,7 +20,7 @@
             id="accpet_request_close"
           ></button>
         </div>
-        <form @submit.prevent="$emit('accept_request', body)">
+        <form @submit.prevent="$emit('accept_request', body, data)">
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
@@ -164,6 +164,13 @@ export default {
         taminotchi_id: null,
         quantity: 0,
         name: "",
+      },
+      data: {
+        name: "string",
+        quantity: 0,
+        olchov_birligi: "string",
+        comment: "string",
+        building_id: 0,
       },
     };
   },

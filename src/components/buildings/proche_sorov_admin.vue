@@ -1,14 +1,14 @@
 <template>
-  <div class="table-responsive m-2">
-    <table class="table table-sm table-hover table-bordered">
+  <div class="table-responsive">
+    <table class="table table-sm table-bordered">
       <thead class="">
         <tr>
           <th style="width: 10%">#ИД</th>
+          <th style="width: 12%">Сана</th>
           <th style="width: 20%">Номи</th>
           <th style="width: 20%">Ҳажм</th>
           <th style="width: 20%">Ўлчов бирлиги</th>
-          <th style="width: 20%">Сана</th>
-          <th style="width: 20%">Изох</th>
+          <th style="width: 28%">Изох</th>
           <th>
             <select
               class="form-control form-control-sm form-select"
@@ -27,76 +27,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in product_requests || []" :key="item">
-          <td style="width: 10%">{{ item.id }}</td>
-          <td style="width: 20%">
-            <div class="input-group" v-if="item.status == 'adminda_proche'">
-              <input
-                type="text"
-                class="form-control form-control-sm"
-                :id="`name${item.id}`"
-                step="any"
-                :disabled="proche_name != item.id"
-                v-model="item.name"
-                required
-              />
-              <button
-                v-if="proche_name != item.id"
-                class="btn btn-sm btn-warning"
-                @click="update_name(item.id)"
-                type="button"
-              >
-                <i class="fa-solid fa-edit text-white"></i>
-              </button>
-              <button
-                v-else-if="proche_name == item.id"
-                class="btn btn-sm btn-danger"
-                @click="remove_name(item.id)"
-                type="button"
-              >
-                <i class="fa-solid fa-circle-xmark text-white"></i>
-              </button>
-            </div>
-            <span v-else>{{ item.name }}</span>
-          </td>
-          <td style="width: 20%">
-            <form
-              :id="`form${item.id}`"
-              @submit.prevent="accept(item.id, item.quantity, true, item.name)"
-            >
-              <div class="input-group" v-if="item.status == 'adminda_proche'">
-                <input
-                  type="number"
-                  class="form-control form-control-sm"
-                  :id="`id${item.id}`"
-                  step="any"
-                  :disabled="proche_id != item.id"
-                  v-model="item.quantity"
-                  required
-                  min="1"
-                />
-                <button
-                  v-if="proche_id != item.id"
-                  class="btn btn-sm btn-warning"
-                  @click="update_quantity(item.id)"
-                  type="button"
-                >
-                  <i class="fa-solid fa-edit text-white"></i>
-                </button>
-                <button
-                  v-else-if="proche_id == item.id"
-                  class="btn btn-sm btn-danger"
-                  @click="remove_quantity(item.id)"
-                  type="button"
-                >
-                  <i class="fa-solid fa-circle-xmark text-white"></i>
-                </button>
-              </div>
-              <span v-else>{{ item.quantity }}</span>
-            </form>
-          </td>
-          <td style="width: 20%">{{ item.olchov_birligi }}</td>
-          <td style="width: 20%">
+        <tr v-for="(item, inc) in product_requests || []" :key="item">
+          <td>{{ item.id }}</td>
+          <td>
             {{
               new Date(item.time)
                 .toLocaleDateString("en-us", {
@@ -110,13 +43,91 @@
                 .slice(0, 16)
             }}
           </td>
-          <td style="width: 20%">{{ item.comment }}</td>
+          <td>
+            <form
+              @submit.prevent="accept(item.id, true, item)"
+              :id="`form${inc}`"
+            >
+              <input
+                v-if="item.status == 'adminda_proche'"
+                type="text"
+                :form="`form${inc}`"
+                class="form-control form-control-sm"
+                v-model="item.name"
+                :data-name="inc"
+                @dblclick="enable('data-name', inc)"
+                @focusout="disable('data-name', inc)"
+                readonly
+                required
+              />
+              <span v-else>{{ item.name }}</span>
+            </form>
+          </td>
+          <td>
+            <input
+              v-if="item.status == 'adminda_proche'"
+              type="number"
+              :form="`form${inc}`"
+              class="form-control form-control-sm"
+              step="any"
+              v-model="item.quantity"
+              :data-quantity="inc"
+              @dblclick="enable('data-quantity', inc)"
+              @focusout="disable('data-quantity', inc)"
+              readonly
+              required
+            />
+
+            <span v-else>{{ item.quantity }}</span>
+          </td>
+          <td>
+            <input
+              v-if="item.status == 'adminda_proche'"
+              type="text"
+              :form="`form${inc}`"
+              class="form-control form-control-sm"
+              v-model="item.olchov_birligi"
+              :data-olchov_birligi="inc"
+              @dblclick="enable('data-olchov_birligi', inc)"
+              @focusout="disable('data-olchov_birligi', inc)"
+              readonly
+              required
+            />
+
+            <span v-else>
+              {{ item.olchov_birligi }}
+            </span>
+          </td>
+          <td>
+            <textarea
+              v-if="item.status == 'adminda_proche'"
+              :form="`form${inc}`"
+              class="form-control form-control-sm"
+              v-model="item.comment"
+              :data-comment="inc"
+              @dblclick="enable('data-comment', inc)"
+              @focusout="disable('data-comment', inc)"
+              readonly
+              required
+            ></textarea>
+
+            <span v-else>
+              {{ item.comment }}
+            </span>
+          </td>
+
           <td>
             <button
-              :form="`form${item.id}`"
               class="btn btn-sm btn-success"
               :id="`accept_proche${item.id}`"
               v-if="item.status == 'adminda_proche'"
+              :form="`form${inc}`"
+              :disabled="
+                !item.name ||
+                !item.quantity ||
+                !item.comment ||
+                !item.olchov_birligi
+              "
             >
               <i class="fa-solid fa-circle-check text-white"></i>
             </button>
@@ -208,8 +219,14 @@ export default {
       product_requests: [],
       building_id: this.$route.query.id,
       status: "adminda_proche",
-      proche_id: null,
-      proche_name: "",
+      body: {
+        name: "",
+        quantity: 0,
+        olchov_birligi: "",
+        comment: "",
+        building_id: 0,
+      },
+      utils: "",
     };
   },
   watch: {
@@ -241,29 +258,20 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
-    update_quantity(id) {
-      this.proche_id = id;
-      document.getElementById(`id${id}`).disabled = false;
-    },
-    remove_quantity(id) {
-      this.proche_id = null;
-      document.getElementById(`id${id}`).disabled = true;
-    },
-    update_name(id) {
-      this.proche_name = id;
-      document.getElementById(`name${id}`).disabled = false;
-    },
-    remove_name(id) {
-      this.proche_name = null;
-      document.getElementById(`name${id}`).disabled = true;
-    },
-    accept(id, quantity, status, name) {
-      document.getElementById(`remove_proche${id}`).disabled = true;
+    accept(id, status, item) {
+      this.body = {
+        name: item.name,
+        quantity: item.quantity,
+        olchov_birligi: item.olchov_birligi,
+        comment: item.comment,
+        building_id: 0,
+      };
+      document.getElementById(`accept_proche${id}`).disabled = true;
       this.$store.dispatch("setLoading", { isLoading: true });
-      proche_s_put(id, status, 0, quantity, name)
+      proche_s_put(id, status, 0, this.body)
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
-          document.getElementById(`remove_proche${id}`).disabled = false;
+          document.getElementById(`accept_proche${id}`).disabled = false;
           success(res).then(() => {
             this.get_proche_s(
               this.page,
@@ -271,20 +279,18 @@ export default {
               this.building_id,
               this.status
             );
-            this.proche_id = null;
-            document.getElementById(`id${id}`).disabled = true;
           });
         })
         .catch((err) => {
           catchError(err);
           this.$store.dispatch("setLoading", { isLoading: false });
-          document.getElementById(`remove_proche${id}`).disabled = false;
+          document.getElementById(`accept_proche${id}`).disabled = false;
         });
     },
     remove(id, status) {
       document.getElementById(`remove_proche${id}`).disabled = true;
       this.$store.dispatch("setLoading", { isLoading: true });
-      proche_s_put(id, status, 0, 0, "")
+      proche_s_put(id, status, 0, this.body)
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById(`remove_proche${id}`).disabled = false;
@@ -302,6 +308,14 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById(`remove_proche${id}`).disabled = false;
         });
+    },
+    enable(attr, id) {
+      document.querySelector(`[${attr}="${id}"]`).removeAttribute("readonly");
+    },
+    disable(attr, id) {
+      document
+        .querySelector(`[${attr}="${id}"]`)
+        .setAttribute("readonly", true);
     },
   },
   created() {

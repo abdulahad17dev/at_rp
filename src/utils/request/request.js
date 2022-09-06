@@ -457,9 +457,10 @@ export function proche_s_add(data) {
   return instance.post(`product_request`, data);
 }
 
-export function proche_s_put(p_s_id, status, t_id, quantity, name) {
+export function proche_s_put(p_s_id, status, t_id, data) {
   return instance.put(
-    `confirm_or_reject_product_request/${p_s_id}?status=${status}&taminotchi_id=${t_id}&quantity=${quantity}&name=${name}`
+    `confirm_or_reject_product_request/${p_s_id}?status=${status}&taminotchi_id=${t_id}`,
+    data
   );
 }
 

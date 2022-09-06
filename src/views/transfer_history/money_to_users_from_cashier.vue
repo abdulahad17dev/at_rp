@@ -129,6 +129,79 @@
       </div>
     </div>
   </form>
+
+  <Money_to_user_items
+    :transfer_cashier="transfer_cashier"
+    @status="sort_status"
+    @to="sort_to"
+  />
+
+  <nav
+    aria-label="Page navigation example"
+    class="mt-1"
+    v-if="transfer_cashier != ''"
+  >
+    <ul class="pagination pagination-sm justify-content-end">
+      <div class="page-item">
+        <select
+          class="form-control form-control-sm form-select mx-1"
+          v-model="limit"
+        >
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+      <li class="page-item">
+        <button
+          type="button"
+          class="page-link"
+          @click="
+            transfer_to_cashier(
+              page,
+              limit,
+              from,
+              to,
+              status,
+              from_time,
+              to_time
+            )
+          "
+        >
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+      </li>
+      <li class="page-item">
+        <button class="page-link" @click="page = 0" :disabled="page == 0">
+          <i class="fa-solid fa-angles-left text-dark"></i>
+        </button>
+      </li>
+      <li class="page-item">
+        <button class="page-link" @click="page--" :disabled="page == 0">
+          <i class="fa-solid fa-angle-left text-dark"></i>
+        </button>
+      </li>
+      <li class="page-item">
+        <button class="page-link text-dark" disabled>
+          {{ page + 1 }}
+        </button>
+      </li>
+      <li class="page-item">
+        <button class="page-link" @click="page++" :disabled="page == pages - 1">
+          <i class="fa-solid fa-angle-right text-dark"></i>
+        </button>
+      </li>
+      <li class="page-item">
+        <button
+          class="page-link"
+          @click="page = pages - 1"
+          :disabled="page == pages - 1"
+        >
+          <i class="fa-solid fa-angles-right text-dark"></i>
+        </button>
+      </li>
+    </ul>
+  </nav>
 </template>
 
 <script>
@@ -140,6 +213,7 @@ import {
   user_get,
 } from "@/utils/request/request";
 import { catchError, success } from "@/utils/request/handle_api_err";
+import Money_to_user_items from "../../components/transfer/money_to_user_items.vue";
 export default {
   name: "TransferMoneyUser",
   data() {
@@ -158,6 +232,7 @@ export default {
       text: "ходимлар",
       balance: null,
       // history
+      transfer_cashier: [],
       from_time: "",
       to_time: "",
       from: 0,
@@ -165,6 +240,7 @@ export default {
       status: false,
       page: 0,
       limit: 25,
+      pages: null,
     };
   },
   watch: {
@@ -209,30 +285,6 @@ export default {
         this.to_time
       );
       document.getElementById("scroll").scrollTop = 0;
-    },
-    to(e) {
-      this.page = 0;
-      this.transfer_to_users(
-        this.page,
-        this.limit,
-        this.from,
-        e,
-        this.status,
-        this.from_time,
-        this.to_time
-      );
-    },
-    status(e) {
-      this.page = 0;
-      this.transfer_to_users(
-        this.page,
-        this.limit,
-        this.from,
-        this.to,
-        e,
-        this.from_time,
-        this.to_time
-      );
     },
   },
   methods: {
@@ -281,6 +333,15 @@ export default {
 
       current_user()
         .then((res) => {
+          this.transfer_to_users(
+            this.page,
+            this.limit,
+            this.from,
+            this.to,
+            this.status,
+            this.from_time,
+            this.to_time
+          );
           this.balance = res.data.balance;
           this.$store.dispatch("setLoading", { isLoading: false });
         })
@@ -328,20 +389,35 @@ export default {
       );
       this.page = 0;
     },
+    sort_status(e) {
+      this.page = 0;
+      this.transfer_to_users(
+        this.page,
+        this.limit,
+        this.from,
+        this.to,
+        e,
+        this.from_time,
+        this.to_time
+      );
+    },
+    sort_to(e) {
+      this.page = 0;
+      this.transfer_to_users(
+        this.page,
+        this.limit,
+        this.from,
+        e,
+        this.status,
+        this.from_time,
+        this.to_time
+      );
+    },
   },
   created() {
     this.get_balance();
-    this.transfer_to_users(
-      this.page,
-      this.limit,
-      this.from,
-      this.to,
-      this.status,
-      this.from_time,
-      this.to_time
-    );
   },
-  components: { Header_item },
+  components: { Header_item, Money_to_user_items },
 };
 </script>
 

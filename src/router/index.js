@@ -135,7 +135,7 @@ let routes = [
   },
   // proche sorovlar
   {
-    path: "/buildings/product_request_zakupshik",
+    path: "/product_request_zakupshik",
     name: "proche_sorov_zakupshik",
     meta: {
       requiresAuth: true,

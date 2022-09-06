@@ -3,10 +3,7 @@ import Swal from "sweetalert2";
 export let link = "https://constructionproject.crud.uz/uploaded_files/";
 
 export function catchError(error) {
-  if (
-    error.response.status == 401 ||
-    error.response.data.detail == "Inactive user"
-  ) {
+  if (error.response.status == 401) {
     console.clear();
     localStorage.clear();
     Swal.mixin({
@@ -91,6 +88,31 @@ export function catchError(error) {
       icon: "error",
       title: error.response.data.detail,
     });
+  } else if (error.response.data.detail == "Inactive user") {
+    console.clear();
+    localStorage.clear();
+    Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    })
+      .fire({
+        icon: "error",
+        title: "Логин ёки паролда хатолик",
+      })
+      .then(() => {
+        if (window.location.pathname == "/") {
+          console.log();
+        } else {
+          window.location.href = "/";
+        }
+      });
   }
   console.clear();
 }
