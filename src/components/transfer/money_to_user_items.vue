@@ -136,7 +136,16 @@
           <td>
             <b class="text-primary">{{ item.user_for_to_ }}</b>
           </td>
-          <td></td>
+          <td>
+            <button
+              class="btn btn-sm btn-danger"
+              v-if="item.Transfers.status == false"
+              @click="$emit('remove', item.Transfers.id)"
+              :id="item.Transfers.id"
+            >
+              <i class="fa-solid fa-circle-xmark"></i>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -151,7 +160,7 @@ import { catchError } from "@/utils/request/handle_api_err";
 export default {
   name: "MoneyToUserItems",
   props: ["transfer_cashier"],
-  emits: ["status", "to"],
+  emits: ["status", "to", "remove"],
   data() {
     return {
       limit_user: 25,
@@ -213,20 +222,20 @@ table {
 }
 
 .table-responsive {
-  min-height: 58vh;
-  max-height: 58vh;
+  min-height: 52vh;
+  max-height: 52vh;
 }
 
 @media (max-width: 575px) {
   .table-responsive {
-    min-height: 45vh;
-    max-height: 45vh;
+    min-height: 41vh;
+    max-height: 41vh;
   }
 }
 @media (max-width: 500px) {
   .table-responsive {
-    min-height: 65vh;
-    max-height: 65vh;
+    min-height: 58vh;
+    max-height: 58vh;
   }
 }
 </style>

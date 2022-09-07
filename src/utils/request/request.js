@@ -259,6 +259,26 @@ export function transfer_users_get(
   }
 }
 
+export function transfer_m_cashiers_get(
+  page,
+  limit,
+  from,
+  to,
+  status,
+  from_time,
+  to_time
+) {
+  if (from_time && to_time) {
+    return instance.get(
+      `transfered_money_to_cashier_from_users?from_time=${from_time}&to_time=${to_time}&from_=${from}&to_=${to}&status=${status}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(
+      `transfered_money_to_cashier_from_users?from_=${from}&to_=${to}&status=${status}&page=${page}&limit=${limit}`
+    );
+  }
+}
+
 export function accept_money_in_cashier(id, money_l_id, percent, comment) {
   return instance.put(
     `acceptance_or_remove_transfered_money/${id}?money_launderer_id=${money_l_id}&percent=${percent}&comment=${comment}`
@@ -279,6 +299,10 @@ export function transfer_money_to_wallets(data) {
 
 export function transfer_money_to_users(data) {
   return instance.post("transfer_money_to_users_from_cashier", data);
+}
+
+export function transfer_money_to_cashier(data) {
+  return instance.post("transfer_money_to_cashier_from_users", data);
 }
 
 export function money_from_launderer_get(
@@ -339,6 +363,17 @@ export function transfer_to_w_history_get(page, limit, to, from_time, to_time) {
       `transfered_money_to_wallet?to_=${to}&page=${page}&limit=${limit}`
     );
   }
+}
+
+export function accept_or_remove_m_user(id) {
+  return instance.put(
+    `acceptance_or_remove_transfered_money_to_cashier_from_users/${id}`
+  );
+}
+export function accept_or_remove_m_cashier(id) {
+  return instance.put(
+    `acceptance_or_remove_transfered_money_to_users_from_cashier/${id}`
+  );
 }
 
 // expences

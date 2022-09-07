@@ -99,6 +99,12 @@ export default {
           role: ["kassir"],
         },
         {
+          to: "/transfer_money_to_cashier",
+          icon: "fa-solid fa-users fa-2x",
+          title: "Кассирга пул ўтказиш ва қабул қилиш",
+          role: ["taminotchi", "prorap"],
+        },
+        {
           to: "/product_request_zakupshik",
           icon: "fa-solid fa-rectangle-list fa-2x",
           title: "Проче сўровлар",

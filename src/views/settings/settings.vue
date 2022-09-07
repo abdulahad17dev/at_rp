@@ -26,6 +26,11 @@ import Dark_mode from "./dark_mode.vue";
 export default {
   components: { currentuser, Dark_mode },
   name: "SettingsItem",
+  data() {
+    return {
+      role: localStorage.getItem("role"),
+    };
+  },
   methods: {
     logout() {
       this.$router.push("/");

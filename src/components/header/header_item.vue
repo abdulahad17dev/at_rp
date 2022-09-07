@@ -13,7 +13,7 @@
     <span :class="this.$route.meta.icon"></span>
     {{ this.$route.meta.title }}
     <br />
-    <h6 v-if="balance">
+    <h6 v-if="balance || balance == 0">
       Менинг балансим:
       <b> {{ new Intl.NumberFormat().format(balance) }} </b> сўм
     </h6>

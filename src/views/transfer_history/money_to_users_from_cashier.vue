@@ -1,212 +1,333 @@
 <template>
   <Header_item :balance="balance" />
-  <form @submit.prevent="transfer">
-    <div class="row mb-5">
-      <div class="col-md-3 col-lg-3 col-sm-6">
-        <label for="balance">
-          Сумма:
-          <span class="text-primary"
-            >{{ new Intl.NumberFormat().format(body.money) }} сўм
-          </span></label
-        >
-        <div class="input-group input-group-sm">
-          <input
-            id="balance"
-            type="number"
-            step="any"
-            class="form-control"
-            v-model="body.money"
-            required
-            min="1"
-          />
-          <span class="input-group-text bg-white">сўм</span>
-        </div>
-      </div>
-      <div class="col-md-3 col-lg-3 col-sm-6">
-        <label for="user">Ходим: </label>
-        <div class="dropdown">
-          <button
-            class="btn btn-light btn-sm dropdown-toggle"
-            type="button"
-            id="user_text"
-            data-bs-toggle="dropdown"
-            data-bs-auto-close="outside"
-            aria-expanded="false"
-            @click="
-              users.length ? '' : get_users(page_user, limit_user, search_user)
-            "
-          >
-            {{ text }}
-          </button>
-          <ul class="dropdown-menu border-top-0" aria-labelledby="user_text">
-            <li>
+  <ul
+    class="nav nav-pills navv-fill nav-justified mb-3"
+    id="pills-tab"
+    role="tablist"
+  >
+    <li class="nav-item" role="presentation">
+      <button
+        class="btn btn-sm w-100 btn-light"
+        id="pills-profile-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-profile"
+        type="button"
+        role="tab"
+        aria-controls="pills-profile"
+        aria-selected="false"
+        @click="accept = true"
+      >
+        ҳодимлардан пул қабул қилиш
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="btn btn-sm w-100 btn-light"
+        id="pills-home-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-home"
+        type="button"
+        role="tab"
+        aria-controls="pills-home"
+        aria-selected="true"
+        @click="
+          transfer_cashier.length
+            ? ''
+            : this.transfer_to_users(
+                this.page,
+                this.limit,
+                this.from,
+                this.to,
+                this.status,
+                this.from_time,
+                this.to_time
+              )
+        "
+      >
+        ҳодимларга пул ўтказиш
+      </button>
+    </li>
+  </ul>
+  <div class="tab-content" id="pills-tabContent">
+    <div
+      class="tab-pane fade"
+      id="pills-profile"
+      role="tabpanel"
+      aria-labelledby="pills-profile-tab"
+    >
+      <Accept_m_in_cashier_from_user
+        v-if="accept == true"
+        @get_balance="get_balance"
+      />
+    </div>
+    <div
+      class="tab-pane fade"
+      id="pills-home"
+      role="tabpanel"
+      aria-labelledby="pills-home-tab"
+    >
+      <form @submit.prevent="transfer">
+        <div class="row mb-2">
+          <div class="col-md-3 col-lg-3 col-sm-6">
+            <label for="balance">
+              Сумма:
+              <span class="text-primary"
+                >{{ new Intl.NumberFormat().format(body.money) }} сўм
+              </span></label
+            >
+            <div class="input-group input-group-sm">
               <input
-                type="search"
-                class="form-control form-control-sm"
-                placeholder="қидириш ..."
-                v-model="search_user"
+                id="balance"
+                type="number"
+                step="any"
+                class="form-control"
+                v-model="body.money"
+                required
+                min="1"
               />
-            </li>
-            <li>
-              <ul class="dropdown-items">
-                <li
-                  v-for="item in users"
-                  :key="item"
-                  @click="select(item.id, item.name)"
-                >
-                  <a class="dropdown-item">{{ item.name }}</a>
+              <span class="input-group-text bg-white">сўм</span>
+            </div>
+          </div>
+          <div class="col-md-3 col-lg-3 col-sm-6">
+            <label for="user">Ходим: </label>
+            <div class="dropdown">
+              <button
+                class="btn btn-light btn-sm dropdown-toggle"
+                type="button"
+                id="user_text"
+                data-bs-toggle="dropdown"
+                data-bs-auto-close="outside"
+                aria-expanded="false"
+                @click="
+                  users.length
+                    ? ''
+                    : get_users(page_user, limit_user, search_user)
+                "
+              >
+                {{ text }}
+              </button>
+              <ul
+                class="dropdown-menu border-top-0"
+                aria-labelledby="user_text"
+              >
+                <li>
+                  <input
+                    type="search"
+                    class="form-control form-control-sm"
+                    placeholder="қидириш ..."
+                    v-model="search_user"
+                  />
+                </li>
+                <li>
+                  <ul class="dropdown-items">
+                    <li
+                      v-for="item in users"
+                      :key="item"
+                      @click="select(item.id, item.name)"
+                    >
+                      <a class="dropdown-item">{{ item.name }}</a>
+                    </li>
+                  </ul>
+                </li>
+                <li v-if="users != ''">
+                  <hr class="dropdown-divider m-0" />
+                </li>
+                <li>
+                  <nav
+                    aria-label="Page navigation example"
+                    class="mt-2"
+                    v-if="users != ''"
+                  >
+                    <ul class="pagination pagination-sm justify-content-end">
+                      <li class="page-item">
+                        <button
+                          type="button"
+                          class="page-link"
+                          @click="users_get(page_user, limit_user, search_user)"
+                        >
+                          <i class="fa-solid fa-rotate"></i>
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button
+                          type="button"
+                          class="page-link"
+                          @click="page_user--"
+                          :disabled="page_user == 0"
+                        >
+                          <i class="fa-solid fa-angle-left text-dark"></i>
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button
+                          type="button"
+                          class="page-link text-dark"
+                          disabled
+                        >
+                          {{ page_user + 1 }}
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button
+                          type="button"
+                          class="page-link"
+                          @click="page_user++"
+                          :disabled="page_user == pages_user - 1"
+                        >
+                          <i class="fa-solid fa-angle-right text-dark"></i>
+                        </button>
+                      </li>
+                    </ul>
+                  </nav>
                 </li>
               </ul>
-            </li>
-            <li v-if="users != ''">
-              <hr class="dropdown-divider m-0" />
-            </li>
-            <li>
-              <nav
-                aria-label="Page navigation example"
-                class="mt-2"
-                v-if="users != ''"
-              >
-                <ul class="pagination pagination-sm justify-content-end">
-                  <li class="page-item">
-                    <button
-                      type="button"
-                      class="page-link"
-                      @click="users_get(page_user, limit_user, search_user)"
-                    >
-                      <i class="fa-solid fa-rotate"></i>
-                    </button>
-                  </li>
-                  <li class="page-item">
-                    <button
-                      type="button"
-                      class="page-link"
-                      @click="page_user--"
-                      :disabled="page_user == 0"
-                    >
-                      <i class="fa-solid fa-angle-left text-dark"></i>
-                    </button>
-                  </li>
-                  <li class="page-item">
-                    <button type="button" class="page-link text-dark" disabled>
-                      {{ page_user + 1 }}
-                    </button>
-                  </li>
-                  <li class="page-item">
-                    <button
-                      type="button"
-                      class="page-link"
-                      @click="page_user++"
-                      :disabled="page_user == pages_user - 1"
-                    >
-                      <i class="fa-solid fa-angle-right text-dark"></i>
-                    </button>
-                  </li>
-                </ul>
-              </nav>
-            </li>
-          </ul>
+            </div>
+          </div>
+          <div class="col-md-3 col-lg-3 col-sm-6">
+            <label for="comment">Изох: </label>
+            <textarea
+              id="comment"
+              class="form-control form-control-sm"
+              v-model="body.comment"
+            ></textarea>
+          </div>
+          <div class="col-md-3 col-lg-3 col-sm-6">
+            <label>ㅤ</label>
+            <button
+              class="btn btn-primary btn-sm w-100"
+              type="submit"
+              :disabled="!body.money || !body.to_ || !body.comment"
+              id="transfer_disabled"
+            >
+              <i class="fa-solid fa-circle-check"></i>
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="col-md-3 col-lg-3 col-sm-6">
-        <label for="comment">Изох: </label>
-        <textarea
-          id="comment"
-          class="form-control form-control-sm"
-          v-model="body.comment"
-        ></textarea>
-      </div>
-      <div class="col-md-3 col-lg-3 col-sm-6">
-        <label>ㅤ</label>
-        <button
-          class="btn btn-primary btn-sm w-100"
-          type="submit"
-          :disabled="!body.money || !body.to_ || !body.comment"
-          id="transfer_disabled"
-        >
-          <i class="fa-solid fa-circle-check"></i>
-        </button>
-      </div>
+      </form>
+
+      <form @submit.prevent="time">
+        <div class="row m-1">
+          <div class="col">
+            <input
+              type="date"
+              class="form-control form-control-sm"
+              v-model="from_time"
+              required
+            />
+          </div>
+          <div class="col">
+            <input
+              type="date"
+              class="form-control form-control-sm"
+              v-model="to_time"
+              required
+            />
+          </div>
+          <div class="col">
+            <div class="btn-group w-100">
+              <button
+                class="btn btn-outline-primary btn-sm w-80"
+                :disabled="from_time == '' || to_time == ''"
+              >
+                <i class="fa-solid fa-search"></i>
+              </button>
+              <button
+                class="btn btn-outline-danger btn-sm w-20"
+                @click="reset"
+                v-if="from_time && to_time"
+              >
+                <i class="fa-solid fa-circle-xmark"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <Money_to_user_items
+        :transfer_cashier="transfer_cashier"
+        @status="sort_status"
+        @to="sort_to"
+        @remove="remove"
+      />
+
+      <nav
+        aria-label="Page navigation example"
+        class="mt-1"
+        v-if="transfer_cashier != ''"
+      >
+        <ul class="pagination pagination-sm justify-content-end">
+          <div class="page-item">
+            <select
+              class="form-control form-control-sm form-select mx-1"
+              v-model="limit"
+            >
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </div>
+          <li class="page-item">
+            <button
+              type="button"
+              class="page-link"
+              @click="
+                transfer_to_cashier(
+                  page,
+                  limit,
+                  from,
+                  to,
+                  status,
+                  from_time,
+                  to_time
+                )
+              "
+            >
+              <i class="fa-solid fa-rotate"></i>
+            </button>
+          </li>
+          <li class="page-item">
+            <button class="page-link" @click="page = 0" :disabled="page == 0">
+              <i class="fa-solid fa-angles-left text-dark"></i>
+            </button>
+          </li>
+          <li class="page-item">
+            <button class="page-link" @click="page--" :disabled="page == 0">
+              <i class="fa-solid fa-angle-left text-dark"></i>
+            </button>
+          </li>
+          <li class="page-item">
+            <button class="page-link text-dark" disabled>
+              {{ page + 1 }}
+            </button>
+          </li>
+          <li class="page-item">
+            <button
+              class="page-link"
+              @click="page++"
+              :disabled="page == pages - 1"
+            >
+              <i class="fa-solid fa-angle-right text-dark"></i>
+            </button>
+          </li>
+          <li class="page-item">
+            <button
+              class="page-link"
+              @click="page = pages - 1"
+              :disabled="page == pages - 1"
+            >
+              <i class="fa-solid fa-angles-right text-dark"></i>
+            </button>
+          </li>
+        </ul>
+      </nav>
     </div>
-  </form>
-
-  <Money_to_user_items
-    :transfer_cashier="transfer_cashier"
-    @status="sort_status"
-    @to="sort_to"
-  />
-
-  <nav
-    aria-label="Page navigation example"
-    class="mt-1"
-    v-if="transfer_cashier != ''"
-  >
-    <ul class="pagination pagination-sm justify-content-end">
-      <div class="page-item">
-        <select
-          class="form-control form-control-sm form-select mx-1"
-          v-model="limit"
-        >
-          <option value="25">25</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-        </select>
-      </div>
-      <li class="page-item">
-        <button
-          type="button"
-          class="page-link"
-          @click="
-            transfer_to_cashier(
-              page,
-              limit,
-              from,
-              to,
-              status,
-              from_time,
-              to_time
-            )
-          "
-        >
-          <i class="fa-solid fa-rotate"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button class="page-link" @click="page = 0" :disabled="page == 0">
-          <i class="fa-solid fa-angles-left text-dark"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button class="page-link" @click="page--" :disabled="page == 0">
-          <i class="fa-solid fa-angle-left text-dark"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button class="page-link text-dark" disabled>
-          {{ page + 1 }}
-        </button>
-      </li>
-      <li class="page-item">
-        <button class="page-link" @click="page++" :disabled="page == pages - 1">
-          <i class="fa-solid fa-angle-right text-dark"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button
-          class="page-link"
-          @click="page = pages - 1"
-          :disabled="page == pages - 1"
-        >
-          <i class="fa-solid fa-angles-right text-dark"></i>
-        </button>
-      </li>
-    </ul>
-  </nav>
+  </div>
 </template>
 
 <script>
 import Header_item from "@/components/header/header_item.vue";
 import {
+  accept_or_remove_m_cashier,
   current_user,
   transfer_money_to_users,
   transfer_users_get,
@@ -214,6 +335,7 @@ import {
 } from "@/utils/request/request";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Money_to_user_items from "../../components/transfer/money_to_user_items.vue";
+import Accept_m_in_cashier_from_user from "@/components/transfer/accept_m_in_cashier_from_user.vue";
 export default {
   name: "TransferMoneyUser",
   data() {
@@ -241,6 +363,7 @@ export default {
       page: 0,
       limit: 25,
       pages: null,
+      accept: false,
     };
   },
   watch: {
@@ -315,11 +438,21 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("transfer_disabled").disabled = false;
           success(res).then(() => {
-            this.get_balance();
+            this.transfer_to_users(
+              this.page,
+              this.limit,
+              this.from,
+              this.to,
+              this.status,
+              this.from_time,
+              this.to_time
+            );
             this.body.money = null;
             this.body.from_ = 0;
             this.body.to_ = null;
             this.body.comment = "";
+            this.text = "ходимлар";
+            this.get_balance();
           });
         })
         .catch((err) => {
@@ -333,15 +466,6 @@ export default {
 
       current_user()
         .then((res) => {
-          this.transfer_to_users(
-            this.page,
-            this.limit,
-            this.from,
-            this.to,
-            this.status,
-            this.from_time,
-            this.to_time
-          );
           this.balance = res.data.balance;
           this.$store.dispatch("setLoading", { isLoading: false });
         })
@@ -413,13 +537,47 @@ export default {
         this.to_time
       );
     },
+    remove(e) {
+      this.$store.dispatch("setLoading", { isLoading: true });
+      document.getElementById(e).disabled = true;
+      accept_or_remove_m_cashier(e)
+        .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById(e).disabled = false;
+          success(res).then(() => {
+            this.transfer_to_users(
+              this.page,
+              this.limit,
+              this.from,
+              this.to,
+              this.status,
+              this.from_time,
+              this.to_time
+            );
+            this.get_balance();
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById(e).disabled = false;
+        });
+    },
   },
   created() {
     this.get_balance();
   },
-  components: { Header_item, Money_to_user_items },
+  components: {
+    Header_item,
+    Money_to_user_items,
+    Accept_m_in_cashier_from_user,
+  },
 };
 </script>
 
-<!-- <style lang="scss" scoped>
-</style> -->
+<style lang="scss" scoped>
+button.active {
+  background: #6c757d !important;
+  color: #fff;
+}
+</style>

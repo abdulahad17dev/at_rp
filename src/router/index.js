@@ -11,6 +11,7 @@ import smeta from "../views/smeta/smeta.vue";
 import bank_acoounts from "../views/bank_accounts/bank_accounts.vue";
 import transfers_history from "../views/transfer_history/transfer_history.vue";
 import transfers_to_users from "../views/transfer_history/money_to_users_from_cashier.vue";
+import transfer_money_to_cashier from "../views/transfer_history/transfer_from_user_to_cashier.vue";
 import expences from "../views/expences/expences.vue";
 import main_warehouses from "../views/main_warehouses/main_warehouses.vue";
 import money_launderers from "../views/money_launderers/money_launderers.vue";
@@ -192,6 +193,18 @@ let routes = [
       role: ["kassir"],
     },
     component: transfers_to_users,
+  },
+  // transfer money to cashier from users
+  {
+    path: "/transfer_money_to_cashier",
+    name: "transfer_money_to_cashier",
+    meta: {
+      requiresAuth: true,
+      title: "Кассирга пул ўтказиш ва қабул қилиш",
+      icon: "fa-solid fa-users",
+      role: ["taminotchi", "prorap"],
+    },
+    component: transfer_money_to_cashier,
   },
   // expences
   {
