@@ -200,7 +200,7 @@ let routes = [
     name: "transfer_money_to_cashier",
     meta: {
       requiresAuth: true,
-      title: "Кассирга пул ўтказиш ва қабул қилиш",
+      title: "Пул ўтказмалари",
       icon: "fa-solid fa-users",
       role: ["taminotchi", "prorap"],
     },
@@ -224,7 +224,7 @@ let routes = [
     name: "main_warehouses",
     meta: {
       requiresAuth: true,
-      title: "Базачилар",
+      title: "Базалар",
       icon: "fa-solid fa-users-line",
       role: ["bazachi"],
     },
@@ -284,7 +284,7 @@ let routes = [
     name: "money_launderer_history",
     meta: {
       requiresAuth: true,
-      title: "Ўтаказилган ва қабул қилинган пуллар тарихи",
+      title: "Ўтказмалар тарихи",
       icon: "fa-solid fa-clock-rotate-left",
       role: ["kassir"],
     },
@@ -296,7 +296,7 @@ let routes = [
     name: "wallet_transfer_history",
     meta: {
       requiresAuth: true,
-      title: "Ўтаказилган ва қабул қилинган пуллар тарихи",
+      title: "Ўтказмалар тарихи",
       icon: "fa-solid fa-clock-rotate-left",
       role: ["kassir"],
     },

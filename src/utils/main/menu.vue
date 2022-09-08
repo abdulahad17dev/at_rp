@@ -65,7 +65,7 @@ export default {
         {
           to: "/main_warehouses",
           icon: "fa-solid fa-users-line fa-2x",
-          title: "Базачилар",
+          title: "Базалар",
           role: ["bazachi"],
         },
         {
@@ -101,7 +101,7 @@ export default {
         {
           to: "/transfer_money_to_cashier",
           icon: "fa-solid fa-users fa-2x",
-          title: "Кассирга пул ўтказиш ва қабул қилиш",
+          title: "Пул ўтказмалари",
           role: ["taminotchi", "prorap"],
         },
         {

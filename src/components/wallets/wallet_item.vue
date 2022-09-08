@@ -1,5 +1,5 @@
 <template>
-  <div class="table-responsive mt-3" v-if="data != ''">
+  <div class="table-responsive mt-3">
     <table class="table table-sm table-hover table-bordered">
       <thead class="">
         <tr>

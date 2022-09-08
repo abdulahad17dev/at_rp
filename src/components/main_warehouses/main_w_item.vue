@@ -4,9 +4,9 @@
       <thead class="">
         <tr>
           <th>#ИД</th>
-          <th>Исм</th>
+          <th>Номи</th>
           <th>Телефон рақам</th>
-          <th>Адресс</th>
+          <th>Манзил</th>
         </tr>
       </thead>
       <tbody>

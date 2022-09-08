@@ -12,6 +12,7 @@
   >
     <span :class="this.$route.meta.icon"></span>
     {{ this.$route.meta.title }}
+
     <br />
     <h6 v-if="balance || balance == 0">
       Менинг балансим:
@@ -30,7 +31,7 @@ export default {
 
 <style lang="scss">
 @media (max-width: 772px) {
-  .row {
+  h5 {
     zoom: 75%;
   }
 }

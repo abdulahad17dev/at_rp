@@ -250,7 +250,7 @@ export default {
   width: 200px;
 }
 
-@media (max-width: 368px) {
+@media (max-width: 509px) {
   .row {
     display: block;
   }
