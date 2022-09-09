@@ -91,6 +91,13 @@ export default {
       product_requests: [],
       building_id: this.$route.query.id,
       status: "",
+      body: {
+        name: "string",
+        quantity: 0,
+        olchov_birligi: "string",
+        comment: "string",
+        building_id: 0,
+      },
     };
   },
   watch: {
@@ -152,7 +159,7 @@ export default {
     remove(e) {
       document.getElementById("remove_proche").disabled = true;
       this.$store.dispatch("setLoading", { isLoading: true });
-      proche_s_put(e, "false", 0, 0)
+      proche_s_put(e, "false", 0, this.body)
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_proche").disabled = false;

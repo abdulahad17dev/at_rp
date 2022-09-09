@@ -85,4 +85,16 @@ th select {
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
 }
+
+@media (max-width: 992px) {
+  .table-responsive {
+    max-height: 51vh;
+  }
+}
+
+@media (max-width: 500px) {
+  .table-responsive {
+    max-height: 73vh;
+  }
+}
 </style>
