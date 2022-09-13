@@ -251,111 +251,18 @@
     </table>
     <Data_notfound v-if="fixed_history == ''" />
   </div>
-
-  <nav
-    aria-label="Page navigation example"
-    class="mt-1"
-    v-if="fixed_history != ''"
-  >
-    <ul class="pagination pagination-sm justify-content-end">
-      <li class="page-item">
-        <select
-          class="form-control form-control-sm form-select mx-1"
-          v-model="limit"
-        >
-          <option value="25">25</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-        </select>
-      </li>
-      <li class="page-item">
-        <button
-          type="button"
-          class="page-link"
-          @click="fixed_history_get(page, limit, from, to, user_id)"
-        >
-          <i class="fa-solid fa-rotate"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button class="page-link" @click="page = 0" :disabled="page == 0">
-          <i class="fa-solid fa-angles-left text-dark"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button class="page-link" @click="page--" :disabled="page == 0">
-          <i class="fa-solid fa-angle-left text-dark"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button class="page-link text-dark" disabled>
-          {{ page + 1 }}
-        </button>
-      </li>
-      <li class="page-item">
-        <button class="page-link" @click="page++" :disabled="page == pages - 1">
-          <i class="fa-solid fa-angle-right text-dark"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button
-          class="page-link"
-          @click="page = pages - 1"
-          :disabled="page == pages - 1"
-        >
-          <i class="fa-solid fa-angles-right text-dark"></i>
-        </button>
-      </li>
-    </ul>
-  </nav>
-
-  <div
-    class="modal fade"
-    id="pay_for_fixed_expense"
-    tabindex="-1"
-    aria-labelledby="pay_for_expneses"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="pay_for_expneses">Доимий чиқим</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            id="pay_f"
-          ></button>
-        </div>
-
-        <FixedBody @pay_f_expense="pay_f_expense" />
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
-import {
-  bank_account_get,
-  fixed_expence_get,
-  get_fixed_history,
-  pay_for_fixed_expense,
-} from "@/utils/request/request";
-import { catchError, success } from "@/utils/request/handle_api_err";
+import { bank_account_get, fixed_expence_get } from "@/utils/request/request";
+import { catchError } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
-import FixedBody from "./FixedBody.vue";
 export default {
   name: "FixedItem",
+  props: ["fixed_history"],
+  emits: ["from", "to"],
   data() {
     return {
-      limit: 25,
-      page: 0,
-      pages: null,
-      fixed_history: [],
-      from: 0,
-      to: 0,
-      user_id: 0,
       page_account: 0,
       pages_account: null,
       limit_account: 25,
@@ -371,22 +278,6 @@ export default {
     };
   },
   watch: {
-    limit(e) {
-      this.page = 0;
-      this.fixed_history_get(this.page, e, this.from, this.to, this.user_id);
-    },
-    page(e) {
-      this.fixed_history_get(e, this.limit, this.from, this.to, this.user_id);
-      document.getElementById("scroll").scrollTop = 0;
-    },
-    from(e) {
-      this.page = 0;
-      this.fixed_history_get(this.page, this.limit, e, this.to, this.user_id);
-    },
-    to(e) {
-      this.page = 0;
-      this.fixed_history_get(this.page, this.limit, this.from, e, this.user_id);
-    },
     limit_account(e) {
       this.page_account = 0;
       this.bank_accounts_get(this.page_account, e, this.search_account);
@@ -439,50 +330,6 @@ export default {
     },
   },
   methods: {
-    pay_f_expense(e) {
-      document.getElementById("pay_f_e_disabled").disabled = true;
-      this.$store.dispatch("setLoading", { isLoading: true });
-      pay_for_fixed_expense(e)
-        .then((res) => {
-          this.$store.dispatch("setLoading", { isLoading: false });
-          document.getElementById("pay_f").click();
-          document.getElementById("pay_f_e_disabled").disabled = false;
-          success(res).then(() => {
-            this.fixed_history_get(
-              this.page,
-              this.limit,
-              this.from,
-              this.to,
-              this.user_id
-            );
-            e.money = null;
-            e.from_ = null;
-            e.to_ = null;
-            e.comment = "";
-          });
-          document.getElementById("bank_account_text").innerHTML =
-            "ҳисоб рақамлар";
-          document.getElementById("expenses_text").innerHTML = "чиқимлар";
-        })
-        .catch((err) => {
-          catchError(err);
-          this.$store.dispatch("setLoading", { isLoading: false });
-          document.getElementById("pay_f_e_disabled").disabled = false;
-        });
-    },
-    fixed_history_get(page, limit, from, to, user_id) {
-      this.$store.dispatch("setLoading", { isLoading: true });
-      get_fixed_history(page, limit, from, to, user_id)
-        .then((res) => {
-          this.fixed_history = res.data.data;
-          this.pages = res.data.pages;
-          this.$store.dispatch("setLoading", { isLoading: false });
-        })
-        .catch((err) => {
-          catchError(err);
-          this.$store.dispatch("setLoading", { isLoading: false });
-        });
-    },
     bank_accounts_get(page_account, limit_account, search_account) {
       this.$store.dispatch("setLoading", { isLoading: true });
 
@@ -498,7 +345,7 @@ export default {
         });
     },
     select(id, name) {
-      this.from = id;
+      this.$emit("from", id);
       this.text_account = name;
       document.getElementById("select_bank_account").click();
     },
@@ -517,21 +364,12 @@ export default {
         });
     },
     select_expense(id, name) {
-      this.to = id;
+      this.$emit("to", id);
       this.text_expense = name;
       document.getElementById("select_expense").click();
     },
   },
-  created() {
-    this.fixed_history_get(
-      this.page,
-      this.limit,
-      this.from,
-      this.to,
-      this.user_id
-    );
-  },
-  components: { Data_notfound, FixedBody },
+  components: { Data_notfound },
 };
 </script>
 
@@ -543,8 +381,8 @@ th select {
 }
 
 .table-responsive {
-  max-height: 65vh;
-  min-height: 65vh;
+  max-height: 64vh;
+  min-height: 64vh;
 }
 
 @media (max-width: 634px) {

@@ -69,7 +69,11 @@
         role="tab"
         aria-controls="pills-profile"
         aria-selected="false"
-        @click="fixed = true"
+        @click="
+          fixed_history.length
+            ? ''
+            : fixed_history_get(h_page, h_limit, h_from, h_to, h_user_id)
+        "
       >
         Доимий чиқимлар
       </button>
@@ -87,7 +91,11 @@
         role="tab"
         aria-controls="pills-contact"
         aria-selected="false"
-        @click="variable = true"
+        @click="
+          variable_history.length
+            ? ''
+            : variable_history_get(v_page, v_limit, v_from, v_user_id)
+        "
       >
         Бир марталик чиқимлар
       </button>
@@ -183,7 +191,74 @@
       role="tabpanel"
       aria-labelledby="pills-profile-tab"
     >
-      <Fixed v-if="fixed == true" />
+      <Fixed :fixed_history="fixed_history" @from="sort_from" @to="sort_to" />
+
+      <nav
+        aria-label="Page navigation example"
+        class="mt-1"
+        v-if="fixed_history != ''"
+      >
+        <ul class="pagination pagination-sm justify-content-end">
+          <li class="page-item">
+            <select
+              class="form-control form-control-sm form-select mx-1"
+              v-model="h_limit"
+            >
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </li>
+          <li class="page-item">
+            <button
+              type="button"
+              class="page-link"
+              @click="
+                fixed_history_get(h_page, h_limit, h_from, h_to, h_user_id)
+              "
+            >
+              <i class="fa-solid fa-rotate"></i>
+            </button>
+          </li>
+          <li class="page-item">
+            <button
+              class="page-link"
+              @click="h_page = 0"
+              :disabled="h_page == 0"
+            >
+              <i class="fa-solid fa-angles-left text-dark"></i>
+            </button>
+          </li>
+          <li class="page-item">
+            <button class="page-link" @click="h_page--" :disabled="h_page == 0">
+              <i class="fa-solid fa-angle-left text-dark"></i>
+            </button>
+          </li>
+          <li class="page-item">
+            <button class="page-link text-dark" disabled>
+              {{ h_page + 1 }}
+            </button>
+          </li>
+          <li class="page-item">
+            <button
+              class="page-link"
+              @click="h_page++"
+              :disabled="h_page == h_pages - 1"
+            >
+              <i class="fa-solid fa-angle-right text-dark"></i>
+            </button>
+          </li>
+          <li class="page-item">
+            <button
+              class="page-link"
+              @click="h_page = h_pages - 1"
+              :disabled="h_page == h_pages - 1"
+            >
+              <i class="fa-solid fa-angles-right text-dark"></i>
+            </button>
+          </li>
+        </ul>
+      </nav>
     </div>
     <div
       class="tab-pane fade"
@@ -191,7 +266,72 @@
       role="tabpanel"
       aria-labelledby="pills-contact-tab"
     >
-      <Variable v-if="variable == true" />
+      <Variable :variable_history="variable_history" @from="sort_from_v" />
+
+      <nav
+        aria-label="Page navigation example"
+        class="mt-1"
+        v-if="variable_history != ''"
+      >
+        <ul class="pagination pagination-sm justify-content-end">
+          <li class="page-item">
+            <select
+              class="form-control form-control-sm form-select mx-1"
+              v-model="v_limit"
+            >
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </li>
+          <li class="page-item">
+            <button
+              type="button"
+              class="page-link"
+              @click="variable_history_get(v_page, v_limit, v_from, v_user_id)"
+            >
+              <i class="fa-solid fa-rotate"></i>
+            </button>
+          </li>
+          <li class="page-item">
+            <button
+              class="page-link"
+              @click="v_page = 0"
+              :disabled="v_page == 0"
+            >
+              <i class="fa-solid fa-angles-left text-dark"></i>
+            </button>
+          </li>
+          <li class="page-item">
+            <button class="page-link" @click="v_page--" :disabled="v_page == 0">
+              <i class="fa-solid fa-angle-left text-dark"></i>
+            </button>
+          </li>
+          <li class="page-item">
+            <button class="page-link text-dark" disabled>
+              {{ v_page + 1 }}
+            </button>
+          </li>
+          <li class="page-item">
+            <button
+              class="page-link"
+              @click="v_page++"
+              :disabled="v_page == v_pages - 1"
+            >
+              <i class="fa-solid fa-angle-right text-dark"></i>
+            </button>
+          </li>
+          <li class="page-item">
+            <button
+              class="page-link"
+              @click="v_page = v_pages - 1"
+              :disabled="v_page == v_pages - 1"
+            >
+              <i class="fa-solid fa-angles-right text-dark"></i>
+            </button>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 
@@ -314,6 +454,8 @@
     </div>
   </div>
   <FixedItemPut :item="item" @put="put" />
+  <FixedBody @pay_f_expense="pay_f_expense" />
+  <VariableBody @pay_v_expense="pay_v_expense" />
 </template>
 
 <script>
@@ -323,13 +465,27 @@ import {
   fixed_expence_add,
   fixed_expence_get,
   fixed_expence_put,
+  get_fixed_history,
+  get_variable_history,
+  pay_for_fixed_expense,
+  pay_for_variable_expense,
 } from "@/utils/request/request";
 import Fixed from "@/components/expences/Fixed.vue";
 import Variable from "@/components/expences/Variable.vue";
 import FixedExpenses from "../../components/expences/FixedExpenses.vue";
 import FixedItemPut from "@/components/expences/FixedItemPut.vue";
+import FixedBody from "@/components/expences/FixedBody.vue";
+import VariableBody from "../../components/expences/VariableBody.vue";
 export default {
-  components: { Header_item, Fixed, Variable, FixedExpenses, FixedItemPut },
+  components: {
+    Header_item,
+    Fixed,
+    Variable,
+    FixedExpenses,
+    FixedItemPut,
+    FixedBody,
+    VariableBody,
+  },
   name: "ExpencesItem",
   data() {
     return {
@@ -347,8 +503,19 @@ export default {
       role: localStorage.getItem("role"),
       limit_of_expense: false,
       item: {},
-      fixed: false,
-      variable: false,
+      fixed_history: [],
+      h_limit: 25,
+      h_page: 0,
+      h_pages: null,
+      h_from: 0,
+      h_to: 0,
+      h_user_id: 0,
+      v_limit: 25,
+      v_page: 0,
+      v_pages: null,
+      variable_history: [],
+      v_from: 0,
+      v_user_id: 0,
     };
   },
   watch: {
@@ -368,6 +535,34 @@ export default {
         this.get_fixed_expenses(this.page, this.limit, this.search);
         this.page = 0;
       }
+    },
+    h_limit(e) {
+      this.h_page = 0;
+      this.fixed_history_get(
+        this.h_page,
+        e,
+        this.h_from,
+        this.h_to,
+        this.h_user_id
+      );
+    },
+    h_page(e) {
+      this.fixed_history_get(
+        e,
+        this.h_limit,
+        this.h_from,
+        this.h_to,
+        this.h_user_id
+      );
+      document.getElementById("scroll").scrollTop = 0;
+    },
+    v_limit(e) {
+      this.v_page = 0;
+      this.variable_history_get(this.v_page, e, this.v_from, this.v_user_id);
+    },
+    v_page(e) {
+      this.variable_history_get(e, this.v_limit, this.v_from, this.v_user_id);
+      document.getElementById("scroll").scrollTop = 0;
     },
   },
   methods: {
@@ -449,6 +644,116 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("fixed_e_disabled").disabled = false;
         });
+    },
+    pay_f_expense(e) {
+      document.getElementById("pay_f_e_disabled").disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      pay_for_fixed_expense(e)
+        .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("pay_f").click();
+          document.getElementById("pay_f_e_disabled").disabled = false;
+          success(res).then(() => {
+            this.fixed_history_get(
+              this.h_page,
+              this.h_limit,
+              this.h_from,
+              this.h_to,
+              this.h_user_id
+            );
+            e.money = null;
+            e.from_ = null;
+            e.to_ = null;
+            e.comment = "";
+          });
+          document.getElementById("bank_account_text").innerHTML =
+            "ҳисоб рақамлар";
+          document.getElementById("expenses_text").innerHTML = "чиқимлар";
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("pay_f_e_disabled").disabled = false;
+        });
+    },
+    fixed_history_get(h_page, h_limit, h_from, h_to, h_user_id) {
+      this.$store.dispatch("setLoading", { isLoading: true });
+      get_fixed_history(h_page, h_limit, h_from, h_to, h_user_id)
+        .then((res) => {
+          this.fixed_history = res.data.data;
+          this.h_pages = res.data.pages;
+          this.$store.dispatch("setLoading", { isLoading: false });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        });
+    },
+    sort_from(e) {
+      this.h_page = 0;
+      this.fixed_history_get(
+        this.h_page,
+        this.h_limit,
+        e,
+        this.h_to,
+        this.h_user_id
+      );
+    },
+    sort_to(e) {
+      this.h_page = 0;
+      this.fixed_history_get(
+        this.h_page,
+        this.h_limit,
+        this.h_from,
+        e,
+        this.h_user_id
+      );
+    },
+    pay_v_expense(e) {
+      document.getElementById("pay_v_e_disabled").disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      pay_for_variable_expense(e)
+        .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("pay_v").click();
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("pay_v_e_disabled").disabled = false;
+          success(res).then(() => {
+            this.variable_history_get(
+              this.v_page,
+              this.v_limit,
+              this.v_from,
+              this.v_user_id
+            );
+            e.money = null;
+            e.from_ = null;
+            e.comment = "";
+            document.getElementById("bank_account_text2").innerHTML =
+              "ҳисоб рақамлар";
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("pay_v_e_disabled").disabled = false;
+        });
+    },
+    variable_history_get(v_page, v_limit, v_from, v_user_id) {
+      this.$store.dispatch("setLoading", { isLoading: true });
+      get_variable_history(v_page, v_limit, v_from, v_user_id)
+        .then((res) => {
+          this.variable_history = res.data.data;
+          this.v_pages = res.data.pages;
+          this.$store.dispatch("setLoading", { isLoading: false });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        });
+    },
+    sort_from_v(e) {
+      this.v_page = 0;
+      this.variable_history_get(this.v_page, this.v_limit, e, this.v_user_id);
     },
   },
 };

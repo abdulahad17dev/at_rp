@@ -28,10 +28,10 @@
       </thead>
       <tbody>
         <tr v-for="(item, inc) in product_requests || []" :key="item">
-          <td>{{ item.id }}</td>
+          <td>{{ item.Proche_sorovlar.id }}</td>
           <td>
             {{
-              new Date(item.time)
+              new Date(item.Proche_sorovlar.time)
                 .toLocaleDateString("en-us", {
                   year: "numeric",
                   month: "numeric",
@@ -45,32 +45,32 @@
           </td>
           <td>
             <form
-              @submit.prevent="accept(item.id, true, item)"
+              @submit.prevent="accept(item.Proche_sorovlar.id, true, item)"
               :id="`form${inc}`"
             >
               <input
-                v-if="item.status == 'adminda_proche'"
+                v-if="item.Proche_sorovlar.status == 'adminda_proche'"
                 type="text"
                 :form="`form${inc}`"
                 class="form-control form-control-sm"
-                v-model="item.name"
+                v-model="item.Proche_sorovlar.name"
                 :data-name="inc"
                 @dblclick="enable('data-name', inc)"
                 @focusout="disable('data-name', inc)"
                 readonly
                 required
               />
-              <span v-else>{{ item.name }}</span>
+              <span v-else>{{ item.Proche_sorovlar.name }}</span>
             </form>
           </td>
           <td>
             <input
-              v-if="item.status == 'adminda_proche'"
+              v-if="item.Proche_sorovlar.status == 'adminda_proche'"
               type="number"
               :form="`form${inc}`"
               class="form-control form-control-sm"
               step="any"
-              v-model="item.quantity"
+              v-model="item.Proche_sorovlar.quantity"
               :data-quantity="inc"
               @dblclick="enable('data-quantity', inc)"
               @focusout="disable('data-quantity', inc)"
@@ -78,15 +78,15 @@
               required
             />
 
-            <span v-else>{{ item.quantity }}</span>
+            <span v-else>{{ item.Proche_sorovlar.quantity }}</span>
           </td>
           <td>
             <input
-              v-if="item.status == 'adminda_proche'"
+              v-if="item.Proche_sorovlar.status == 'adminda_proche'"
               type="text"
               :form="`form${inc}`"
               class="form-control form-control-sm"
-              v-model="item.olchov_birligi"
+              v-model="item.Proche_sorovlar.olchov_birligi"
               :data-olchov_birligi="inc"
               @dblclick="enable('data-olchov_birligi', inc)"
               @focusout="disable('data-olchov_birligi', inc)"
@@ -95,15 +95,15 @@
             />
 
             <span v-else>
-              {{ item.olchov_birligi }}
+              {{ item.Proche_sorovlar.olchov_birligi }}
             </span>
           </td>
           <td>
             <textarea
-              v-if="item.status == 'adminda_proche'"
+              v-if="item.Proche_sorovlar.status == 'adminda_proche'"
               :form="`form${inc}`"
               class="form-control form-control-sm"
-              v-model="item.comment"
+              v-model="item.Proche_sorovlar.comment"
               :data-comment="inc"
               @dblclick="enable('data-comment', inc)"
               @focusout="disable('data-comment', inc)"
@@ -112,30 +112,30 @@
             ></textarea>
 
             <span v-else>
-              {{ item.comment }}
+              {{ item.Proche_sorovlar.comment }}
             </span>
           </td>
 
           <td>
             <button
               class="btn btn-sm btn-success"
-              :id="`accept_proche${item.id}`"
-              v-if="item.status == 'adminda_proche'"
+              :id="`accept_proche${item.Proche_sorovlar.id}`"
+              v-if="item.Proche_sorovlar.status == 'adminda_proche'"
               :form="`form${inc}`"
               :disabled="
-                !item.name ||
-                !item.quantity ||
-                !item.comment ||
-                !item.olchov_birligi
+                !item.Proche_sorovlar.name ||
+                !item.Proche_sorovlar.quantity ||
+                !item.Proche_sorovlar.comment ||
+                !item.Proche_sorovlar.olchov_birligi
               "
             >
               <i class="fa-solid fa-circle-check text-white"></i>
             </button>
             <button
               class="btn btn-sm btn-danger mx-1"
-              :id="`remove_proche${item.id}`"
-              v-if="item.status == 'adminda_proche'"
-              @click="remove(item.id, false)"
+              :id="`remove_proche${item.Proche_sorovlar.id}`"
+              v-if="item.Proche_sorovlar.status == 'adminda_proche'"
+              @click="remove(item.Proche_sorovlar.id, false)"
             >
               <i class="fa-solid fa-circle-xmark text-white"></i>
             </button>

@@ -145,107 +145,18 @@
     </table>
     <Data_notfound v-if="variable_history == ''" />
   </div>
-
-  <nav
-    aria-label="Page navigation example"
-    class="mt-1"
-    v-if="variable_history != ''"
-  >
-    <ul class="pagination pagination-sm justify-content-end">
-      <li class="page-item">
-        <select
-          class="form-control form-control-sm form-select mx-1"
-          v-model="limit"
-        >
-          <option value="25">25</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-        </select>
-      </li>
-      <li class="page-item">
-        <button
-          type="button"
-          class="page-link"
-          @click="variable_history_get(page, limit, from, user_id)"
-        >
-          <i class="fa-solid fa-rotate"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button class="page-link" @click="page = 0" :disabled="page == 0">
-          <i class="fa-solid fa-angles-left text-dark"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button class="page-link" @click="page--" :disabled="page == 0">
-          <i class="fa-solid fa-angle-left text-dark"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button class="page-link text-dark" disabled>
-          {{ page + 1 }}
-        </button>
-      </li>
-      <li class="page-item">
-        <button class="page-link" @click="page++" :disabled="page == pages - 1">
-          <i class="fa-solid fa-angle-right text-dark"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button
-          class="page-link"
-          @click="page = pages - 1"
-          :disabled="page == pages - 1"
-        >
-          <i class="fa-solid fa-angles-right text-dark"></i>
-        </button>
-      </li>
-    </ul>
-  </nav>
-
-  <div
-    class="modal fade"
-    id="pay_for_variable_expense"
-    tabindex="-1"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Бир марталик</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            id="pay_v"
-          ></button>
-        </div>
-        <VariableBody @pay_v_expense="pay_v_expense" />
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
-import {
-  bank_account_get,
-  get_variable_history,
-  pay_for_variable_expense,
-} from "@/utils/request/request";
-import { catchError, success } from "@/utils/request/handle_api_err";
-import VariableBody from "./VariableBody.vue";
+import { bank_account_get } from "@/utils/request/request";
+import { catchError } from "@/utils/request/handle_api_err";
 export default {
   name: "VariableItem",
+  props: ["variable_history"],
+  emits: ["pay_v_expense", "from"],
   data() {
     return {
-      limit: 25,
-      page: 0,
-      pages: null,
-      variable_history: [],
-      from: 0,
-      user_id: 0,
       page_account: 0,
       pages_account: null,
       limit_account: 25,
@@ -255,18 +166,6 @@ export default {
     };
   },
   watch: {
-    limit(e) {
-      this.page = 0;
-      this.variable_history_get(this.page, e, this.from, this.user_id);
-    },
-    page(e) {
-      this.variable_history_get(e, this.limit, this.from, this.user_id);
-      document.getElementById("scroll").scrollTop = 0;
-    },
-    from(e) {
-      this.page = 0;
-      this.variable_history_get(this.page, this.limit, e, this.user_id);
-    },
     limit_account(e) {
       this.page_account = 0;
       this.bank_accounts_get(this.page_account, e, this.search_account);
@@ -294,48 +193,6 @@ export default {
     },
   },
   methods: {
-    pay_v_expense(e) {
-      document.getElementById("pay_v_e_disabled").disabled = true;
-      this.$store.dispatch("setLoading", { isLoading: true });
-      pay_for_variable_expense(e)
-        .then((res) => {
-          this.$store.dispatch("setLoading", { isLoading: false });
-          document.getElementById("pay_v").click();
-          this.$store.dispatch("setLoading", { isLoading: false });
-          document.getElementById("pay_v_e_disabled").disabled = false;
-          success(res).then(() => {
-            this.variable_history_get(
-              this.page,
-              this.limit,
-              this.from,
-              this.user_id
-            );
-            e.money = null;
-            e.from_ = null;
-            e.comment = "";
-            document.getElementById("bank_account_text2").innerHTML =
-              "ҳисоб рақамлар";
-          });
-        })
-        .catch((err) => {
-          catchError(err);
-          this.$store.dispatch("setLoading", { isLoading: false });
-          document.getElementById("pay_v_e_disabled").disabled = false;
-        });
-    },
-    variable_history_get(page, limit, from, user_id) {
-      this.$store.dispatch("setLoading", { isLoading: true });
-      get_variable_history(page, limit, from, user_id)
-        .then((res) => {
-          this.variable_history = res.data.data;
-          this.pages = res.data.pages;
-          this.$store.dispatch("setLoading", { isLoading: false });
-        })
-        .catch((err) => {
-          catchError(err);
-          this.$store.dispatch("setLoading", { isLoading: false });
-        });
-    },
     bank_accounts_get(page_account, limit_account, search_account) {
       this.$store.dispatch("setLoading", { isLoading: true });
 
@@ -351,15 +208,12 @@ export default {
         });
     },
     select(id, name) {
-      this.from = id;
+      this.$emit("from", id);
       this.text_account = name;
       document.getElementById("bank_account_text4").click();
     },
   },
-  created() {
-    this.variable_history_get(this.page, this.limit, this.from, this.user_id);
-  },
-  components: { Data_notfound, VariableBody },
+  components: { Data_notfound },
 };
 </script>
 
@@ -371,8 +225,8 @@ th select {
 }
 
 .table-responsive {
-  max-height: 65vh;
-  min-height: 65vh;
+  max-height: 64vh;
+  min-height: 64vh;
 }
 
 @media (max-width: 634px) {

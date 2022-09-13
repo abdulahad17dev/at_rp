@@ -122,17 +122,17 @@
       </thead>
       <tbody>
         <tr v-for="item in product_requests || []" :key="item">
-          <td>{{ item.id }}</td>
+          <td>{{ item.Proche_sorovlar.id }}</td>
           <td>
-            {{ item.name }}
+            {{ item.Proche_sorovlar.name }}
           </td>
           <td>
-            {{ item.quantity }}
+            {{ item.Proche_sorovlar.quantity }}
           </td>
-          <td>{{ item.olchov_birligi }}</td>
+          <td>{{ item.Proche_sorovlar.olchov_birligi }}</td>
           <td>
             {{
-              new Date(item.time)
+              new Date(item.Proche_sorovlar.time)
                 .toLocaleDateString("en-us", {
                   year: "numeric",
                   month: "numeric",
@@ -144,11 +144,13 @@
                 .slice(0, 16)
             }}
           </td>
-          <td>{{ item.comment }}</td>
+          <td>{{ item.Proche_sorovlar.comment }}</td>
           <td>
             <button
               class="btn btn-sm btn-success"
-              @click="select_item(item.id, item.name)"
+              @click="
+                select_item(item.Proche_sorovlar.id, item.Proche_sorovlar.name)
+              "
               data-bs-toggle="modal"
               data-bs-target="#accept_request"
             >

@@ -28,13 +28,13 @@
       </thead>
       <tbody>
         <tr v-for="item in data || []" :key="item">
-          <td style="width: 10%">{{ item.id }}</td>
-          <td style="width: 20%">{{ item.name }}</td>
-          <td style="width: 20%">{{ item.quantity }}</td>
-          <td style="width: 20%">{{ item.olchov_birligi }}</td>
+          <td style="width: 10%">{{ item.Proche_sorovlar.id }}</td>
+          <td style="width: 20%">{{ item.Proche_sorovlar.name }}</td>
+          <td style="width: 20%">{{ item.Proche_sorovlar.quantity }}</td>
+          <td style="width: 20%">{{ item.Proche_sorovlar.olchov_birligi }}</td>
           <td style="width: 20%">
             {{
-              new Date(item.time)
+              new Date(item.Proche_sorovlar.time)
                 .toLocaleDateString("en-us", {
                   year: "numeric",
                   month: "numeric",
@@ -46,12 +46,12 @@
                 .slice(0, 16)
             }}
           </td>
-          <td style="width: 20%">{{ item.comment }}</td>
+          <td style="width: 20%">{{ item.Proche_sorovlar.comment }}</td>
           <td>
             <button
-              v-if="item.status == 'adminda_proche'"
+              v-if="item.Proche_sorovlar.status == 'adminda_proche'"
               class="btn btn-sm btn-danger"
-              @click="$emit('remove', item.id)"
+              @click="$emit('remove', item.Proche_sorovlar.id)"
               id="remove_proche"
             >
               <i class="fa-solid fa-circle-xmark text-white"></i>

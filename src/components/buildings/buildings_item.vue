@@ -516,7 +516,7 @@ export default {
 
 <style lang="scss" scoped>
 table {
-  min-width: 1000px;
+  // min-width: 1000px;
   width: 100%;
 }
 

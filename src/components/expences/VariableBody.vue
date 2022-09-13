@@ -1,162 +1,195 @@
 <template>
-  <form @submit.prevent="$emit('pay_v_expense', pay_body)">
-    <div class="modal-body">
-      <div class="row gap-2">
-        <div class="col-10 mx-auto">
-          <label for="from">Банк ҳисоб: </label>
-          <div class="dropdown">
-            <button
-              class="btn btn-light btn-sm dropdown-toggle"
-              type="button"
-              id="bank_account_text2"
-              data-bs-toggle="dropdown"
-              data-bs-auto-close="outside"
-              aria-expanded="false"
-              @click="
-                bank_accounts.length
-                  ? ''
-                  : bank_accounts_get(
-                      page_account,
-                      limit_account,
-                      search_account
-                    )
-              "
-            >
-              {{ text_account }}
-            </button>
-            <ul
-              class="dropdown-menu border-top-0"
-              aria-labelledby="bank_account"
-            >
-              <li>
-                <input
-                  type="search"
-                  class="form-control form-control-sm"
-                  placeholder="қидириш ..."
-                  v-model="search_account"
-                />
-              </li>
-              <li>
-                <ul class="dropdown-items">
-                  <li
-                    v-for="item in bank_accounts"
-                    :key="item"
+  <div
+    class="modal fade"
+    id="pay_for_variable_expense"
+    tabindex="-1"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Бир марталик</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            id="pay_v"
+          ></button>
+        </div>
+        <form @submit.prevent="$emit('pay_v_expense', pay_body)">
+          <div class="modal-body">
+            <div class="row gap-2">
+              <div class="col-10 mx-auto">
+                <label for="from">Банк ҳисоб: </label>
+                <div class="dropdown">
+                  <button
+                    class="btn btn-light btn-sm dropdown-toggle"
+                    type="button"
+                    id="bank_account_text2"
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                    aria-expanded="false"
                     @click="
-                      select(item.Bank_accounts.id, item.Bank_accounts.name)
-                    "
-                  >
-                    <a class="dropdown-item">{{ item.Bank_accounts.name }}</a>
-                  </li>
-                </ul>
-              </li>
-              <li v-if="bank_accounts != ''">
-                <hr class="dropdown-divider m-0" />
-              </li>
-              <li>
-                <nav
-                  aria-label="Page navigation example"
-                  class="mt-2"
-                  v-if="bank_accounts != ''"
-                >
-                  <ul class="pagination pagination-sm justify-content-end">
-                    <li class="page-item">
-                      <button
-                        type="button"
-                        class="page-link"
-                        @click="
-                          bank_accounts_get(
+                      bank_accounts.length
+                        ? ''
+                        : bank_accounts_get(
                             page_account,
                             limit_account,
                             search_account
                           )
-                        "
-                      >
-                        <i class="fa-solid fa-rotate"></i>
-                      </button>
+                    "
+                  >
+                    {{ text_account }}
+                  </button>
+                  <ul
+                    class="dropdown-menu border-top-0"
+                    aria-labelledby="bank_account"
+                  >
+                    <li>
+                      <input
+                        type="search"
+                        class="form-control form-control-sm"
+                        placeholder="қидириш ..."
+                        v-model="search_account"
+                      />
                     </li>
-                    <li class="page-item">
-                      <button
-                        type="button"
-                        class="page-link"
-                        @click="page_account--"
-                        :disabled="page_account == 0"
-                      >
-                        <i class="fa-solid fa-angle-left text-dark"></i>
-                      </button>
+                    <li>
+                      <ul class="dropdown-items">
+                        <li
+                          v-for="item in bank_accounts"
+                          :key="item"
+                          @click="
+                            select(
+                              item.Bank_accounts.id,
+                              item.Bank_accounts.name
+                            )
+                          "
+                        >
+                          <a class="dropdown-item">{{
+                            item.Bank_accounts.name
+                          }}</a>
+                        </li>
+                      </ul>
                     </li>
-                    <li class="page-item">
-                      <button
-                        type="button"
-                        class="page-link text-dark"
-                        disabled
-                      >
-                        {{ page_account + 1 }}
-                      </button>
+                    <li v-if="bank_accounts != ''">
+                      <hr class="dropdown-divider m-0" />
                     </li>
-                    <li class="page-item">
-                      <button
-                        type="button"
-                        class="page-link"
-                        @click="page_account++"
-                        :disabled="page_account == pages_account - 1"
+                    <li>
+                      <nav
+                        aria-label="Page navigation example"
+                        class="mt-2"
+                        v-if="bank_accounts != ''"
                       >
-                        <i class="fa-solid fa-angle-right text-dark"></i>
-                      </button>
+                        <ul
+                          class="pagination pagination-sm justify-content-end"
+                        >
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link"
+                              @click="
+                                bank_accounts_get(
+                                  page_account,
+                                  limit_account,
+                                  search_account
+                                )
+                              "
+                            >
+                              <i class="fa-solid fa-rotate"></i>
+                            </button>
+                          </li>
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link"
+                              @click="page_account--"
+                              :disabled="page_account == 0"
+                            >
+                              <i class="fa-solid fa-angle-left text-dark"></i>
+                            </button>
+                          </li>
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link text-dark"
+                              disabled
+                            >
+                              {{ page_account + 1 }}
+                            </button>
+                          </li>
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link"
+                              @click="page_account++"
+                              :disabled="page_account == pages_account - 1"
+                            >
+                              <i class="fa-solid fa-angle-right text-dark"></i>
+                            </button>
+                          </li>
+                        </ul>
+                      </nav>
                     </li>
                   </ul>
-                </nav>
-              </li>
-            </ul>
+                </div>
+              </div>
+              <div class="col-10 mx-auto">
+                <label for="summa"
+                  >Сумма:
+                  <span class="text-primary"
+                    >{{
+                      new Intl.NumberFormat().format(pay_body.money)
+                    }}
+                    сўм</span
+                  ></label
+                >
+                <div class="input-group input-group-sm">
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="summa"
+                    v-model="pay_body.money"
+                    required
+                    step="any"
+                    min="1"
+                  />
+                  <span class="input-group-text bg-white">сўм</span>
+                </div>
+              </div>
+              <div class="col-10 mx-auto">
+                <label for="comment">Изох: </label>
+                <textarea
+                  id="comment"
+                  class="form-control form-control-sm"
+                  v-model="pay_body.comment"
+                ></textarea>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="col-10 mx-auto">
-          <label for="summa"
-            >Сумма:
-            <span class="text-primary"
-              >{{ new Intl.NumberFormat().format(pay_body.money) }} сўм</span
-            ></label
-          >
-          <div class="input-group input-group-sm">
-            <input
-              type="number"
-              class="form-control"
-              id="summa"
-              v-model="pay_body.money"
-              required
-              step="any"
-              min="1"
-            />
-            <span class="input-group-text bg-white">сўм</span>
+          <div class="modal-footer">
+            <button
+              type="submit"
+              class="btn btn-outline-primary btn-sm"
+              id="pay_v_e_disabled"
+              :disabled="
+                !pay_body.from_ || !pay_body.money || !pay_body.comment
+              "
+            >
+              <i class="fa-solid fa-circle-check"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-danger btn-sm"
+              data-bs-dismiss="modal"
+            >
+              <i class="fa-solid fa-circle-xmark"></i>
+            </button>
           </div>
-        </div>
-        <div class="col-10 mx-auto">
-          <label for="comment">Изох: </label>
-          <textarea
-            id="comment"
-            class="form-control form-control-sm"
-            v-model="pay_body.comment"
-          ></textarea>
-        </div>
+        </form>
       </div>
     </div>
-    <div class="modal-footer">
-      <button
-        type="submit"
-        class="btn btn-outline-primary btn-sm"
-        id="pay_v_e_disabled"
-        :disabled="!pay_body.from_ || !pay_body.money || !pay_body.comment"
-      >
-        <i class="fa-solid fa-circle-check"></i>
-      </button>
-      <button
-        type="button"
-        class="btn btn-outline-danger btn-sm"
-        data-bs-dismiss="modal"
-      >
-        <i class="fa-solid fa-circle-xmark"></i>
-      </button>
-    </div>
-  </form>
+  </div>
 </template>
 
 <script>
