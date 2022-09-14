@@ -331,25 +331,13 @@ th select {
   font-size: 0.875rem;
 }
 
-@media (max-width: 368px) {
-  .row {
-    display: block;
-  }
-  .row .col .input-group {
-    width: 100%;
-  }
-  .row .col select {
-    width: 100%;
-  }
-}
-
 .table-responsive {
   max-height: 76vh;
 }
 
 @media (max-width: 500px) {
   .table-responsive {
-    max-height: 105vh;
+    max-height: 100vh;
   }
 }
 

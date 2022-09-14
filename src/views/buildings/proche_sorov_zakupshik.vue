@@ -1,226 +1,288 @@
 <template>
   <Header_item />
 
-  <div class="table-responsive">
-    <table class="table table-sm table-hover table-bordered">
-      <thead class="">
-        <tr>
-          <th style="width: 7%">#ИД</th>
-          <th style="width: 15%">Номи</th>
-          <th style="width: 15%">Ҳажм</th>
-          <th style="width: 15%">Ўлчов бирлиги</th>
-          <th style="width: 15%">Сана</th>
-          <th style="width: 15%">Изох</th>
-          <th style="width: 8%">
-            <div class="dropdown">
-              <button
-                class="btn btn-light btn-sm dropdown-toggle"
-                type="button"
-                id="select_bank_building"
-                data-bs-toggle="dropdown"
-                data-bs-auto-close="outside"
-                aria-expanded="false"
-                @click="
-                  buildings.length
-                    ? ''
-                    : buildings_get(
-                        page_building,
-                        limit_building,
-                        search_building
-                      )
-                "
-              >
-                {{ text_building }}
-              </button>
-              <ul
-                class="dropdown-menu border-top-0"
-                aria-labelledby="bank_building"
-              >
-                <li>
-                  <input
-                    type="search"
-                    class="form-control form-control-sm"
-                    placeholder="қидириш ..."
-                    v-model="search_building"
-                  />
-                </li>
-                <li>
-                  <ul class="dropdown-items">
-                    <li @click="select(0, 'барчаси')">
-                      <a class="dropdown-item">барчаси</a>
+  <ul
+    class="nav nav-pills nav-fill nav-jusitified mb-3"
+    id="pills-tab"
+    role="tablist"
+  >
+    <li class="nav-item" role="presentation">
+      <button
+        class="btn btn-sm btn-light w-100"
+        id="pills-home-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-home"
+        type="button"
+        role="tab"
+        aria-controls="pills-home"
+        aria-selected="true"
+        @click="get_proche_s(page, limit, building_id, status)"
+      >
+        Проче сўровлар
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="btn btn-sm btn-light w-100"
+        id="pills-profile-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-profile"
+        type="button"
+        role="tab"
+        aria-controls="pills-profile"
+        aria-selected="false"
+        @click="smeta = true"
+      >
+        Сметалар
+      </button>
+    </li>
+  </ul>
+  <div class="tab-content" id="pills-tabContent">
+    <div
+      class="tab-pane fade"
+      id="pills-home"
+      role="tabpanel"
+      aria-labelledby="pills-home-tab"
+    >
+      <div class="table-responsive">
+        <table class="table table-sm table-hover table-bordered">
+          <thead class="">
+            <tr>
+              <th style="width: 7%">#ИД</th>
+              <th style="width: 15%">Номи</th>
+              <th style="width: 15%">Ҳажм</th>
+              <th style="width: 15%">Ўлчов бирлиги</th>
+              <th style="width: 15%">Сана</th>
+              <th style="width: 15%">Изох</th>
+              <th style="width: 8%">
+                <div class="dropdown">
+                  <button
+                    class="btn btn-light btn-sm dropdown-toggle"
+                    type="button"
+                    id="select_bank_building"
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                    aria-expanded="false"
+                    @click="
+                      buildings.length
+                        ? ''
+                        : buildings_get(
+                            page_building,
+                            limit_building,
+                            search_building
+                          )
+                    "
+                  >
+                    {{ text_building }}
+                  </button>
+                  <ul
+                    class="dropdown-menu border-top-0"
+                    aria-labelledby="bank_building"
+                  >
+                    <li>
+                      <input
+                        type="search"
+                        class="form-control form-control-sm"
+                        placeholder="қидириш ..."
+                        v-model="search_building"
+                      />
                     </li>
-                    <li
-                      v-for="item in buildings"
-                      :key="item"
-                      @click="select(item.id, item.name)"
-                    >
-                      <a class="dropdown-item">{{ item.name }}</a>
+                    <li>
+                      <ul class="dropdown-items">
+                        <li @click="select(0, 'барчаси')">
+                          <a class="dropdown-item">барчаси</a>
+                        </li>
+                        <li
+                          v-for="item in buildings"
+                          :key="item"
+                          @click="select(item.id, item.name)"
+                        >
+                          <a class="dropdown-item">{{ item.name }}</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li v-if="buildings != ''">
+                      <hr class="dropdown-divider m-0" />
+                    </li>
+                    <li>
+                      <nav
+                        aria-label="Page navigation example"
+                        class="mt-2"
+                        v-if="buildings != ''"
+                      >
+                        <ul
+                          class="pagination pagination-sm justify-content-end"
+                        >
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link"
+                              @click="
+                                buildings_get(
+                                  page_building,
+                                  limit_building,
+                                  search_building
+                                )
+                              "
+                            >
+                              <i class="fa-solid fa-rotate"></i>
+                            </button>
+                          </li>
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link"
+                              @click="page_building--"
+                              :disabled="page_building == 0"
+                            >
+                              <i class="fa-solid fa-angle-left text-dark"></i>
+                            </button>
+                          </li>
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link text-dark"
+                              disabled
+                            >
+                              {{ page_building + 1 }}
+                            </button>
+                          </li>
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link"
+                              @click="page_building++"
+                              :disabled="page_building == pages_building - 1"
+                            >
+                              <i class="fa-solid fa-angle-right text-dark"></i>
+                            </button>
+                          </li>
+                        </ul>
+                      </nav>
                     </li>
                   </ul>
-                </li>
-                <li v-if="buildings != ''">
-                  <hr class="dropdown-divider m-0" />
-                </li>
-                <li>
-                  <nav
-                    aria-label="Page navigation example"
-                    class="mt-2"
-                    v-if="buildings != ''"
-                  >
-                    <ul class="pagination pagination-sm justify-content-end">
-                      <li class="page-item">
-                        <button
-                          type="button"
-                          class="page-link"
-                          @click="
-                            buildings_get(
-                              page_building,
-                              limit_building,
-                              search_building
-                            )
-                          "
-                        >
-                          <i class="fa-solid fa-rotate"></i>
-                        </button>
-                      </li>
-                      <li class="page-item">
-                        <button
-                          type="button"
-                          class="page-link"
-                          @click="page_building--"
-                          :disabled="page_building == 0"
-                        >
-                          <i class="fa-solid fa-angle-left text-dark"></i>
-                        </button>
-                      </li>
-                      <li class="page-item">
-                        <button
-                          type="button"
-                          class="page-link text-dark"
-                          disabled
-                        >
-                          {{ page_building + 1 }}
-                        </button>
-                      </li>
-                      <li class="page-item">
-                        <button
-                          type="button"
-                          class="page-link"
-                          @click="page_building++"
-                          :disabled="page_building == pages_building - 1"
-                        >
-                          <i class="fa-solid fa-angle-right text-dark"></i>
-                        </button>
-                      </li>
-                    </ul>
-                  </nav>
-                </li>
-              </ul>
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in product_requests || []" :key="item">
-          <td>{{ item.Proche_sorovlar.id }}</td>
-          <td>
-            {{ item.Proche_sorovlar.name }}
-          </td>
-          <td>
-            {{ item.Proche_sorovlar.quantity }}
-          </td>
-          <td>{{ item.Proche_sorovlar.olchov_birligi }}</td>
-          <td>
-            {{
-              new Date(item.Proche_sorovlar.time)
-                .toLocaleDateString("en-us", {
-                  year: "numeric",
-                  month: "numeric",
-                  day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
-                  hour12: false,
-                })
-                .slice(0, 16)
-            }}
-          </td>
-          <td>{{ item.Proche_sorovlar.comment }}</td>
-          <td>
-            <button
-              class="btn btn-sm btn-success"
-              @click="
-                select_item(item.Proche_sorovlar.id, item.Proche_sorovlar.name)
-              "
-              data-bs-toggle="modal"
-              data-bs-target="#accept_request"
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in product_requests || []" :key="item">
+              <td>{{ item.Proche_sorovlar.id }}</td>
+              <td>
+                {{ item.Proche_sorovlar.name }}
+              </td>
+              <td>
+                {{ item.Proche_sorovlar.quantity }}
+              </td>
+              <td>{{ item.Proche_sorovlar.olchov_birligi }}</td>
+              <td>
+                {{
+                  new Date(item.Proche_sorovlar.time)
+                    .toLocaleDateString("en-us", {
+                      year: "numeric",
+                      month: "numeric",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                      hour12: false,
+                    })
+                    .slice(0, 16)
+                }}
+              </td>
+              <td>{{ item.Proche_sorovlar.comment }}</td>
+              <td>
+                <button
+                  class="btn btn-sm btn-success"
+                  @click="
+                    select_item(
+                      item.Proche_sorovlar.id,
+                      item.Proche_sorovlar.name
+                    )
+                  "
+                  data-bs-toggle="modal"
+                  data-bs-target="#accept_request"
+                >
+                  <i class="fa-solid fa-circle-check text-white"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <Data_notfound v-if="product_requests == ''" />
+
+      <nav
+        aria-label="Page navigation example"
+        class="mt-2"
+        v-if="product_requests != ''"
+      >
+        <ul class="pagination pagination-sm justify-content-end">
+          <li class="page-item">
+            <select
+              class="form-control form-control-sm form-select mx-1"
+              v-model="limit"
             >
-              <i class="fa-solid fa-circle-check text-white"></i>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </li>
+          <li class="page-item">
+            <button
+              type="button"
+              class="page-link"
+              @click="get_proche_s(page, limit, building_id, status)"
+            >
+              <i class="fa-solid fa-rotate"></i>
             </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </li>
+          <li class="page-item">
+            <button class="page-link" @click="page = 0" :disabled="page == 0">
+              <i class="fa-solid fa-angles-left text-dark"></i>
+            </button>
+          </li>
+          <li class="page-item">
+            <button class="page-link" @click="page--" :disabled="page == 0">
+              <i class="fa-solid fa-angle-left text-dark"></i>
+            </button>
+          </li>
+          <li class="page-item">
+            <button class="page-link text-dark" disabled>
+              {{ page + 1 }}
+            </button>
+          </li>
+          <li class="page-item">
+            <button
+              class="page-link"
+              @click="page++"
+              :disabled="page == pages - 1"
+            >
+              <i class="fa-solid fa-angle-right text-dark"></i>
+            </button>
+          </li>
+          <li class="page-item">
+            <button
+              class="page-link"
+              @click="page = pages - 1"
+              :disabled="page == pages - 1"
+            >
+              <i class="fa-solid fa-angles-right text-dark"></i>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <Accept_request :item="item" @accept_request="accept_request" />
+    </div>
+    <div
+      class="tab-pane fade"
+      id="pills-profile"
+      role="tabpanel"
+      aria-labelledby="pills-profile-tab"
+    >
+      <Smeta_zakupshik v-if="smeta == true" />
+    </div>
   </div>
-  <Data_notfound v-if="product_requests == ''" />
-
-  <nav
-    aria-label="Page navigation example"
-    class="mt-2"
-    v-if="product_requests != ''"
-  >
-    <ul class="pagination pagination-sm justify-content-end">
-      <li class="page-item">
-        <select
-          class="form-control form-control-sm form-select mx-1"
-          v-model="limit"
-        >
-          <option value="25">25</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-        </select>
-      </li>
-      <li class="page-item">
-        <button
-          type="button"
-          class="page-link"
-          @click="get_proche_s(page, limit, building_id, status)"
-        >
-          <i class="fa-solid fa-rotate"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button class="page-link" @click="page = 0" :disabled="page == 0">
-          <i class="fa-solid fa-angles-left text-dark"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button class="page-link" @click="page--" :disabled="page == 0">
-          <i class="fa-solid fa-angle-left text-dark"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button class="page-link text-dark" disabled>
-          {{ page + 1 }}
-        </button>
-      </li>
-      <li class="page-item">
-        <button class="page-link" @click="page++" :disabled="page == pages - 1">
-          <i class="fa-solid fa-angle-right text-dark"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button
-          class="page-link"
-          @click="page = pages - 1"
-          :disabled="page == pages - 1"
-        >
-          <i class="fa-solid fa-angles-right text-dark"></i>
-        </button>
-      </li>
-    </ul>
-  </nav>
-
-  <Accept_request :item="item" @accept_request="accept_request" />
 </template>
 
 <script>
@@ -233,6 +295,7 @@ import {
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Accept_request from "@/components/buildings/accept_request.vue";
+import Smeta_zakupshik from "@/components/smeta/smeta_zakupshik.vue";
 export default {
   name: "ProcheSorovZakupshik",
   data() {
@@ -250,6 +313,7 @@ export default {
       search_building: "",
       buildings: [],
       text_building: "объектлар",
+      smeta: false,
     };
   },
   watch: {
@@ -356,37 +420,27 @@ export default {
       document.getElementById("select_bank_building").click();
     },
   },
-  created() {
-    this.get_proche_s(this.page, this.limit, this.building_id, this.status);
-  },
-  components: { Header_item, Data_notfound, Accept_request },
+  components: { Header_item, Data_notfound, Accept_request, Smeta_zakupshik },
 };
 </script>
 
 <style lang="scss" scoped>
-@media (max-width: 368px) {
-  .row {
-    display: block;
-  }
-  .row .col .input-group {
-    width: 100%;
-  }
-  .row .col select {
-    width: 100%;
-  }
-}
-
 .table-responsive {
-  max-height: 76vh;
+  max-height: 70vh;
 }
 
 @media (max-width: 500px) {
   .table-responsive {
-    max-height: 105vh;
+    max-height: 100vh;
   }
 }
 table {
   min-width: 1150px;
   width: 100%;
+}
+
+button.active {
+  background: #6c757d !important;
+  color: #fff;
 }
 </style>

@@ -103,6 +103,26 @@ export function smeta_get(page, limit, search, status, id) {
   }
 }
 
+export function smeta_request_get(page, limit, search, status, id) {
+  if (search && !status) {
+    return instance.get(
+      `get_smeta_for_supply/?building_id=${id}&search=${search}&page=${page}&limit=${limit}`
+    );
+  } else if (status && !search) {
+    return instance.get(
+      `get_smeta_for_supply/?building_id=${id}&status=${status}&page=${page}&limit=${limit}`
+    );
+  } else if (search && status) {
+    return instance.get(
+      `get_smeta_for_supply/?building_id=${id}&search=${search}&status=${status}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(
+      `get_smeta_for_supply/?building_id=${id}&&page=${page}&limit=${limit}`
+    );
+  }
+}
+
 export function smeta_add(data, id) {
   return file.post("create_smeta/" + id, data);
 }

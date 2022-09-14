@@ -13,7 +13,7 @@
         <tr v-for="item in data || []" :key="item">
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
-          <td>{{ item.balance }} сўм</td>
+          <td>{{ new Intl.NumberFormat().format(item.balance) }} сўм</td>
           <td>
             <button
               class="btn btn-sm btn-warning"

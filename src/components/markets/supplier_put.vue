@@ -57,28 +57,6 @@
                   placeholder="Манзил"
                 />
               </div>
-              <div class="col-10 mx-auto">
-                <label for="map_long"> Узунлик: </label>
-                <input
-                  type="text"
-                  id="map_long"
-                  class="form-control form-control-sm"
-                  v-model="body.map_long"
-                  required
-                  placeholder="Узунлик"
-                />
-              </div>
-              <div class="col-10 mx-auto">
-                <label for="map_lat"> Кенглик: </label>
-                <input
-                  type="text"
-                  id="map_lat"
-                  class="form-control form-control-sm"
-                  v-model="body.map_lat"
-                  required
-                  placeholder="Кенглик"
-                />
-              </div>
             </div>
           </div>
           <div class="modal-footer">

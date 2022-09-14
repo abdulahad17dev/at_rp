@@ -30,6 +30,7 @@
         role="tab"
         aria-controls="pills-profile"
         aria-selected="false"
+        @click="market = true"
       >
         Таминот олиш
       </button>
@@ -42,7 +43,7 @@
       role="tabpanel"
       aria-labelledby="pills-home-tab"
     >
-      <Suppliers v-if="users === true" />
+      <Suppliers v-if="users == true" />
     </div>
     <div
       class="tab-pane fade"
@@ -50,7 +51,7 @@
       role="tabpanel"
       aria-labelledby="pills-profile-tab"
     >
-      ...
+      <Markets_inner v-if="market == true" />
     </div>
   </div>
 </template>
@@ -58,14 +59,16 @@
 <script>
 import Header_item from "@/components/header/header_item.vue";
 import Suppliers from "../../components/markets/suppliers.vue";
+import Markets_inner from "@/components/markets/markets_inner.vue";
 export default {
   name: "MarketItem",
   data() {
     return {
-      users: "",
+      users: false,
+      market: false,
     };
   },
-  components: { Header_item, Suppliers },
+  components: { Header_item, Suppliers, Markets_inner },
 };
 </script>
 

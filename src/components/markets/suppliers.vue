@@ -47,7 +47,9 @@
             >
           </td>
           <td>{{ item.address }}</td>
-          <td>{{ item.balance }} сўм</td>
+          <td :class="item.balance >= 0 ? 'text-success' : 'text-danger'">
+            {{ new Intl.NumberFormat().format(item.balance) }} сўм
+          </td>
           <td>
             <button
               class="btn btn-sm btn-warning"
@@ -57,6 +59,13 @@
             >
               <i class="fa-solid fa-edit text-white"></i>
             </button>
+            <a
+              target="_blank"
+              :href="`https://www.google.com/maps/@${item.map_lat},${item.map_long},8z`"
+              class="btn btn-sm btn-primary mx-1"
+            >
+              <i class="fa-solid fa-location-dot"></i>
+            </a>
           </td>
         </tr>
       </tbody>

@@ -209,7 +209,15 @@ export default {
           });
         })
         .catch((err) => {
-          catchError(err);
+          catchError(err).then(() => {
+            this.get_smeta(
+              this.page,
+              this.limit,
+              this.search,
+              this.status,
+              this.building_id
+            );
+          });
           this.$store.dispatch("setLoading2", { isLoading2: false });
           document.getElementById("smeta_disabled").disabled = false;
           document.getElementById("file-6").value = null;

@@ -5,7 +5,8 @@ export let link = "https://constructionproject.crud.uz/uploaded_files/";
 export function catchError(error) {
   if (error.response.status == 401) {
     console.clear();
-    localStorage.clear();
+    localStorage.removeItem("role");
+    localStorage.removeItem("access_token");
     Swal.mixin({
       toast: true,
       position: "top-end",

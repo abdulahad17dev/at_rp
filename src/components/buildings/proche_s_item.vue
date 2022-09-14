@@ -77,7 +77,7 @@ table {
 }
 
 .table-responsive {
-  max-height: 62vh;
+  max-height: 65vh;
 }
 
 th select {
@@ -88,13 +88,13 @@ th select {
 
 @media (max-width: 992px) {
   .table-responsive {
-    max-height: 51vh;
+    max-height: 52vh;
   }
 }
 
 @media (max-width: 500px) {
   .table-responsive {
-    max-height: 73vh;
+    max-height: 74vh;
   }
 }
 </style>

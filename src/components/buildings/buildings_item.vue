@@ -106,6 +106,7 @@
               <i class="fa-solid fa-right-long"></i>
             </router-link>
             <router-link
+              v-if="item.Buildings.status == 'start'"
               :to="{
                 name: 'proche_sorovlar',
                 query: { id: item.Buildings.id },
@@ -516,7 +517,7 @@ export default {
 
 <style lang="scss" scoped>
 table {
-  // min-width: 1000px;
+  min-width: 1000px;
   width: 100%;
 }
 

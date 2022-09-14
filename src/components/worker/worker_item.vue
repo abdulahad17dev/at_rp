@@ -17,7 +17,7 @@
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
           <td :class="item.balance >= 0 ? 'text-success' : 'text-danger'">
-            {{ item.balance }} сўм
+            {{ new Intl.NumberFormat().format(item.balance) }} сўм
           </td>
           <td>
             <a
