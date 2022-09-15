@@ -140,7 +140,7 @@ let routes = [
     name: "proche_sorov_zakupshik",
     meta: {
       requiresAuth: true,
-      title: "Таминотчи ҳодимлар",
+      title: "Олиниши керак бўлган материаллар",
       icon: "fa-solid fa-rectangle-list",
       role: ["zakupshik"],
     },

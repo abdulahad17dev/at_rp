@@ -29,10 +29,11 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @media (max-width: 772px) {
-  h5 {
-    zoom: 75%;
+  h5,
+  .btn {
+    zoom: 70%;
   }
 }
 </style>

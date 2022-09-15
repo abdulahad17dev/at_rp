@@ -1,156 +1,198 @@
 <template>
-  <div class="table-responsive mt-3" style="overflow: auto" v-if="smeta != ''">
-    <table class="table table-sm table-hover table-bordered smeta">
-      <tbody v-for="item in smeta" :key="item">
-        <tr v-if="!item.Smeta.grafik_id" class="bg-dark text-white text-center">
-          <td colspan="11">{{ item.Smeta.name }}</td>
+  <div class="table-responsive mt-3">
+    <table class="table table-sm table-hover table-bordered">
+      <thead>
+        <tr>
+          <td>Т/р</td>
+          <td>Номи</td>
+          <td>Ўлчов бирлиги</td>
+          <td>Норма</td>
+          <td>Ҳажм</td>
         </tr>
-        <tr
-          v-if="
-            !type.find((e) => {
-              return e == item.Smeta.type;
-            }) && item.Smeta.grafik_id
-          "
-          class="text-center"
-        >
-          <td colspan="11">{{ item.Smeta.name }}</td>
-        </tr>
-        <tr v-if="item.Smeta.type == 'grafik'" class="grafik">
-          <td style="width: 5%">{{ item.Smeta.shnk }}</td>
-          <td style="width: 20%">{{ item.Smeta.name }}</td>
-          <td style="width: 5%">{{ item.Smeta.olchov_birligi }}</td>
-          <td style="width: 10%">{{ item.Smeta.quantity }}</td>
-          <td style="width: 10%">{{ item.Smeta.allotted_time_for_worker }}</td>
-          <td style="width: 10%">{{ item.Smeta.allotted_time_for_machine }}</td>
-          <td style="width: 10%">
-            <span v-if="item.Smeta.alotted_price">{{
-              item.Smeta.alotted_price
-            }}</span>
-            <span v-else>0</span> сўм
-          </td>
-          <td style="width: 5%">{{ item.Smeta.muddat }} кун</td>
-          <td style="width: 10%">
-            {{
-              new Date(item.Smeta.start_date)
-                .toLocaleDateString("en-us", {
-                  year: "numeric",
-                  month: "numeric",
-                  day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
-                  hour12: false,
-                })
-                .slice(0, 16)
-            }}
-          </td>
-          <td style="width: 10%">
-            {{
-              new Date(item.Smeta.end_date)
-                .toLocaleDateString("en-us", {
-                  year: "numeric",
-                  month: "numeric",
-                  day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
-                  hour12: false,
-                })
-                .slice(0, 16)
-            }}
-          </td>
-          <td style="width: 5%">
-            <button
-              v-if="
-                item.Smeta.status !== 'removed' &&
-                item.Smeta.status !== 'finished' &&
-                role == 'pto'
-              "
-              class="btn btn-danger btn-sm"
-              @click="$emit('remove_smeta', item.Smeta.id)"
-              id="remove_smeta"
-            >
-              <i class="fa-solid fa-circle-xmark"></i>
+      </thead>
+      <tbody>
+        <tr v-for="(item, inc) in smeta" :key="item" class="product">
+          <td
+            class="td_grafik"
+            data-bs-toggle="modal"
+            data-bs-target="#smeta_grafik"
+            @click="get_grafik(item)"
+          >
+            {{ inc + 1 }}
+            <button class="btn btn-sm grafik">
+              <i class="fa-solid fa-caret-down"></i>
             </button>
-            <span
-              v-if="item.Smeta.status == 'removed'"
-              class="badge rounded-pill bg-danger"
-              >ўчирилган</span
-            ><span
-              v-else-if="item.Smeta.status == 'finished'"
-              class="badge rounded-pill bg-success"
-              >якунланган</span
-            >
           </td>
-        </tr>
-        <tr
-          v-if="item.Smeta.type == 'allotted_time_for_worker'"
-          class="allotted_time_for_worker"
-        >
-          <td></td>
-          <td>{{ item.Smeta.name }}</td>
-          <td>{{ item.Smeta.olchov_birligi }}</td>
-          <td>{{ item.Smeta.norm }}</td>
-          <td>{{ item.Smeta.quantity }}</td>
-          <td colspan="6">
-            <span v-if="item.Smeta.alotted_price">
-              {{ item.Smeta.alotted_price }}
-            </span>
-            <span v-else>0</span> сўм
-          </td>
-        </tr>
-        <tr
-          v-if="item.Smeta.type == 'allotted_time_for_machine'"
-          class="allotted_time_for_machine"
-        >
-          <td></td>
-          <td>{{ item.Smeta.name }}</td>
-          <td>{{ item.Smeta.olchov_birligi }}</td>
-          <td>{{ item.Smeta.norm }}</td>
-          <td>{{ item.Smeta.quantity }}</td>
-          <td colspan="6">
-            <span v-if="item.Smeta.alotted_price">
-              {{ item.Smeta.alotted_price }}
-            </span>
-            <span v-else>0</span> сўм
-          </td>
-        </tr>
-        <tr v-if="item.Smeta.type == 'product'" class="product">
-          <td></td>
           <td>{{ item.product_name }}</td>
           <td>{{ item.product_olchov_birligi }}</td>
           <td>{{ item.Smeta.norm }}</td>
           <td>{{ item.Smeta.quantity }}</td>
-          <td colspan="6">
-            <span v-if="item.Smeta.alotted_price">
-              {{ item.Smeta.alotted_price }}
-            </span>
-            <span v-else>0</span> сўм
-          </td>
         </tr>
       </tbody>
     </table>
+    <Data_notfound v-if="smeta == ''" />
+  </div>
+
+  <nav aria-label="Page navigation example" class="mt-2" v-if="smeta != ''">
+    <ul class="pagination pagination-sm justify-content-end">
+      <div class="page-item">
+        <select
+          class="form-control form-control-sm mx-2 form-select"
+          v-model="limit"
+        >
+          <option value="100">100</option>
+          <option value="500">500</option>
+          <option value="1000">1000</option>
+        </select>
+      </div>
+      <li class="page-item">
+        <button
+          type="button"
+          class="page-link"
+          @click="get_smeta(page, limit, search, status, building_id)"
+        >
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+      </li>
+      <li class="page-item">
+        <button class="page-link" @click="page = 0" :disabled="page == 0">
+          <i class="fa-solid fa-angles-left text-dark"></i>
+        </button>
+      </li>
+      <li class="page-item">
+        <button class="page-link" @click="page--" :disabled="page == 0">
+          <i class="fa-solid fa-angle-left text-dark"></i>
+        </button>
+      </li>
+      <li class="page-item">
+        <button class="page-link text-dark" disabled>
+          {{ page + 1 }}
+        </button>
+      </li>
+      <li class="page-item">
+        <button class="page-link" @click="page++" :disabled="page == pages - 1">
+          <i class="fa-solid fa-angle-right text-dark"></i>
+        </button>
+      </li>
+      <li class="page-item">
+        <button
+          class="page-link"
+          @click="page = pages - 1"
+          :disabled="page == pages - 1"
+        >
+          <i class="fa-solid fa-angles-right text-dark"></i>
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="smeta_grafik"
+    tabindex="-1"
+    aria-labelledby="smeta_grafik_labek"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title" id="smeta_grafik_labek">
+            {{ product_name }} ни графиклиги
+          </p>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-sm table-hover table-bordered">
+            <tbody style="font-size: 12px">
+              <tr>
+                <td scope="col">Номи</td>
+                <td>{{ item.name }}</td>
+              </tr>
+              <tr>
+                <td scope="col">Ҳажм</td>
+                <td>{{ item.quantity }} {{ item.olchov_birligi }}</td>
+              </tr>
+              <tr>
+                <td scope="col">ШНК</td>
+                <td>{{ item.shnk }}</td>
+              </tr>
+              <tr>
+                <td scope="col">Нарх</td>
+                <td>{{ item.allotted_price }} сўм</td>
+              </tr>
+              <tr>
+                <td scope="col">Муддат</td>
+                <td>{{ item.muddat }}</td>
+              </tr>
+              <tr>
+                <td scope="col">Бошланиш санаси</td>
+                <td>
+                  {{
+                    new Date(item.start_date)
+                      .toLocaleDateString("en-us", {
+                        year: "numeric",
+                        month: "numeric",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: false,
+                      })
+                      .slice(0, 16)
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <td scope="col">Тугаш санаси</td>
+                <td>
+                  {{
+                    new Date(item.end_date)
+                      .toLocaleDateString("en-us", {
+                        year: "numeric",
+                        month: "numeric",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: false,
+                      })
+                      .slice(0, 16)
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <td scope="col">Норма</td>
+                <td>{{ item.norm }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { smeta_request_get } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
+import Data_notfound from "@/utils/notfound/data_notfound.vue";
 export default {
   name: "SmetaZakupshik",
   data() {
     return {
       smeta: [],
       pages: null,
-      limit: 25,
+      limit: 100,
       page: 0,
       search: "",
       building_id: 0,
       status: "wait",
-      type: [
-        "grafik",
-        "allotted_time_for_worker",
-        "allotted_time_for_machine",
-        "product",
-      ],
+      item: {},
+      product_name: "",
     };
   },
   watch: {
@@ -198,6 +240,10 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
+    get_grafik(item) {
+      this.item = item.grafik;
+      this.product_name = item.product_name;
+    },
   },
   created() {
     this.get_smeta(
@@ -208,8 +254,32 @@ export default {
       this.building_id
     );
   },
+  components: { Data_notfound },
 };
 </script>
 
-<!-- <style lang="scss" scoped>
-</style> -->
+<style lang="scss" scoped>
+.table-responsive table {
+  min-width: 1100px;
+  width: 100%;
+  zoom: 75%;
+}
+
+.table-responsive {
+  max-height: 70vh;
+}
+
+@media (max-width: 500px) {
+  .table-responsive {
+    max-height: 100vh;
+  }
+}
+
+td.td_grafik {
+  cursor: pointer;
+}
+
+button.grafik:focus {
+  box-shadow: none;
+}
+</style>
