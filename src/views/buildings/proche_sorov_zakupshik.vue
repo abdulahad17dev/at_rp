@@ -6,9 +6,9 @@
     id="pills-tab"
     role="tablist"
   >
-    <li class="nav-item" role="presentation">
+    <li class="nav-item mx-1" role="presentation">
       <button
-        class="btn btn-sm btn-light w-100"
+        class="btn btn-sm btn-light shadow-sm w-100"
         id="pills-home-tab"
         data-bs-toggle="pill"
         data-bs-target="#pills-home"
@@ -16,14 +16,18 @@
         role="tab"
         aria-controls="pills-home"
         aria-selected="true"
-        @click="get_proche_s(page, limit, building_id, status)"
+        @click="
+          product_requests.length
+            ? ''
+            : get_proche_s(page, limit, building_id, status)
+        "
       >
         Проче сўровлар
       </button>
     </li>
-    <li class="nav-item" role="presentation">
+    <li class="nav-item mx-1" role="presentation">
       <button
-        class="btn btn-sm btn-light w-100"
+        class="btn btn-sm btn-light shadow-sm w-100"
         id="pills-profile-tab"
         data-bs-toggle="pill"
         data-bs-target="#pills-profile"
@@ -45,7 +49,7 @@
       aria-labelledby="pills-home-tab"
     >
       <div class="table-responsive">
-        <table class="table table-sm table-hover table-bordered">
+        <table class="table table-sm table-hover">
           <thead class="">
             <tr>
               <th style="width: 7%">#ИД</th>

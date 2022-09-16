@@ -10,9 +10,9 @@
     id="pills-tab"
     role="tablist"
   >
-    <li class="nav-item" role="presentation">
+    <li class="nav-item mx-1" role="presentation">
       <button
-        class="btn btn-light btn-sm w-100"
+        class="btn btn-light btn-sm w-100 shadow-sm"
         id="pills-home-tab"
         data-bs-toggle="pill"
         data-bs-target="#pills-home"
@@ -25,9 +25,9 @@
         қабул қилинган пуллар
       </button>
     </li>
-    <li class="nav-item" role="presentation">
+    <li class="nav-item mx-1" role="presentation">
       <button
-        class="btn btn-light btn-sm w-100"
+        class="btn btn-light btn-sm w-100 shadow-sm"
         id="pills-profile-tab"
         data-bs-toggle="pill"
         data-bs-target="#pills-profile"

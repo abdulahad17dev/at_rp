@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive mt-3" v-if="data != ''">
-    <table class="table table-sm table-hover table-bordered building">
+    <table class="table table-sm table-hover building">
       <thead class="">
         <tr>
           <th>#ИД</th>

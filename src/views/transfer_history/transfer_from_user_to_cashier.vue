@@ -6,9 +6,9 @@
     id="pills-tab"
     role="tablist"
   >
-    <li class="nav-item" role="presentation">
+    <li class="nav-item mx-1" role="presentation">
       <button
-        class="btn btn-sm w-100 btn-light"
+        class="btn btn-sm w-100 btn-light shadow-sm"
         id="pills-profile-tab"
         data-bs-toggle="pill"
         data-bs-target="#pills-profile"
@@ -21,9 +21,9 @@
         кассирлардан пул қабул қилиш
       </button>
     </li>
-    <li class="nav-item" role="presentation">
+    <li class="nav-item mx-1" role="presentation">
       <button
-        class="btn btn-sm w-100 btn-light"
+        class="btn btn-sm w-100 btn-light shadow-sm"
         id="pills-home-tab"
         data-bs-toggle="pill"
         data-bs-target="#pills-home"

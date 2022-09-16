@@ -41,7 +41,7 @@
       v-if="role == 'admin'"
     >
       <button
-        class="btn btn-sm w-100 btn-light"
+        class="btn btn-sm w-100 btn-light shadow-sm"
         id="pills-home-tab"
         data-bs-toggle="pill"
         data-bs-target="#pills-home"
@@ -61,7 +61,7 @@
       role="presentation"
     >
       <button
-        class="btn btn-sm w-100 btn-light"
+        class="btn btn-sm w-100 btn-light shadow-sm"
         id="pills-profile-tab"
         data-bs-toggle="pill"
         data-bs-target="#pills-profile"
@@ -83,7 +83,7 @@
       role="presentation"
     >
       <button
-        class="btn btn-sm w-100 btn-light"
+        class="btn btn-sm w-100 btn-light shadow-sm"
         id="pills-contact-tab"
         data-bs-toggle="pill"
         data-bs-target="#pills-contact"

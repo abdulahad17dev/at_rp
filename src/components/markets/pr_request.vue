@@ -1,7 +1,7 @@
 <template>
   <div class="request">
     <div class="table-responsive">
-      <table class="table table-sm table-hover table-bordered">
+      <table class="table table-sm table-hover">
         <thead class="">
           <tr>
             <th style="width: 7%">#ИД</th>

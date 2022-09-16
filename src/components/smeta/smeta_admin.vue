@@ -36,10 +36,7 @@
     id="table-responsive"
     style="overflow: auto"
   >
-    <table
-      class="table table-sm table-hover table-bordered smeta"
-      v-if="smeta != ''"
-    >
+    <table class="table table-sm table-hover smeta" v-if="smeta != ''">
       <tbody v-for="item in smeta" :key="item">
         <tr v-if="!item.Smeta.grafik_id" class="bg-dark text-white text-center">
           <td colspan="11">{{ item.Smeta.name }}</td>

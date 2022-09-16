@@ -123,6 +123,14 @@ export function smeta_request_get(page, limit, search, status, id) {
   }
 }
 
+export function accept_smeta_request(data) {
+  return instance.put(`attach_to_user/${data.smeta_id}/${data.taminotchi_id}`);
+}
+
+export function remove_smeta_request(id) {
+  return instance.delete(`remove_attached_product/${id}`);
+}
+
 export function smeta_add(data, id) {
   return file.post("create_smeta/" + id, data);
 }

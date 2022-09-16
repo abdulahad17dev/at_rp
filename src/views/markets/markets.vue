@@ -5,9 +5,9 @@
     id="pills-tab"
     role="tablist"
   >
-    <li class="nav-item" role="presentation">
+    <li class="nav-item mx-1" role="presentation">
       <button
-        class="btn btn-sm btn-light w-100"
+        class="btn btn-sm btn-light w-100 shadow-sm"
         id="pills-home-tab"
         data-bs-toggle="pill"
         data-bs-target="#pills-home"
@@ -20,9 +20,9 @@
         Таминотчилар
       </button>
     </li>
-    <li class="nav-item" role="presentation">
+    <li class="nav-item mx-1" role="presentation">
       <button
-        class="btn btn-sm btn-light w-100"
+        class="btn btn-sm btn-light w-100 shadow-sm"
         id="pills-profile-tab"
         data-bs-toggle="pill"
         data-bs-target="#pills-profile"
@@ -61,7 +61,7 @@ import Header_item from "@/components/header/header_item.vue";
 import Suppliers from "../../components/markets/suppliers.vue";
 import Markets_inner from "@/components/markets/markets_inner.vue";
 export default {
-  name: "MarketItem",
+  name: "MarketItems",
   data() {
     return {
       users: false,

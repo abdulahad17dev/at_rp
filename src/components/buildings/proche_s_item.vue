@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive m-2">
-    <table class="table table-sm table-hover table-bordered">
+    <table class="table table-sm table-hover">
       <thead class="">
         <tr>
           <th style="width: 10%">#ИД</th>

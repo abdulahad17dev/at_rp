@@ -63,7 +63,7 @@
           </form>
 
           <div class="table-responsive my-2" v-if="data != ''">
-            <table class="table table-sm table-hover table-bordered">
+            <table class="table table-sm table-hover">
               <thead>
                 <tr>
                   <th>Т/р</th>

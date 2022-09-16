@@ -12,7 +12,7 @@
   >
     <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
       <button
-        class="btn btn-sm btn-light w-100"
+        class="btn btn-sm btn-light shadow-sm w-100"
         id="pills-home-tab"
         data-bs-toggle="pill"
         data-bs-target="#pills-home"
@@ -27,7 +27,7 @@
     </li>
     <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
       <button
-        class="btn btn-sm btn-light w-100"
+        class="btn btn-sm btn-light shadow-sm w-100"
         id="pills-profile-tab"
         data-bs-toggle="pill"
         data-bs-target="#pills-profile"
@@ -42,7 +42,7 @@
     </li>
     <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
       <button
-        class="btn btn-sm btn-light w-100"
+        class="btn btn-sm btn-light shadow-sm w-100"
         id="pills-contact-tab"
         data-bs-toggle="pill"
         data-bs-target="#pills-contact"
@@ -57,7 +57,7 @@
     </li>
     <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
       <button
-        class="btn btn-sm btn-light w-100"
+        class="btn btn-sm btn-light shadow-sm w-100"
         id="pills-home-tab2"
         data-bs-toggle="pill"
         data-bs-target="#pills-home2"
@@ -72,7 +72,7 @@
     </li>
     <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
       <button
-        class="btn btn-sm btn-light w-100"
+        class="btn btn-sm btn-light shadow-sm w-100"
         id="pills-profile-tab2"
         data-bs-toggle="pill"
         data-bs-target="#pills-profile2"
@@ -87,7 +87,7 @@
     </li>
     <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
       <button
-        class="btn btn-sm btn-light w-100"
+        class="btn btn-sm btn-light shadow-sm w-100"
         id="pills-contact-tab2"
         data-bs-toggle="pill"
         data-bs-target="#pills-contact2"

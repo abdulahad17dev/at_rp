@@ -37,7 +37,7 @@
     </div>
   </form>
   <div class="table-responsive">
-    <table class="table table-sm table-hover table-bordered">
+    <table class="table table-sm table-hover">
       <thead>
         <tr>
           <th style="width: 10%">#ИД</th>
