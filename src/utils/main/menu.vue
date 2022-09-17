@@ -111,6 +111,12 @@ export default {
           role: ["zakupshik"],
         },
         {
+          to: "/worker_types",
+          icon: "fa-solid fa-box fa-2x",
+          title: "Ишчи турлари",
+          role: ["prorap"],
+        },
+        {
           to: "/settings",
           icon: "fa-solid fa-screwdriver-wrench fa-2x",
           title: "Созламалар",

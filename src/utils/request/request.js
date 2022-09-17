@@ -594,3 +594,25 @@ export function markets_get(page, limit, search) {
 export function market_put(data) {
   return instance.put(`update_market/${data.id}`, data);
 }
+
+// worker types
+
+export function worker_type_get(page, limit, search) {
+  if (search) {
+    return instance.get(
+      `get_worker_specialty_types?search=${search}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(
+      `get_worker_specialty_types?page=${page}&limit=${limit}`
+    );
+  }
+}
+
+export function worker_type_add(data) {
+  return instance.post(`create_worker_specialty_type`, data);
+}
+
+export function worker_type_remove(id) {
+  return instance.delete(`remove_worker_specialty_type/${id}`);
+}

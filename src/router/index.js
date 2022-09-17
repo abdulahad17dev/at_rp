@@ -4,6 +4,7 @@ import users from "../views/users/users.vue";
 import building from "../views/buildings/buildings.vue";
 import building_inner from "../views/buildings/building_inner_page.vue";
 import workers from "../views/buildings/workers.vue";
+import worker_types from "../views/buildings/worker_types.vue";
 import proche_sorovlar from "../views/buildings/proche_sorovlar.vue";
 import proche_sorov_zakupshik from "../views/buildings/proche_sorov_zakupshik.vue";
 import product from "../views/product/product.vue";
@@ -301,6 +302,17 @@ let routes = [
       role: ["kassir"],
     },
     component: wallets_history,
+  },
+  {
+    path: "/worker_types",
+    name: "worker_types",
+    meta: {
+      requiresAuth: true,
+      title: "Ишчи турлари",
+      icon: "fa-solid fa-box",
+      role: ["prorap"],
+    },
+    component: worker_types,
   },
 ];
 
