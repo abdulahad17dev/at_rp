@@ -145,15 +145,20 @@
             </td>
             <td>{{ item.Proche_sorovlar.comment }}</td>
             <td>
-              <button class="btn btn-sm btn-success">
+              <button
+                class="btn btn-sm btn-success"
+                data-bs-toggle="modal"
+                data-bs-target="#accept_proche_sorov"
+                @click="get_item(item.Proche_sorovlar)"
+              >
                 <i class="fa-solid fa-circle-check text-white"></i>
               </button>
             </td>
           </tr>
         </tbody>
       </table>
+      <Data_notfound v-if="product_requests == ''" />
     </div>
-    <Data_notfound v-if="product_requests == ''" />
 
     <nav
       aria-label="Page navigation example"
@@ -216,12 +221,153 @@
       </ul>
     </nav>
   </div>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="accept_proche_sorov"
+    tabindex="-1"
+    aria-labelledby="accept_proche_sorovLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="accept_proche_sorovLabel">
+            {{ proche_name }}ни қабул қилиш
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            id="supply_add"
+          ></button>
+        </div>
+        <form @submit.prevent="take">
+          <div class="modal-body">
+            <div class="row gap-2">
+              <div class="col-10 mx-auto">
+                <label for="quantity"> Ҳажм: </label>
+                <input
+                  type="number"
+                  id="quantity"
+                  class="form-control form-control-sm"
+                  v-model="body.quantity"
+                  placeholder="Ҳажм"
+                  min="1"
+                  required
+                />
+              </div>
+              <div class="col-10 mx-auto">
+                <label for="price">
+                  Нарх:
+                  <span class="text-primary"
+                    >{{ new Intl.NumberFormat().format(body.price) }} сўм</span
+                  ></label
+                >
+                <div class="input-group input-group-sm">
+                  <input
+                    id="price"
+                    type="number"
+                    step="any"
+                    class="form-control"
+                    v-model="body.price"
+                    min="1"
+                    placeholder="Нарх"
+                    required
+                  />
+                  <span class="input-group-text bg-white">сўм</span>
+                </div>
+              </div>
+              <div class="col-10 mx-auto">
+                <label for="market_phone"> Телефон рақам: </label>
+                <div class="input-group input-group-sm">
+                  <span class="input-group-text bg-white">+998</span>
+                  <input
+                    type="tel"
+                    id="market_phone"
+                    class="form-control form-control-sm"
+                    v-model="body.market_phone"
+                    required
+                    placeholder="Телефон рақам"
+                    maxlength="9"
+                    minlength="9"
+                    @keypress="onlyNumber"
+                  />
+                </div>
+              </div>
+              <div class="col-10 mx-auto">
+                <label for="type"> Статус: </label>
+                <select
+                  id="type"
+                  class="form-control form-control-sm"
+                  v-model="body.type"
+                  required
+                >
+                  <option value="naxt_proche">нахт проче</option>
+                  <option value="qarz_proche">қарз проче</option>
+                  <option value="shot_proche">счёт проче</option>
+                </select>
+              </div>
+              <div class="col-10 mx-auto">
+                <label for="map_long"> Узунлик: </label>
+                <input
+                  type="text"
+                  id="map_long"
+                  class="form-control form-control-sm"
+                  v-model="body.map_long"
+                  required
+                  placeholder="Узунлик"
+                />
+              </div>
+              <div class="col-10 mx-auto">
+                <label for="map_lat"> Кенглик: </label>
+                <input
+                  type="text"
+                  id="map_lat"
+                  class="form-control form-control-sm"
+                  v-model="body.map_lat"
+                  required
+                  placeholder="Кенглик"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="submit"
+              class="btn btn-outline-primary btn-sm"
+              id="supply_disabled"
+            >
+              <i class="fa-solid fa-circle-check"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-danger btn-sm"
+              data-bs-dismiss="modal"
+            >
+              <i class="fa-solid fa-circle-xmark"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
-import { building_get, proche_s_get } from "@/utils/request/request";
-import { catchError } from "@/utils/request/handle_api_err";
+import {
+  building_get,
+  proche_s_get,
+  take_supply_proche,
+} from "@/utils/request/request";
+import {
+  catchError,
+  position_err,
+  success,
+} from "@/utils/request/handle_api_err";
 export default {
   name: "Pr_request",
   data() {
@@ -238,6 +384,19 @@ export default {
       search_building: "",
       buildings: [],
       text_building: "объектлар",
+      proche_name: "",
+      body: {
+        related_id: null,
+        product_composition: "",
+        sup_by_b_a_id: 0,
+        quantity: null,
+        price: null,
+        market_phone: null,
+        type: "",
+        map_long: "",
+        map_lat: "",
+        building_id: null,
+      },
     };
   },
   watch: {
@@ -313,6 +472,64 @@ export default {
       this.text_building = name;
       document.getElementById("select_bank_building").click();
     },
+    get_item(e) {
+      this.body.map_lat = "";
+      this.body.map_long = "";
+      const success = (position) => {
+        this.body.map_lat = position.coords.latitude;
+        this.body.map_long = position.coords.longitude;
+      };
+
+      const error = (err) => {
+        position_err(err);
+      };
+
+      navigator.geolocation.getCurrentPosition(success, error);
+      this.proche_name = e.name;
+      this.body.building_id = e.building_id;
+      this.body.related_id = e.id;
+    },
+    onlyNumber($event) {
+      let keyCode = $event.keyCode ? $event.keyCode : $event.which;
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
+        $event.preventDefault();
+      }
+    },
+    take() {
+      document.getElementById("supply_disabled").disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      take_supply_proche(this.body)
+        .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("supply_add").click();
+          document.getElementById("supply_disabled").disabled = false;
+          success(res).then(() => {
+            this.get_proche_s(
+              this.page,
+              this.limit,
+              this.building_id,
+              this.status
+            );
+            this.body = {
+              related_id: null,
+              product_composition: "",
+              sup_by_b_a_id: 0,
+              quantity: null,
+              price: null,
+              market_phone: null,
+              type: "",
+              map_long: "",
+              map_lat: "",
+              building_id: null,
+            };
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("supply_disabled").disabled = false;
+        });
+    },
   },
   created() {
     this.get_proche_s(this.page, this.limit, this.building_id, this.status);
@@ -322,13 +539,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-button.active {
-  background: #6c757d !important;
-  color: #fff;
-}
-
 .table-responsive {
-  max-height: 45vh;
+  max-height: 92vh;
+  min-height: 92vh;
 }
 
 .request {
@@ -337,11 +550,16 @@ button.active {
 
 @media (max-width: 500px) {
   .table-responsive {
-    max-height: 65vh;
+    max-height: 124vh;
+    min-height: 124vh;
   }
 }
 table {
   min-width: 1150px;
   width: 100%;
+}
+
+.dropdown-menu {
+  transform: translate3d(0px, 32.8px, 0px) !important;
 }
 </style>

@@ -7,6 +7,7 @@
           <th>Исм</th>
           <th>Баланс</th>
           <th>Телефон рақам</th>
+          <td></td>
         </tr>
       </thead>
       <tbody>

@@ -1,7 +1,7 @@
 <template>
   <Header_item />
   <ul
-    class="nav nav-pills nav-fill nav-justified mb-3"
+    class="nav nav-pills nav-fill nav-justified"
     id="pills-tab"
     role="tablist"
   >

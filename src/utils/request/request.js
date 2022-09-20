@@ -520,6 +520,10 @@ export function proche_s_add(data) {
   return instance.post(`product_request`, data);
 }
 
+export function take_supply_proche(data) {
+  return instance.post(`take_supply_proche`, data);
+}
+
 export function proche_s_put(p_s_id, status, t_id, data) {
   return instance.put(
     `confirm_or_reject_product_request/${p_s_id}?status=${status}&taminotchi_id=${t_id}`,
