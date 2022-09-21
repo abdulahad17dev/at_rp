@@ -143,6 +143,10 @@ export function smeta_remove(id, status) {
   }
 }
 
+export function take_supply_smeta(data) {
+  return instance.post(`take_supply_smeta`, data);
+}
+
 // products
 
 export function products_get(page, limit, search) {
@@ -504,10 +508,10 @@ export function money_launderers_put(data) {
 
 // proche sorovlar
 
-export function proche_s_get(page, limit, building_id, status) {
-  if (status) {
+export function proche_s_get(page, limit, building_id, status, search) {
+  if (search) {
     return instance.get(
-      `get_product_request?building_id=${building_id}&status=${status}&page=${page}&limit=${limit}`
+      `get_product_request?building_id=${building_id}&status=${status}&search=${search}&page=${page}&limit=${limit}`
     );
   } else {
     return instance.get(

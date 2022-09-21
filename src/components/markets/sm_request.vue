@@ -1,10 +1,51 @@
 <template>
   <div class="request">
+    <div class="row">
+      <div class="col mt-1 d-flex align-items-center">
+        <span class="d-none d-md-block d-sm-block d-lg-block d-xll-block mx-2"
+          >Лимит</span
+        >
+        <select
+          class="form-control form-control-sm form-select"
+          v-model="limit"
+        >
+          <option value="25" selected>25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+      <div class="col mt-2 d-flex align-items-center justify-content-end">
+        <span>Қидириш: </span>
+        <div class="input-group input-group-sm mx-2">
+          <input
+            type="search"
+            v-model="search"
+            class="form-control form-control-sm"
+          />
+          <button
+            class="btn btn-danger"
+            type="button"
+            @click="search2 = ''"
+            v-if="remove_check"
+          >
+            <i class="fa-solid fa-circle-xmark"></i>
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="table-responsive smeta mt-3">
       <table class="table table-sm table-hover">
         <thead class="">
           <tr>
-            <td style="width: 8%">Т/р</td>
+            <td style="width: 8%">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                v-model="checkAll"
+                v-if="remove_check"
+              />
+              Т/р
+            </td>
             <td style="width: 32%">Номи</td>
             <td style="width: 10%">Ўлчов бирлиги</td>
             <td style="width: 15%">Норма</td>
@@ -126,14 +167,21 @@
         </thead>
         <tbody>
           <tr v-for="(item, inc) in smeta" :key="item" class="product">
-            <td
-              class="td_grafik"
-              data-bs-toggle="modal"
-              data-bs-target="#smeta_grafik"
-              @click="get_grafik(item)"
-            >
+            <td class="td_grafik">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                :value="item"
+                v-model="checked"
+                v-if="search2 == item.product_name"
+              />
               {{ inc + 1 }}
-              <button class="btn btn-sm">
+              <button
+                class="btn btn-sm"
+                @click="get_grafik(item)"
+                data-bs-toggle="modal"
+                data-bs-target="#smeta_grafik"
+              >
                 <i
                   class="fa-solid fa-circle-question product"
                   style="font-size: 17px"
@@ -143,11 +191,16 @@
             <td>{{ item.product_name }}</td>
             <td>{{ item.product_olchov_birligi }}</td>
             <td>{{ item.Smeta.norm }}</td>
-            <td>{{ item.Smeta.quantity }}</td>
+            <td
+              style="cursor: pointer; user-select: none"
+              @dblclick="sort_name(item.product_name)"
+            >
+              {{ item.Smeta.quantity }}
+            </td>
             <td>
               <button
                 class="btn btn-sm btn-success"
-                @click="get_item(item.Smeta)"
+                @click="get_item(item)"
                 data-bs-toggle="modal"
                 data-bs-target="#accept_smeta"
               >
@@ -162,16 +215,6 @@
 
     <nav aria-label="Page navigation example" class="mt-2" v-if="smeta != ''">
       <ul class="pagination pagination-sm justify-content-end">
-        <div class="page-item">
-          <select
-            class="form-control form-control-sm mx-2 form-select"
-            v-model="limit"
-          >
-            <option value="100">100</option>
-            <option value="500">500</option>
-            <option value="1000">1000</option>
-          </select>
-        </div>
         <li class="page-item">
           <button
             type="button"
@@ -320,9 +363,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="accept_smetaLabel">
+          <p class="modal-title" id="accept_smetaLabel">
             {{ smeta_name }}ни қабул қилиш
-          </h5>
+          </p>
           <button
             type="button"
             class="btn-close"
@@ -395,10 +438,21 @@
                   v-model="body[0].type"
                   required
                 >
-                  <option value="naxt_proche">нахт проче</option>
-                  <option value="qarz_proche">қарз проче</option>
-                  <option value="shot_proche">счёт проче</option>
+                  <option value="naxt_smeta">нахт смета</option>
+                  <option value="qarz_smeta">қарз смета</option>
+                  <option value="shot_smeta">счёт смета</option>
                 </select>
+              </div>
+              <div class="col-10 mx-auto">
+                <label for="didox_link"> Дидох линк: </label>
+                <input
+                  type="text"
+                  id="didox_link"
+                  class="form-control form-control-sm"
+                  v-model="body[0].didox_link"
+                  required
+                  placeholder="Дидох линк"
+                />
               </div>
               <div class="col-10 mx-auto">
                 <label for="map_long"> Узунлик: </label>
@@ -447,8 +501,16 @@
 </template>
 
 <script>
-import { building_get, smeta_request_get } from "@/utils/request/request";
-import { catchError, position_err } from "@/utils/request/handle_api_err";
+import {
+  building_get,
+  smeta_request_get,
+  take_supply_smeta,
+} from "@/utils/request/request";
+import {
+  catchError,
+  position_err,
+  success,
+} from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 export default {
   name: "Sm_request",
@@ -459,6 +521,7 @@ export default {
       limit: 100,
       page: 0,
       search: "",
+      search2: "",
       building_id: 0,
       status: "wait",
       item: {},
@@ -477,6 +540,7 @@ export default {
           quantity: null,
           price: null,
           market_phone: null,
+          didox_link: "",
           type: "",
           map_long: "",
           map_lat: "",
@@ -484,6 +548,8 @@ export default {
         },
       ],
       smeta_name: "",
+      remove_check: false,
+      checked: [],
     };
   },
   watch: {
@@ -498,21 +564,20 @@ export default {
     search(e) {
       this.page = 0;
       if (e.length > 0) {
-        this.get_smeta(
-          this.page,
-          this.limit,
-          this.search,
-          this.status,
-          this.building_id
-        );
+        this.get_smeta(this.page, this.limit, e, this.status, this.building_id);
       } else if (e.length == 0) {
-        this.get_smeta(
-          this.page,
-          this.limit,
-          this.search,
-          this.status,
-          this.building_id
-        );
+        this.remove_check = false;
+        this.get_smeta(this.page, this.limit, e, this.status, this.building_id);
+        this.page = 0;
+      }
+    },
+    search2(e) {
+      this.page = 0;
+      if (e.length > 0) {
+        this.get_smeta(this.page, this.limit, e, this.status, this.building_id);
+      } else if (e.length == 0) {
+        this.remove_check = false;
+        this.get_smeta(this.page, this.limit, e, this.status, this.building_id);
         this.page = 0;
       }
     },
@@ -591,9 +656,19 @@ export default {
       document.getElementById("select_bank_building").click();
     },
     get_item(e) {
-      console.log(e);
-      this.body[0].map_lat = "";
-      this.body[0].map_long = "";
+      this.body[0] = {
+        related_id: null,
+        product_composition: "",
+        sup_by_b_a_id: 0,
+        quantity: null,
+        price: null,
+        market_phone: null,
+        type: "",
+        didox_link: "",
+        map_long: "",
+        map_lat: "",
+        building_id: null,
+      };
       const success = (position) => {
         this.body[0].map_lat = position.coords.latitude;
         this.body[0].map_long = position.coords.longitude;
@@ -604,14 +679,58 @@ export default {
       };
 
       navigator.geolocation.getCurrentPosition(success, error);
-      // this.proche_name = e.Smeta.name;
-      // this.body[0].building_id = e.Smeta.building_id;
-      // this.body[0].related_id = e.Smeta.id;
+      this.smeta_name = e.product_name;
+      this.body[0].building_id = e.Smeta.building_id;
+      this.body[0].related_id = e.Smeta.id;
     },
     onlyNumber($event) {
       let keyCode = $event.keyCode ? $event.keyCode : $event.which;
       if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
         $event.preventDefault();
+      }
+    },
+    take() {
+      document.getElementById("supply_s_disabled").disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      take_supply_smeta(this.body)
+        .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("supply_take").click();
+          document.getElementById("supply_s_disabled").disabled = false;
+          success(res).then(() => {
+            this.get_smeta(
+              this.page,
+              this.limit,
+              this.search,
+              this.status,
+              this.building_id
+            );
+            this.body[0] = {
+              related_id: null,
+              product_composition: "",
+              sup_by_b_a_id: 0,
+              quantity: null,
+              price: null,
+              market_phone: null,
+              type: "",
+              didox_link: "",
+              map_long: "",
+              map_lat: "",
+              building_id: null,
+            };
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("supply_s_disabled").disabled = false;
+        });
+      console.log(this.body);
+    },
+    sort_name(e) {
+      if (e != null) {
+        this.remove_check = true;
+        this.search2 = e;
       }
     },
   },
@@ -624,6 +743,22 @@ export default {
       this.building_id
     );
   },
+  computed: {
+    checkAll: {
+      get: function () {
+        return this.smeta ? this.checked.length == this.smeta.length : false;
+      },
+      set: function (value) {
+        var checked = [];
+        if (value) {
+          this.smeta.forEach(function (smeta) {
+            checked.push(smeta);
+          });
+        }
+        this.checked = checked;
+      },
+    },
+  },
   components: { Data_notfound },
 };
 </script>
@@ -635,8 +770,8 @@ export default {
 }
 
 .table-responsive.smeta {
-  max-height: 92vh;
-  min-height: 92vh;
+  max-height: 85vh;
+  min-height: 85vh;
 }
 
 .request {
@@ -644,9 +779,9 @@ export default {
 }
 
 @media (max-width: 500px) {
-  .table-responsive {
-    max-height: 124vh;
-    min-height: 124vh;
+  .table-responsive.smeta {
+    max-height: 115vh;
+    min-height: 115vh;
   }
 }
 td.td_grafik {
@@ -659,5 +794,14 @@ td.td_grafik {
 
 .dropdown-menu {
   transform: translate3d(0px, 32.8px, 0px) !important;
+}
+
+.col select {
+  width: 80px;
+  height: 30px;
+}
+
+.col .input-group {
+  width: 200px;
 }
 </style>

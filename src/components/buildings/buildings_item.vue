@@ -135,7 +135,9 @@
       <tbody v-else>
         <tr v-for="item in data" :key="item">
           <td>{{ item.id }}</td>
-          <td>{{ item.name }}</td>
+          <td>
+            <p style="min-width: 250px; width: 250px">{{ item.name }}</p>
+          </td>
           <td>{{ item.address }}</td>
           <td>
             {{

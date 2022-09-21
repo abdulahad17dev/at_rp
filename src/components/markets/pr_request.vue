@@ -1,6 +1,31 @@
 <template>
   <div class="request">
-    <div class="table-responsive">
+    <div class="row">
+      <div class="col mt-1 d-flex align-items-center">
+        <span class="d-none d-md-block d-sm-block d-lg-block d-xll-block mx-2"
+          >Лимит</span
+        >
+        <select
+          class="form-control form-control-sm form-select"
+          v-model="limit"
+        >
+          <option value="25" selected>25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+      <div class="col mt-2 d-flex align-items-center justify-content-end">
+        <span>Қидириш: </span>
+        <div class="input-group input-group-sm mx-2">
+          <input
+            type="search"
+            v-model="search"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive mt-3">
       <table class="table table-sm table-hover">
         <thead class="">
           <tr>
@@ -180,7 +205,7 @@
           <button
             type="button"
             class="page-link"
-            @click="get_proche_s(page, limit, building_id, status)"
+            @click="get_proche_s(page, limit, building_id, status, search)"
           >
             <i class="fa-solid fa-rotate"></i>
           </button>
@@ -311,6 +336,17 @@
                 </select>
               </div>
               <div class="col-10 mx-auto">
+                <label for="didox_link"> Дидох линк: </label>
+                <input
+                  type="text"
+                  id="didox_link"
+                  class="form-control form-control-sm"
+                  v-model="body.didox_link"
+                  required
+                  placeholder="Дидох линк"
+                />
+              </div>
+              <div class="col-10 mx-auto">
                 <label for="map_long"> Узунлик: </label>
                 <input
                   type="text"
@@ -377,6 +413,7 @@ export default {
       pages: null,
       product_requests: [],
       building_id: 0,
+      search: "",
       status: "taminotchida_proche",
       page_building: 0,
       pages_building: null,
@@ -393,6 +430,7 @@ export default {
         price: null,
         market_phone: null,
         type: "",
+        didox_link: "",
         map_long: "",
         map_lat: "",
         building_id: null,
@@ -402,15 +440,48 @@ export default {
   watch: {
     limit(e) {
       this.page = 0;
-      this.get_proche_s(this.page, e, this.building_id, this.status);
+      this.get_proche_s(
+        this.page,
+        e,
+        this.building_id,
+        this.status,
+        this.search
+      );
     },
     page(e) {
-      this.get_proche_s(e, this.limit, this.building_id, this.status);
+      this.get_proche_s(
+        e,
+        this.limit,
+        this.building_id,
+        this.status,
+        this.search
+      );
       document.getElementById("scroll").scrollTop = 0;
+    },
+    search(e) {
+      this.page = 0;
+      if (e.length > 0) {
+        this.get_proche_s(
+          this.page,
+          this.limit,
+          this.building_id,
+          this.status,
+          this.search
+        );
+      } else if (e.length == 0) {
+        this.get_proche_s(
+          this.page,
+          this.limit,
+          this.building_id,
+          this.status,
+          this.search
+        );
+        this.page = 0;
+      }
     },
     building_id(e) {
       this.page = 0;
-      this.get_proche_s(this.page, this.limit, e, this.status);
+      this.get_proche_s(this.page, this.limit, e, this.status, this.search);
     },
     limit_building(e) {
       this.page_building = 0;
@@ -439,10 +510,10 @@ export default {
     },
   },
   methods: {
-    get_proche_s(page, limit, building_id, status) {
+    get_proche_s(page, limit, building_id, status, search) {
       this.$store.dispatch("setLoading", { isLoading: true });
 
-      proche_s_get(page, limit, building_id, status)
+      proche_s_get(page, limit, building_id, status, search)
         .then((res) => {
           this.product_requests = res.data.data;
           this.pages = res.data.pages;
@@ -508,7 +579,8 @@ export default {
               this.page,
               this.limit,
               this.building_id,
-              this.status
+              this.status,
+              this.search
             );
             this.body = {
               related_id: null,
@@ -518,6 +590,7 @@ export default {
               price: null,
               market_phone: null,
               type: "",
+              didox_link: "",
               map_long: "",
               map_lat: "",
               building_id: null,
@@ -532,7 +605,13 @@ export default {
     },
   },
   created() {
-    this.get_proche_s(this.page, this.limit, this.building_id, this.status);
+    this.get_proche_s(
+      this.page,
+      this.limit,
+      this.building_id,
+      this.status,
+      this.search
+    );
   },
   components: { Data_notfound },
 };
@@ -540,8 +619,8 @@ export default {
 
 <style lang="scss" scoped>
 .table-responsive {
-  max-height: 92vh;
-  min-height: 92vh;
+  max-height: 85vh;
+  min-height: 85vh;
 }
 
 .request {
@@ -550,8 +629,8 @@ export default {
 
 @media (max-width: 500px) {
   .table-responsive {
-    max-height: 124vh;
-    min-height: 124vh;
+    max-height: 115vh;
+    min-height: 115vh;
   }
 }
 table {
@@ -561,5 +640,14 @@ table {
 
 .dropdown-menu {
   transform: translate3d(0px, 32.8px, 0px) !important;
+}
+
+.col select {
+  width: 80px;
+  height: 30px;
+}
+
+.col .input-group {
+  width: 200px;
 }
 </style>
