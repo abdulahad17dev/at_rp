@@ -22,14 +22,6 @@
             v-model="search"
             class="form-control form-control-sm"
           />
-          <button
-            class="btn btn-danger"
-            type="button"
-            @click="search2 = ''"
-            v-if="remove_check"
-          >
-            <i class="fa-solid fa-circle-xmark"></i>
-          </button>
         </div>
       </div>
     </div>
@@ -192,13 +184,14 @@
             <td>{{ item.product_olchov_birligi }}</td>
             <td>{{ item.Smeta.norm }}</td>
             <td
-              style="cursor: pointer; user-select: none"
+              :style="search2 ? '' : 'cursor: pointer; user-select: none'"
               @dblclick="sort_name(item.product_name)"
             >
               {{ item.Smeta.quantity }}
             </td>
             <td>
               <button
+                v-if="search2 != item.product_name"
                 class="btn btn-sm btn-success"
                 @click="get_item(item)"
                 data-bs-toggle="modal"
@@ -213,8 +206,30 @@
       <Data_notfound v-if="smeta == ''" />
     </div>
 
+    <div class="row mt-2" v-if="remove_check">
+      <div class="col-6">
+        <button
+          class="btn btn-sm btn-outline-success w-100"
+          data-bs-toggle="modal"
+          data-bs-target="#accept_smeta"
+          :disabled="!checked.length"
+          @click="get_item(item)"
+        >
+          <i class="fa-solid fa-circle-check"></i> тасдиқлаш
+        </button>
+      </div>
+      <div class="col-6">
+        <button
+          class="btn btn-sm btn-outline-danger w-100"
+          @click="search2 = ''"
+        >
+          <i class="fa-solid fa-circle-xmark"></i> бекор қилиш
+        </button>
+      </div>
+    </div>
+
     <nav aria-label="Page navigation example" class="mt-2" v-if="smeta != ''">
-      <ul class="pagination pagination-sm justify-content-end">
+      <ul class="pagination pagination-sm justify-content-end mb-0">
         <li class="page-item">
           <button
             type="button"
@@ -383,7 +398,7 @@
                   type="number"
                   id="quantity"
                   class="form-control form-control-sm"
-                  v-model="body[0].quantity"
+                  v-model="body.quantity"
                   placeholder="Ҳажм"
                   min="1"
                   required
@@ -393,10 +408,7 @@
                 <label for="price">
                   Нарх:
                   <span class="text-primary"
-                    >{{
-                      new Intl.NumberFormat().format(body[0].price)
-                    }}
-                    сўм</span
+                    >{{ new Intl.NumberFormat().format(body.price) }} сўм</span
                   ></label
                 >
                 <div class="input-group input-group-sm">
@@ -405,7 +417,7 @@
                     type="number"
                     step="any"
                     class="form-control"
-                    v-model="body[0].price"
+                    v-model="body.price"
                     min="1"
                     placeholder="Нарх"
                     required
@@ -421,7 +433,7 @@
                     type="tel"
                     id="market_phone"
                     class="form-control form-control-sm"
-                    v-model="body[0].market_phone"
+                    v-model="body.market_phone"
                     required
                     placeholder="Телефон рақам"
                     maxlength="9"
@@ -435,7 +447,7 @@
                 <select
                   id="type"
                   class="form-control form-control-sm"
-                  v-model="body[0].type"
+                  v-model="body.type"
                   required
                 >
                   <option value="naxt_smeta">нахт смета</option>
@@ -449,7 +461,7 @@
                   type="text"
                   id="didox_link"
                   class="form-control form-control-sm"
-                  v-model="body[0].didox_link"
+                  v-model="body.didox_link"
                   required
                   placeholder="Дидох линк"
                 />
@@ -460,7 +472,7 @@
                   type="text"
                   id="map_long"
                   class="form-control form-control-sm"
-                  v-model="body[0].map_long"
+                  v-model="body.map_long"
                   required
                   placeholder="Узунлик"
                 />
@@ -471,7 +483,7 @@
                   type="text"
                   id="map_lat"
                   class="form-control form-control-sm"
-                  v-model="body[0].map_lat"
+                  v-model="body.map_lat"
                   required
                   placeholder="Кенглик"
                 />
@@ -532,21 +544,19 @@ export default {
       search_building: "",
       buildings: [],
       text_building: "объектлар",
-      body: [
-        {
-          related_id: null,
-          product_composition: "",
-          sup_by_b_a_id: 0,
-          quantity: null,
-          price: null,
-          market_phone: null,
-          didox_link: "",
-          type: "",
-          map_long: "",
-          map_lat: "",
-          building_id: null,
-        },
-      ],
+      body: {
+        related_id: null,
+        product_composition: "",
+        sup_by_b_a_id: 0,
+        quantity: null,
+        price: null,
+        market_phone: null,
+        didox_link: "",
+        type: "",
+        map_long: "",
+        map_lat: "",
+        building_id: null,
+      },
       smeta_name: "",
       remove_check: false,
       checked: [],
@@ -635,7 +645,6 @@ export default {
       this.item = item.grafik;
       this.product_name = item.product_name;
     },
-
     buildings_get(page_building, limit_building, search_building) {
       this.$store.dispatch("setLoading", { isLoading: true });
 
@@ -656,7 +665,7 @@ export default {
       document.getElementById("select_bank_building").click();
     },
     get_item(e) {
-      this.body[0] = {
+      this.body = {
         related_id: null,
         product_composition: "",
         sup_by_b_a_id: 0,
@@ -670,8 +679,8 @@ export default {
         building_id: null,
       };
       const success = (position) => {
-        this.body[0].map_lat = position.coords.latitude;
-        this.body[0].map_long = position.coords.longitude;
+        this.body.map_lat = position.coords.latitude;
+        this.body.map_long = position.coords.longitude;
       };
 
       const error = (err) => {
@@ -679,9 +688,14 @@ export default {
       };
 
       navigator.geolocation.getCurrentPosition(success, error);
-      this.smeta_name = e.product_name;
-      this.body[0].building_id = e.Smeta.building_id;
-      this.body[0].related_id = e.Smeta.id;
+
+      if (this.search2) {
+        this.smeta_name = this.checked[0].product_name;
+      } else {
+        this.smeta_name = e.product_name;
+        this.body.building_id = e.Smeta.building_id;
+        this.body.related_id = e.Smeta.id;
+      }
     },
     onlyNumber($event) {
       let keyCode = $event.keyCode ? $event.keyCode : $event.which;
@@ -690,9 +704,25 @@ export default {
       }
     },
     take() {
+      let array = [];
+      var arr = this.checked.map((e) => ({
+        related_id: e.Smeta.id,
+        product_composition: this.body.product_composition,
+        sup_by_b_a_id: this.body.sup_by_b_a_id,
+        quantity: this.body.quantity,
+        price: this.body.price,
+        market_phone: this.body.market_phone,
+        didox_link: this.body.didox_link,
+        type: this.body.type,
+        map_long: this.body.map_long,
+        map_lat: this.body.map_lat,
+        building_id: e.Smeta.building_id,
+      }));
+
+      array = arr;
       document.getElementById("supply_s_disabled").disabled = true;
       this.$store.dispatch("setLoading", { isLoading: true });
-      take_supply_smeta(this.body)
+      take_supply_smeta(this.checked.length ? array : this.body)
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("supply_take").click();
@@ -705,7 +735,8 @@ export default {
               this.status,
               this.building_id
             );
-            this.body[0] = {
+            this.search2 = "";
+            this.body = {
               related_id: null,
               product_composition: "",
               sup_by_b_a_id: 0,
@@ -725,10 +756,10 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("supply_s_disabled").disabled = false;
         });
-      console.log(this.body);
     },
     sort_name(e) {
       if (e != null) {
+        this.checked = [];
         this.remove_check = true;
         this.search2 = e;
       }
@@ -770,8 +801,8 @@ export default {
 }
 
 .table-responsive.smeta {
-  max-height: 85vh;
-  min-height: 85vh;
+  max-height: 82vh;
+  min-height: 82vh;
 }
 
 .request {
@@ -780,8 +811,8 @@ export default {
 
 @media (max-width: 500px) {
   .table-responsive.smeta {
-    max-height: 115vh;
-    min-height: 115vh;
+    max-height: 112vh;
+    min-height: 112vh;
   }
 }
 td.td_grafik {

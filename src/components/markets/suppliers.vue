@@ -67,6 +67,9 @@
             >
               <i class="fa-solid fa-location-dot"></i>
             </a>
+            <button class="btn btn-sm btn-secondary mx-1">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </button>
           </td>
         </tr>
       </tbody>
