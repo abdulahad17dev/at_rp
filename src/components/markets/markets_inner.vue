@@ -38,6 +38,21 @@
               Смета
             </button>
           </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="btn btn-sm btn-light w-100 shadow-sm"
+              id="pills-contact-shot-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-contact-shot"
+              type="button"
+              role="tab"
+              aria-controls="pills-contact-shot"
+              aria-selected="false"
+              @click="contact = true"
+            >
+              Счёт
+            </button>
+          </li>
         </ul>
       </div>
     </div>
@@ -59,21 +74,31 @@
     >
       <Sm_request v-if="smeta == true" />
     </div>
+    <div
+      class="tab-pane fade"
+      id="pills-contact-shot"
+      role="tabpanel"
+      aria-labelledby="pills-contact-shot-tab"
+    >
+      <Sch_request v-if="contact == true" />
+    </div>
   </div>
 </template>
 
 <script>
 import Pr_request from "./pr_request.vue";
 import Sm_request from "./sm_request.vue";
+import Sch_request from "./sch_request.vue";
 export default {
   name: "MarketIner",
   data() {
     return {
       proche: true,
       smeta: false,
+      contact: false,
     };
   },
-  components: { Pr_request, Sm_request },
+  components: { Pr_request, Sm_request, Sch_request },
 };
 </script>
 
@@ -87,5 +112,9 @@ button.active {
   .nav {
     display: block;
   }
+}
+
+ul {
+  zoom: 70%;
 }
 </style>

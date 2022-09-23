@@ -393,7 +393,10 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
-                <label for="quantity"> Ҳажм: </label>
+                <label for="quantity">
+                  Ҳажм:
+                  <b class="text-primary"> {{ total_quantity }} </b></label
+                >
                 <input
                   type="number"
                   id="quantity"
@@ -442,20 +445,7 @@
                   />
                 </div>
               </div>
-              <div class="col-10 mx-auto">
-                <label for="type"> Статус: </label>
-                <select
-                  id="type"
-                  class="form-control form-control-sm"
-                  v-model="body.type"
-                  required
-                >
-                  <option value="naxt_smeta">нахт смета</option>
-                  <option value="qarz_smeta">қарз смета</option>
-                  <option value="shot_smeta">счёт смета</option>
-                </select>
-              </div>
-              <div class="col-10 mx-auto">
+              <div class="col-10 mx-auto" v-if="body.type == 'shot_smeta'">
                 <label for="didox_link"> Дидох линк: </label>
                 <input
                   type="text"
@@ -467,26 +457,17 @@
                 />
               </div>
               <div class="col-10 mx-auto">
-                <label for="map_long"> Узунлик: </label>
-                <input
-                  type="text"
-                  id="map_long"
+                <label for="type"> Тўлов тури: </label>
+                <select
+                  id="type"
                   class="form-control form-control-sm"
-                  v-model="body.map_long"
+                  v-model="body.type"
                   required
-                  placeholder="Узунлик"
-                />
-              </div>
-              <div class="col-10 mx-auto">
-                <label for="map_lat"> Кенглик: </label>
-                <input
-                  type="text"
-                  id="map_lat"
-                  class="form-control form-control-sm"
-                  v-model="body.map_lat"
-                  required
-                  placeholder="Кенглик"
-                />
+                >
+                  <option value="naxt_smeta">нахт смета</option>
+                  <option value="qarz_smeta">қарз смета</option>
+                  <option value="shot_smeta">счёт смета</option>
+                </select>
               </div>
             </div>
           </div>
@@ -560,6 +541,7 @@ export default {
       smeta_name: "",
       remove_check: false,
       checked: [],
+      total_quantity: null,
     };
   },
   watch: {
@@ -685,12 +667,19 @@ export default {
 
       const error = (err) => {
         position_err(err);
+        this.body.map_lat = 0;
+        this.body.map_long = 0;
       };
 
       navigator.geolocation.getCurrentPosition(success, error);
 
       if (this.search2) {
         this.smeta_name = this.checked[0].product_name;
+        var total_quantity = 0;
+        this.checked.forEach((element) => {
+          total_quantity += element.Smeta.quantity;
+        });
+        this.total_quantity = total_quantity;
       } else {
         this.smeta_name = e.product_name;
         this.body.building_id = e.Smeta.building_id;
@@ -722,7 +711,7 @@ export default {
       array = arr;
       document.getElementById("supply_s_disabled").disabled = true;
       this.$store.dispatch("setLoading", { isLoading: true });
-      take_supply_smeta(this.checked.length ? array : this.body)
+      take_supply_smeta(this.checked.length ? array : Array(this.body))
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("supply_take").click();
@@ -801,8 +790,8 @@ export default {
 }
 
 .table-responsive.smeta {
-  max-height: 82vh;
-  min-height: 82vh;
+  max-height: 89vh;
+  min-height: 89vh;
 }
 
 .request {
@@ -811,8 +800,8 @@ export default {
 
 @media (max-width: 500px) {
   .table-responsive.smeta {
-    max-height: 112vh;
-    min-height: 112vh;
+    max-height: 115vh;
+    min-height: 115vh;
   }
 }
 td.td_grafik {

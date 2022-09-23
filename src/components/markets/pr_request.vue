@@ -322,6 +322,17 @@
                   />
                 </div>
               </div>
+              <div class="col-10 mx-auto" v-if="body.type == 'shot_proche'">
+                <label for="didox_link"> Дидох линк: </label>
+                <input
+                  type="text"
+                  id="didox_link"
+                  class="form-control form-control-sm"
+                  v-model="body.didox_link"
+                  required
+                  placeholder="Дидох линк"
+                />
+              </div>
               <div class="col-10 mx-auto">
                 <label for="type"> Статус: </label>
                 <select
@@ -334,39 +345,6 @@
                   <option value="qarz_proche">қарз проче</option>
                   <option value="shot_proche">счёт проче</option>
                 </select>
-              </div>
-              <div class="col-10 mx-auto">
-                <label for="didox_link"> Дидох линк: </label>
-                <input
-                  type="text"
-                  id="didox_link"
-                  class="form-control form-control-sm"
-                  v-model="body.didox_link"
-                  required
-                  placeholder="Дидох линк"
-                />
-              </div>
-              <div class="col-10 mx-auto">
-                <label for="map_long"> Узунлик: </label>
-                <input
-                  type="text"
-                  id="map_long"
-                  class="form-control form-control-sm"
-                  v-model="body.map_long"
-                  required
-                  placeholder="Узунлик"
-                />
-              </div>
-              <div class="col-10 mx-auto">
-                <label for="map_lat"> Кенглик: </label>
-                <input
-                  type="text"
-                  id="map_lat"
-                  class="form-control form-control-sm"
-                  v-model="body.map_lat"
-                  required
-                  placeholder="Кенглик"
-                />
               </div>
             </div>
           </div>
@@ -553,6 +531,8 @@ export default {
 
       const error = (err) => {
         position_err(err);
+        this.body.map_lat = 0;
+        this.body.map_long = 0;
       };
 
       navigator.geolocation.getCurrentPosition(success, error);
@@ -619,8 +599,8 @@ export default {
 
 <style lang="scss" scoped>
 .table-responsive {
-  max-height: 85vh;
-  min-height: 85vh;
+  max-height: 87vh;
+  min-height: 87vh;
 }
 
 .request {
