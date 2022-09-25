@@ -192,16 +192,6 @@
     >
       <ul class="pagination pagination-sm justify-content-end">
         <li class="page-item">
-          <select
-            class="form-control form-control-sm form-select mx-1"
-            v-model="limit"
-          >
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select>
-        </li>
-        <li class="page-item">
           <button
             type="button"
             class="page-link"
@@ -322,7 +312,7 @@
                   />
                 </div>
               </div>
-              <div class="col-10 mx-auto" v-if="body.type == 'shot_proche'">
+              <div class="col-10 mx-auto" v-if="body.type == 'proche'">
                 <label for="didox_link"> Дидох линк: </label>
                 <input
                   type="text"
@@ -341,9 +331,9 @@
                   v-model="body.type"
                   required
                 >
-                  <option value="naxt_proche">нахт проче</option>
-                  <option value="qarz_proche">қарз проче</option>
-                  <option value="shot_proche">счёт проче</option>
+                  <option value="naxt_proche">нахт</option>
+                  <option value="qarz_proche">қарз</option>
+                  <option value="proche">счёт</option>
                 </select>
               </div>
             </div>
@@ -522,8 +512,19 @@ export default {
       document.getElementById("select_bank_building").click();
     },
     get_item(e) {
-      this.body.map_lat = "";
-      this.body.map_long = "";
+      this.body = {
+        related_id: null,
+        product_composition: "",
+        sup_by_b_a_id: 0,
+        quantity: null,
+        price: null,
+        market_phone: null,
+        type: "",
+        didox_link: "",
+        map_long: "",
+        map_lat: "",
+        building_id: null,
+      };
       const success = (position) => {
         this.body.map_lat = position.coords.latitude;
         this.body.map_long = position.coords.longitude;

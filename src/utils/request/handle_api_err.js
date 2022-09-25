@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 export let link = "https://constructionproject.crud.uz/uploaded_files/";
 
 export function catchError(error) {
+  console.log(error);
   if (error.response.status == 401) {
     console.clear();
     localStorage.removeItem("role");
@@ -125,10 +126,6 @@ export function success(res) {
     showConfirmButton: false,
     timer: 800,
     timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.addEventListener("mouseenter", Swal.stopTimer);
-      toast.addEventListener("mouseleave", Swal.resumeTimer);
-    },
   }).fire({
     icon: "success",
     title: res.data.detail,

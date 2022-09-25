@@ -144,7 +144,11 @@ export function smeta_remove(id, status) {
 }
 
 export function take_supply_smeta(data) {
-  return instance.post(`take_supply_smeta`, data);
+  if (data[0].type == "smeta") {
+    return instance.post(`take_supply_by_b_a`, data);
+  } else {
+    return instance.post(`take_supply_smeta`, data);
+  }
 }
 
 // products
@@ -525,7 +529,11 @@ export function proche_s_add(data) {
 }
 
 export function take_supply_proche(data) {
-  return instance.post(`take_supply_proche`, data);
+  if (data.type == "proche") {
+    return instance.post(`take_supply_by_b_a`, Array(data));
+  } else {
+    return instance.post(`take_supply_proche`, data);
+  }
 }
 
 export function proche_s_put(p_s_id, status, t_id, data) {
@@ -613,11 +621,23 @@ export function shot_request(
     return instance.get(
       `get_supplies_by_b_a?market_id=${market_id}&status=${status}&paid_status=${paid_status}&building_id=${building_id}&from_time=${from_time}&to_time=${to_time}&page=${page}&limit=${limit}`
     );
-  } else {
+  } else if (paid_status) {
     return instance.get(
       `get_supplies_by_b_a?market_id=${market_id}&status=${status}&paid_status=${paid_status}&building_id=${building_id}&page=${page}&limit=${limit}`
     );
+  } else if (status) {
+    return instance.get(
+      `get_supplies_by_b_a?market_id=${market_id}&status=${status}&building_id=${building_id}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(
+      `get_supplies_by_b_a?market_id=${market_id}&building_id=${building_id}&page=${page}&limit=${limit}`
+    );
   }
+}
+
+export function take_supply_b_a(data) {
+  return instance.post(`take_supply_by_b_a`, Array(data));
 }
 
 export function market_put(data) {

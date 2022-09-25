@@ -445,7 +445,7 @@
                   />
                 </div>
               </div>
-              <div class="col-10 mx-auto" v-if="body.type == 'shot_smeta'">
+              <div class="col-10 mx-auto" v-if="body.type == 'smeta'">
                 <label for="didox_link"> Дидох линк: </label>
                 <input
                   type="text"
@@ -464,9 +464,9 @@
                   v-model="body.type"
                   required
                 >
-                  <option value="naxt_smeta">нахт смета</option>
-                  <option value="qarz_smeta">қарз смета</option>
-                  <option value="shot_smeta">счёт смета</option>
+                  <option value="naxt_smeta">нахт</option>
+                  <option value="qarz_smeta">қарз</option>
+                  <option value="smeta">счёт</option>
                 </select>
               </div>
             </div>
@@ -790,8 +790,8 @@ export default {
 }
 
 .table-responsive.smeta {
-  max-height: 89vh;
-  min-height: 89vh;
+  max-height: 86vh;
+  min-height: 86vh;
 }
 
 .request {
@@ -800,8 +800,8 @@ export default {
 
 @media (max-width: 500px) {
   .table-responsive.smeta {
-    max-height: 115vh;
-    min-height: 115vh;
+    max-height: 113vh;
+    min-height: 113vh;
   }
 }
 td.td_grafik {

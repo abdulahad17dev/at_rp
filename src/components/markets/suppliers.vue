@@ -1,7 +1,7 @@
 <template>
-  <div class="row">
+  <div class="row sort">
     <div class="col mt-1 d-flex align-items-center">
-      <span>Лимит</span>
+      <span class="d-none d-md-block d-sm-block d-lg-block">Лимит</span>
       <select
         class="form-control form-control-sm mx-2 form-select"
         v-model="limit"
@@ -221,18 +221,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media (max-width: 632px) {
-  .row {
-    display: block;
-  }
-  .row .col .input-group {
-    width: 600px;
-  }
-  .row .col select {
-    width: 50%;
-  }
-}
-
 .col .input-group {
   width: 200px;
 }
@@ -248,12 +236,15 @@ table {
 }
 
 .table-responsive {
-  max-height: 60vh;
+  max-height: 65vh;
 }
 
 @media (max-width: 500px) {
   .table-responsive {
-    max-height: 95vh;
+    max-height: 100vh;
+  }
+  .sort {
+    zoom: 80%;
   }
 }
 </style>
