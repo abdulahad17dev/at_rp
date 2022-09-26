@@ -72,9 +72,5 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-button.active {
-  background: #6c757d !important;
-  color: #fff;
-}
-</style>
+<!-- <style lang="scss" scoped>
+</style> -->

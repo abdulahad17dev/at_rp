@@ -1,5 +1,5 @@
 <template>
-  <div class="table-responsive mt-3">
+  <div class="table-responsive product mt-3">
     <table class="table table-sm table-hover table_products">
       <thead class="">
         <tr>
@@ -228,9 +228,17 @@ div.table_product_composition {
   max-height: 66vh;
 }
 
+div.product {
+  max-height: 70vh;
+}
+
 @media (max-width: 500px) {
   div.table_product_composition {
     max-height: 90vh;
+  }
+
+  div.product {
+    max-height: 98vh;
   }
 }
 </style>

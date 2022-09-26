@@ -119,5 +119,13 @@ export default {
 };
 </script>
 
-<!-- <style scoped>
-</style> -->
+<style scoped lang="scss">
+@media (max-width: 700px) {
+  .row {
+    display: block;
+  }
+  .col-5 {
+    width: 100%;
+  }
+}
+</style>

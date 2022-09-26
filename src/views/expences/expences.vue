@@ -778,8 +778,4 @@ export default {
     width: 50%;
   }
 }
-button.active {
-  background: #6c757d !important;
-  color: #fff;
-}
 </style>

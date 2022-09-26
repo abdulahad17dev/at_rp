@@ -442,9 +442,4 @@ table {
   min-width: 1150px;
   width: 100%;
 }
-
-button.active {
-  background: #6c757d !important;
-  color: #fff;
-}
 </style>

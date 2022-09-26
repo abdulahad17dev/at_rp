@@ -241,14 +241,15 @@ table {
 
 @media (max-width: 575px) {
   .table-responsive {
-    min-height: 41vh;
-    max-height: 41vh;
+    min-height: 39vh;
+    max-height: 39vh;
+    zoom: 75%;
   }
 }
 @media (max-width: 500px) {
   .table-responsive {
-    min-height: 58vh;
-    max-height: 58vh;
+    min-height: 70vh;
+    max-height: 70vh;
   }
 }
 </style>

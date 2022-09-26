@@ -201,6 +201,14 @@ export function product_composition_add(data) {
   return instance.post("create_product_composition", data);
 }
 
+export function take_product_request(data) {
+  if (data.type == "tarkib") {
+    return instance.post("take_supply_by_b_a", Array(data));
+  } else {
+    return instance.post("take_supply_product_composition", data);
+  }
+}
+
 export function product_composition_remove(id) {
   return instance.delete("remove_product_composition/" + id);
 }
