@@ -52,7 +52,7 @@
         <table class="table table-sm table-hover">
           <thead class="">
             <tr>
-              <th style="width: 7%">#ИД</th>
+              <th style="width: 7%">№</th>
               <th style="width: 15%">Номи</th>
               <th style="width: 15%">Ҳажм</th>
               <th style="width: 15%">Ўлчов бирлиги</th>
@@ -170,16 +170,20 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in product_requests || []" :key="item">
-              <td>{{ item.Proche_sorovlar.id }}</td>
-              <td>
+            <tr v-for="(item, inc) in product_requests" :key="item">
+              <td v-if="item.Proche_sorovlar">{{ inc + 1 }}</td>
+              <td v-if="item.Proche_sorovlar">
                 {{ item.Proche_sorovlar.name }}
               </td>
-              <td>
-                {{ item.Proche_sorovlar.quantity }}
+              <td v-if="item.Proche_sorovlar">
+                {{
+                  new Intl.NumberFormat().format(item.Proche_sorovlar.quantity)
+                }}
               </td>
-              <td>{{ item.Proche_sorovlar.olchov_birligi }}</td>
-              <td>
+              <td v-if="item.Proche_sorovlar">
+                {{ item.Proche_sorovlar.olchov_birligi }}
+              </td>
+              <td v-if="item.Proche_sorovlar">
                 {{
                   new Date(item.Proche_sorovlar.time)
                     .toLocaleDateString("en-us", {
@@ -193,8 +197,10 @@
                     .slice(0, 16)
                 }}
               </td>
-              <td>{{ item.Proche_sorovlar.comment }}</td>
-              <td>
+              <td v-if="item.Proche_sorovlar">
+                {{ item.Proche_sorovlar.comment }}
+              </td>
+              <td v-if="item.Proche_sorovlar">
                 <button
                   class="btn btn-sm btn-success"
                   @click="
@@ -431,11 +437,13 @@ export default {
 <style lang="scss" scoped>
 .table-responsive {
   max-height: 70vh;
+  min-height: 70vh;
 }
 
 @media (max-width: 500px) {
   .table-responsive {
     max-height: 100vh;
+    min-height: 100vh;
   }
 }
 table {

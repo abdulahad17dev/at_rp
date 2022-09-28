@@ -3,7 +3,7 @@
     <table class="table table-sm table-hover">
       <thead class="">
         <tr>
-          <th style="width: 8%">#ИД</th>
+          <th style="width: 8%">№</th>
           <th style="width: 15%">Исм</th>
           <th style="width: 15%">Баланс</th>
           <th style="width: 15%">Телефон рақам</th>
@@ -13,8 +13,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in data || []" :key="item">
-          <td>{{ item.id }}</td>
+        <tr v-for="(item, inc) in data || []" :key="item">
+          <td>{{ inc + 1 }}</td>
           <td>{{ item.name }}</td>
           <td :class="item.balance >= 0 ? 'text-success' : 'text-danger'">
             {{ new Intl.NumberFormat().format(item.balance) }} сўм

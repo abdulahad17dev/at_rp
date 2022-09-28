@@ -3,15 +3,15 @@
     <table class="table table-sm table-hover">
       <thead class="">
         <tr>
-          <th style="width: 10%">#ИД</th>
+          <th style="width: 10%">№</th>
           <th style="width: 30%">Исм</th>
           <th style="width: 30%">Баланс</th>
           <th style="width: 30%"></th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in data || []" :key="item">
-          <td>{{ item.id }}</td>
+        <tr v-for="(item, inc) in data || []" :key="item">
+          <td>{{ inc + 1 }}</td>
           <td>{{ item.name }}</td>
           <td>{{ new Intl.NumberFormat().format(item.balance) }} сўм</td>
           <td>

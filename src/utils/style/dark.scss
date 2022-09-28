@@ -1,22 +1,38 @@
 :root {
-    --dark: rgb(63, 68, 73);
+    --dark: #27293d;
 }
 
 .dark .app {
     color: white;
-    background: rgb(60, 65, 70);
+    background: #1e1e2e;
 }
 
-.dark button.btn-light {
-    color: white;
-    background: #979797 !important;
-}
 .dark button.btn-light.active {
     color: white;
 }
 
+.dark button.btn-secondary {
+    color: white;
+    background: #419ef9;
+    border: none;
+}
+
+.dark button.btn-light {
+    background: none;
+    color: white !important;
+}
+
+.dark button.btn-light:hover {
+    color: white !important;
+}
+
 .dark .container-fluid .card {
     background: var(--dark);
+}
+
+.dark .card .card-header,
+.dark .card .card-footer {
+    background: var(--dark) !important;
 }
 
 .dark .login_card {
@@ -51,14 +67,14 @@
 .dark textarea,
 .dark select {
     border: 1px solid gray;
-    background: rgb(211, 211, 211, 0.1);
+    background: var(--dark);
     color: lightgray !important;
 }
 
 .dark input[disabled] {
     background: var(--item-hover);
     border: 1px solid gray;
-    background: rgb(211, 211, 211, 0.1);
+    background: var(--dark);
     color: lightgray !important;
 }
 
@@ -82,12 +98,12 @@
 }
 
 .dark .list-group-item:hover {
-    background: rgb(60, 65, 70);
+    background: var(--dark);
     color: white;
 }
 
 .dark .list-group-item:active {
-    background: rgb(60, 65, 70);
+    background: var(--dark);
     color: white;
 }
 
@@ -108,7 +124,7 @@
 .dark nav ul li button:hover,
 .dark nav ul li button:active,
 .dark nav ul li button:focus {
-    background: rgb(71, 77, 82);
+    background: var(--dark);
     color: white !important;
 }
 
@@ -150,7 +166,7 @@
 .dark .dropdown button:active,
 .dark .dropdown button:hover,
 .dark .dropdown .dropdown-menu {
-    background: rgb(71, 77, 82);
+    background: var(--dark);
     color: white !important;
 }
 
@@ -159,11 +175,31 @@
 }
 
 .dark ul.dropdown-items li {
-    background: rgb(71, 77, 82);
+    background: var(--dark);
 }
 
 .dark ul.dropdown-items li .dropdown-item:active,
 .dark ul.dropdown-items li .dropdown-item:hover,
 .dark ul.dropdown-items li .dropdown-item:focus {
-    background: rgb(60, 65, 70);
+    background: var(--dark);
+}
+
+.dark .table-responsive {
+    -webkit-box-shadow: 0px 5px 10px 2px rgba(225, 225, 225, 0.08);
+    -moz-box-shadow: 0px 5px 10px 2px rgba(225, 225, 225, 0.08);
+    box-shadow: 0px 3px 8px 1px rgba(225, 225, 225, 0.08) !important;
+}
+
+.dark .back,
+.dark .back_home,
+.dark .log_out {
+    background: #1e1e2e;
+    border: 1px solid #fff;
+}
+
+.dark .back:hover,
+.dark .back_home:hover,
+.dark .log_out:hover {
+    background: #1e1e2e;
+    border: 1px solid #fff;
 }

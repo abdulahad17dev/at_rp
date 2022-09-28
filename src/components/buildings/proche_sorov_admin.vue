@@ -3,7 +3,7 @@
     <table class="table table-sm">
       <thead class="">
         <tr>
-          <th style="width: 10%">#ИД</th>
+          <th style="width: 10%">№</th>
           <th style="width: 12%">Сана</th>
           <th style="width: 20%">Номи</th>
           <th style="width: 20%">Ҳажм</th>
@@ -28,24 +28,28 @@
       </thead>
       <tbody>
         <tr v-for="(item, inc) in product_requests || []" :key="item">
-          <td>{{ item.Proche_sorovlar.id }}</td>
-          <td>
-            {{
-              new Date(item.Proche_sorovlar.time)
-                .toLocaleDateString("en-us", {
-                  year: "numeric",
-                  month: "numeric",
-                  day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
-                  hour12: false,
-                })
-                .slice(0, 16)
-            }}
+          <td v-if="item.Proche_sorovlar != null">{{ inc + 1 }}</td>
+          <td v-if="item.Proche_sorovlar != null">
+            <span v-if="item.Proche_sorovlar.time">
+              {{
+                new Date(item.Proche_sorovlar.time)
+                  .toLocaleDateString("en-us", {
+                    year: "numeric",
+                    month: "numeric",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: false,
+                  })
+                  .slice(0, 16)
+              }}
+            </span>
           </td>
-          <td>
+          <td v-if="item.Proche_sorovlar != null">
             <form
-              @submit.prevent="accept(item.Proche_sorovlar.id, true, item)"
+              @submit.prevent="
+                accept(item.Proche_sorovlar.id, true, item.Proche_sorovlar)
+              "
               :id="`form${inc}`"
             >
               <input
@@ -63,7 +67,7 @@
               <span v-else>{{ item.Proche_sorovlar.name }}</span>
             </form>
           </td>
-          <td>
+          <td v-if="item.Proche_sorovlar != null">
             <input
               v-if="item.Proche_sorovlar.status == 'adminda_proche'"
               type="number"
@@ -78,9 +82,11 @@
               required
             />
 
-            <span v-else>{{ item.Proche_sorovlar.quantity }}</span>
+            <span v-else>{{
+              new Intl.NumberFormat().format(item.Proche_sorovlar.quantity)
+            }}</span>
           </td>
-          <td>
+          <td v-if="item.Proche_sorovlar != null">
             <input
               v-if="item.Proche_sorovlar.status == 'adminda_proche'"
               type="text"
@@ -98,7 +104,7 @@
               {{ item.Proche_sorovlar.olchov_birligi }}
             </span>
           </td>
-          <td>
+          <td v-if="item.Proche_sorovlar != null">
             <textarea
               v-if="item.Proche_sorovlar.status == 'adminda_proche'"
               :form="`form${inc}`"
@@ -116,7 +122,7 @@
             </span>
           </td>
 
-          <td>
+          <td v-if="item.Proche_sorovlar != null">
             <button
               class="btn btn-sm btn-success"
               :id="`accept_proche${item.Proche_sorovlar.id}`"

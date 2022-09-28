@@ -1,9 +1,9 @@
 <template>
-  <div class="table-responsive mt-3" v-if="data != ''">
+  <div class="table-responsive mt-3" v-if="role != 'pto'">
     <table class="table table-sm table-hover building">
       <thead class="">
         <tr>
-          <th>#ИД</th>
+          <th>№</th>
           <th>Номи</th>
           <th>Манзил</th>
           <th>Бошлаш санаси</th>
@@ -13,9 +13,13 @@
         </tr>
       </thead>
       <tbody v-if="role == 'prorap' || role == 'omborchi'">
-        <tr v-for="item in data" :key="item">
-          <td>{{ item.Buildings.id }}</td>
-          <td>{{ item.Buildings.name }}</td>
+        <tr v-for="(item, inc) in data" :key="item">
+          <td>{{ inc + 1 }}</td>
+          <td>
+            <p style="min-width: 250px; width: 250px">
+              {{ item.Buildings.name }}
+            </p>
+          </td>
           <td>{{ item.Buildings.address }}</td>
           <td>
             {{
@@ -133,8 +137,8 @@
         </tr>
       </tbody>
       <tbody v-else>
-        <tr v-for="item in data" :key="item">
-          <td>{{ item.id }}</td>
+        <tr v-for="(item, inc) in data" :key="item">
+          <td>{{ inc + 1 }}</td>
           <td>
             <p style="min-width: 250px; width: 250px">{{ item.name }}</p>
           </td>
@@ -202,6 +206,7 @@
             >
               <i class="fa-solid fa-flag-checkered"></i>
             </button>
+
             <button
               class="btn btn-sm btn-primary mx-1"
               data-bs-toggle="modal"
@@ -218,6 +223,7 @@
             >
               <i class="fa-solid fa-location-dot"></i>
             </a>
+
             <button
               class="btn btn-sm btn-primary mx-1"
               data-bs-toggle="modal"
@@ -227,6 +233,7 @@
             >
               <i class="fa-solid fa-file-arrow-up"></i>
             </button>
+
             <router-link
               v-if="role == 'admin'"
               :to="{
@@ -237,6 +244,7 @@
             >
               <i class="fa-solid fa-right-long"></i>
             </router-link>
+
             <router-link
               v-else
               :to="{
@@ -247,6 +255,7 @@
             >
               <i class="fa-solid fa-right-long"></i>
             </router-link>
+
             <button
               class="btn btn-sm btn-primary mx-1 d-block mt-1"
               v-if="item.status == 'wait' && role == 'pto'"
@@ -259,6 +268,168 @@
       </tbody>
     </table>
   </div>
+
+  <div class="row row_building" v-else-if="role == 'pto'">
+    <div
+      class="col-md-4 col-sm-6 col-lg-4 col-xxl-4 my-1"
+      v-for="item in data"
+      :key="item"
+    >
+      <div class="card shadow">
+        <div class="card-header bg-white">
+          <h5 class="card-title text-center mb-0">
+            <!-- <span :title="item.name" v-if="item.name.length > 30">
+              {{ item.name.slice(0, 20) }}
+            </span>
+            <span v-else> -->
+            {{ item.name }}
+            <!-- </span> -->
+          </h5>
+        </div>
+        <div class="card-body text-center">
+          <h6><b>Манзил: </b> {{ item.address }}</h6>
+          <h6>
+            <b>Бошлаш санаси: </b>
+            {{
+              new Date(item.start_date)
+                .toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false,
+                })
+                .slice(0, 16)
+            }}
+          </h6>
+          <h6>
+            <b>Тугаш санаси: </b>
+            {{
+              new Date(item.end_date)
+                .toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false,
+                })
+                .slice(0, 16)
+            }}
+          </h6>
+          <span
+            class="badge rounded-pill bg-warning"
+            v-if="item.status == 'wait'"
+            >кутилмоқда</span
+          >
+          <span
+            class="badge rounded-pill bg-primary"
+            v-else-if="item.status == 'start'"
+            >қурилмоқда</span
+          >
+          <span
+            class="badge rounded-pill bg-success"
+            v-else-if="item.status == 'end'"
+            >якунланди</span
+          >
+        </div>
+        <div class="card-footer bg-white">
+          <div class="d-flex justify-content-center">
+            <div
+              class="coll mx-1"
+              v-if="item.status == 'wait' && role == 'pto'"
+            >
+              <button
+                class="btn btn-sm btn-warning"
+                data-bs-toggle="modal"
+                data-bs-target="#building_put"
+                @click="items(item)"
+              >
+                <i class="fa fa-edit text-white"></i>
+              </button>
+            </div>
+            <div
+              class="coll mx-1"
+              v-else-if="item.status == 'start' && role == 'pto'"
+            >
+              <button class="btn btn-sm btn-success" @click="finish(item)">
+                <i class="fa-solid fa-flag-checkered"></i>
+              </button>
+            </div>
+            <div
+              class="coll mx-1"
+              v-else-if="item.status == 'end' && role == 'pto'"
+            >
+              <button class="btn btn-sm btn-primary" @click="start(item)">
+                <i class="fa-solid fa-play"></i>
+              </button>
+            </div>
+            <div class="coll mx-1" v-if="role == 'admin' || role == 'pto'">
+              <button
+                class="btn btn-sm btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#foremans_warehousemans"
+                @click="select_id(item.id, item.name, 1)"
+              >
+                <i class="fa-solid fa-users"></i>
+              </button>
+            </div>
+            <div class="coll mx-1">
+              <a
+                target="_blank"
+                :href="`https://www.google.com/maps/@${item.map_lat},${item.map_long},8z`"
+                class="btn btn-sm btn-primary"
+              >
+                <i class="fa-solid fa-location-dot"></i>
+              </a>
+            </div>
+            <div class="coll mx-1" v-if="role == 'pto'">
+              <button
+                class="btn btn-sm btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#building_document"
+                @click="select_id(item.id, item.name, 2)"
+              >
+                <i class="fa-solid fa-file-arrow-up"></i>
+              </button>
+            </div>
+            <div class="coll mx-1" v-if="role == 'admin'">
+              <router-link
+                :to="{
+                  name: 'building',
+                  query: { id: item.id, name: item.name },
+                }"
+                class="btn btn-sm btn-primary"
+              >
+                <i class="fa-solid fa-right-long"></i>
+              </router-link>
+            </div>
+            <div class="coll mx-1" v-else>
+              <router-link
+                :to="{
+                  name: 'smeta',
+                  query: { id: item.id, name: item.name },
+                }"
+                class="btn btn-sm btn-primary"
+              >
+                <i class="fa-solid fa-right-long"></i>
+              </router-link>
+            </div>
+            <div
+              class="coll mx-1"
+              v-if="item.status == 'wait' && role == 'pto'"
+            >
+              <button class="btn btn-sm btn-primary" @click="start(item)">
+                <i class="fa-solid fa-play"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <Building_put :object="item" @put="put" />
 
   <Building_documents
@@ -525,6 +696,11 @@ table {
 
 .table-responsive {
   max-height: 66vh;
+}
+
+div.row_building {
+  max-height: 70vh;
+  overflow: auto;
 }
 
 @media (max-width: 500px) {

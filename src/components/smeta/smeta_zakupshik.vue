@@ -3,7 +3,7 @@
     <table class="table table-sm table-hover">
       <thead>
         <tr>
-          <td style="width: 8%">Т/р</td>
+          <td style="width: 8%">№</td>
           <td style="width: 32%">Номи</td>
           <td style="width: 10%">Ўлчов бирлиги</td>
           <td style="width: 15%">Норма</td>
@@ -142,7 +142,7 @@
           <td>{{ item.product_name }}</td>
           <td>{{ item.product_olchov_birligi }}</td>
           <td>{{ item.Smeta.norm }}</td>
-          <td>{{ item.Smeta.quantity }}</td>
+          <td>{{ new Intl.NumberFormat().format(item.Smeta.quantity) }}</td>
           <td></td>
           <td>
             <button
@@ -177,8 +177,8 @@
           v-model="limit"
         >
           <option value="100">100</option>
+          <option value="250">250</option>
           <option value="500">500</option>
-          <option value="1000">1000</option>
         </select>
       </div>
       <li class="page-item">
@@ -253,7 +253,10 @@
                 </tr>
                 <tr>
                   <td scope="col">Ҳажм</td>
-                  <td>{{ item.quantity }} {{ item.olchov_birligi }}</td>
+                  <td>
+                    {{ new Intl.NumberFormat().format(item.quantity) }}
+                    {{ item.olchov_birligi }}
+                  </td>
                 </tr>
                 <tr>
                   <td scope="col">ШНК</td>
@@ -535,11 +538,13 @@ export default {
 
 .smeta {
   max-height: 70vh;
+  min-height: 70vh;
 }
 
 @media (max-width: 500px) {
   .smeta {
     max-height: 100vh;
+    min-height: 100vh;
   }
 }
 

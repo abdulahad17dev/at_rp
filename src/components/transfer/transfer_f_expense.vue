@@ -3,7 +3,7 @@
     <table class="table table-sm table-hover">
       <thead>
         <tr>
-          <th style="width: 5%">#ИД</th>
+          <th style="width: 5%">№</th>
           <th style="width: 35%">Сумма</th>
           <th style="width: 20%">Сана</th>
           <th style="width: 40%">Изох</th>
@@ -110,8 +110,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in fixed_history" :key="item">
-          <td>{{ item.Expenses.id }}</td>
+        <tr v-for="(item, inc) in fixed_history" :key="item">
+          <td>{{ inc + 1 }}</td>
           <td>{{ new Intl.NumberFormat().format(item.Expenses.money) }} сўм</td>
           <td>
             {{

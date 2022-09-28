@@ -29,7 +29,7 @@
       <table class="table table-sm table-hover">
         <thead class="">
           <tr>
-            <th style="width: 7%">#ИД</th>
+            <th style="width: 7%">№</th>
             <th style="width: 15%">Номи</th>
             <th style="width: 15%">Ҳажм</th>
             <th style="width: 15%">Ўлчов бирлиги</th>
@@ -145,13 +145,36 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in product_requests || []" :key="item">
-            <td>{{ item.Proche_sorovlar.id }}</td>
+          <tr v-for="(item, inc) in product_requests || []" :key="item">
+            <td>{{ inc + 1 }}</td>
             <td>
               {{ item.Proche_sorovlar.name }}
             </td>
-            <td>
-              {{ item.Proche_sorovlar.quantity }}
+            <td @dblclick="show_quantity(inc)" style="cursor: pointer">
+              {{
+                new Intl.NumberFormat().format(item.Proche_sorovlar.quantity) +
+                " (олинган ҳажм: " +
+                (item.sum_supply_by_b_a_quantity + item.sum_supply_quantity) +
+                ")"
+              }}
+              <span
+                class="text-primary"
+                style="display: none"
+                :id="`show_${inc}`"
+              >
+                <p class="mb-0">
+                  счётдан олинган:
+                  {{
+                    new Intl.NumberFormat().format(
+                      item.sum_supply_by_b_a_quantity
+                    )
+                  }}
+                </p>
+                <p class="mb-0">
+                  олинган:
+                  {{ new Intl.NumberFormat().format(item.sum_supply_quantity) }}
+                </p>
+              </span>
             </td>
             <td>{{ item.Proche_sorovlar.olchov_birligi }}</td>
             <td>
@@ -267,6 +290,7 @@
                 <input
                   type="number"
                   id="quantity"
+                  step="any"
                   class="form-control form-control-sm"
                   v-model="body.quantity"
                   placeholder="Ҳажм"
@@ -324,7 +348,7 @@
                 />
               </div>
               <div class="col-10 mx-auto">
-                <label for="type"> Статус: </label>
+                <label for="type"> Тўлов тури: </label>
                 <select
                   id="type"
                   class="form-control form-control-sm"
@@ -583,6 +607,14 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("supply_disabled").disabled = false;
         });
+    },
+    show_quantity(e) {
+      let show = document.getElementById(`show_${e}`);
+      if (show.style.display == "none") {
+        show.style.display = "block";
+      } else {
+        show.style.display = "none";
+      }
     },
   },
   created() {

@@ -40,15 +40,18 @@
     <table class="table table-sm table-hover">
       <thead>
         <tr>
-          <th style="width: 5%">#ИД</th>
+          <th style="width: 5%">№</th>
           <th style="width: 30%">Сумма</th>
           <th style="width: 30%">Сана</th>
           <th style="width: 35%">Изох</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in hisob_raqamiga_qabul_qilingan_pullar" :key="item">
-          <td>{{ item.id }}</td>
+        <tr
+          v-for="(item, inc) in hisob_raqamiga_qabul_qilingan_pullar"
+          :key="item"
+        >
+          <td>{{ inc + 1 }}</td>
           <td>{{ new Intl.NumberFormat().format(item.money) }} сўм</td>
           <td>
             {{

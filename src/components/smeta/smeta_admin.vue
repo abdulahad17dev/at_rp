@@ -7,8 +7,8 @@
         v-model="limit"
       >
         <option value="100">100</option>
+        <option value="250">250</option>
         <option value="500">500</option>
-        <option value="1000">1000</option>
       </select>
       <select
         class="form-control form-control-sm mx-2 form-select smeta_sort"
@@ -55,7 +55,9 @@
           <td style="width: 5%">{{ item.Smeta.shnk }}</td>
           <td style="width: 20%">{{ item.Smeta.name }}</td>
           <td style="width: 5%">{{ item.Smeta.olchov_birligi }}</td>
-          <td style="width: 10%">{{ item.Smeta.quantity }}</td>
+          <td style="width: 10%">
+            {{ new Intl.NumberFormat().format(item.Smeta.quantity) }}
+          </td>
           <td style="width: 10%">{{ item.Smeta.allotted_time_for_worker }}</td>
           <td style="width: 10%">{{ item.Smeta.allotted_time_for_machine }}</td>
           <td style="width: 10%">
@@ -125,7 +127,7 @@
           <td>{{ item.Smeta.name }}</td>
           <td>{{ item.Smeta.olchov_birligi }}</td>
           <td>{{ item.Smeta.norm }}</td>
-          <td>{{ item.Smeta.quantity }}</td>
+          <td>{{ new Intl.NumberFormat().format(item.Smeta.quantity) }}</td>
           <td colspan="6">
             <span v-if="item.Smeta.alotted_price">
               {{ item.Smeta.alotted_price }}
@@ -141,7 +143,7 @@
           <td>{{ item.Smeta.name }}</td>
           <td>{{ item.Smeta.olchov_birligi }}</td>
           <td>{{ item.Smeta.norm }}</td>
-          <td>{{ item.Smeta.quantity }}</td>
+          <td>{{ new Intl.NumberFormat().format(item.Smeta.quantity) }}</td>
           <td colspan="6">
             <span v-if="item.Smeta.alotted_price">
               {{ item.Smeta.alotted_price }}
@@ -154,7 +156,7 @@
           <td>{{ item.product_name }}</td>
           <td>{{ item.product_olchov_birligi }}</td>
           <td>{{ item.Smeta.norm }}</td>
-          <td>{{ item.Smeta.quantity }}</td>
+          <td>{{ new Intl.NumberFormat().format(item.Smeta.quantity) }}</td>
           <td colspan="6">
             <span v-if="item.Smeta.alotted_price">
               {{ item.Smeta.alotted_price }}

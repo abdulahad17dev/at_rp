@@ -3,15 +3,15 @@
     <table class="table table-sm table-hover">
       <thead class="">
         <tr>
-          <th>#ИД</th>
+          <th>№</th>
           <th>Номи</th>
           <th>Телефон рақам</th>
           <th>Манзил</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in data || []" :key="item">
-          <td>{{ item.id }}</td>
+        <tr v-for="(item, inc) in data || []" :key="item">
+          <td>{{ inc + 1 }}</td>
           <td>{{ item.name }}</td>
           <td>
             <a

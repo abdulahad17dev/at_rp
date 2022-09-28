@@ -3,15 +3,15 @@
     <table class="table table-sm table-hover">
       <thead>
         <tr>
-          <th style="width: 10%">#ИД</th>
+          <th style="width: 10%">№</th>
           <th style="width: 30%">Номи</th>
           <th style="width: 20%">Баланс</th>
           <th style="width: 20%"></th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in data" :key="item">
-          <td>{{ item.Bank_accounts.id }}</td>
+        <tr v-for="(item, inc) in data" :key="item">
+          <td>{{ inc + 1 }}</td>
           <td>{{ item.Bank_accounts.name }}</td>
           <td>
             {{ new Intl.NumberFormat().format(item.Bank_accounts.balance) }} сўм
@@ -196,5 +196,15 @@ export default {
 table {
   min-width: 700px;
   width: 100%;
+}
+
+.table-responsive {
+  max-height: 70vh;
+}
+
+@media (max-width: 500px) {
+  .table-responsive {
+    max-height: 95vh;
+  }
 }
 </style>

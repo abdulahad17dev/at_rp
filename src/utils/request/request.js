@@ -520,10 +520,10 @@ export function money_launderers_put(data) {
 
 // proche sorovlar
 
-export function proche_s_get(page, limit, building_id, status, search) {
-  if (search) {
+export function proche_s_get(page, limit, building_id, status) {
+  if (status) {
     return instance.get(
-      `get_product_request?building_id=${building_id}&status=${status}&search=${search}&page=${page}&limit=${limit}`
+      `get_product_request?building_id=${building_id}&status=${status}&page=${page}&limit=${limit}`
     );
   } else {
     return instance.get(
@@ -645,7 +645,16 @@ export function shot_request(
 }
 
 export function take_supply_b_a(data) {
-  return instance.post(`take_supply_by_b_a`, Array(data));
+  if (data.type == "smeta") {
+    data.type = "shot_smeta";
+    return instance.post(`take_supply_smeta`, Array(data));
+  } else if (data.type == "proche") {
+    data.type = "shot_proche";
+    return instance.post(`take_supply_proche`, data);
+  } else if (data.type == "tarkib") {
+    data.type = "shot_tarkib";
+    return instance.post(`take_supply_product_composition`, data);
+  }
 }
 
 export function market_put(data) {

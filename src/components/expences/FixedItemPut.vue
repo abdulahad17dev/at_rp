@@ -89,6 +89,7 @@
                     type="number"
                     class="form-control"
                     placeholder="Лимит"
+                    step="any"
                     v-model="body.limit_of_expense"
                     required
                     @keyup="input"

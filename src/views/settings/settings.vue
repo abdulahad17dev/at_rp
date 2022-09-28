@@ -8,7 +8,7 @@
       </h4>
     </div>
     <div class="col">
-      <button class="btn btn-dark btn-sm float-end" @click="logout">
+      <button class="btn btn-dark btn-sm float-end log_out" @click="logout">
         <i class="fa-solid fa-arrow-right-from-bracket"></i>
       </button>
     </div>

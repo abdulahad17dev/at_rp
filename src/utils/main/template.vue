@@ -2,7 +2,7 @@
   <div class="app" v-if="this.$route.name !== 'login'">
     <div class="scroll" id="scroll">
       <div class="container-fluid pt-3">
-        <div class="card shadow mb-3 border-0">
+        <div class="card mb-3 border-0">
           <div class="card-body zoom">
             <slot />
           </div>

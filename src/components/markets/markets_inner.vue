@@ -2,7 +2,7 @@
   <div class="container-fluid mb-2">
     <div class="row">
       <div class="col mx-1" style="padding: 0 0"></div>
-      <div class="col mx-1" style="padding: 0 0">
+      <div class="col mx-1" style="padding: 2px 0">
         <ul
           class="nav nav-pills nav-fill nav-justified justify-content-end"
           id="pills-tab2"

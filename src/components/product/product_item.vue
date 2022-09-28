@@ -3,7 +3,7 @@
     <table class="table table-sm table-hover table_products">
       <thead class="">
         <tr>
-          <th>Т/р</th>
+          <th>№</th>
           <th>Номи</th>
           <th>Ўлчов бирлиги</th>
           <th>Код</th>
@@ -100,7 +100,7 @@
             <table class="table table-sm table-hover product_c">
               <thead>
                 <tr>
-                  <th>Т/р</th>
+                  <th>№</th>
                   <th>Номи</th>
                   <th>Ҳажми</th>
                   <th>Ўлчов бирлиги</th>
@@ -111,7 +111,9 @@
                 <tr v-for="(item, idx) in product_composition" :key="item">
                   <td style="width: 10%">{{ idx + 1 }}</td>
                   <td style="width: 20%">{{ item.name }}</td>
-                  <td style="width: 20%">{{ item.quantity }}</td>
+                  <td style="width: 20%">
+                    {{ new Intl.NumberFormat().format(item.quantity) }}
+                  </td>
                   <td style="width: 20%">{{ item.olchov_birligi }}</td>
                   <td style="width: 10%">
                     <button

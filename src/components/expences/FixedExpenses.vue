@@ -3,7 +3,7 @@
     <table class="table table-sm table-hover">
       <thead>
         <tr>
-          <th style="width: 10%">#ИД</th>
+          <th style="width: 10%">№</th>
           <th style="width: 25%">Номи</th>
           <th style="width: 25%">Лимит сумма</th>
           <th style="width: 25%">Ихтисослик</th>
@@ -11,8 +11,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in data" :key="item">
-          <td>{{ item.id }}</td>
+        <tr v-for="(item, inc) in data" :key="item">
+          <td>{{ inc + 1 }}</td>
           <td>{{ item.name }}</td>
           <td>
             {{ new Intl.NumberFormat().format(item.limit_of_expense) }} сўм

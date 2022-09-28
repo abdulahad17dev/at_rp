@@ -27,7 +27,7 @@
     <table class="table table-sm table-hover">
       <thead>
         <tr>
-          <th>#ИД</th>
+          <th>№</th>
           <th>Исм</th>
           <th>Телефон рақам</th>
           <th>Манзил</th>
@@ -36,8 +36,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in markets || []" :key="item">
-          <td>{{ item.id }}</td>
+        <tr v-for="(item, inc) in markets || []" :key="item">
+          <td>{{ inc + 1 }}</td>
           <td>{{ item.name }}</td>
           <td>
             <a
@@ -67,7 +67,7 @@
             >
               <i class="fa-solid fa-location-dot"></i>
             </a>
-            <button class="btn btn-sm btn-secondary mx-1">
+            <button class="btn btn-sm btn-secondary">
               <i class="fa-solid fa-clock-rotate-left"></i>
             </button>
           </td>

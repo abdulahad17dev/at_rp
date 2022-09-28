@@ -66,7 +66,7 @@
             <table class="table table-sm table-hover">
               <thead>
                 <tr>
-                  <th>Т/р</th>
+                  <th>№</th>
                   <th>Файл</th>
                   <th>Изох</th>
                   <th></th>
@@ -80,7 +80,10 @@
                     {{ item.Building_documents.comment }}
                   </td>
                   <td style="width: 15%">
-                    <button class="btn btn-sm btn-primary mx-1">
+                    <button
+                      class="btn btn-sm btn-primary mx-1"
+                      @click="download(item)"
+                    >
                       <i class="fa-solid fa-download"></i>
                     </button>
                     <button
@@ -103,6 +106,7 @@
 
 <script>
 import { link } from "@/utils/request/handle_api_err";
+import axios from "axios";
 export default {
   name: "BuildingDocuments",
   props: ["id", "name", "data"],
@@ -113,7 +117,6 @@ export default {
         comment: "",
       },
       txt: "файл юклаш",
-      link: link,
     };
   },
   methods: {
@@ -124,18 +127,51 @@ export default {
       this.body.file = e.target.files[0];
       this.txt = e.target.files[0].name.slice(0, 20);
     },
+    forceFileDownload(response, item) {
+      var headers = response.headers;
+      var extension =
+        link +
+        item.Building_documents.file.substring(
+          item.Building_documents.file.lastIndexOf(".") + 1
+        );
+      var blob = new Blob([response.data], { type: headers["content-type"] });
+      var link_file = document.createComment("a");
+      link_file.href = window.URL.createObjectURL(blob);
+      link_file.download = `${item.Building_documents.file}.${extension}`;
+      link_file.click();
+      link_file.remove();
+    },
+    download(e) {
+      axios({
+        method: "get",
+        url: link + e.Building_documents.file,
+        responseType: "blob",
+        Accept: "*/*",
+      })
+        .then((response) => {
+          this.forceFileDownload(response, e);
+        })
+        .catch(() => {
+          console.log("error occured");
+        });
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 table {
-  min-width: 800px;
+  min-width: 650px;
   width: 100%;
 }
 
 .table-responsive {
   max-height: 70vh;
-  overflow: auto;
+}
+
+@media (max-width: 500px) {
+  .table-responsive {
+    min-height: 90vh;
+  }
 }
 </style>

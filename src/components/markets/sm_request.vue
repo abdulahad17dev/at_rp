@@ -30,17 +30,17 @@
         <table class="table table-sm table-hover">
           <thead class="">
             <tr>
-              <td style="width: 8%">
+              <td style="width: 10%">
                 <input
                   class="form-check-input"
                   type="checkbox"
                   v-model="checkAll"
                   v-if="remove_check"
                 />
-                Т/р
+                №
               </td>
-              <td style="width: 32%">Номи</td>
-              <td style="width: 10%">Ўлчов бирлиги</td>
+              <td style="width: 25%">Номи</td>
+              <td style="width: 15%">Ўлчов бирлиги</td>
               <td style="width: 15%">Норма</td>
               <td style="width: 15%">Ҳажм</td>
               <td style="width: 10%">
@@ -189,8 +189,37 @@
               <td
                 :style="search2 ? '' : 'cursor: pointer; user-select: none'"
                 @dblclick="sort_name(item.product_name)"
+                @click="show_quantity(inc)"
               >
-                {{ item.Smeta.quantity }}
+                <span>
+                  {{
+                    new Intl.NumberFormat().format(item.Smeta.quantity) +
+                    " (олинган ҳажм: " +
+                    (item.sum_supply_by_b_a_quantity +
+                      item.sum_supply_quantity) +
+                    ")"
+                  }}
+                </span>
+                <span
+                  class="text-primary"
+                  style="display: none"
+                  :id="`show_smeta_${inc}`"
+                >
+                  <p class="mb-0">
+                    счётдан олинган:
+                    {{
+                      new Intl.NumberFormat().format(
+                        item.sum_supply_by_b_a_quantity
+                      )
+                    }}
+                  </p>
+                  <p class="mb-0">
+                    олинган:
+                    {{
+                      new Intl.NumberFormat().format(item.sum_supply_quantity)
+                    }}
+                  </p>
+                </span>
               </td>
               <td>
                 <button
@@ -351,7 +380,10 @@
                       </tr>
                       <tr>
                         <td scope="col">Ҳажм</td>
-                        <td>{{ item.quantity }} {{ item.olchov_birligi }}</td>
+                        <td>
+                          {{ new Intl.NumberFormat().format(item.quantity) }}
+                          {{ item.olchov_birligi }}
+                        </td>
                       </tr>
                       <tr>
                         <td scope="col">ШНК</td>
@@ -417,7 +449,7 @@
                   <table class="table table-sm table-hover product_table">
                     <thead>
                       <tr>
-                        <th style="width: 8%">Т/р</th>
+                        <th style="width: 8%">№</th>
                         <th style="width: 30%">Номи</th>
                         <th style="width: 22%">Ҳажм</th>
                         <th style="width: 30%">Ўлчов бирлиги</th>
@@ -431,7 +463,9 @@
                       >
                         <td>{{ inc + 1 }}</td>
                         <td>{{ item.name }}</td>
-                        <td>{{ item.quantity }}</td>
+                        <td>
+                          {{ new Intl.NumberFormat().format(item.quantity) }}
+                        </td>
                         <td>{{ item.olchov_birligi }}</td>
                         <td>
                           <button
@@ -491,6 +525,7 @@
                     class="form-control form-control-sm"
                     v-model="body.quantity"
                     placeholder="Ҳажм"
+                    step="any"
                     min="1"
                     required
                   />
@@ -619,6 +654,7 @@
                     v-model="body2.quantity"
                     placeholder="Ҳажм"
                     min="1"
+                    step="any"
                     required
                   />
                 </div>
@@ -1054,6 +1090,14 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("supply_p_disabled").disabled = false;
         });
+    },
+    show_quantity(e) {
+      let show = document.getElementById(`show_smeta_${e}`);
+      if (show.style.display == "none") {
+        show.style.display = "block";
+      } else {
+        show.style.display = "none";
+      }
     },
   },
   created() {
