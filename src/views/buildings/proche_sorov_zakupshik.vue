@@ -218,8 +218,8 @@
             </tr>
           </tbody>
         </table>
+        <Data_notfound v-if="product_requests == ''" />
       </div>
-      <Data_notfound v-if="product_requests == ''" />
 
       <nav
         aria-label="Page navigation example"

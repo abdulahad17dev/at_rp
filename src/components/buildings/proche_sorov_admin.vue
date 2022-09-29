@@ -28,8 +28,8 @@
       </thead>
       <tbody>
         <tr v-for="(item, inc) in product_requests || []" :key="item">
-          <td v-if="item.Proche_sorovlar != null">{{ inc + 1 }}</td>
-          <td v-if="item.Proche_sorovlar != null">
+          <td v-if="item.Proche_sorovlar">{{ inc + 1 }}</td>
+          <td v-if="item.Proche_sorovlar">
             <span v-if="item.Proche_sorovlar.time">
               {{
                 new Date(item.Proche_sorovlar.time)
@@ -45,7 +45,7 @@
               }}
             </span>
           </td>
-          <td v-if="item.Proche_sorovlar != null">
+          <td v-if="item.Proche_sorovlar">
             <form
               @submit.prevent="
                 accept(item.Proche_sorovlar.id, true, item.Proche_sorovlar)
@@ -67,7 +67,7 @@
               <span v-else>{{ item.Proche_sorovlar.name }}</span>
             </form>
           </td>
-          <td v-if="item.Proche_sorovlar != null">
+          <td v-if="item.Proche_sorovlar">
             <input
               v-if="item.Proche_sorovlar.status == 'adminda_proche'"
               type="number"
@@ -86,7 +86,7 @@
               new Intl.NumberFormat().format(item.Proche_sorovlar.quantity)
             }}</span>
           </td>
-          <td v-if="item.Proche_sorovlar != null">
+          <td v-if="item.Proche_sorovlar">
             <input
               v-if="item.Proche_sorovlar.status == 'adminda_proche'"
               type="text"
@@ -104,7 +104,7 @@
               {{ item.Proche_sorovlar.olchov_birligi }}
             </span>
           </td>
-          <td v-if="item.Proche_sorovlar != null">
+          <td v-if="item.Proche_sorovlar">
             <textarea
               v-if="item.Proche_sorovlar.status == 'adminda_proche'"
               :form="`form${inc}`"
@@ -122,7 +122,7 @@
             </span>
           </td>
 
-          <td v-if="item.Proche_sorovlar != null">
+          <td v-if="item.Proche_sorovlar">
             <button
               class="btn btn-sm btn-success"
               :id="`accept_proche${item.Proche_sorovlar.id}`"
@@ -149,8 +149,8 @@
         </tr>
       </tbody>
     </table>
+    <Data_notfound v-if="product_requests == ''" />
   </div>
-  <Data_notfound v-if="product_requests == ''" />
 
   <nav
     aria-label="Page navigation example"

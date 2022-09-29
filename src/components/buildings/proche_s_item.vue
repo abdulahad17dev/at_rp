@@ -28,13 +28,19 @@
       </thead>
       <tbody>
         <tr v-for="(item, inc) in data || []" :key="item">
-          <td style="width: 10%">{{ inc + 1 }}</td>
-          <td style="width: 20%">{{ item.Proche_sorovlar.name }}</td>
-          <td style="width: 20%">
+          <td v-if="item.Proche_sorovlar" style="width: 10%">
+            {{ inc + 1 }}
+          </td>
+          <td v-if="item.Proche_sorovlar" style="width: 20%">
+            {{ item.Proche_sorovlar.name }}
+          </td>
+          <td v-if="item.Proche_sorovlar" style="width: 20%">
             {{ new Intl.NumberFormat().format(item.Proche_sorovlar.quantity) }}
           </td>
-          <td style="width: 20%">{{ item.Proche_sorovlar.olchov_birligi }}</td>
-          <td style="width: 20%">
+          <td v-if="item.Proche_sorovlar" style="width: 20%">
+            {{ item.Proche_sorovlar.olchov_birligi }}
+          </td>
+          <td v-if="item.Proche_sorovlar" style="width: 20%">
             {{
               new Date(item.Proche_sorovlar.time)
                 .toLocaleDateString("en-us", {
@@ -48,8 +54,10 @@
                 .slice(0, 16)
             }}
           </td>
-          <td style="width: 20%">{{ item.Proche_sorovlar.comment }}</td>
-          <td>
+          <td v-if="item.Proche_sorovlar" style="width: 20%">
+            {{ item.Proche_sorovlar.comment }}
+          </td>
+          <td v-if="item.Proche_sorovlar">
             <button
               v-if="item.Proche_sorovlar.status == 'adminda_proche'"
               class="btn btn-sm btn-danger"

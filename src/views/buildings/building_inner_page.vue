@@ -34,20 +34,6 @@
           Проче сўров
         </button>
       </li>
-      <li class="nav-item" role="presentation">
-        <button
-          class="btn btn-sm w-100 btn-light"
-          id="pills-contact-tab"
-          data-bs-toggle="pill"
-          data-bs-target="#pills-contact"
-          type="button"
-          role="tab"
-          aria-controls="pills-contact"
-          aria-selected="false"
-        >
-          Contact
-        </button>
-      </li>
     </ul>
     <div class="tab-content" id="pills-tabContent">
       <div
@@ -65,14 +51,6 @@
         aria-labelledby="pills-profile-tab"
       >
         <Proche_sorov_admin v-if="proche_sorov === true" />
-      </div>
-      <div
-        class="tab-pane fade"
-        id="pills-contact"
-        role="tabpanel"
-        aria-labelledby="pills-contact-tab"
-      >
-        ...
       </div>
     </div>
   </div>

@@ -348,11 +348,11 @@ table.smeta {
 }
 
 .table-responsive {
-  max-height: 65vh;
+  max-height: 67vh;
 }
 @media (max-width: 500px) {
   .table-responsive {
-    max-height: 100vh;
+    max-height: 90vh;
   }
 }
 </style>
