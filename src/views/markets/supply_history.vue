@@ -30,6 +30,7 @@
         role="tab"
         aria-controls="pills-profile"
         aria-selected="false"
+        @click="history_schot = true"
       >
         Счёт
       </button>
@@ -50,7 +51,7 @@
       role="tabpanel"
       aria-labelledby="pills-profile-tab"
     >
-      ...
+      <History_schot v-if="history_schot == true" />
     </div>
   </div>
 </template>
@@ -58,9 +59,10 @@
 <script>
 import Header_item from "@/components/header/header_item.vue";
 import History from "@/components/supply_history/history.vue";
+import History_schot from "@/components/supply_history/history_schot.vue";
 export default {
   name: "SupplyHistory",
-  components: { Header_item, History },
+  components: { Header_item, History, History_schot },
   data() {
     return {
       history: false,

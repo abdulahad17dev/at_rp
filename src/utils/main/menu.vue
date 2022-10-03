@@ -117,6 +117,12 @@ export default {
           role: ["prorap"],
         },
         {
+          to: "/supply_request",
+          icon: "fa-solid fa-box fa-2x",
+          title: "Сўровлар",
+          role: ["bugalter"],
+        },
+        {
           to: "/settings",
           icon: "fa-solid fa-screwdriver-wrench fa-2x",
           title: "Созламалар",

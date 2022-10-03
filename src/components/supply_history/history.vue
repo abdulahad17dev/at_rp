@@ -82,7 +82,7 @@
         </thead>
         <tbody>
           <tr v-for="(item, inc) in requests || []" :key="item">
-            <td v-if="item.Supplies">
+            <td>
               <input
                 class="form-check-input"
                 type="checkbox"
@@ -92,11 +92,11 @@
               />
               {{ inc + 1 }}
             </td>
-            <td v-if="item.Supplies">
+            <td>
               {{ new Intl.NumberFormat().format(item.Supplies.quantity) }}
             </td>
-            <td v-if="item.Supplies">{{ item.Supplies.olchov_birligi }}</td>
-            <td v-if="item.Supplies">
+            <td>{{ item.Supplies.olchov_birligi }}</td>
+            <td>
               {{
                 new Date(item.Supplies.time)
                   .toLocaleDateString("en-us", {
@@ -110,7 +110,7 @@
                   .slice(0, 16)
               }}
             </td>
-            <td v-if="item.Supplies">
+            <td>
               <div
                 class="input-group input-group-sm"
                 v-if="item.Supplies.paid_status == false"
@@ -127,7 +127,7 @@
               </div>
               <span v-else>{{ item.Supplies.price }} сўм</span>
             </td>
-            <td v-if="item.Supplies">
+            <td>
               <button
                 class="btn btn-sm btn-primary"
                 v-if="item.Supplies.paid_status == false && !checked.length"
@@ -348,7 +348,9 @@ export default {
         .then((res) => {
           res.data.data.forEach((element) => {
             if (element.Supplies.paid_status == false) {
-              let num = element.Supplies.price - element.sum_paid_money;
+              let num =
+                element.Supplies.quantity * element.Supplies.price -
+                element.sum_paid_money;
               element.total_price = num;
             }
           });

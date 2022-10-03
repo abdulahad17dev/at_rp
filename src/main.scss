@@ -109,3 +109,11 @@ button.active {
   background: #2c3e50 !important;
   color: #fff !important;
 }
+
+button[disabled],
+input[readonly],
+input[disabled] {
+  cursor: not-allowed;
+  pointer-events: all !important;
+  caret-color: red !important;
+}

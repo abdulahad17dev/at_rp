@@ -85,6 +85,7 @@
                   <option value="ish_yurituvchi">иш_юритувчи</option>
                   <option value="bazachi">базачи</option>
                   <option value="zakupshik">закупшик</option>
+                  <option value="operator">оператор</option>
                 </select>
               </div>
             </div>

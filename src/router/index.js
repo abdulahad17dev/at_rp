@@ -22,6 +22,7 @@ import wallets_history from "../views/wallets/wallets_money_history.vue";
 import markets from "../views/markets/markets.vue";
 import money_from_bugalter from "../views/transfer_history/money_from_bugalter.vue";
 import supply_history from "../views/markets/supply_history.vue";
+import supply_request from "../views/schot_request/supply_request.vue";
 import menu from "./../utils/main/menu.vue";
 import notfound from "./../utils/notfound/notfound.vue";
 import settings from "../views/settings/settings.vue";
@@ -325,6 +326,17 @@ let routes = [
       role: ["taminotchi"],
     },
     component: supply_history,
+  },
+  {
+    path: "/supply_request",
+    name: "supply_request",
+    meta: {
+      requiresAuth: true,
+      title: "Сўровлар",
+      icon: "fa-solid fa-box",
+      role: ["bugalter"],
+    },
+    component: supply_request,
   },
 ];
 

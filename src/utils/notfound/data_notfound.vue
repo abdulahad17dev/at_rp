@@ -1,9 +1,10 @@
 <template>
   <div id="notfound">
     <img
-      src="./../../assets/no-results.png"
-      width="180"
-      height="180"
+      class="mt-3"
+      src="./../../assets/not_found.png"
+      width="250"
+      height="250"
       alt="img_notfound"
     />
   </div>
