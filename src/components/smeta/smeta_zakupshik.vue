@@ -126,7 +126,6 @@
       <tbody>
         <tr v-for="(item, inc) in smeta" :key="item" class="product">
           <td
-            v-if="item.Smeta"
             class="td_grafik"
             data-bs-toggle="modal"
             data-bs-target="#smeta_grafik"
@@ -140,14 +139,14 @@
               ></i>
             </button>
           </td>
-          <td v-if="item.Smeta">{{ item.product_name }}</td>
-          <td v-if="item.Smeta">{{ item.product_olchov_birligi }}</td>
-          <td v-if="item.Smeta">{{ item.Smeta.norm }}</td>
-          <td v-if="item.Smeta">
+          <td>{{ item.product_name }}</td>
+          <td>{{ item.product_olchov_birligi }}</td>
+          <td>{{ item.Smeta.norm }}</td>
+          <td>
             {{ new Intl.NumberFormat().format(item.Smeta.quantity) }}
           </td>
-          <td v-if="item.Smeta"></td>
-          <td v-if="item.Smeta">
+          <td></td>
+          <td>
             <button
               class="btn btn-sm btn-success"
               @click="select_item(item.Smeta.id, item.product_name)"

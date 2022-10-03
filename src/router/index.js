@@ -21,6 +21,7 @@ import wallets from "../views/wallets/wallets.vue";
 import wallets_history from "../views/wallets/wallets_money_history.vue";
 import markets from "../views/markets/markets.vue";
 import money_from_bugalter from "../views/transfer_history/money_from_bugalter.vue";
+import supply_history from "../views/markets/supply_history.vue";
 import menu from "./../utils/main/menu.vue";
 import notfound from "./../utils/notfound/notfound.vue";
 import settings from "../views/settings/settings.vue";
@@ -313,6 +314,17 @@ let routes = [
       role: ["prorap"],
     },
     component: worker_types,
+  },
+  {
+    path: "/supply_history",
+    name: "supply_history",
+    meta: {
+      requiresAuth: true,
+      title: "Таминот тарихи",
+      icon: "fa-solid fa-clock-rotate-left",
+      role: ["taminotchi"],
+    },
+    component: supply_history,
   },
 ];
 

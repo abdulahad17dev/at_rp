@@ -187,7 +187,7 @@
               <td>{{ item.product_olchov_birligi }}</td>
               <td>{{ item.Smeta.norm }}</td>
               <td
-                :style="search2 ? '' : 'cursor: pointer; user-select: none'"
+                style="cursor: pointer; user-select: none"
                 @dblclick="sort_name(item.product_name)"
                 @click="show_quantity(inc)"
               >

@@ -171,19 +171,19 @@
           </thead>
           <tbody>
             <tr v-for="(item, inc) in product_requests" :key="item">
-              <td v-if="item.Proche_sorovlar">{{ inc + 1 }}</td>
-              <td v-if="item.Proche_sorovlar">
+              <td>{{ inc + 1 }}</td>
+              <td>
                 {{ item.Proche_sorovlar.name }}
               </td>
-              <td v-if="item.Proche_sorovlar">
+              <td>
                 {{
                   new Intl.NumberFormat().format(item.Proche_sorovlar.quantity)
                 }}
               </td>
-              <td v-if="item.Proche_sorovlar">
+              <td>
                 {{ item.Proche_sorovlar.olchov_birligi }}
               </td>
-              <td v-if="item.Proche_sorovlar">
+              <td>
                 {{
                   new Date(item.Proche_sorovlar.time)
                     .toLocaleDateString("en-us", {
@@ -197,10 +197,10 @@
                     .slice(0, 16)
                 }}
               </td>
-              <td v-if="item.Proche_sorovlar">
+              <td>
                 {{ item.Proche_sorovlar.comment }}
               </td>
-              <td v-if="item.Proche_sorovlar">
+              <td>
                 <button
                   class="btn btn-sm btn-success"
                   @click="

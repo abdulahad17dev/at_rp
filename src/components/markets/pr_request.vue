@@ -150,7 +150,10 @@
             <td>
               {{ item.Proche_sorovlar.name }}
             </td>
-            <td @dblclick="show_quantity(inc)" style="cursor: pointer">
+            <td
+              @click="show_quantity(inc)"
+              style="cursor: pointer; user-select: none"
+            >
               {{
                 new Intl.NumberFormat().format(item.Proche_sorovlar.quantity) +
                 " (олинган ҳажм: " +

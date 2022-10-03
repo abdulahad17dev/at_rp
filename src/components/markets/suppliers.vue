@@ -67,9 +67,12 @@
             >
               <i class="fa-solid fa-location-dot"></i>
             </a>
-            <button class="btn btn-sm btn-secondary">
+            <router-link
+              :to="{ name: 'supply_history', query: { id: item.id } }"
+              class="btn btn-sm btn-secondary"
+            >
               <i class="fa-solid fa-clock-rotate-left"></i>
-            </button>
+            </router-link>
           </td>
         </tr>
       </tbody>
@@ -113,8 +116,6 @@
           class="page-link"
           @click="page = pages - 1"
           :disabled="page == pages - 1"
-          data-bs-toggle="modal"
-          data-bs-target="#supplier_put"
         >
           <i class="fa-solid fa-angles-right text-dark"></i>
         </button>

@@ -278,12 +278,16 @@
       <div class="card shadow">
         <div class="card-header bg-white">
           <h5 class="card-title text-center mb-0">
-            <!-- <span :title="item.name" v-if="item.name.length > 30">
-              {{ item.name.slice(0, 20) }}
-            </span>
-            <span v-else> -->
-            {{ item.name }}
-            <!-- </span> -->
+            <span class="descinline"> {{ shorttext(item.name) }} </span>
+            <span class="descempty"> {{ item.name }} </span>
+            <span
+              class="text-primary"
+              style="cursor: pointer"
+              @click="toggler($event)"
+              v-if="item.name.length > 15"
+            >
+              яна</span
+            >
           </h5>
         </div>
         <div class="card-body text-center">
@@ -683,6 +687,26 @@ export default {
           document.getElementById("remove_document").disabled = false;
         });
     },
+    toggler(e) {
+      if (e.target.innerText == " яна") {
+        e.target.innerText = "ёпиш";
+        e.target.parentElement.children[0].className = "";
+        e.target.parentElement.children[0].className = "descempty";
+        e.target.parentElement.children[1].className = "";
+        e.target.parentElement.children[1].className = "descinline";
+      } else {
+        e.target.innerText = " яна";
+        e.target.parentElement.children[0].className = "descinline";
+        e.target.parentElement.children[1].className = "descempty";
+      }
+    },
+  },
+  computed: {
+    shorttext() {
+      return (v) => {
+        return v.substring(0, 15);
+      };
+    },
   },
   components: { Building_put, Foreman, Warehouseman, Building_documents },
 };
@@ -715,5 +739,13 @@ div.row_building {
 
 .modal-body {
   height: 85vh;
+}
+
+.descinline {
+  display: inline;
+}
+
+.descempty {
+  display: none;
 }
 </style>

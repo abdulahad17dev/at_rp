@@ -620,28 +620,107 @@ export function shot_request(
   status,
   paid_status,
   building_id,
+  type,
   from_time,
   to_time,
   page,
   limit
 ) {
-  if (from_time && to_time) {
+  if (from_time && to_time && status && paid_status) {
     return instance.get(
-      `get_supplies_by_b_a?market_id=${market_id}&status=${status}&paid_status=${paid_status}&building_id=${building_id}&from_time=${from_time}&to_time=${to_time}&page=${page}&limit=${limit}`
+      `get_supplies_by_b_a?market_id=${market_id}&status=${status}&paid_status=${paid_status}&building_id=${building_id}&type=${type}&from_time=${from_time}&to_time=${to_time}&page=${page}&limit=${limit}`
     );
-  } else if (paid_status) {
+  } else if (from_time && to_time && status && !paid_status) {
     return instance.get(
-      `get_supplies_by_b_a?market_id=${market_id}&status=${status}&paid_status=${paid_status}&building_id=${building_id}&page=${page}&limit=${limit}`
+      `get_supplies_by_b_a?market_id=${market_id}&status=${status}&building_id=${building_id}&type=${type}&from_time=${from_time}&to_time=${to_time}&page=${page}&limit=${limit}`
     );
-  } else if (status) {
+  } else if (from_time && to_time && !status && paid_status) {
     return instance.get(
-      `get_supplies_by_b_a?market_id=${market_id}&status=${status}&building_id=${building_id}&page=${page}&limit=${limit}`
+      `get_supplies_by_b_a?market_id=${market_id}&paid_status=${paid_status}&building_id=${building_id}&type=${type}&from_time=${from_time}&to_time=${to_time}&page=${page}&limit=${limit}`
     );
-  } else {
+  } else if (from_time && to_time && !status && !paid_status) {
     return instance.get(
-      `get_supplies_by_b_a?market_id=${market_id}&building_id=${building_id}&page=${page}&limit=${limit}`
+      `get_supplies_by_b_a?market_id=${market_id}&building_id=${building_id}&type=${type}&from_time=${from_time}&to_time=${to_time}&page=${page}&limit=${limit}`
+    );
+  } else if (!from_time && !to_time && status && paid_status) {
+    return instance.get(
+      `get_supplies_by_b_a?market_id=${market_id}&status=${status}&paid_status=${paid_status}&building_id=${building_id}&type=${type}&page=${page}&limit=${limit}`
+    );
+  } else if (!from_time && !to_time && !status && paid_status) {
+    return instance.get(
+      `get_supplies_by_b_a?market_id=${market_id}&paid_status=${paid_status}&building_id=${building_id}&type=${type}&page=${page}&limit=${limit}`
+    );
+  } else if (!from_time && !to_time && status && !paid_status) {
+    return instance.get(
+      `get_supplies_by_b_a?market_id=${market_id}&status=${status}&building_id=${building_id}&type=${type}&page=${page}&limit=${limit}`
+    );
+  } else if (!from_time && !to_time && !status && !paid_status) {
+    return instance.get(
+      `get_supplies_by_b_a?market_id=${market_id}&building_id=${building_id}&type=${type}&page=${page}&limit=${limit}`
     );
   }
+}
+
+export function get_supplies(
+  market_id,
+  status,
+  paid_status,
+  building_id,
+  type,
+  from_time,
+  to_time,
+  page,
+  limit
+) {
+  if (from_time && to_time && status && paid_status) {
+    return instance.get(
+      `get_supplies?market_id=${market_id}&status=${status}&paid_status=${paid_status}&building_id=${building_id}&type=${type}&from_time=${from_time}&to_time=${to_time}&page=${page}&limit=${limit}`
+    );
+  } else if (from_time && to_time && status && !paid_status) {
+    return instance.get(
+      `get_supplies?market_id=${market_id}&status=${status}&building_id=${building_id}&type=${type}&from_time=${from_time}&to_time=${to_time}&page=${page}&limit=${limit}`
+    );
+  } else if (from_time && to_time && !status && paid_status) {
+    return instance.get(
+      `get_supplies?market_id=${market_id}&paid_status=${paid_status}&building_id=${building_id}&type=${type}&from_time=${from_time}&to_time=${to_time}&page=${page}&limit=${limit}`
+    );
+  } else if (from_time && to_time && !status && !paid_status) {
+    return instance.get(
+      `get_supplies?market_id=${market_id}&building_id=${building_id}&type=${type}&from_time=${from_time}&to_time=${to_time}&page=${page}&limit=${limit}`
+    );
+  } else if (!from_time && !to_time && status && paid_status) {
+    return instance.get(
+      `get_supplies?market_id=${market_id}&status=${status}&paid_status=${paid_status}&building_id=${building_id}&type=${type}&page=${page}&limit=${limit}`
+    );
+  } else if (!from_time && !to_time && !status && paid_status) {
+    return instance.get(
+      `get_supplies?market_id=${market_id}&paid_status=${paid_status}&building_id=${building_id}&type=${type}&page=${page}&limit=${limit}`
+    );
+  } else if (!from_time && !to_time && status && !paid_status) {
+    return instance.get(
+      `get_supplies?market_id=${market_id}&status=${status}&building_id=${building_id}&type=${type}&page=${page}&limit=${limit}`
+    );
+  } else if (!from_time && !to_time && !status && !paid_status) {
+    return instance.get(
+      `get_supplies?market_id=${market_id}&building_id=${building_id}&type=${type}&page=${page}&limit=${limit}`
+    );
+  }
+}
+
+export function pay_for_supply(data) {
+  return instance.post(`pay_for_supply`, data);
+}
+
+export function pay_for_supply_by_b_a(data) {
+  return instance.post(`pay_for_supply_by_b_a`, data);
+}
+
+export function remove_supply(id) {
+  return instance.delete(`remove_supply/${id}`);
+}
+
+export function remove_supply_by_b_a(id) {
+  return instance.delete(`remove_supply_by_b_a/${id}`);
 }
 
 export function take_supply_b_a(data) {
