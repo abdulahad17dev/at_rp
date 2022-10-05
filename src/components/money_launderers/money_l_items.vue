@@ -22,7 +22,7 @@
               :href="`tel:+998${item.phone}`"
               class="text-decoration-none text-dark"
             >
-              +998 {{ item.phone }}</a
+              +998 {{ format_phone(tem.phone) }}</a
             >
           </td>
           <td>
@@ -63,6 +63,20 @@ export default {
   name: "MoneyLaundererItems",
   props: ["data"],
   emits: ["item", "get_l_id"],
+  methods: {
+    format_phone(number) {
+      return String(
+        "(" +
+          String(number).substr(0, 2) +
+          ") " +
+          String(number).substr(2, 3) +
+          " " +
+          String(number).substr(5, 2) +
+          " " +
+          String(number).substr(7, 2)
+      );
+    },
+  },
 };
 </script>
 

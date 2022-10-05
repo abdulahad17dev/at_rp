@@ -126,7 +126,7 @@
                   step="any"
                   class="form-control"
                   v-model="item.total_price"
-                  @change="valid($event, item)"
+                  @change="valid($event, item.Supplies_by_bank_account)"
                 />
                 <span class="input-group-text bg-white">сўм</span>
               </div>
@@ -139,9 +139,11 @@
                   item.Supplies_by_bank_account.paid_status == false &&
                   !checked.length
                 "
-                @click="pay(item)"
+                @click="get_item(item)"
                 id="pay_supply_d"
                 :luboy="'button' + item.Supplies_by_bank_account.id"
+                data-bs-toggle="modal"
+                data-bs-target="#pay_by_b_a"
               >
                 <i class="fa-solid fa-money-bill-transfer"></i>
               </button>
@@ -167,9 +169,11 @@
       <div class="col-12">
         <button
           class="btn btn-sm btn-outline-success w-100"
-          @click="pay(item)"
+          @click="get_item(item)"
           id="pay_supply_d"
           :disabled="disabled"
+          data-bs-toggle="modal"
+          data-bs-target="#pay_by_b_a"
         >
           <i class="fa-solid fa-circle-check"></i> тўлаш
         </button>
@@ -249,12 +253,186 @@
       </ul>
     </nav>
   </div>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="pay_by_b_a"
+    tabindex="-1"
+    aria-labelledby="pay_by_b_aLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="pay_by_b_aLabel">Пул тўлаш</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            id="pay_bank_close"
+          ></button>
+        </div>
+        <form @submit.prevent="pay">
+          <div class="modal-body">
+            <div class="row gap-2">
+              <div class="col-10 mx-auto">
+                <label for="from">Банк ҳисоб: </label>
+                <div class="dropdown">
+                  <button
+                    class="btn btn-light btn-sm dropdown-toggle"
+                    type="button"
+                    id="bank_account_text"
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                    aria-expanded="false"
+                    @click="
+                      bank_accounts.length
+                        ? ''
+                        : bank_accounts_get(
+                            page_account,
+                            limit_account,
+                            search_account
+                          )
+                    "
+                  >
+                    {{ text_account }}
+                  </button>
+                  <ul
+                    class="dropdown-menu border-top-0"
+                    aria-labelledby="bank_account"
+                  >
+                    <li>
+                      <input
+                        type="search"
+                        class="form-control form-control-sm"
+                        placeholder="қидириш ..."
+                        v-model="search_account"
+                      />
+                    </li>
+                    <li>
+                      <ul class="dropdown-items">
+                        <li
+                          v-for="item in bank_accounts"
+                          :key="item"
+                          @click="
+                            select(
+                              item.Bank_accounts.id,
+                              item.Bank_accounts.name
+                            )
+                          "
+                        >
+                          <a class="dropdown-item">{{
+                            item.Bank_accounts.name
+                          }}</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li v-if="bank_accounts != ''">
+                      <hr class="dropdown-divider m-0" />
+                    </li>
+                    <li>
+                      <nav
+                        aria-label="Page navigation example"
+                        class="mt-2"
+                        v-if="bank_accounts != ''"
+                      >
+                        <ul
+                          class="pagination pagination-sm justify-content-end"
+                        >
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link"
+                              @click="
+                                bank_accounts_get(
+                                  page_account,
+                                  limit_account,
+                                  search_account
+                                )
+                              "
+                            >
+                              <i class="fa-solid fa-rotate"></i>
+                            </button>
+                          </li>
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link"
+                              @click="page_account--"
+                              :disabled="page_account == 0"
+                            >
+                              <i class="fa-solid fa-angle-left text-dark"></i>
+                            </button>
+                          </li>
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link text-dark"
+                              disabled
+                            >
+                              {{ page_account + 1 }}
+                            </button>
+                          </li>
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link"
+                              @click="page_account++"
+                              :disabled="page_account == pages_account - 1"
+                            >
+                              <i class="fa-solid fa-angle-right text-dark"></i>
+                            </button>
+                          </li>
+                        </ul>
+                      </nav>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-10 mx-auto">
+                <label for="comment">Изох: </label>
+                <textarea
+                  id="comment"
+                  class="form-control form-control-sm"
+                  v-model="body.comment"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="submit"
+              class="btn btn-outline-primary btn-sm"
+              id="pay_bank_account_d"
+              :disabled="!body.from_ || !body.comment"
+            >
+              <i class="fa-solid fa-circle-check"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-danger btn-sm"
+              data-bs-dismiss="modal"
+            >
+              <i class="fa-solid fa-circle-xmark"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import Header_item from "@/components/header/header_item.vue";
-import { shot_request } from "@/utils/request/request";
-import { catchError } from "@/utils/request/handle_api_err";
+import {
+  bank_account_get,
+  pay_for_supply_by_b_a,
+  remove_supply_by_b_a,
+  shot_request,
+} from "@/utils/request/request";
+import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 export default {
   name: "SupplyRequest",
@@ -262,7 +440,7 @@ export default {
     return {
       requests: [],
       pages: null,
-      market_id: 27,
+      market_id: 0,
       status: "",
       paid_status: "false",
       building_id: 0,
@@ -281,7 +459,84 @@ export default {
         comment: "",
       },
       disabled: false,
+      page_account: 0,
+      pages_account: null,
+      limit_account: 25,
+      search_account: "",
+      text_account: "ҳисоб рақамлар",
+      bank_accounts: [],
     };
+  },
+  watch: {
+    type(e) {
+      this.page = 0;
+      this.get_supply(
+        this.market_id,
+        this.status,
+        this.paid_status,
+        this.building_id,
+        e,
+        this.from_time,
+        this.to_time,
+        this.page,
+        this.limit
+      );
+    },
+    status(e) {
+      this.paid_status = "";
+      this.page = 0;
+      this.get_supply(
+        this.market_id,
+        e,
+        this.paid_status,
+        this.building_id,
+        this.type,
+        this.from_time,
+        this.to_time,
+        this.page,
+        this.limit
+      );
+    },
+    paid_status(e) {
+      this.status = "";
+      this.page = 0;
+      this.get_supply(
+        this.market_id,
+        this.status,
+        e,
+        this.building_id,
+        this.type,
+        this.from_time,
+        this.to_time,
+        this.page,
+        this.limit
+      );
+    },
+    limit_account(e) {
+      this.page_account = 0;
+      this.bank_accounts_get(this.page_account, e, this.search_account);
+    },
+    page_account(e) {
+      this.bank_accounts_get(e, this.limit_account, this.search_account);
+      document.getElementById("scroll").scrollTop = 0;
+    },
+    search_account(e) {
+      this.page_account = 0;
+      if (e.length > 0) {
+        this.bank_accounts_get(
+          this.page_account,
+          this.limit_account,
+          this.search_account
+        );
+      } else if (e.length == 0) {
+        this.bank_accounts_get(
+          this.page_account,
+          this.limit_account,
+          this.search_account
+        );
+        this.page_account = 0;
+      }
+    },
   },
   methods: {
     get_supply(
@@ -356,32 +611,149 @@ export default {
       );
       this.page = 0;
     },
+    get_item(e) {
+      this.text_account = "ҳисоб рақамлар";
+      this.body = {
+        money: null,
+        from_: null,
+        to_: null,
+        for_: null,
+        comment: "",
+      };
+
+      if (this.checked.length) {
+        var total_price = 0;
+        this.checked.forEach((element) => {
+          total_price += element.Supplies_by_bank_account.price;
+        });
+        this.total_price = total_price;
+      } else {
+        this.body.for_ = e.Supplies_by_bank_account.id;
+        this.body.money = e.total_price;
+        this.body.to_ = e.Supplies_by_bank_account.market_id;
+      }
+    },
+    pay() {
+      let array = [];
+      var arr = this.checked.map((el) => ({
+        money: el.total_price,
+        from_: this.body.from_,
+        to_: el.Supplies_by_bank_account.market_id,
+        for_: el.Supplies_by_bank_account.id,
+        comment: this.body.comment,
+      }));
+
+      array = arr;
+
+      document.getElementById("pay_bank_account_d").disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      pay_for_supply_by_b_a(this.checked.length ? array : Array(this.body))
+        .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("pay_bank_close").click();
+          document.getElementById("pay_bank_account_d").disabled = false;
+          success(res).then(() => {
+            this.get_supply(
+              this.market_id,
+              this.status,
+              this.paid_status,
+              this.building_id,
+              this.type,
+              this.from_time,
+              this.to_time,
+              this.page,
+              this.limit
+            );
+
+            this.body = {
+              money: null,
+              from_: null,
+              to_: null,
+              for_: null,
+              comment: "",
+            };
+            this.checked = [];
+            this.text_account = "ҳисоб рақамлар";
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("pay_bank_account_d").disabled = false;
+        });
+    },
     valid(e, item) {
       if (e.target.value <= 0) {
         document
-          .querySelector(`[luboy="input${item.Supplies.id}"]`)
+          .querySelector(`[luboy="input${item.id}"]`)
           .classList.add("error");
 
-        document.querySelector(`[luboy="button${item.Supplies.id}"]`)
+        document.querySelector(`[luboy="button${item.id}"]`)
           ? document
-              .querySelector(`[luboy="button${item.Supplies.id}"]`)
+              .querySelector(`[luboy="button${item.id}"]`)
               .setAttribute("disabled", "true")
           : false;
 
         this.disabled = true;
       } else {
         document
-          .querySelector(`[luboy="input${item.Supplies.id}"]`)
+          .querySelector(`[luboy="input${item.id}"]`)
           .classList.remove("error");
 
-        document.querySelector(`[luboy="button${item.Supplies.id}"]`)
+        document.querySelector(`[luboy="button${item.id}"]`)
           ? document
-              .querySelector(`[luboy="button${item.Supplies.id}"]`)
+              .querySelector(`[luboy="button${item.id}"]`)
               .removeAttribute("disabled")
           : false;
 
         this.disabled = false;
       }
+    },
+    remove(e) {
+      document.getElementById("remove_supply").disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      remove_supply_by_b_a(e)
+        .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("remove_supply").disabled = false;
+          success(res).then(() => {
+            this.get_supply(
+              this.market_id,
+              this.status,
+              this.paid_status,
+              this.building_id,
+              this.type,
+              this.from_time,
+              this.to_time,
+              this.page,
+              this.limit
+            );
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("remove_supply").disabled = false;
+        });
+    },
+    bank_accounts_get(page_account, limit_account, search_account) {
+      this.$store.dispatch("setLoading", { isLoading: true });
+
+      bank_account_get(page_account, limit_account, search_account)
+        .then((res) => {
+          this.bank_accounts = res.data.data;
+          this.pages_account = res.data.pages;
+          this.$store.dispatch("setLoading", { isLoading: false });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        });
+    },
+    select(id, name) {
+      this.body.from_ = id;
+      this.text_account = name;
+      document.getElementById("bank_account_text").click();
     },
   },
   created() {

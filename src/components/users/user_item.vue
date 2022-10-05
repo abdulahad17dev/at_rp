@@ -20,7 +20,7 @@
               :href="`tel:+998${item.phone}`"
               class="text-decoration-none text-dark"
             >
-              +998 {{ item.phone }}</a
+              +998 {{ format_phone(item.phone) }}</a
             >
           </td>
           <td>{{ item.role }}</td>
@@ -93,6 +93,18 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("user_disabled_put").disabled = false;
         });
+    },
+    format_phone(number) {
+      return String(
+        "(" +
+          String(number).substr(0, 2) +
+          ") " +
+          String(number).substr(2, 3) +
+          " " +
+          String(number).substr(5, 2) +
+          " " +
+          String(number).substr(7, 2)
+      );
     },
   },
 };
