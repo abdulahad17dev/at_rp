@@ -23,6 +23,7 @@ import markets from "../views/markets/markets.vue";
 import money_from_bugalter from "../views/transfer_history/money_from_bugalter.vue";
 import supply_history from "../views/markets/supply_history.vue";
 import supply_request from "../views/schot_request/supply_request.vue";
+import supply_accept from "../views/markets/supply_in_warehouse.vue";
 import menu from "./../utils/main/menu.vue";
 import notfound from "./../utils/notfound/notfound.vue";
 import settings from "../views/settings/settings.vue";
@@ -337,6 +338,17 @@ let routes = [
       role: ["bugalter"],
     },
     component: supply_request,
+  },
+  {
+    path: "/supply_accept",
+    name: "supply_accept",
+    meta: {
+      requiresAuth: true,
+      title: "Сўровлар",
+      icon: "fa-solid fa-box",
+      role: ["omborchi"],
+    },
+    component: supply_accept,
   },
 ];
 

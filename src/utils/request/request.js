@@ -551,6 +551,14 @@ export function proche_s_put(p_s_id, status, t_id, data) {
   );
 }
 
+export function accept_supply(data) {
+  return instance.put(`supply_acceptance`, data);
+}
+
+export function remove_supply_w(id) {
+  return instance.put(`supply_return/${id}`);
+}
+
 // wallets
 
 export function wallets_get(page, limit, search) {

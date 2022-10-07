@@ -123,6 +123,12 @@ export default {
           role: ["bugalter"],
         },
         {
+          to: "/supply_accept",
+          icon: "fa-solid fa-box fa-2x",
+          title: "Сўровлар",
+          role: ["omborchi"],
+        },
+        {
           to: "/settings",
           icon: "fa-solid fa-screwdriver-wrench fa-2x",
           title: "Созламалар",

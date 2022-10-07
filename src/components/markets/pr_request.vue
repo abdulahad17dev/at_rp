@@ -289,17 +289,22 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
-                <label for="quantity"> Ҳажм: </label>
-                <input
-                  type="number"
-                  id="quantity"
-                  step="any"
-                  class="form-control form-control-sm"
-                  v-model="body.quantity"
-                  placeholder="Ҳажм"
-                  min="1"
-                  required
-                />
+                <label for="quantity"> Ҳажм: ({{ proche_quantity }})</label>
+                <div class="input-group input-group-sm">
+                  <input
+                    type="number"
+                    id="quantity"
+                    step="any"
+                    class="form-control"
+                    v-model="body.quantity"
+                    placeholder="Ҳажм"
+                    min="1"
+                    required
+                  />
+                  <span class="input-group-text bg-white">{{
+                    proche_olchov_birligi
+                  }}</span>
+                </div>
               </div>
               <div class="col-10 mx-auto">
                 <label for="price">
@@ -417,6 +422,8 @@ export default {
       buildings: [],
       text_building: "объектлар",
       proche_name: "",
+      proche_olchov_birligi: "",
+      proche_quantity: "",
       body: {
         related_id: null,
         product_composition: "",
@@ -565,6 +572,8 @@ export default {
 
       navigator.geolocation.getCurrentPosition(success, error);
       this.proche_name = e.name;
+      this.proche_olchov_birligi = e.olchov_birligi;
+      this.proche_quantity = e.quantity;
       this.body.building_id = e.building_id;
       this.body.related_id = e.id;
     },

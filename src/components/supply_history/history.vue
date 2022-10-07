@@ -73,6 +73,7 @@
               />
               №
             </th>
+            <th style="width: 15%">Махсулот</th>
             <th style="width: 15%">Ҳажм</th>
             <th style="width: 15%">Ўлчов бирлиги</th>
             <th style="width: 15%">Сана</th>
@@ -92,6 +93,7 @@
               />
               {{ inc + 1 }}
             </td>
+            <td>{{ item.product }}</td>
             <td>
               {{ new Intl.NumberFormat().format(item.Supplies.quantity) }}
             </td>
@@ -256,7 +258,7 @@ export default {
       pages: null,
       market_id: this.$route.query.id,
       status: "",
-      paid_status: "false",
+      paid_status: "",
       building_id: 0,
       type: "proche",
       from_time: "",

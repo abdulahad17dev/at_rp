@@ -8,9 +8,9 @@
           id="pills-tab2"
           role="tablist"
         >
-          <li class="nav-item" role="presentation">
+          <li class="nav-item d-flex" role="presentation">
             <button
-              class="btn btn-sm btn-light w-100 shadow-sm active"
+              class="btn btn-sm btn-light w-100 shadow-sm rounded-start active"
               id="pills-home-ps-tab"
               data-bs-toggle="pill"
               data-bs-target="#pills-home-ps"
@@ -18,14 +18,33 @@
               role="tab"
               aria-controls="pills-home-ps"
               aria-selected="true"
-              @click="proche = true"
+              @click="
+                proche = true;
+                proche_history = false;
+              "
             >
               Проче сўров
             </button>
-          </li>
-          <li class="nav-item" role="presentation">
             <button
-              class="btn btn-sm btn-light w-100 shadow-sm"
+              class="btn btn-sm btn-light rounded-end"
+              id="pills-home-ps-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-home-ps"
+              type="button"
+              role="tab"
+              aria-controls="pills-home-ps"
+              aria-selected="true"
+              @click="
+                proche_history = true;
+                proche = false;
+              "
+            >
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </button>
+          </li>
+          <li class="nav-item d-flex" role="presentation">
+            <button
+              class="btn btn-sm btn-light w-100 shadow-sm rounded-start"
               id="pills-profile-smeta-tab"
               data-bs-toggle="pill"
               data-bs-target="#pills-profile-smeta"
@@ -33,14 +52,33 @@
               role="tab"
               aria-controls="pills-profile-smeta"
               aria-selected="false"
-              @click="smeta = true"
+              @click="
+                smeta = true;
+                smeta_history = false;
+              "
             >
               Смета
             </button>
-          </li>
-          <li class="nav-item" role="presentation">
             <button
-              class="btn btn-sm btn-light w-100 shadow-sm"
+              class="btn btn-sm btn-light rounded-end"
+              id="pills-profile-smeta-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-profile-smeta"
+              type="button"
+              role="tab"
+              aria-controls="pills-profile-smeta"
+              aria-selected="false"
+              @click="
+                smeta_history = true;
+                smeta = false;
+              "
+            >
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </button>
+          </li>
+          <li class="nav-item d-flex" role="presentation">
+            <button
+              class="btn btn-sm btn-light w-100 shadow-sm rounded-start"
               id="pills-contact-shot-tab"
               data-bs-toggle="pill"
               data-bs-target="#pills-contact-shot"
@@ -48,9 +86,28 @@
               role="tab"
               aria-controls="pills-contact-shot"
               aria-selected="false"
-              @click="contact = true"
+              @click="
+                contact = true;
+                contact_history = false;
+              "
             >
               Счёт
+            </button>
+            <button
+              class="btn btn-sm btn-light rounded-end"
+              id="pills-contact-shot-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-contact-shot"
+              type="button"
+              role="tab"
+              aria-controls="pills-contact-shot"
+              aria-selected="false"
+              @click="
+                contact_history = true;
+                contact = false;
+              "
+            >
+              <i class="fa-solid fa-clock-rotate-left"></i>
             </button>
           </li>
         </ul>
@@ -64,7 +121,8 @@
       role="tabpanel"
       aria-labelledby="pills-home-ps-tab"
     >
-      <Pr_request v-if="proche == true" />
+      <Pr_request v-if="proche == true && proche_history == false" />
+      <Proche_history v-if="proche == false && proche_history == true" />
     </div>
     <div
       class="tab-pane fade"
@@ -72,7 +130,8 @@
       role="tabpanel"
       aria-labelledby="pills-profile-smeta-tab"
     >
-      <Sm_request v-if="smeta == true" />
+      <Sm_request v-if="smeta == true && smeta_history == false" />
+      <Smeta_history v-if="smeta == false && smeta_history == true" />
     </div>
     <div
       class="tab-pane fade"
@@ -80,7 +139,8 @@
       role="tabpanel"
       aria-labelledby="pills-contact-shot-tab"
     >
-      <Sch_request v-if="contact == true" />
+      <Sch_request v-if="contact == true && contact_history == false" />
+      <Shot_history v-if="contact == false && contact_history == true" />
     </div>
   </div>
 </template>
@@ -89,16 +149,29 @@
 import Pr_request from "./pr_request.vue";
 import Sm_request from "./sm_request.vue";
 import Sch_request from "./sch_request.vue";
+import Proche_history from "./proche_history.vue";
+import Smeta_history from "./smeta_history.vue";
+import Shot_history from "./shot_history.vue";
 export default {
   name: "MarketIner",
   data() {
     return {
       proche: true,
+      proche_history: false,
       smeta: false,
+      smeta_history: false,
       contact: false,
+      contact_history: false,
     };
   },
-  components: { Pr_request, Sm_request, Sch_request },
+  components: {
+    Pr_request,
+    Sm_request,
+    Sch_request,
+    Proche_history,
+    Smeta_history,
+    Shot_history,
+  },
 };
 </script>
 

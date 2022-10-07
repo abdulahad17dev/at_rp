@@ -65,6 +65,7 @@
         <thead class="">
           <tr>
             <th style="width: 10%">№</th>
+            <th style="width: 15%">Махсулот</th>
             <th style="width: 15%">Ҳажм</th>
             <th style="width: 15%">Ўлчов бирлиги</th>
             <th style="width: 15%">Сана</th>
@@ -76,6 +77,7 @@
             <td>
               {{ inc + 1 }}
             </td>
+            <td>{{ item.product }}</td>
             <td>
               {{
                 new Intl.NumberFormat().format(
@@ -194,7 +196,7 @@ export default {
       pages: null,
       market_id: this.$route.query.id,
       status: "",
-      paid_status: "false",
+      paid_status: "",
       building_id: 0,
       type: "proche",
       from_time: "",

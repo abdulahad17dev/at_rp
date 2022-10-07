@@ -74,6 +74,7 @@
               />
               №
             </th>
+            <th style="width: 15%">Махсулот</th>
             <th style="width: 15%">Ҳажм</th>
             <th style="width: 15%">Ўлчов бирлиги</th>
             <th style="width: 15%">Сана</th>
@@ -93,6 +94,7 @@
               />
               {{ inc + 1 }}
             </td>
+            <td>{{ item.product }}</td>
             <td>
               {{
                 new Intl.NumberFormat().format(
@@ -130,7 +132,9 @@
                 />
                 <span class="input-group-text bg-white">сўм</span>
               </div>
-              <span v-else>{{ item.Supplies_by_bank_account.price }} сўм</span>
+              <span v-else
+                >{{ item.Supplies_by_bank_account.total_price }} сўм</span
+              >
             </td>
             <td>
               <button
@@ -442,7 +446,7 @@ export default {
       pages: null,
       market_id: 0,
       status: "",
-      paid_status: "false",
+      paid_status: "",
       building_id: 0,
       type: "proche",
       from_time: "",

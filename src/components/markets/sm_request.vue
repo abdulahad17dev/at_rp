@@ -519,16 +519,21 @@
                     Ҳажм:
                     <b class="text-primary"> {{ total_quantity }} </b></label
                   >
-                  <input
-                    type="number"
-                    id="quantity"
-                    class="form-control form-control-sm"
-                    v-model="body.quantity"
-                    placeholder="Ҳажм"
-                    step="any"
-                    min="1"
-                    required
-                  />
+                  <div class="input-group input-group-sm">
+                    <input
+                      type="number"
+                      id="quantity"
+                      class="form-control"
+                      v-model="body.quantity"
+                      placeholder="Ҳажм"
+                      step="any"
+                      min="1"
+                      required
+                    />
+                    <span class="input-group-text bg-white">{{
+                      smeta_olchov_birligi
+                    }}</span>
+                  </div>
                 </div>
                 <div class="col-10 mx-auto">
                   <label for="price">
@@ -798,6 +803,7 @@ export default {
         building_id: null,
       },
       smeta_name: "",
+      smeta_olchov_birligi: "",
       remove_check: false,
       checked: [],
       total_quantity: null,
@@ -977,8 +983,11 @@ export default {
           total_quantity += element.Smeta.quantity;
         });
         this.total_quantity = total_quantity;
+        this.smeta_olchov_birligi = this.checked[0].product_olchov_birligi;
       } else {
         this.smeta_name = e.product_name;
+        this.smeta_olchov_birligi = e.product_olchov_birligi;
+        this.total_quantity = e.Smeta.quantity;
         this.body.building_id = e.Smeta.building_id;
         this.body.related_id = e.Smeta.id;
       }

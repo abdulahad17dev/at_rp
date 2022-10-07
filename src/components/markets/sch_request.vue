@@ -5,6 +5,7 @@
         <thead class="">
           <tr>
             <th style="width: 7%">№</th>
+            <th style="width: 15%">Махсулот</th>
             <th style="width: 15%">Ҳажм</th>
             <th style="width: 15%">Ўлчов бирлиги</th>
             <th style="width: 15%">Сана</th>
@@ -15,6 +16,7 @@
         <tbody>
           <tr v-for="(item, inc) in shot_requests || []" :key="item">
             <td>{{ inc + 1 }}</td>
+            <td>{{ item.product }}</td>
             <td>
               {{
                 new Intl.NumberFormat().format(
@@ -154,7 +156,7 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
-                <label for="quantity"> Ҳажм: </label>
+                <label for="quantity"> Ҳажм: ({{ quantity }})</label>
                 <input
                   type="number"
                   id="quantity"
@@ -226,6 +228,7 @@ export default {
         map_lat: "",
         building_id: 0,
       },
+      quantity: "",
     };
   },
   watch: {
@@ -319,6 +322,7 @@ export default {
       };
 
       navigator.geolocation.getCurrentPosition(success, error);
+      this.quantity = e.quantity;
     },
     take() {
       document.getElementById("supply_disabled_shot").disabled = true;
