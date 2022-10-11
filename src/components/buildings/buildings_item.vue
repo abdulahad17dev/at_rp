@@ -17,13 +17,13 @@
           <td>{{ inc + 1 }}</td>
           <td>
             <p style="min-width: 250px; width: 250px">
-              {{ item.Buildings.name }}
+              {{ item.name }}
             </p>
           </td>
-          <td>{{ item.Buildings.address }}</td>
+          <td>{{ item.address }}</td>
           <td>
             {{
-              new Date(item.Buildings.start_date)
+              new Date(item.start_date)
                 .toLocaleDateString("en-us", {
                   year: "numeric",
                   month: "numeric",
@@ -37,7 +37,7 @@
           </td>
           <td>
             {{
-              new Date(item.Buildings.end_date)
+              new Date(item.end_date)
                 .toLocaleDateString("en-us", {
                   year: "numeric",
                   month: "numeric",
@@ -52,17 +52,17 @@
           <td>
             <span
               class="badge rounded-pill bg-warning"
-              v-if="item.Buildings.status == 'wait'"
+              v-if="item.status == 'wait'"
               >кутилмоқда</span
             >
             <span
               class="badge rounded-pill bg-primary"
-              v-else-if="item.Buildings.status == 'start'"
+              v-else-if="item.status == 'start'"
               >қурилмоқда</span
             >
             <span
               class="badge rounded-pill bg-success"
-              v-else-if="item.Buildings.status == 'end'"
+              v-else-if="item.status == 'end'"
               >якунланди</span
             >
           </td>
@@ -72,14 +72,14 @@
               data-bs-toggle="modal"
               data-bs-target="#building_put"
               @click="items(item.building)"
-              v-if="item.Buildings.status == 'wait' && role == 'pto'"
+              v-if="item.status == 'wait' && role == 'pto'"
             >
               <i class="fa fa-edit text-white"></i>
             </button>
 
             <button
               class="btn btn-sm btn-success mx-1"
-              v-else-if="item.Buildings.status == 'start' && role == 'pto'"
+              v-else-if="item.status == 'start' && role == 'pto'"
               @click="finish(item.building)"
             >
               <i class="fa-solid fa-flag-checkered"></i>
@@ -88,14 +88,14 @@
               class="btn btn-sm btn-primary mx-1"
               data-bs-toggle="modal"
               data-bs-target="#foremans_warehousemans"
-              @click="select_id(item.Buildings.id)"
+              @click="select_id(item.id)"
               v-if="role == 'admin' || role == 'pto'"
             >
               <i class="fa-solid fa-users"></i>
             </button>
             <a
               target="_blank"
-              :href="`https://www.google.com/maps/@${item.Buildings.map_lat},${item.Buildings.map_long},8z`"
+              :href="`https://www.google.com/maps/@${item.map_lat},${item.map_long},8z`"
               class="btn btn-sm btn-primary mx-1"
             >
               <i class="fa-solid fa-location-dot"></i>
@@ -103,17 +103,17 @@
             <router-link
               :to="{
                 name: 'smeta',
-                query: { id: item.Buildings.id, name: item.Buildings.id },
+                query: { id: item.id, name: item.id },
               }"
               class="btn btn-sm btn-primary mx-1"
             >
               <i class="fa-solid fa-right-long"></i>
             </router-link>
             <router-link
-              v-if="item.Buildings.status == 'start'"
+              v-if="item.status == 'start'"
               :to="{
                 name: 'proche_sorovlar',
-                query: { id: item.Buildings.id },
+                query: { id: item.id },
               }"
               class="btn btn-sm btn-primary mx-1"
             >
@@ -121,13 +121,13 @@
             </router-link>
             <button
               class="btn btn-sm btn-primary mx-1 d-block mt-1"
-              v-if="item.Buildings.status == 'wait' && role == 'pto'"
+              v-if="item.status == 'wait' && role == 'pto'"
               @click="start(item.building)"
             >
               бошлаш
             </button>
             <router-link
-              :to="{ name: 'workers', query: { id: item.Buildings.id } }"
+              :to="{ name: 'workers', query: { id: item.id } }"
               class="btn btn-sm btn-primary mx-1"
               v-if="role == 'prorap'"
             >
