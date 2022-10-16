@@ -333,7 +333,7 @@ let routes = [
     name: "supply_request",
     meta: {
       requiresAuth: true,
-      title: "Сўровлар",
+      title: "Омбордаги материаллар",
       icon: "fa-solid fa-box",
       role: ["bugalter"],
     },
@@ -344,7 +344,7 @@ let routes = [
     name: "supply_accept",
     meta: {
       requiresAuth: true,
-      title: "Сўровлар",
+      title: "Омбордаги материаллар",
       icon: "fa-solid fa-box",
       role: ["omborchi"],
     },

@@ -221,7 +221,9 @@
           <button
             type="button"
             class="page-link"
-            @click="get_proche_s(page, limit, building_id, status, search)"
+            @click="
+              get_proche_s(page, limit, building_id, status, user_id, search)
+            "
           >
             <i class="fa-solid fa-rotate"></i>
           </button>
@@ -413,6 +415,7 @@ export default {
       pages: null,
       product_requests: [],
       building_id: 0,
+      user_id: 0,
       search: "",
       status: "taminotchida_proche",
       page_building: 0,
@@ -447,6 +450,7 @@ export default {
         e,
         this.building_id,
         this.status,
+        this.user_id,
         this.search
       );
     },
@@ -456,6 +460,7 @@ export default {
         this.limit,
         this.building_id,
         this.status,
+        this.user_id,
         this.search
       );
       document.getElementById("scroll").scrollTop = 0;
@@ -468,6 +473,7 @@ export default {
           this.limit,
           this.building_id,
           this.status,
+          this.user_id,
           this.search
         );
       } else if (e.length == 0) {
@@ -476,6 +482,7 @@ export default {
           this.limit,
           this.building_id,
           this.status,
+          this.user_id,
           this.search
         );
         this.page = 0;
@@ -483,7 +490,14 @@ export default {
     },
     building_id(e) {
       this.page = 0;
-      this.get_proche_s(this.page, this.limit, e, this.status, this.search);
+      this.get_proche_s(
+        this.page,
+        this.limit,
+        e,
+        this.status,
+        this.user_id,
+        this.search
+      );
     },
     limit_building(e) {
       this.page_building = 0;
@@ -512,10 +526,10 @@ export default {
     },
   },
   methods: {
-    get_proche_s(page, limit, building_id, status, search) {
+    get_proche_s(page, limit, building_id, status, user_id, search) {
       this.$store.dispatch("setLoading", { isLoading: true });
 
-      proche_s_get(page, limit, building_id, status, search)
+      proche_s_get(page, limit, building_id, status, user_id, search)
         .then((res) => {
           this.product_requests = res.data.data;
           this.pages = res.data.pages;
@@ -597,6 +611,7 @@ export default {
               this.limit,
               this.building_id,
               this.status,
+              this.user_id,
               this.search
             );
             this.body = {
@@ -635,6 +650,7 @@ export default {
       this.limit,
       this.building_id,
       this.status,
+      this.user_id,
       this.search
     );
   },

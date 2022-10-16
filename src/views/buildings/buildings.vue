@@ -1,5 +1,5 @@
 <template>
-  <Header_item />
+  <Header_item :data="buildings" />
 
   <div class="row">
     <div class="col mt-1 d-flex align-items-center">

@@ -266,7 +266,9 @@
             <button
               type="button"
               class="page-link"
-              @click="get_smeta(page, limit, search, status, building_id)"
+              @click="
+                get_smeta(page, limit, search, status, building_id, user_id)
+              "
             >
               <i class="fa-solid fa-rotate"></i>
             </button>
@@ -780,6 +782,7 @@ export default {
       search: "",
       search2: "",
       building_id: 0,
+      user_id: 0,
       status: "wait",
       item: {},
       product_name: "",
@@ -826,40 +829,96 @@ export default {
   watch: {
     limit(e) {
       this.page = 0;
-      this.get_smeta(this.page, e, this.search, this.status, this.building_id);
+      this.get_smeta(
+        this.page,
+        e,
+        this.search,
+        this.status,
+        this.building_id,
+        this.user_id
+      );
     },
     page(e) {
-      this.get_smeta(e, this.limit, this.search, this.status, this.building_id);
+      this.get_smeta(
+        e,
+        this.limit,
+        this.search,
+        this.status,
+        this.building_id,
+        this.user_id
+      );
       document.getElementById("scroll").scrollTop = 0;
     },
     search(e) {
       this.page = 0;
       if (e.length > 0) {
-        this.get_smeta(this.page, this.limit, e, this.status, this.building_id);
+        this.get_smeta(
+          this.page,
+          this.limit,
+          e,
+          this.status,
+          this.building_id,
+          this.user_id
+        );
       } else if (e.length == 0) {
         this.remove_check = false;
-        this.get_smeta(this.page, this.limit, e, this.status, this.building_id);
+        this.get_smeta(
+          this.page,
+          this.limit,
+          e,
+          this.status,
+          this.building_id,
+          this.user_id
+        );
         this.page = 0;
       }
     },
     search2(e) {
       this.page = 0;
       if (e.length > 0) {
-        this.get_smeta(this.page, this.limit, e, this.status, this.building_id);
+        this.get_smeta(
+          this.page,
+          this.limit,
+          e,
+          this.status,
+          this.building_id,
+          this.user_id
+        );
       } else if (e.length == 0) {
         this.remove_check = false;
-        this.get_smeta(this.page, this.limit, e, this.status, this.building_id);
+        this.get_smeta(
+          this.page,
+          this.limit,
+          e,
+          this.status,
+          this.building_id,
+          this.user_id
+        );
         this.page = 0;
       }
     },
     status(e) {
       this.page = 0;
-      this.get_smeta(this.page, this.limit, this.search, e, this.building_id);
+      this.get_smeta(
+        this.page,
+        this.limit,
+        this.search,
+        e,
+        this.building_id,
+        this.user_id
+      );
       document.getElementById("scroll").scrollTop = 0;
     },
     building_id(e) {
       this.page = 0;
-      this.get_smeta(this.page, this.limit, this.search, this.status, e);
+      this.get_smeta(
+        this.page,
+        this.limit,
+        this.search,
+        this.status,
+        e,
+        this.user_id
+      );
       document.getElementById("scroll").scrollTop = 0;
     },
     limit_building(e) {
@@ -889,9 +948,9 @@ export default {
     },
   },
   methods: {
-    get_smeta(page, limit, search, status, building_id) {
+    get_smeta(page, limit, search, status, building_id, user_id) {
       this.$store.dispatch("setLoading", { isLoading: true });
-      smeta_request_get(page, limit, search, status, building_id)
+      smeta_request_get(page, limit, search, status, building_id, user_id)
         .then((res) => {
           this.smeta = res.data.data;
           this.pages = res.data.pages;
@@ -1028,7 +1087,8 @@ export default {
               this.limit,
               this.search,
               this.status,
-              this.building_id
+              this.building_id,
+              this.user_id
             );
             this.search2 = "";
             this.body = {
@@ -1083,7 +1143,8 @@ export default {
               this.limit,
               this.search,
               this.status,
-              this.building_id
+              this.building_id,
+              this.user_id
             );
             this.body2.product_composition = "";
             this.body2.sup_by_b_a_id = 0;
@@ -1115,7 +1176,8 @@ export default {
       this.limit,
       this.search,
       this.status,
-      this.building_id
+      this.building_id,
+      this.user_id
     );
   },
   computed: {

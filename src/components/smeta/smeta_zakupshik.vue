@@ -187,7 +187,7 @@
         <button
           type="button"
           class="page-link"
-          @click="get_smeta(page, limit, search, status, building_id)"
+          @click="get_smeta(page, limit, search, status, building_id, user_id)"
         >
           <i class="fa-solid fa-rotate"></i>
         </button>
@@ -344,6 +344,7 @@ export default {
       page: 0,
       search: "",
       building_id: 0,
+      user_id: 0,
       status: " ",
       item: {},
       product_name: "",
@@ -359,10 +360,24 @@ export default {
   watch: {
     limit(e) {
       this.page = 0;
-      this.get_smeta(this.page, e, this.search, this.status, this.building_id);
+      this.get_smeta(
+        this.page,
+        e,
+        this.search,
+        this.status,
+        this.building_id,
+        this.user_id
+      );
     },
     page(e) {
-      this.get_smeta(e, this.limit, this.search, this.status, this.building_id);
+      this.get_smeta(
+        e,
+        this.limit,
+        this.search,
+        this.status,
+        this.building_id,
+        this.user_id
+      );
       document.getElementById("scroll").scrollTop = 0;
     },
     search(e) {
@@ -373,7 +388,8 @@ export default {
           this.limit,
           this.search,
           this.status,
-          this.building_id
+          this.building_id,
+          this.user_id
         );
       } else if (e.length == 0) {
         this.get_smeta(
@@ -381,19 +397,34 @@ export default {
           this.limit,
           this.search,
           this.status,
-          this.building_id
+          this.building_id,
+          this.user_id
         );
         this.page = 0;
       }
     },
     status(e) {
       this.page = 0;
-      this.get_smeta(this.page, this.limit, this.search, e, this.building_id);
+      this.get_smeta(
+        this.page,
+        this.limit,
+        this.search,
+        e,
+        this.building_id,
+        this.user_id
+      );
       document.getElementById("scroll").scrollTop = 0;
     },
     building_id(e) {
       this.page = 0;
-      this.get_smeta(this.page, this.limit, this.search, this.status, e);
+      this.get_smeta(
+        this.page,
+        this.limit,
+        this.search,
+        this.status,
+        e,
+        this.user_id
+      );
       document.getElementById("scroll").scrollTop = 0;
     },
     limit_building(e) {
@@ -423,9 +454,9 @@ export default {
     },
   },
   methods: {
-    get_smeta(page, limit, search, status, building_id) {
+    get_smeta(page, limit, search, status, building_id, user_id) {
       this.$store.dispatch("setLoading", { isLoading: true });
-      smeta_request_get(page, limit, search, status, building_id)
+      smeta_request_get(page, limit, search, status, building_id, user_id)
         .then((res) => {
           this.smeta = res.data.data;
           this.pages = res.data.pages;
@@ -462,7 +493,8 @@ export default {
               this.limit,
               this.search,
               this.status,
-              this.building_id
+              this.building_id,
+              this.user_id
             );
           });
           e.taminotchi_id = null;
@@ -487,7 +519,8 @@ export default {
               this.limit,
               this.search,
               this.status,
-              this.building_id
+              this.building_id,
+              this.user_id
             );
             document.getElementById(e).disabled = false;
           });
@@ -524,7 +557,8 @@ export default {
       this.limit,
       this.search,
       this.status,
-      this.building_id
+      this.building_id,
+      this.user_id
     );
   },
   components: { Data_notfound, Accept_smeta_request },

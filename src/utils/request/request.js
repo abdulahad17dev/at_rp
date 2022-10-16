@@ -103,22 +103,22 @@ export function smeta_get(page, limit, search, status, id) {
   }
 }
 
-export function smeta_request_get(page, limit, search, status, id) {
+export function smeta_request_get(page, limit, search, status, id, user_id) {
   if (search && !status) {
     return instance.get(
-      `get_smeta_for_supply/?building_id=${id}&search=${search}&page=${page}&limit=${limit}`
+      `get_smeta_for_supply/?building_id=${id}&user_id=${user_id}&search=${search}&page=${page}&limit=${limit}`
     );
   } else if (status && !search) {
     return instance.get(
-      `get_smeta_for_supply/?building_id=${id}&status=${status}&page=${page}&limit=${limit}`
+      `get_smeta_for_supply/?building_id=${id}&user_id=${user_id}&status=${status}&page=${page}&limit=${limit}`
     );
   } else if (search && status) {
     return instance.get(
-      `get_smeta_for_supply/?building_id=${id}&search=${search}&status=${status}&page=${page}&limit=${limit}`
+      `get_smeta_for_supply/?building_id=${id}&user_id=${user_id}&search=${search}&status=${status}&page=${page}&limit=${limit}`
     );
   } else {
     return instance.get(
-      `get_smeta_for_supply/?building_id=${id}&&page=${page}&limit=${limit}`
+      `get_smeta_for_supply/?building_id=${id}&user_id=${user_id}&&page=${page}&limit=${limit}`
     );
   }
 }
@@ -520,14 +520,29 @@ export function money_launderers_put(data) {
 
 // proche sorovlar
 
-export function proche_s_get(page, limit, building_id, status) {
-  if (status) {
+export function proche_s_get(
+  page,
+  limit,
+  building_id,
+  status,
+  user_id,
+  search
+) {
+  if (status && !search) {
     return instance.get(
-      `get_product_request?building_id=${building_id}&status=${status}&page=${page}&limit=${limit}`
+      `get_product_request?building_id=${building_id}&status=${status}&user_id=${user_id}&page=${page}&limit=${limit}`
+    );
+  } else if (search && !status) {
+    return instance.get(
+      `get_product_request?building_id=${building_id}&search=${search}&user_id=${user_id}&page=${page}&limit=${limit}`
+    );
+  } else if (search && status) {
+    return instance.get(
+      `get_product_request?building_id=${building_id}&status=${status}&search=${search}&user_id=${user_id}&page=${page}&limit=${limit}`
     );
   } else {
     return instance.get(
-      `get_product_request?building_id=${building_id}&page=${page}&limit=${limit}`
+      `get_product_request?building_id=${building_id}&user_id=${user_id}&page=${page}&limit=${limit}`
     );
   }
 }

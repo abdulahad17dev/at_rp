@@ -272,11 +272,12 @@
   <div class="row row_building" v-else-if="role == 'pto'">
     <div
       class="col-md-4 col-sm-6 col-lg-4 col-xxl-4 my-1"
-      v-for="item in data"
+      v-for="(item, inc) in data"
       :key="item"
     >
       <div class="card shadow">
         <div class="card-header bg-white">
+          <span class="float-start badge bg-primary">{{ inc + 1 }}</span>
           <h5 class="card-title text-center mb-0">
             <span class="descinline"> {{ shorttext(item.name) }} </span>
             <span class="descempty"> {{ item.name }} </span>
@@ -550,48 +551,64 @@ export default {
         });
     },
     start(e) {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 10000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener("mouseenter", Swal.stopTimer);
-          toast.addEventListener("mouseleave", Swal.resumeTimer);
-        },
-      });
-
-      Toast.fire({
-        icon: "warning",
-        width: 600,
-        title:
-          "Obyekt qurilishi boshlanganidan so'ng uning ma'lumotlarini o'zgartirib bo'lmaydi",
-        showCancelButton: true,
-        showConfirmButton: true,
-        confirmButtonText: "<i class='fa-solid fa-circle-check'></i>",
-        cancelButtonText: "<i class='fa-solid fa-circle-xmark'></i>",
-        confirmButtonColor: "#0D6EFD",
-        cancelButtonColor: "#DC3545",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.$store.dispatch("setLoading", { isLoading: true });
-          e.status = "start";
-          building_put(e)
-            .then((res) => {
-              this.$store.dispatch("setLoading", { isLoading: false });
-              success(res).then(() => {
-                this.$emit("get_buildings");
-              });
-            })
-            .catch((err) => {
-              catchError(err);
-              this.$store.dispatch("setLoading", { isLoading: false });
+      if (e.status == "end") {
+        this.$store.dispatch("setLoading", { isLoading: true });
+        e.status = "start";
+        building_put(e)
+          .then((res) => {
+            this.$store.dispatch("setLoading", { isLoading: false });
+            success(res).then(() => {
+              this.$emit("get_buildings");
             });
-        } else {
-          result;
-        }
-      });
+          })
+          .catch((err) => {
+            catchError(err);
+            this.$store.dispatch("setLoading", { isLoading: false });
+          });
+      } else {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 10000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+
+        Toast.fire({
+          icon: "warning",
+          width: 600,
+          title:
+            "Obyekt qurilishi boshlanganidan so'ng uning ma'lumotlarini o'zgartirib bo'lmaydi",
+          showCancelButton: true,
+          showConfirmButton: true,
+          confirmButtonText: "<i class='fa-solid fa-circle-check'></i>",
+          cancelButtonText: "<i class='fa-solid fa-circle-xmark'></i>",
+          confirmButtonColor: "#0D6EFD",
+          cancelButtonColor: "#DC3545",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.$store.dispatch("setLoading", { isLoading: true });
+            e.status = "start";
+            building_put(e)
+              .then((res) => {
+                this.$store.dispatch("setLoading", { isLoading: false });
+                success(res).then(() => {
+                  this.$emit("get_buildings");
+                });
+              })
+              .catch((err) => {
+                catchError(err);
+                this.$store.dispatch("setLoading", { isLoading: false });
+              });
+          } else {
+            result;
+          }
+        });
+      }
     },
     finish(e) {
       this.$store.dispatch("setLoading", { isLoading: true });

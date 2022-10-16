@@ -119,13 +119,13 @@ export default {
         {
           to: "/supply_request",
           icon: "fa-solid fa-box fa-2x",
-          title: "Сўровлар",
+          title: "Омбордаги материаллар",
           role: ["bugalter"],
         },
         {
           to: "/supply_accept",
           icon: "fa-solid fa-box fa-2x",
-          title: "Сўровлар",
+          title: "Омбордаги материаллар",
           role: ["omborchi"],
         },
         {

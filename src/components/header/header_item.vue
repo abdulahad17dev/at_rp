@@ -14,6 +14,15 @@
     {{ this.$route.meta.title }}
 
     <br />
+    <h6
+      class="text-center text-danger"
+      v-if="
+        (!data.length && role == 'prorap') ||
+        (!data.length && role == 'omborchi')
+      "
+    >
+      <b> Сиз бирор бир обйектга бириктирилмагансиз </b>
+    </h6>
     <h6 v-if="balance || balance == 0">
       Менинг балансим:
       <b> {{ new Intl.NumberFormat().format(balance) }} </b> сўм
@@ -25,7 +34,12 @@
 <script>
 export default {
   name: "PageHeaderItem",
-  props: ["balance"],
+  props: ["balance", "data"],
+  data() {
+    return {
+      role: localStorage.getItem("role"),
+    };
+  },
 };
 </script>
 

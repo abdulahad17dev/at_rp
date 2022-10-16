@@ -172,7 +172,9 @@
         <button
           type="button"
           class="page-link"
-          @click="get_proche_s(page, limit, building_id, status)"
+          @click="
+            get_proche_s(page, limit, building_id, status, user_id, search)
+          "
         >
           <i class="fa-solid fa-rotate"></i>
         </button>
@@ -225,6 +227,8 @@ export default {
       product_requests: [],
       building_id: this.$route.query.id,
       status: "adminda_proche",
+      search: "",
+      user_id: 0,
       body: {
         name: "",
         quantity: 0,
@@ -238,22 +242,43 @@ export default {
   watch: {
     limit(e) {
       this.page = 0;
-      this.get_proche_s(this.page, e, this.building_id, this.status);
+      this.get_proche_s(
+        this.page,
+        e,
+        this.building_id,
+        this.status,
+        this.user_id,
+        this.search
+      );
     },
     page(e) {
-      this.get_proche_s(e, this.limit, this.building_id, this.status);
+      this.get_proche_s(
+        e,
+        this.limit,
+        this.building_id,
+        this.status,
+        this.user_id,
+        this.search
+      );
       document.getElementById("scroll").scrollTop = 0;
     },
     status(e) {
       this.page = 0;
-      this.get_proche_s(this.page, this.limit, this.building_id, e);
+      this.get_proche_s(
+        this.page,
+        this.limit,
+        this.building_id,
+        e,
+        this.user_id,
+        this.search
+      );
     },
   },
   methods: {
-    get_proche_s(page, limit, building_id, status) {
+    get_proche_s(page, limit, building_id, status, user_id, search) {
       this.$store.dispatch("setLoading", { isLoading: true });
 
-      proche_s_get(page, limit, building_id, status)
+      proche_s_get(page, limit, building_id, status, user_id, search)
         .then((res) => {
           this.product_requests = res.data.data;
           this.pages = res.data.pages;
@@ -283,7 +308,9 @@ export default {
               this.page,
               this.limit,
               this.building_id,
-              this.status
+              this.status,
+              this.user_id,
+              this.search
             );
           });
         })
@@ -305,7 +332,9 @@ export default {
               this.page,
               this.limit,
               this.building_id,
-              this.status
+              this.status,
+              this.user_id,
+              this.search
             );
           });
         })
@@ -325,7 +354,14 @@ export default {
     },
   },
   created() {
-    this.get_proche_s(this.page, this.limit, this.building_id, this.status);
+    this.get_proche_s(
+      this.page,
+      this.limit,
+      this.building_id,
+      this.status,
+      this.user_id,
+      this.search
+    );
   },
 };
 </script>

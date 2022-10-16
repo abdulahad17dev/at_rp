@@ -6,7 +6,7 @@
     id="pills-tab"
     role="tablist"
   >
-    <li class="nav-item mx-1" role="presentation">
+    <li class="nav-item d-flex mx-1" role="presentation">
       <button
         class="btn btn-sm btn-light shadow-sm w-100"
         id="pills-home-tab"
@@ -19,13 +19,26 @@
         @click="
           product_requests.length
             ? ''
-            : get_proche_s(page, limit, building_id, status)
+            : get_proche_s(page, limit, building_id, status, user_id, search)
         "
       >
         Проче сўровлар
       </button>
+      <button
+        class="btn btn-sm btn-light shadow-sm"
+        id="pills-homee-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-homee"
+        type="button"
+        role="tab"
+        aria-controls="pills-homee"
+        aria-selected="true"
+        @click="proche_history = true"
+      >
+        <i class="fa-solid fa-clock-rotate-left"></i>
+      </button>
     </li>
-    <li class="nav-item mx-1" role="presentation">
+    <li class="nav-item d-flex mx-1" role="presentation">
       <button
         class="btn btn-sm btn-light shadow-sm w-100"
         id="pills-profile-tab"
@@ -38,6 +51,19 @@
         @click="smeta = true"
       >
         Сметалар
+      </button>
+      <button
+        class="btn btn-sm btn-light shadow-sm"
+        id="pills-profilee-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-profilee"
+        type="button"
+        role="tab"
+        aria-controls="pills-profilee"
+        aria-selected="false"
+        @click="smeta_history = true"
+      >
+        <i class="fa-solid fa-clock-rotate-left"></i>
       </button>
     </li>
   </ul>
@@ -167,6 +193,7 @@
                   </ul>
                 </div>
               </th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -200,6 +227,7 @@
               <td>
                 {{ item.Proche_sorovlar.comment }}
               </td>
+              <td></td>
               <td>
                 <button
                   class="btn btn-sm btn-success"
@@ -241,7 +269,9 @@
             <button
               type="button"
               class="page-link"
-              @click="get_proche_s(page, limit, building_id, status)"
+              @click="
+                get_proche_s(page, limit, building_id, status, user_id, search)
+              "
             >
               <i class="fa-solid fa-rotate"></i>
             </button>
@@ -286,11 +316,27 @@
     </div>
     <div
       class="tab-pane fade"
+      id="pills-homee"
+      role="tabpanel"
+      aria-labelledby="pills-homee-tab"
+    >
+      <Proche_history_zakupshik v-if="proche_history" />
+    </div>
+    <div
+      class="tab-pane fade"
       id="pills-profile"
       role="tabpanel"
       aria-labelledby="pills-profile-tab"
     >
-      <Smeta_zakupshik v-if="smeta == true" />
+      <Smeta_zakupshik v-if="smeta" />
+    </div>
+    <div
+      class="tab-pane fade"
+      id="pills-profilee"
+      role="tabpanel"
+      aria-labelledby="pills-profilee-tab"
+    >
+      <Smeta_history_zakupshik v-if="smeta_history" />
     </div>
   </div>
 </template>
@@ -306,6 +352,8 @@ import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Accept_request from "@/components/buildings/accept_request.vue";
 import Smeta_zakupshik from "@/components/smeta/smeta_zakupshik.vue";
+import Smeta_history_zakupshik from "@/components/supply_history/smeta_history_zakupshik.vue";
+import Proche_history_zakupshik from "@/components/supply_history/proche_history_zakupshik.vue";
 export default {
   name: "ProcheSorovZakupshik",
   data() {
@@ -315,6 +363,8 @@ export default {
       pages: null,
       product_requests: [],
       building_id: 0,
+      user_id: 0,
+      search: "",
       status: "zakupshikda_proche",
       item: {},
       page_building: 0,
@@ -324,20 +374,43 @@ export default {
       buildings: [],
       text_building: "объектлар",
       smeta: false,
+      smeta_history: false,
+      proche_history: false,
     };
   },
   watch: {
     limit(e) {
       this.page = 0;
-      this.get_proche_s(this.page, e, this.building_id, this.status);
+      this.get_proche_s(
+        this.page,
+        e,
+        this.building_id,
+        this.status,
+        this.user_id,
+        this.search
+      );
     },
     page(e) {
-      this.get_proche_s(e, this.limit, this.building_id, this.status);
+      this.get_proche_s(
+        e,
+        this.limit,
+        this.building_id,
+        this.status,
+        this.user_id,
+        this.search
+      );
       document.getElementById("scroll").scrollTop = 0;
     },
     building_id(e) {
       this.page = 0;
-      this.get_proche_s(this.page, this.limit, e, this.status);
+      this.get_proche_s(
+        this.page,
+        this.limit,
+        e,
+        this.status,
+        this.user_id,
+        this.search
+      );
     },
     limit_building(e) {
       this.page_building = 0;
@@ -366,10 +439,10 @@ export default {
     },
   },
   methods: {
-    get_proche_s(page, limit, building_id, status) {
+    get_proche_s(page, limit, building_id, status, user_id, search) {
       this.$store.dispatch("setLoading", { isLoading: true });
 
-      proche_s_get(page, limit, building_id, status)
+      proche_s_get(page, limit, building_id, status, user_id, search)
         .then((res) => {
           this.product_requests = res.data.data;
           this.pages = res.data.pages;
@@ -399,7 +472,9 @@ export default {
               this.page,
               this.limit,
               this.building_id,
-              this.status
+              this.status,
+              this.user_id,
+              this.search
             );
           });
           e.taminotchi_id = null;
@@ -430,7 +505,14 @@ export default {
       document.getElementById("select_bank_building").click();
     },
   },
-  components: { Header_item, Data_notfound, Accept_request, Smeta_zakupshik },
+  components: {
+    Header_item,
+    Data_notfound,
+    Accept_request,
+    Smeta_zakupshik,
+    Smeta_history_zakupshik,
+    Proche_history_zakupshik,
+  },
 };
 </script>
 
