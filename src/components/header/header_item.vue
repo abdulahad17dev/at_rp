@@ -14,14 +14,15 @@
     {{ this.$route.meta.title }}
 
     <br />
-    <h6
-      class="text-center text-danger"
-      v-if="
-        (!data.length && role == 'prorap') ||
-        (!data.length && role == 'omborchi')
-      "
-    >
-      <b> Сиз бирор бир обйектга бириктирилмагансиз </b>
+    <h6 class="text-center text-danger" v-if="this.$route.name == 'buildings'">
+      <b
+        v-if="
+          (!data.length && role == 'prorap') ||
+          (!data.length && role == 'omborchi')
+        "
+      >
+        Сиз бирор бир обйектга бириктирилмагансиз
+      </b>
     </h6>
     <h6 v-if="balance || balance == 0">
       Менинг балансим:

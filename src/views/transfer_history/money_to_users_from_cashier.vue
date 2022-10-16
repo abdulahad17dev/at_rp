@@ -519,23 +519,25 @@ export default {
     },
     sort_status(e) {
       this.page = 0;
+      this.status = e;
       this.transfer_to_users(
         this.page,
         this.limit,
         this.from,
         this.to,
-        e,
+        this.status,
         this.from_time,
         this.to_time
       );
     },
     sort_to(e) {
       this.page = 0;
+      this.to = e;
       this.transfer_to_users(
         this.page,
         this.limit,
         this.from,
-        e,
+        this.to,
         this.status,
         this.from_time,
         this.to_time

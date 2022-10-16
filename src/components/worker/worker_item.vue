@@ -4,11 +4,10 @@
       <thead class="">
         <tr>
           <th style="width: 8%">№</th>
-          <th style="width: 15%">Исм</th>
-          <th style="width: 15%">Баланс</th>
-          <th style="width: 15%">Телефон рақам</th>
+          <th style="width: 20%">Исм</th>
+          <th style="width: 20%">Телефон рақам</th>
           <th style="width: 25%">Ихтисослик</th>
-          <th style="width: 10%">Рейтинг</th>
+          <th style="width: 12%">Рейтинг</th>
           <th></th>
         </tr>
       </thead>
@@ -16,9 +15,6 @@
         <tr v-for="(item, inc) in data || []" :key="item">
           <td>{{ inc + 1 }}</td>
           <td>{{ item.name }}</td>
-          <td :class="item.balance >= 0 ? 'text-success' : 'text-danger'">
-            {{ new Intl.NumberFormat().format(item.balance) }} сўм
-          </td>
           <td>
             <a
               :href="`tel:+998${item.phone}`"
@@ -31,10 +27,10 @@
             <span
               @click="$emit('remove_specialty', worker_item.id)"
               class="badge rounded-pill bg-danger mx-1"
-              v-for="worker_item in item.worker_specialties"
+              v-for="worker_item in item.specialties"
               :key="worker_item"
               ><i class="fa-solid fa-circle-xmark text-danger text-white"></i>
-              {{ worker_item.specialty }}</span
+              {{ worker_item.specialty_type.specialty }}</span
             >
           </td>
           <td>

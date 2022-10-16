@@ -19,15 +19,17 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
-                <label for="name_speciality"> Номи: </label>
-                <input
-                  type="text"
+                <label for="name_speciality"> Ишчи тури: </label>
+                <select
                   id="name_speciality"
-                  class="form-control form-control-sm"
-                  v-model="body.specialty"
-                  required
-                  placeholder="Номи"
-                />
+                  class="form-select form-select-sm"
+                  @click="get_worker_types(page, limit, search)"
+                  v-model="body.specialty_type_id"
+                >
+                  <option :value="item.id" v-for="item in types" :key="item">
+                    {{ item.specialty }}
+                  </option>
+                </select>
               </div>
             </div>
           </div>
@@ -54,6 +56,8 @@
 </template>
 
 <script>
+import { worker_type_get } from "@/utils/request/request";
+import { catchError } from "@/utils/request/handle_api_err";
 export default {
   name: "WorkerAdd",
   props: ["item"],
@@ -65,10 +69,30 @@ export default {
   data() {
     return {
       body: {
-        specialty: "",
+        specialty_type_id: null,
         worker_id: null,
       },
+      page: 0,
+      pages: null,
+      limit: 100,
+      search: "",
+      types: [],
     };
+  },
+  methods: {
+    get_worker_types(page, limit, search) {
+      this.$store.dispatch("setLoading", { isLoading: true });
+      worker_type_get(page, limit, search)
+        .then((res) => {
+          this.types = res.data.data;
+          this.pages = res.data.pages;
+          this.$store.dispatch("setLoading", { isLoading: false });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        });
+    },
   },
 };
 </script>

@@ -48,18 +48,18 @@
           </select>
         </div>
         <div class="col">
-          <select class="form-select form-select-sm" v-model="paid_status">
-            <option value="">барчаси</option>
-            <option value="true">тўланди</option>
-            <option value="false">тўланмади</option>
-          </select>
-        </div>
-        <div class="col">
           <select class="form-select form-select-sm" v-model="status">
             <option value="">барчаси</option>
             <option value="true">қабул қилинди</option>
             <option value="false">қабул қилинмади</option>
           </select>
+        </div>
+        <div class="col">
+          <!-- <select class="form-select form-select-sm" v-model="paid_status">
+            <option value="">барчаси</option>
+            <option value="true">тўланди</option>
+            <option value="false">тўланмади</option>
+          </select> -->
         </div>
       </div>
     </form>
@@ -289,21 +289,21 @@ export default {
         this.limit
       );
     },
-    paid_status(e) {
-      this.status = "";
-      this.page = 0;
-      this.get_supply(
-        this.market_id,
-        this.status,
-        e,
-        this.building_id,
-        this.type,
-        this.from_time,
-        this.to_time,
-        this.page,
-        this.limit
-      );
-    },
+    // paid_status(e) {
+    //   this.status = "";
+    //   this.page = 0;
+    //   this.get_supply(
+    //     this.market_id,
+    //     this.status,
+    //     e,
+    //     this.building_id,
+    //     this.type,
+    //     this.from_time,
+    //     this.to_time,
+    //     this.page,
+    //     this.limit
+    //   );
+    // },
   },
   methods: {
     get_supply(

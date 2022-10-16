@@ -38,18 +38,22 @@
       <tbody>
         <tr v-for="(item, inc) in markets || []" :key="item">
           <td>{{ inc + 1 }}</td>
-          <td>{{ item.name }}</td>
+          <td>{{ item.Markets.name }}</td>
           <td>
             <a
-              :href="`tel:+998${item.phone}`"
+              :href="`tel:+998${item.Markets.phone}`"
               class="text-decoration-none text-dark"
             >
-              +998 {{ format_phone(item.phone) }}</a
+              +998 {{ format_phone(item.Markets.phone) }}</a
             >
           </td>
-          <td>{{ item.address }}</td>
-          <td :class="item.balance >= 0 ? 'text-success' : 'text-danger'">
-            {{ new Intl.NumberFormat().format(item.balance) }} сўм
+          <td>{{ item.Markets.address }}</td>
+          <td>
+            нахт пулдаги қарздорлик:
+            {{ item.naxt_supply - item.naxt_expense }} сўм
+            <br />
+            ҳисоб рақамидан қарздорлик:
+            {{ item.shot_supply - item.shot_expense }} сўм
           </td>
           <td>
             <button
@@ -62,13 +66,13 @@
             </button>
             <a
               target="_blank"
-              :href="`https://www.google.com/maps/@${item.map_lat},${item.map_long},8z`"
+              :href="`https://www.google.com/maps/@${item.Markets.map_lat},${item.Markets.map_long},8z`"
               class="btn btn-sm btn-primary mx-1"
             >
               <i class="fa-solid fa-location-dot"></i>
             </a>
             <router-link
-              :to="{ name: 'supply_history', query: { id: item.id } }"
+              :to="{ name: 'supply_history', query: { id: item.Markets.id } }"
               class="btn btn-sm btn-secondary"
             >
               <i class="fa-solid fa-clock-rotate-left"></i>
@@ -239,7 +243,7 @@ export default {
 }
 
 table {
-  min-width: 600px;
+  min-width: 900px;
   width: 100%;
 }
 

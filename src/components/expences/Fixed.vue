@@ -381,14 +381,14 @@ th select {
 }
 
 .table-responsive {
-  max-height: 64vh;
-  min-height: 64vh;
+  max-height: 70vh;
+  min-height: 70vh;
 }
 
 @media (max-width: 634px) {
   .table-responsive {
-    max-height: 58vh;
-    min-height: 58vh;
+    max-height: 90vh;
+    min-height: 90vh;
   }
 }
 table {

@@ -19,18 +19,82 @@
       >
         Доимий <i class="fa-solid fa-circle-plus"></i>
       </button>
-      <button
+      <!-- <button
         class="btn btn-sm btn-secondary mx-1"
         data-bs-toggle="modal"
         data-bs-target="#pay_for_variable_expense"
         v-if="role != 'admin'"
       >
         Бир марталик <i class="fa-solid fa-circle-plus"></i>
-      </button>
+      </button> -->
     </div>
   </div>
 
+  <Fixed :fixed_history="fixed_history" @from="sort_from" @to="sort_to" />
+
+  <nav
+    aria-label="Page navigation example"
+    class="mt-1"
+    v-if="fixed_history != ''"
+  >
+    <ul class="pagination pagination-sm justify-content-end">
+      <li class="page-item">
+        <select
+          class="form-control form-control-sm form-select mx-1"
+          v-model="h_limit"
+        >
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </li>
+      <li class="page-item">
+        <button
+          type="button"
+          class="page-link"
+          @click="fixed_history_get(h_page, h_limit, h_from, h_to, h_user_id)"
+        >
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+      </li>
+      <li class="page-item">
+        <button class="page-link" @click="h_page = 0" :disabled="h_page == 0">
+          <i class="fa-solid fa-angles-left text-dark"></i>
+        </button>
+      </li>
+      <li class="page-item">
+        <button class="page-link" @click="h_page--" :disabled="h_page == 0">
+          <i class="fa-solid fa-angle-left text-dark"></i>
+        </button>
+      </li>
+      <li class="page-item">
+        <button class="page-link text-dark" disabled>
+          {{ h_page + 1 }}
+        </button>
+      </li>
+      <li class="page-item">
+        <button
+          class="page-link"
+          @click="h_page++"
+          :disabled="h_page == h_pages - 1"
+        >
+          <i class="fa-solid fa-angle-right text-dark"></i>
+        </button>
+      </li>
+      <li class="page-item">
+        <button
+          class="page-link"
+          @click="h_page = h_pages - 1"
+          :disabled="h_page == h_pages - 1"
+        >
+          <i class="fa-solid fa-angles-right text-dark"></i>
+        </button>
+      </li>
+    </ul>
+  </nav>
+
   <ul
+    v-if="variable_history.length"
     class="nav nav-pills nav-fill nav-justified mb-3 row"
     id="pills-tab"
     role="tablist"
@@ -692,21 +756,23 @@ export default {
     },
     sort_from(e) {
       this.h_page = 0;
+      this.h_from = e;
       this.fixed_history_get(
         this.h_page,
         this.h_limit,
-        e,
+        this.h_from,
         this.h_to,
         this.h_user_id
       );
     },
     sort_to(e) {
       this.h_page = 0;
+      this.h_to = e;
       this.fixed_history_get(
         this.h_page,
         this.h_limit,
         this.h_from,
-        e,
+        this.h_to,
         this.h_user_id
       );
     },
@@ -754,7 +820,13 @@ export default {
     },
     sort_from_v(e) {
       this.v_page = 0;
-      this.variable_history_get(this.v_page, this.v_limit, e, this.v_user_id);
+      this.v_from = e;
+      this.variable_history_get(
+        this.v_page,
+        this.v_limit,
+        this.v_from,
+        this.v_user_id
+      );
     },
   },
 };

@@ -537,24 +537,26 @@ export default {
       this.t_page = 0;
     },
     sort_status(e) {
+      this.t_status = e;
       this.t_page = 0;
       this.transfer_to_users(
         this.t_page,
         this.t_limit,
         this.t_from,
         this.t_to,
-        e,
+        this.t_status,
         this.t_from_time,
         this.t_to_time
       );
     },
     sort_to(e) {
       this.t_page = 0;
+      this.t_to = e;
       this.transfer_to_users(
         this.t_page,
         this.t_limit,
         this.t_from,
-        e,
+        this.t_to,
         this.t_status,
         this.t_from_time,
         this.t_to_time

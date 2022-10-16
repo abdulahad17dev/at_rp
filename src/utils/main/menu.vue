@@ -42,7 +42,7 @@ export default {
           to: "/buildings",
           icon: "fa-solid fa-building fa-2x",
           title: "Обйектлар",
-          role: ["pto", "admin", "prorap"],
+          role: ["pto", "admin", "prorap", "operator"],
         },
         {
           to: "/products",
@@ -114,7 +114,7 @@ export default {
           to: "/worker_types",
           icon: "fa-solid fa-box fa-2x",
           title: "Ишчи турлари",
-          role: ["prorap"],
+          role: ["operator"],
         },
         {
           to: "/supply_request",

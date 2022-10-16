@@ -22,10 +22,7 @@
         <option value="end">якунланди</option>
       </select>
     </div>
-    <div
-      class="col mt-2 d-flex align-items-center justify-content-end"
-      v-if="role != 'prorap' || role != 'omborchi'"
-    >
+    <div class="col mt-2 d-flex align-items-center justify-content-end">
       <span>Қидириш: </span>
       <div class="input-group input-group-sm mx-2">
         <input

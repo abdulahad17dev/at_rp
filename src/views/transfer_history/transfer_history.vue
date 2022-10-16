@@ -86,7 +86,7 @@
       </button>
     </li>
     <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
-      <button
+      <!-- <button
         class="btn btn-sm btn-light shadow-sm w-100"
         id="pills-contact-tab2"
         data-bs-toggle="pill"
@@ -98,7 +98,7 @@
         @click="transfer_v_expense = true"
       >
         бир марталик чиқим тарихи
-      </button>
+      </button> -->
     </li>
   </ul>
   <div class="tab-content" id="pills-tabContent">

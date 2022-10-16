@@ -33,7 +33,7 @@
     </div>
   </div>
 
-  <Worker_type_item :worker_types="worker_types" />
+  <Worker_type_item :worker_types="worker_types" @remove="remove_type" />
 
   <Data_notfound v-if="worker_types == ''" />
 
@@ -83,14 +83,21 @@
       </li>
     </ul>
   </nav>
+
+  <Worker_type_add @add="add" />
 </template>
 
 <script>
 import Header_item from "@/components/header/header_item.vue";
-import { catchError } from "@/utils/request/handle_api_err";
-import { worker_type_get } from "@/utils/request/request";
+import { catchError, success } from "@/utils/request/handle_api_err";
+import {
+  worker_type_add,
+  worker_type_get,
+  worker_type_remove,
+} from "@/utils/request/request";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Worker_type_item from "@/components/worker/worker_type_item.vue";
+import Worker_type_add from "@/components/worker/worker_type_add.vue";
 export default {
   name: "WorkerTypes",
   data() {
@@ -139,11 +146,44 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
+    remove_type(e) {
+      this.$store.dispatch("setLoading", { isLoading: true });
+      worker_type_remove(e)
+        .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
+          success(res).then(() => {
+            this.get_worker_types(this.page, this.limit, this.search);
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        });
+    },
+    add(e) {
+      document.getElementById("worker_t_disabled").disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      worker_type_add(e)
+        .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("worker_t_add").click();
+          document.getElementById("worker_t_disabled").disabled = false;
+          success(res).then(() => {
+            this.get_worker_types(this.page, this.limit, this.search);
+            e.specialty = "";
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("worker_t_disabled").disabled = false;
+        });
+    },
   },
   created() {
     this.get_worker_types(this.page, this.limit, this.search);
   },
-  components: { Header_item, Data_notfound, Worker_type_item },
+  components: { Header_item, Data_notfound, Worker_type_item, Worker_type_add },
 };
 </script>
 

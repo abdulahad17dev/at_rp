@@ -166,7 +166,7 @@ export function products_get(page, limit, search) {
 // foremans
 
 export function foreman_get(id) {
-  return instance.get("get_foremans/" + id);
+  return instance.get("get_foremans?building_id=" + id);
 }
 
 export function foreman_add(data) {
@@ -180,7 +180,7 @@ export function foreman_remove(id) {
 // warehousemans
 
 export function warehouseman_get(id) {
-  return instance.get("get_warehousemans/" + id);
+  return instance.get("get_warehousemans?building_id=" + id);
 }
 
 export function warehouseman_add(data) {

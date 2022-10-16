@@ -136,6 +136,80 @@
           </td>
         </tr>
       </tbody>
+      <tbody v-else-if="role == 'operator'">
+        <tr v-for="(item, inc) in data" :key="item">
+          <td>{{ inc + 1 }}</td>
+          <td>
+            <p style="min-width: 250px; width: 250px">{{ item.name }}</p>
+          </td>
+          <td>{{ item.address }}</td>
+          <td>
+            {{
+              new Date(item.start_date)
+                .toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false,
+                })
+                .slice(0, 16)
+            }}
+          </td>
+          <td>
+            {{
+              new Date(item.end_date)
+                .toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false,
+                })
+                .slice(0, 16)
+            }}
+          </td>
+          <td>
+            <span
+              class="badge rounded-pill bg-warning"
+              v-if="item.status == 'wait'"
+              >кутилмоқда</span
+            >
+            <span
+              class="badge rounded-pill bg-primary"
+              v-else-if="item.status == 'start'"
+              >қурилмоқда</span
+            >
+            <span
+              class="badge rounded-pill bg-success"
+              v-else-if="item.status == 'end'"
+              >якунланди</span
+            >
+          </td>
+          <td>
+            <a
+              target="_blank"
+              :href="`https://www.google.com/maps/@${item.map_lat},${item.map_long},8z`"
+              class="btn btn-sm btn-primary mx-1"
+            >
+              <i class="fa-solid fa-location-dot"></i>
+            </a>
+
+            <router-link
+              v-if="item.status == 'start'"
+              :to="{
+                path: '/buildings/product_request',
+                query: { id: item.id },
+              }"
+              class="btn btn-sm btn-primary mx-1"
+            >
+              <i class="fa-solid fa-rectangle-list"></i>
+            </router-link>
+          </td>
+        </tr>
+      </tbody>
       <tbody v-else>
         <tr v-for="(item, inc) in data" :key="item">
           <td>{{ inc + 1 }}</td>
