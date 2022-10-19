@@ -85,7 +85,7 @@ let routes = [
     name: "buildings",
     meta: {
       requiresAuth: true,
-      title: "Обйектлар",
+      title: "Объектлар",
       icon: "fa-solid fa-building",
       role: ["pto", "admin", "prorap", "zakupshik", "operator"],
     },
@@ -218,7 +218,7 @@ let routes = [
       requiresAuth: true,
       title: "Чиқимлар",
       icon: "fa-solid fa-box",
-      role: ["bugalter", "admin"],
+      role: ["bugalter", "admin", "taminotchi", "kassir"],
     },
     component: expences,
   },

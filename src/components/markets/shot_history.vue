@@ -74,9 +74,9 @@
                   <li
                     v-for="item in markets"
                     :key="item"
-                    @click="select(item.id, item.name)"
+                    @click="select(item.Markets.id, item.Markets.name)"
                   >
-                    <a class="dropdown-item">{{ item.name }}</a>
+                    <a class="dropdown-item">{{ item.Markets.name }}</a>
                   </li>
                 </ul>
               </li>

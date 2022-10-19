@@ -7,7 +7,7 @@
           <th style="width: 35%">Сумма</th>
           <th style="width: 20%">Сана</th>
           <th style="width: 40%">Изох</th>
-          <th>
+          <th v-if="role == 'bugalter'">
             <div class="dropdown">
               <button
                 class="btn btn-light btn-sm dropdown-toggle"
@@ -240,8 +240,8 @@
             }}
           </td>
           <td>{{ item.Expenses.comment }}</td>
-          <td>
-            <b class="text-primary"> {{ item.bank_account }}</b>
+          <td v-if="role == 'bugalter'">
+            <b class="text-primary"> {{ item.name_for_from }}</b>
           </td>
           <td>
             <b class="text-primary"> {{ item.fixed_expense }}</b>
@@ -275,6 +275,7 @@ export default {
       search_expense: "",
       expenses: [],
       text_expense: "чиқимлар",
+      role: localStorage.getItem("role"),
     };
   },
   watch: {
@@ -387,8 +388,15 @@ th select {
 
 @media (max-width: 634px) {
   .table-responsive {
-    max-height: 90vh;
-    min-height: 90vh;
+    max-height: 75vh;
+    min-height: 75vh;
+  }
+}
+
+@media (max-width: 500px) {
+  .table-responsive {
+    max-height: 95vh;
+    min-height: 95vh;
   }
 }
 table {

@@ -20,7 +20,7 @@
         <form @submit.prevent="$emit('pay_v_expense', pay_body)">
           <div class="modal-body">
             <div class="row gap-2">
-              <div class="col-10 mx-auto">
+              <div class="col-10 mx-auto" v-if="role == 'bugalter'">
                 <label for="from">Банк ҳисоб: </label>
                 <div class="dropdown">
                   <button
@@ -210,8 +210,10 @@ export default {
         money: null,
         from_: null,
         to_: 0,
+        for_: 0,
         comment: "",
       },
+      role: localStorage.getItem("role"),
     };
   },
   watch: {

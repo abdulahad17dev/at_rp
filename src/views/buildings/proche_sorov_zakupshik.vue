@@ -227,7 +227,7 @@
               <td>
                 {{ item.Proche_sorovlar.comment }}
               </td>
-              <td></td>
+              <td>{{ item.building }}</td>
               <td>
                 <button
                   class="btn btn-sm btn-success"

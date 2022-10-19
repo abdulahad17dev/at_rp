@@ -74,9 +74,9 @@
                   <li
                     v-for="item in markets"
                     :key="item"
-                    @click="select(item.id, item.name)"
+                    @click="select(item.Markets.id, item.Markets.name)"
                   >
-                    <a class="dropdown-item">{{ item.name }}</a>
+                    <a class="dropdown-item">{{ item.Markets.name }}</a>
                   </li>
                 </ul>
               </li>
@@ -163,6 +163,7 @@
             <th style="width: 15%">Ўлчов бирлиги</th>
             <th style="width: 15%">Сана</th>
             <th style="width: 15%">Сумма</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -190,6 +191,16 @@
               }}
             </td>
             <td>{{ item.Supplies.price }} сўм</td>
+            <td>
+              <button
+                class="btn btn-sm btn-danger mx-1"
+                v-if="item.Supplies.status == false"
+                @click="remove(item.Supplies.id)"
+                id="remove_supplies"
+              >
+                <i class="fa-solid fa-circle-xmark"></i>
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -272,8 +283,12 @@
 </template>
 
 <script>
-import { get_supplies, markets_get } from "@/utils/request/request";
-import { catchError } from "@/utils/request/handle_api_err";
+import {
+  get_supplies,
+  markets_get,
+  remove_supply,
+} from "@/utils/request/request";
+import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 export default {
   name: "ProcheHistory",
@@ -460,6 +475,33 @@ export default {
       this.market_id = id;
       this.text_market = name;
       document.getElementById("select_bank_market").click();
+    },
+    remove(e) {
+      document.getElementById("remove_supplies").disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      remove_supply(e)
+        .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("remove_supplies").disabled = false;
+          success(res).then(() => {
+            this.get_supply(
+              this.market_id,
+              this.status,
+              this.paid_status,
+              this.building_id,
+              this.type,
+              this.from_time,
+              this.to_time,
+              this.page,
+              this.limit
+            );
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("remove_supplies").disabled = false;
+        });
     },
   },
   created() {

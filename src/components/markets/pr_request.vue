@@ -142,6 +142,7 @@
                 </ul>
               </div>
             </th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -195,6 +196,7 @@
               }}
             </td>
             <td>{{ item.Proche_sorovlar.comment }}</td>
+            <td>{{ item.building }}</td>
             <td>
               <button
                 class="btn btn-sm btn-success"

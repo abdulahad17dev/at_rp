@@ -27,12 +27,12 @@
     <table class="table table-sm table-hover">
       <thead>
         <tr>
-          <th>№</th>
-          <th>Исм</th>
-          <th>Телефон рақам</th>
-          <th>Манзил</th>
-          <th>Баланс</th>
-          <th></th>
+          <th style="width: 10%">№</th>
+          <th style="width: 20%">Исм</th>
+          <th style="width: 15%">Телефон рақам</th>
+          <th style="width: 20%">Манзил</th>
+          <th style="width: 20%">Баланс</th>
+          <th style="width: 15%"></th>
         </tr>
       </thead>
       <tbody>

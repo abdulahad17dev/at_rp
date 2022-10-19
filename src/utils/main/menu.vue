@@ -41,7 +41,7 @@ export default {
         {
           to: "/buildings",
           icon: "fa-solid fa-building fa-2x",
-          title: "Обйектлар",
+          title: "Объектлар",
           role: ["pto", "admin", "prorap", "operator"],
         },
         {
@@ -60,7 +60,7 @@ export default {
           to: "/expenses",
           icon: "fa-solid fa-box fa-2x",
           title: "Чиқимлар",
-          role: ["bugalter", "admin"],
+          role: ["bugalter", "admin", "taminotchi", "kassir"],
         },
         {
           to: "/main_warehouses",

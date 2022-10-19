@@ -39,8 +39,6 @@
     @get_l_id="get_l_id"
   />
 
-  <Data_notfound v-if="money_launderers == ''" />
-
   <nav
     aria-label="Page navigation example"
     class="mt-2"
@@ -95,7 +93,6 @@
 
 <script>
 import Header_item from "@/components/header/header_item.vue";
-import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import {
   money_launderers_add,
@@ -111,7 +108,6 @@ export default {
   name: "MoneyLaunderers",
   components: {
     Header_item,
-    Data_notfound,
     Money_l_items,
     Money_l_add,
     Money_l_update,

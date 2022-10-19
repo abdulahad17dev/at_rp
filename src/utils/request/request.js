@@ -784,3 +784,24 @@ export function worker_type_add(data) {
 export function worker_type_remove(id) {
   return instance.delete(`remove_worker_specialty_type/${id}`);
 }
+
+// warehouse products
+
+export function warehouse_products(
+  type,
+  building_id,
+  search,
+  status,
+  page,
+  limit
+) {
+  if (search) {
+    return instance.get(
+      `warehouse_products?type=${type}&building_id=${building_id}&search=${search}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(
+      `warehouse_products?type=${type}&building_id=${building_id}&page=${page}&limit=${limit}`
+    );
+  }
+}

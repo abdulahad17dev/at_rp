@@ -729,6 +729,7 @@ export default {
             e.money = null;
             e.from_ = null;
             e.to_ = null;
+            e.for_ = 0;
             e.comment = "";
           });
           document.getElementById("bank_account_text").innerHTML =
@@ -828,6 +829,15 @@ export default {
         this.v_user_id
       );
     },
+  },
+  created() {
+    this.fixed_history_get(
+      this.h_page,
+      this.h_limit,
+      this.h_from,
+      this.h_to,
+      this.h_user_id
+    );
   },
 };
 </script>

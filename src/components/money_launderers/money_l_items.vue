@@ -22,7 +22,7 @@
               :href="`tel:+998${item.phone}`"
               class="text-decoration-none text-dark"
             >
-              +998 {{ format_phone(tem.phone) }}</a
+              +998 {{ format_phone(item.phone) }}</a
             >
           </td>
           <td>
@@ -47,7 +47,7 @@
                 name: 'money_launderer_history',
                 query: { id: item.id, name: item.name },
               }"
-              class="btn btn-sm btn-secondary mx-1"
+              class="btn btn-sm btn-secondary"
             >
               <i class="fa-solid fa-clock-rotate-left"></i>
             </router-link>
@@ -55,10 +55,12 @@
         </tr>
       </tbody>
     </table>
+    <Data_notfound v-if="data == ''" />
   </div>
 </template>
 
 <script>
+import Data_notfound from "@/utils/notfound/data_notfound.vue";
 export default {
   name: "MoneyLaundererItems",
   props: ["data"],
@@ -77,6 +79,7 @@ export default {
       );
     },
   },
+  components: { Data_notfound },
 };
 </script>
 
@@ -84,5 +87,15 @@ export default {
 table {
   min-width: 700px;
   width: 100%;
+}
+
+.table-responsive {
+  max-height: 70vh;
+}
+
+@media (max-width: 500px) {
+  .table-responsive {
+    max-height: 95vh;
+  }
 }
 </style>
