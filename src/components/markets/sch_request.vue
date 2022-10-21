@@ -141,9 +141,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="accept_shot_requestLabel">
-            ни қабул қилиш
-          </h5>
+          <h5 class="modal-title" id="accept_shot_requestLabel">қабул қилиш</h5>
           <button
             type="button"
             class="btn-close"
@@ -165,6 +163,7 @@
                   placeholder="Ҳажм"
                   step="any"
                   min="1"
+                  :max="quantity"
                   required
                 />
               </div>
@@ -207,10 +206,10 @@ export default {
       shot_requests: [],
       pages: null,
       market_id: 0,
-      status: false,
+      status: "false",
       paid_status: "",
       building_id: 0,
-      type: "smeta",
+      type: "",
       from_time: "",
       to_time: "",
       page: 0,
@@ -325,6 +324,7 @@ export default {
       this.quantity = e.quantity;
     },
     take() {
+      this.$store.dispatch("setLoading", { isLoading: true });
       document.getElementById("supply_disabled_shot").disabled = true;
       take_supply_b_a(this.body)
         .then((res) => {
@@ -337,6 +337,7 @@ export default {
               this.status,
               this.paid_status,
               this.building_id,
+              this.type,
               this.from_time,
               this.to_time,
               this.page,

@@ -157,18 +157,11 @@
         <thead class="">
           <tr>
             <th style="width: 10%">№</th>
-            <th style="width: 15%">Махсулот</th>
+            <th style="width: 20%">Махсулот</th>
             <th style="width: 15%">Ҳажм</th>
             <th style="width: 15%">Ўлчов бирлиги</th>
             <th style="width: 15%">Сана</th>
-            <th style="width: 15%">Сумма</th>
-            <th style="width: 15%">
-              <select class="form-select form-select-sm" v-model="type">
-                <option value="proche">проче</option>
-                <option value="smeta">смета</option>
-                <option value="tarkib">таркиб</option>
-              </select>
-            </th>
+            <th style="width: 20%">Сумма</th>
           </tr>
         </thead>
         <tbody>
@@ -178,18 +171,14 @@
             </td>
             <td>{{ item.product }}</td>
             <td>
-              {{
-                new Intl.NumberFormat().format(
-                  item.Supplies_by_bank_account.quantity
-                )
-              }}
+              {{ new Intl.NumberFormat().format(item.Supplies.quantity) }}
             </td>
             <td>
-              {{ item.Supplies_by_bank_account.olchov_birligi }}
+              {{ item.Supplies.olchov_birligi }}
             </td>
             <td>
               {{
-                new Date(item.Supplies_by_bank_account.time)
+                new Date(item.Supplies.time)
                   .toLocaleDateString("en-us", {
                     year: "numeric",
                     month: "numeric",
@@ -201,9 +190,7 @@
                   .slice(0, 16)
               }}
             </td>
-            <td colspan="2">
-              {{ item.Supplies_by_bank_account.total_price }} сўм
-            </td>
+            <td colspan="2">{{ item.Supplies.total_price }} сўм</td>
           </tr>
         </tbody>
       </table>
@@ -231,7 +218,7 @@
             type="button"
             class="page-link"
             @click="
-              get_supply_by_b_a(
+              get_supply(
                 market_id,
                 status,
                 paid_status,
@@ -287,7 +274,7 @@
 
 <script>
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
-import { markets_get, shot_request } from "@/utils/request/request";
+import { get_supplies, markets_get } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
 export default {
   name: "ShotHistory",
@@ -299,7 +286,7 @@ export default {
       status: "",
       paid_status: "",
       building_id: 0,
-      type: "",
+      type: "shot",
       from_time: "",
       to_time: "",
       page: 0,
@@ -315,7 +302,7 @@ export default {
   watch: {
     type(e) {
       this.page = 0;
-      this.get_supply_by_b_a(
+      this.get_supply(
         this.market_id,
         this.status,
         this.paid_status,
@@ -330,7 +317,7 @@ export default {
     status(e) {
       this.paid_status = "";
       this.page = 0;
-      this.get_supply_by_b_a(
+      this.get_supply(
         this.market_id,
         e,
         this.paid_status,
@@ -345,7 +332,7 @@ export default {
     paid_status(e) {
       this.status = "";
       this.page = 0;
-      this.get_supply_by_b_a(
+      this.get_supply(
         this.market_id,
         this.status,
         e,
@@ -384,7 +371,7 @@ export default {
     },
     market_id(e) {
       this.page = 0;
-      this.get_supply_by_b_a(
+      this.get_supply(
         e,
         this.status,
         this.paid_status,
@@ -398,7 +385,7 @@ export default {
     },
   },
   methods: {
-    get_supply_by_b_a(
+    get_supply(
       market_id,
       status,
       paid_status,
@@ -410,7 +397,7 @@ export default {
       limit
     ) {
       this.$store.dispatch("setLoading", { isLoading: true });
-      shot_request(
+      get_supplies(
         market_id,
         status,
         paid_status,
@@ -432,7 +419,7 @@ export default {
         });
     },
     time() {
-      this.get_supply_by_b_a(
+      this.get_supply(
         this.market_id,
         this.status,
         this.paid_status,
@@ -448,7 +435,7 @@ export default {
     reset() {
       this.from_time = "";
       this.to_time = "";
-      this.get_supply_by_b_a(
+      this.get_supply(
         this.market_id,
         this.status,
         this.paid_status,
@@ -482,7 +469,7 @@ export default {
     },
   },
   created() {
-    this.get_supply_by_b_a(
+    this.get_supply(
       this.market_id,
       this.status,
       this.paid_status,

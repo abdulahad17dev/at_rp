@@ -1058,6 +1058,8 @@ export default {
       }
     },
     take() {
+      this.$store.dispatch("setLoading", { isLoading: true });
+
       let array = [];
       var arr = this.checked.map((e) => ({
         related_id: e.Smeta.id,
@@ -1075,7 +1077,6 @@ export default {
 
       array = arr;
       document.getElementById("supply_s_disabled").disabled = true;
-      this.$store.dispatch("setLoading", { isLoading: true });
       take_supply_smeta(this.checked.length ? array : Array(this.body))
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });

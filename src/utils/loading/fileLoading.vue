@@ -2,7 +2,7 @@
   <div class="page-loader2">
     <div id="loader2">
       <img
-        src="./../../assets/animate2.gif"
+        src="https://constructionproject.crud.uz/uploaded_files/frontend_animate2.gif"
         alt="notfound"
         width="200"
         height="200"

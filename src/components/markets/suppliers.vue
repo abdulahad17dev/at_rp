@@ -243,7 +243,7 @@ export default {
 }
 
 table {
-  min-width: 900px;
+  min-width: 1050px;
   width: 100%;
 }
 

@@ -8,7 +8,7 @@
               <div class="brand-logo d-flex justify-content-center">
                 <img
                   class="img-responsive"
-                  src="./../../../assets/Construction_background.jpg"
+                  src="https://constructionproject.crud.uz/uploaded_files/frontend_background.jpg"
                   width="150"
                   alt=""
                 />
@@ -108,7 +108,7 @@ export default {
 
 <style lang="scss">
 .login {
-  background: url(./../../../assets/Construction_background.jpg);
+  background: url(https://constructionproject.crud.uz/uploaded_files/frontend_background.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
