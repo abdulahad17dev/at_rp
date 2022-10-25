@@ -49,16 +49,14 @@
           </td>
           <td>{{ item.Markets.address }}</td>
           <td>
-            нахт пулдаги қарздорлик:
             {{ item.naxt_supply - item.naxt_expense }} сўм
             <br />
-            ҳисоб рақамидан қарздорлик:
             {{ item.shot_supply - item.shot_expense }} сўм
           </td>
           <td>
             <button
               class="btn btn-sm btn-warning"
-              @click="get_item(item)"
+              @click="get_item(item.Markets)"
               data-bs-toggle="modal"
               data-bs-target="#supplier_put"
             >

@@ -144,11 +144,11 @@
           </select>
         </div>
         <div class="col">
-          <select class="form-select form-select-sm" v-model="status">
+          <!-- <select class="form-select form-select-sm" v-model="status">
             <option value="">барчаси</option>
             <option value="true">қабул қилинди</option>
             <option value="false">қабул қилинмади</option>
-          </select>
+          </select> -->
         </div>
       </div>
     </form>
@@ -171,26 +171,29 @@
             </td>
             <td>{{ item.product }}</td>
             <td>
-              {{ new Intl.NumberFormat().format(item.Supplies.quantity) }}
+              {{
+                new Intl.NumberFormat().format(
+                  item.Supplies_by_bank_account.quantity
+                )
+              }}
             </td>
             <td>
-              {{ item.Supplies.olchov_birligi }}
+              {{ item.Supplies_by_bank_account.olchov_birligi }}
             </td>
             <td>
               {{
-                new Date(item.Supplies.time)
+                new Date(item.Supplies_by_bank_account.time)
                   .toLocaleDateString("en-us", {
                     year: "numeric",
                     month: "numeric",
                     day: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
-                    hour12: false,
                   })
-                  .slice(0, 16)
+                  .slice(0, 10)
               }}
             </td>
-            <td colspan="2">{{ item.Supplies.total_price }} сўм</td>
+            <td colspan="2">
+              {{ item.Supplies_by_bank_account.total_price }} сўм
+            </td>
           </tr>
         </tbody>
       </table>
@@ -274,7 +277,7 @@
 
 <script>
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
-import { get_supplies, markets_get } from "@/utils/request/request";
+import { markets_get, shot_request } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
 export default {
   name: "ShotHistory",
@@ -283,7 +286,7 @@ export default {
       requests: [],
       pages: null,
       market_id: 0,
-      status: "",
+      status: "true",
       paid_status: "",
       building_id: 0,
       type: "shot",
@@ -397,7 +400,7 @@ export default {
       limit
     ) {
       this.$store.dispatch("setLoading", { isLoading: true });
-      get_supplies(
+      shot_request(
         market_id,
         status,
         paid_status,

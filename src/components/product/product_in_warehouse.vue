@@ -166,9 +166,8 @@
         </tr>
       </tbody>
     </table>
+    <Data_notfound v-if="products == ''" />
   </div>
-
-  <Data_notfound v-if="products == ''" />
 
   <nav aria-label="Page navigation example" class="mt-2" v-if="products != ''">
     <ul class="pagination pagination-sm justify-content-end">

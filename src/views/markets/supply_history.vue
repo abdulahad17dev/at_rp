@@ -49,7 +49,7 @@
               data-bs-auto-close="outside"
               aria-expanded="false"
             >
-              статус
+              {{ status_text }}
             </button>
             <ul
               class="dropdown-menu"
@@ -59,9 +59,9 @@
                 <a
                   class="dropdown-item d-flex"
                   href="#"
-                  @click="item.children ? '' : sort(item.type)"
+                  @click="item.children ? '' : sort(item.type, item.title)"
                   ><p
-                    @click="!item.children ? '' : sort(item.type)"
+                    @click="!item.children ? '' : sort(item.type, item.title)"
                     class="m-0"
                     style="width: 90%"
                   >
@@ -84,7 +84,7 @@
                   <li
                     v-for="child in item.children"
                     :key="child"
-                    @click="sort(child.type)"
+                    @click="sort(child.type, item.title)"
                   >
                     <a href="#" class="dropdown-item ml-4">{{ child.title }}</a>
                   </li>
@@ -154,11 +154,8 @@
                     year: "numeric",
                     month: "numeric",
                     day: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
-                    hour12: false,
                   })
-                  .slice(0, 16)
+                  .slice(0, 10)
               }}
             </td>
             <td>
@@ -357,6 +354,7 @@ export default {
         { type: "qarz", title: "қарз" },
         { type: "shot", title: "счёт" },
       ],
+      status_text: "статус",
     };
   },
   watch: {
@@ -598,7 +596,8 @@ export default {
           document.getElementById("remove_supply").disabled = false;
         });
     },
-    sort(e) {
+    sort(e, title) {
+      this.status_text = title;
       this.type = e;
       document.getElementById("dropdownMenuClickableInside").click();
     },

@@ -28,11 +28,8 @@
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
-                  hour12: false,
                 })
-                .slice(0, 16)
+                .slice(0, 10)
             }}
           </td>
           <td>
@@ -42,11 +39,8 @@
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
-                  hour12: false,
                 })
-                .slice(0, 16)
+                .slice(0, 10)
             }}
           </td>
           <td>
@@ -150,11 +144,8 @@
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
-                  hour12: false,
                 })
-                .slice(0, 16)
+                .slice(0, 10)
             }}
           </td>
           <td>
@@ -164,11 +155,8 @@
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
-                  hour12: false,
                 })
-                .slice(0, 16)
+                .slice(0, 10)
             }}
           </td>
           <td>
@@ -224,11 +212,8 @@
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
-                  hour12: false,
                 })
-                .slice(0, 16)
+                .slice(0, 10)
             }}
           </td>
           <td>
@@ -238,11 +223,8 @@
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
-                  hour12: false,
                 })
-                .slice(0, 16)
+                .slice(0, 10)
             }}
           </td>
           <td>
@@ -375,11 +357,8 @@
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
-                  hour12: false,
                 })
-                .slice(0, 16)
+                .slice(0, 10)
             }}
           </h6>
           <h6>
@@ -390,11 +369,8 @@
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
-                  hour12: false,
                 })
-                .slice(0, 16)
+                .slice(0, 10)
             }}
           </h6>
           <span

@@ -281,11 +281,8 @@
                           year: "numeric",
                           month: "numeric",
                           day: "numeric",
-                          hour: "numeric",
-                          minute: "numeric",
-                          hour12: false,
                         })
-                        .slice(0, 16)
+                        .slice(0, 10)
                     }}
                   </td>
                 </tr>
@@ -298,11 +295,8 @@
                           year: "numeric",
                           month: "numeric",
                           day: "numeric",
-                          hour: "numeric",
-                          minute: "numeric",
-                          hour12: false,
                         })
-                        .slice(0, 16)
+                        .slice(0, 10)
                     }}
                   </td>
                 </tr>

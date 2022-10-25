@@ -127,11 +127,8 @@
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
-                  hour12: false,
                 })
-                .slice(0, 16)
+                .slice(0, 10)
             }}
           </td>
           <td>{{ item.Transfers.comment }}</td>
@@ -235,21 +232,14 @@ table {
 }
 
 .table-responsive {
-  min-height: 52vh;
-  max-height: 52vh;
+  min-height: 63vh;
+  max-height: 63vh;
 }
 
-@media (max-width: 575px) {
-  .table-responsive {
-    min-height: 39vh;
-    max-height: 39vh;
-    zoom: 75%;
-  }
-}
 @media (max-width: 500px) {
   .table-responsive {
-    min-height: 70vh;
-    max-height: 70vh;
+    min-height: 120vh;
+    max-height: 120vh;
   }
 }
 </style>
