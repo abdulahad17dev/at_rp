@@ -173,7 +173,7 @@ export default {
     },
     status(e) {
       if (e == "wait" || e == "re-check" || e == "confirmed") {
-        this.type = "proche";
+        this.type = "grafik";
       } else {
         this.type = "";
       }

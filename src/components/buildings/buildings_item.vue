@@ -490,6 +490,17 @@
                 <i class="fa-solid fa-box"></i>
               </router-link>
             </div>
+            <div class="coll mx-1">
+              <router-link
+                :to="{
+                  name: 'building_works',
+                  query: { id: item.id, name: item.name },
+                }"
+                class="btn btn-sm btn-primary"
+              >
+                <i class="fa-solid fa-clipboard-list"></i>
+              </router-link>
+            </div>
           </div>
         </div>
       </div>

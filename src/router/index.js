@@ -26,6 +26,7 @@ import supply_request from "../views/schot_request/supply_request.vue";
 import supply_accept from "../views/markets/supply_in_warehouse.vue";
 import transfered_products from "../views/transfer_history/transfered_products.vue";
 import building_products from "../views/product/building_product.vue";
+import building_works from "../views/buildings/building_works.vue";
 import menu from "./../utils/main/menu.vue";
 import notfound from "./../utils/notfound/notfound.vue";
 import settings from "../views/settings/settings.vue";
@@ -373,6 +374,17 @@ let routes = [
       role: ["pto"],
     },
     component: building_products,
+  },
+  {
+    path: "/building_works",
+    name: "building_works",
+    meta: {
+      requiresAuth: true,
+      title: "Объект ишлари",
+      icon: "fa-solid fa-clipboard-list",
+      role: ["pto"],
+    },
+    component: building_works,
   },
 ];
 

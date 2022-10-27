@@ -989,3 +989,27 @@ export function take_back_transfered_product(id) {
 export function acceptance_transfered_product(id) {
   return instance.put(`acceptance_transfered_product/${id}`);
 }
+
+// other works
+
+export function other_works(search, building_id, status, user_id, page, limit) {
+  if (search) {
+    return instance.get(
+      `get_other_works?search=${search}&building_id=${building_id}&status=${status}&user_id=${user_id}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(
+      `get_other_works?building_id=${building_id}&status=${status}&user_id=${user_id}&page=${page}&limit=${limit}`
+    );
+  }
+}
+
+export function add_other_work(data) {
+  return instance.post(`add_other_work`, data);
+}
+
+export function remove_other_work(id) {
+  return instance.delete(`remove_other_work/${id}`);
+}
+
+// spent items to work
