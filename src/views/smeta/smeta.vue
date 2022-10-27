@@ -18,7 +18,9 @@
       >
         <option value="">барчаси</option>
         <option value="removed">ўчирилган</option>
-        <option value="finished">якунланган</option>
+        <option value="wait">кутиш</option>
+        <option value="re-check">қайта-текширув</option>
+        <option value="confirmed">тасдиқланган</option>
       </select>
     </div>
     <div class="col mt-2 d-flex align-items-center justify-content-end">
@@ -60,7 +62,7 @@
         <button
           type="button"
           class="page-link"
-          @click="get_smeta(page, limit, search, status, building_id)"
+          @click="get_smeta(page, limit, search, type, status, building_id)"
         >
           <i class="fa-solid fa-rotate"></i>
         </button>
@@ -119,16 +121,31 @@ export default {
       smeta: [],
       search: "",
       status: "",
+      type: "",
       role: localStorage.getItem("role"),
     };
   },
   watch: {
     limit(e) {
       this.page = 0;
-      this.get_smeta(this.page, e, this.search, this.status, this.building_id);
+      this.get_smeta(
+        this.page,
+        e,
+        this.search,
+        this.type,
+        this.status,
+        this.building_id
+      );
     },
     page(e) {
-      this.get_smeta(e, this.limit, this.search, this.status, this.building_id);
+      this.get_smeta(
+        e,
+        this.limit,
+        this.search,
+        this.type,
+        this.status,
+        this.building_id
+      );
       document.getElementById("scroll").scrollTop = 0;
     },
     search(e) {
@@ -138,6 +155,7 @@ export default {
           this.page,
           this.limit,
           this.search,
+          this.type,
           this.status,
           this.building_id
         );
@@ -146,6 +164,7 @@ export default {
           this.page,
           this.limit,
           this.search,
+          this.type,
           this.status,
           this.building_id
         );
@@ -153,11 +172,18 @@ export default {
       }
     },
     status(e) {
+      if (e == "wait" || e == "re-check" || e == "confirmed") {
+        this.type = "proche";
+      } else {
+        this.type = "";
+      }
+
       if (e.length > 0) {
         this.get_smeta(
           this.page,
           this.limit,
           this.search,
+          this.type,
           this.status,
           this.building_id
         );
@@ -166,6 +192,7 @@ export default {
           this.page,
           this.limit,
           this.search,
+          this.type,
           this.status,
           this.building_id
         );
@@ -174,9 +201,9 @@ export default {
     },
   },
   methods: {
-    get_smeta(page, limit, search, status, building_id) {
+    get_smeta(page, limit, search, type, status, building_id) {
       this.$store.dispatch("setLoading", { isLoading: true });
-      smeta_get(page, limit, search, status, building_id)
+      smeta_get(page, limit, search, type, status, building_id)
         .then((res) => {
           this.smeta = res.data.data;
           this.pages = res.data.pages;
@@ -200,6 +227,7 @@ export default {
               this.page,
               this.limit,
               this.search,
+              this.type,
               this.status,
               this.building_id
             );
@@ -214,6 +242,7 @@ export default {
               this.page,
               this.limit,
               this.search,
+              this.type,
               this.status,
               this.building_id
             );
@@ -236,6 +265,7 @@ export default {
               this.page,
               this.limit,
               this.search,
+              this.type,
               this.status,
               this.building_id
             );
@@ -282,6 +312,7 @@ export default {
                   this.page,
                   this.limit,
                   this.search,
+                  this.type,
                   this.status,
                   this.building_id
                 );
@@ -302,6 +333,7 @@ export default {
       this.page,
       this.limit,
       this.search,
+      this.type,
       this.status,
       this.building_id
     );

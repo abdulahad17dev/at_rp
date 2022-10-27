@@ -19,6 +19,12 @@
           v-model="search"
           class="form-control form-control-sm"
         />
+        <router-link
+          :to="{ name: 'transfered_products' }"
+          class="btn btn-sm btn-secondary"
+        >
+          <i class="fa-solid fa-clock-rotate-left"></i>
+        </router-link>
       </div>
     </div>
   </div>
@@ -37,7 +43,7 @@
               <button
                 class="btn btn-light btn-sm dropdown-toggle"
                 type="button"
-                id="select_bank_building"
+                id="select_building"
                 data-bs-toggle="dropdown"
                 data-bs-auto-close="outside"
                 aria-expanded="false"
@@ -55,7 +61,7 @@
               </button>
               <ul
                 class="dropdown-menu border-top-0"
-                aria-labelledby="bank_building"
+                aria-labelledby="select_building"
               >
                 <li>
                   <input
@@ -162,7 +168,19 @@
           <td>{{ item.Warehouse_products.quantity }}</td>
           <td>{{ item.Warehouse_products.price }}</td>
           <td>{{ item.building }}</td>
-          <td></td>
+          <td>
+            <button
+              class="btn btn-sm btn-success mx-1"
+              data-bs-toggle="modal"
+              data-bs-target="#share_m_warehouse"
+              @click="
+                product = item.Warehouse_products;
+                body.related_id = item.Warehouse_products.id;
+              "
+            >
+              <i class="fa-solid fa-circle-check"></i>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -175,7 +193,7 @@
         <button
           type="button"
           class="page-link"
-          @click="get_products(page, limit, search)"
+          @click="get_products(type, building_id, search, status, page, limit)"
         >
           <i class="fa-solid fa-rotate"></i>
         </button>
@@ -211,11 +229,190 @@
       </li>
     </ul>
   </nav>
+
+  <!-- Modal -->
+  <div class="modal fade" id="share_m_warehouse">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="share_m_warehouse">Базага ўткизиш</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            id="share_product"
+          ></button>
+        </div>
+        <form @submit.prevent="share">
+          <div class="modal-body">
+            <div class="row gap-2">
+              <div class="col-10 mx-auto">
+                <div class="form-group">
+                  <label for="quantity">Ҳажм: </label>
+                  <div class="input-group input-group-sm">
+                    <input
+                      type="number"
+                      id="quantity"
+                      step="any"
+                      class="form-control"
+                      v-model="body.quantity"
+                      placeholder="Ҳажм"
+                      min="1"
+                      required
+                    />
+                    <span class="input-group-text bg-white">{{
+                      product.olchov_birligi
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-10 mx-auto" v-if="role == 'omborchi'">
+                <div class="form-group">
+                  <label for="warehouse_text">Базалар: </label>
+                  <div class="dropdown">
+                    <button
+                      class="btn btn-light btn-sm dropdown-toggle"
+                      type="button"
+                      id="warehouse_text"
+                      data-bs-toggle="dropdown"
+                      data-bs-auto-close="outside"
+                      aria-expanded="false"
+                      @click="
+                        warehouses.length
+                          ? ''
+                          : warehouses_get(
+                              page_warehouse,
+                              limit_warehouse,
+                              search_warehouse
+                            )
+                      "
+                    >
+                      {{ text_warehouse }}
+                    </button>
+                    <ul
+                      class="dropdown-menu border-top-0"
+                      aria-labelledby="warehouse_text"
+                    >
+                      <li>
+                        <input
+                          type="search"
+                          class="form-control form-control-sm"
+                          placeholder="қидириш ..."
+                          v-model="search_warehouse"
+                        />
+                      </li>
+                      <li>
+                        <ul class="dropdown-items">
+                          <li
+                            v-for="item in warehouses"
+                            :key="item"
+                            @click="select_w(item.id, item.name)"
+                          >
+                            <a class="dropdown-item">{{ item.name }}</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li v-if="warehouses != ''">
+                        <hr class="dropdown-divider m-0" />
+                      </li>
+                      <li>
+                        <nav
+                          aria-label="Page navigation example"
+                          class="mt-2"
+                          v-if="warehouses != ''"
+                        >
+                          <ul
+                            class="pagination pagination-sm justify-content-end"
+                          >
+                            <li class="page-item">
+                              <button
+                                type="button"
+                                class="page-link"
+                                @click="
+                                  warehouses_get(
+                                    page_warehouse,
+                                    limit_warehouse,
+                                    search_warehouse
+                                  )
+                                "
+                              >
+                                <i class="fa-solid fa-rotate"></i>
+                              </button>
+                            </li>
+                            <li class="page-item">
+                              <button
+                                type="button"
+                                class="page-link"
+                                @click="page_warehouse--"
+                                :disabled="page_warehouse == 0"
+                              >
+                                <i class="fa-solid fa-angle-left text-dark"></i>
+                              </button>
+                            </li>
+                            <li class="page-item">
+                              <button
+                                type="button"
+                                class="page-link text-dark"
+                                disabled
+                              >
+                                {{ page_warehouse + 1 }}
+                              </button>
+                            </li>
+                            <li class="page-item">
+                              <button
+                                type="button"
+                                class="page-link"
+                                @click="page_warehouse++"
+                                :disabled="
+                                  page_warehouse == pages_warehouse - 1
+                                "
+                              >
+                                <i
+                                  class="fa-solid fa-angle-right text-dark"
+                                ></i>
+                              </button>
+                            </li>
+                          </ul>
+                        </nav>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="submit"
+              class="btn btn-outline-primary btn-sm"
+              id="share_disabled"
+              :disabled="!body.related_id || !body.quantity || !body.to_"
+            >
+              <i class="fa-solid fa-circle-check"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-danger btn-sm"
+              data-bs-dismiss="modal"
+            >
+              <i class="fa-solid fa-circle-xmark"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import { building_get, warehouse_products } from "@/utils/request/request";
-import { catchError } from "@/utils/request/handle_api_err";
+import {
+  building_get,
+  main_warehouses_get,
+  transfer_product,
+  warehouse_products,
+} from "@/utils/request/request";
+import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 export default {
   name: "ProductInWarehouse",
@@ -224,7 +421,7 @@ export default {
       type: "proche",
       building_id: 0,
       search: "",
-      status: "",
+      status: "warehouse",
       page: 0,
       limit: 25,
       pages: 0,
@@ -235,6 +432,20 @@ export default {
       search_building: "",
       buildings: [],
       text_building: "объектлар",
+      role: localStorage.getItem("role"),
+      body: {
+        related_id: null,
+        quantity: null,
+        from_: 0,
+        to_: null,
+      },
+      page_warehouse: 0,
+      pages_warehouse: null,
+      limit_warehouse: 25,
+      search_warehouse: "",
+      warehouses: [],
+      text_warehouse: "базалар",
+      product: {},
     };
   },
   watch: {
@@ -362,7 +573,55 @@ export default {
     select(id, name) {
       this.building_id = id;
       this.text_building = name;
-      document.getElementById("select_bank_building").click();
+      document.getElementById("select_building").click();
+    },
+    warehouses_get(page_warehouse, limit_warehouse, search_warehouse) {
+      this.$store.dispatch("setLoading", { isLoading: true });
+
+      main_warehouses_get(page_warehouse, limit_warehouse, search_warehouse)
+        .then((res) => {
+          this.warehouses = res.data.data;
+          this.pages_warehouse = res.data.pages;
+          this.$store.dispatch("setLoading", { isLoading: false });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        });
+    },
+    select_w(id, name) {
+      this.body.to_ = id;
+      this.text_warehouse = name;
+      document.getElementById("warehouse_text").click();
+    },
+    share() {
+      document.getElementById("share_disabled").disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      transfer_product(Array(this.body))
+        .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("share_product").click();
+          document.getElementById("share_disabled").disabled = false;
+          success(res).then(() => {
+            this.get_products(
+              this.type,
+              this.building_id,
+              this.search,
+              this.status,
+              this.page,
+              this.limit
+            );
+            this.text_warehouse = "базалар";
+            this.body.related_id = null;
+            this.body.quantity = null;
+            this.body.to_ = null;
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("share_disabled").disabled = false;
+        });
     },
   },
   created() {
@@ -414,5 +673,9 @@ table {
     min-height: 88vh;
     max-height: 88vh;
   }
+}
+
+td button:focus {
+  box-shadow: none;
 }
 </style>

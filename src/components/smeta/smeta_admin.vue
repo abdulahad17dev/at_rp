@@ -43,7 +43,7 @@
         </tr>
         <tr
           v-if="
-            !type.find((e) => {
+            !types.find((e) => {
               return e == item.Smeta.type;
             }) && item.Smeta.grafik_id
           "
@@ -169,7 +169,7 @@
         <button
           type="button"
           class="page-link"
-          @click="get_smeta(page, limit, search, status, building_id)"
+          @click="get_smeta(page, limit, search, type, status, building_id)"
         >
           <i class="fa-solid fa-rotate"></i>
         </button>
@@ -221,7 +221,8 @@ export default {
       smeta: [],
       search: "",
       status: "",
-      type: [
+      type: "",
+      types: [
         "grafik",
         "allotted_time_for_worker",
         "allotted_time_for_machine",
@@ -233,10 +234,24 @@ export default {
   watch: {
     limit(e) {
       this.page = 0;
-      this.get_smeta(this.page, e, this.search, this.status, this.building_id);
+      this.get_smeta(
+        this.page,
+        e,
+        this.search,
+        this.type,
+        this.status,
+        this.building_id
+      );
     },
     page(e) {
-      this.get_smeta(e, this.limit, this.search, this.status, this.building_id);
+      this.get_smeta(
+        e,
+        this.limit,
+        this.search,
+        this.type,
+        this.status,
+        this.building_id
+      );
       document.getElementById("scroll").scrollTop = 0;
     },
     search(e) {
@@ -246,6 +261,7 @@ export default {
           this.page,
           this.limit,
           this.search,
+          this.type,
           this.status,
           this.building_id
         );
@@ -254,6 +270,7 @@ export default {
           this.page,
           this.limit,
           this.search,
+          this.type,
           this.status,
           this.building_id
         );
@@ -266,6 +283,7 @@ export default {
           this.page,
           this.limit,
           this.search,
+          this.type,
           this.status,
           this.building_id
         );
@@ -274,6 +292,7 @@ export default {
           this.page,
           this.limit,
           this.search,
+          this.type,
           this.status,
           this.building_id
         );
@@ -282,9 +301,9 @@ export default {
     },
   },
   methods: {
-    get_smeta(page, limit, search, status, building_id) {
+    get_smeta(page, limit, search, type, status, building_id) {
       this.$store.dispatch("setLoading", { isLoading: true });
-      smeta_get(page, limit, search, status, building_id)
+      smeta_get(page, limit, search, type, status, building_id)
         .then((res) => {
           this.smeta = res.data.data;
           this.pages = res.data.pages;
@@ -301,6 +320,7 @@ export default {
       this.page,
       this.limit,
       this.search,
+      this.type,
       this.status,
       this.building_id
     );

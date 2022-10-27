@@ -479,6 +479,17 @@
                 <i class="fa-solid fa-play"></i>
               </button>
             </div>
+            <div class="coll mx-1">
+              <router-link
+                :to="{
+                  name: 'building_products',
+                  query: { id: item.id, name: item.name },
+                }"
+                class="btn btn-sm btn-primary"
+              >
+                <i class="fa-solid fa-box"></i>
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -814,5 +825,9 @@ div.row_building {
 
 .descempty {
   display: none;
+}
+
+.card-footer div {
+  zoom: 93%;
 }
 </style>

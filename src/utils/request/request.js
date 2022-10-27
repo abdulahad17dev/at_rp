@@ -85,21 +85,37 @@ export function building_put(data) {
 
 // smeta
 
-export function smeta_get(page, limit, search, status, id) {
-  if (search && !status) {
+export function smeta_get(page, limit, search, type, status, id) {
+  if (search && status && type) {
     return instance.get(
-      `get_smeta/${id}?search=${search}&page=${page}&limit=${limit}`
+      `get_smeta/${id}?search=${search}&status=${status}&type=${type}&page=${page}&limit=${limit}`
     );
-  } else if (status && !search) {
-    return instance.get(
-      `get_smeta/${id}?status=${status}&page=${page}&limit=${limit}`
-    );
-  } else if (search && status) {
+  } else if (search && status && !type) {
     return instance.get(
       `get_smeta/${id}?search=${search}&status=${status}&page=${page}&limit=${limit}`
     );
+  } else if (search && !status && type) {
+    return instance.get(
+      `get_smeta/${id}?search=${search}&type=${type}&page=${page}&limit=${limit}`
+    );
+  } else if (!search && status && type) {
+    return instance.get(
+      `get_smeta/${id}?status=${status}&type=${type}&page=${page}&limit=${limit}`
+    );
+  } else if (search && !status && !type) {
+    return instance.get(
+      `get_smeta/${id}?search=${search}&page=${page}&limit=${limit}`
+    );
+  } else if (!search && !status && type) {
+    return instance.get(
+      `get_smeta/${id}?type=${type}&page=${page}&limit=${limit}`
+    );
+  } else if (!search && status && !type) {
+    return instance.get(
+      `get_smeta/${id}?status=${status}&page=${page}&limit=${limit}`
+    );
   } else {
-    return instance.get(`get_smeta/${id}?&page=${page}&limit=${limit}`);
+    return instance.get(`get_smeta/${id}?page=${page}&limit=${limit}`);
   }
 }
 
@@ -859,13 +875,117 @@ export function warehouse_products(
   page,
   limit
 ) {
-  if (search) {
+  if (search && status) {
+    return instance.get(
+      `warehouse_products?type=${type}&building_id=${building_id}&search=${search}&status=${status}&page=${page}&limit=${limit}`
+    );
+  } else if (search && !status) {
     return instance.get(
       `warehouse_products?type=${type}&building_id=${building_id}&search=${search}&page=${page}&limit=${limit}`
+    );
+  } else if (!search && status) {
+    return instance.get(
+      `warehouse_products?type=${type}&building_id=${building_id}&status=${status}&page=${page}&limit=${limit}`
     );
   } else {
     return instance.get(
       `warehouse_products?type=${type}&building_id=${building_id}&page=${page}&limit=${limit}`
     );
   }
+}
+
+export function add_to_invalid_products(data) {
+  return instance.post(`add_to_invalid_products`, data);
+}
+
+export function warehouse_invalid_products(
+  status,
+  type,
+  search,
+  from_time,
+  to_time,
+  building_id,
+  page,
+  limit
+) {
+  if (from_time && to_time && search) {
+    return instance.get(
+      `invalid_products?status=${status}&type=${type}&search=${search}&from_time=${from_time}&to_time=${to_time}&building_id=${building_id}&page=${page}&limit=${limit}`
+    );
+  } else if (!from_time && !to_time && search) {
+    return instance.get(
+      `invalid_products?status=${status}&type=${type}&search=${search}&building_id=${building_id}&page=${page}&limit=${limit}`
+    );
+  } else if (from_time && to_time && !search) {
+    return instance.get(
+      `invalid_products?status=${status}&type=${type}&from_time=${from_time}&to_time=${to_time}&building_id=${building_id}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(
+      `invalid_products?status=${status}&type=${type}&building_id=${building_id}&page=${page}&limit=${limit}`
+    );
+  }
+}
+
+export function remove_added_invalid_product(id) {
+  return instance.delete(`remove_added_invalid_product/${id}`);
+}
+
+// product transfer
+
+export function transfered_products(
+  status2,
+  type,
+  from,
+  to,
+  status,
+  search,
+  page,
+  limit
+) {
+  if (search && type && status) {
+    return instance.get(
+      `transfered_products/${status2}?type=${type}&from_=${from}&to_=${to}&status=${status}&search=${search}&page=${page}&limit=${limit}`
+    );
+  } else if (search && !type && !status) {
+    return instance.get(
+      `transfered_products/${status2}?from_=${from}&to_=${to}&search=${search}&page=${page}&limit=${limit}`
+    );
+  } else if (!search && !type && status) {
+    return instance.get(
+      `transfered_products/${status2}?from_=${from}&to_=${to}&status=${status}&page=${page}&limit=${limit}`
+    );
+  } else if (!search && type && !status) {
+    return instance.get(
+      `transfered_products/${status2}?type=${type}&from_=${from}&to_=${to}&page=${page}&limit=${limit}`
+    );
+  } else if (search && type && !status) {
+    return instance.get(
+      `transfered_products/${status2}?type=${type}&from_=${from}&to_=${to}&search=${search}&page=${page}&limit=${limit}`
+    );
+  } else if (search && !type && status) {
+    return instance.get(
+      `transfered_products/${status2}?from_=${from}&to_=${to}&status=${status}&search=${search}&page=${page}&limit=${limit}`
+    );
+  } else if (!search && type && status) {
+    return instance.get(
+      `transfered_products/${status2}?type=${type}&from_=${from}&to_=${to}&status=${status}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(
+      `transfered_products/${status2}?from_=${from}&to_=${to}&page=${page}&limit=${limit}`
+    );
+  }
+}
+
+export function transfer_product(data) {
+  return instance.post(`transfer_product`, data);
+}
+
+export function take_back_transfered_product(id) {
+  return instance.delete(`take_back_transfered_product/${id}`);
+}
+
+export function acceptance_transfered_product(id) {
+  return instance.put(`acceptance_transfered_product/${id}`);
 }

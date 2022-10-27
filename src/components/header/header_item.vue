@@ -14,6 +14,7 @@
     {{ this.$route.meta.title }}
 
     <br />
+    <span class="text-primary">{{ name }}</span>
     <h6 class="text-center text-danger" v-if="this.$route.name == 'buildings'">
       <b
         v-if="
@@ -35,7 +36,7 @@
 <script>
 export default {
   name: "PageHeaderItem",
-  props: ["balance", "data"],
+  props: ["balance", "data", "name"],
   data() {
     return {
       role: localStorage.getItem("role"),

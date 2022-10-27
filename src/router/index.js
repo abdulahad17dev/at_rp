@@ -24,6 +24,8 @@ import money_from_bugalter from "../views/transfer_history/money_from_bugalter.v
 import supply_history from "../views/markets/supply_history.vue";
 import supply_request from "../views/schot_request/supply_request.vue";
 import supply_accept from "../views/markets/supply_in_warehouse.vue";
+import transfered_products from "../views/transfer_history/transfered_products.vue";
+import building_products from "../views/product/building_product.vue";
 import menu from "./../utils/main/menu.vue";
 import notfound from "./../utils/notfound/notfound.vue";
 import settings from "../views/settings/settings.vue";
@@ -349,6 +351,28 @@ let routes = [
       role: ["omborchi"],
     },
     component: supply_accept,
+  },
+  {
+    path: "/transfered_products",
+    name: "transfered_products",
+    meta: {
+      requiresAuth: true,
+      title: "Ўтказилган материаллар тарихи",
+      icon: "fa-solid fa-clock-rotate-left",
+      role: ["omborchi"],
+    },
+    component: transfered_products,
+  },
+  {
+    path: "/building_products",
+    name: "building_products",
+    meta: {
+      requiresAuth: true,
+      title: "Объект материаллари",
+      icon: "fa-solid fa-box",
+      role: ["pto"],
+    },
+    component: building_products,
   },
 ];
 

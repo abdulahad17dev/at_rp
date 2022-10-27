@@ -7,6 +7,7 @@
           <th>Номи</th>
           <th>Телефон рақам</th>
           <th>Манзил</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
