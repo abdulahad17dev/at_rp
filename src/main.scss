@@ -120,3 +120,8 @@ input[disabled] {
 ul {
   list-style: none;
 }
+
+table thead tr,
+table tbody tr {
+  vertical-align: middle;
+}

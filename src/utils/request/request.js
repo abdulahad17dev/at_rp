@@ -1013,3 +1013,7 @@ export function remove_other_work(id) {
 }
 
 // spent items to work
+
+export function work_confirmation(id, data) {
+  return instance.post(`work_confirmation/${id}`, data);
+}
