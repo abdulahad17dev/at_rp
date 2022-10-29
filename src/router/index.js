@@ -26,7 +26,9 @@ import supply_request from "../views/schot_request/supply_request.vue";
 import supply_accept from "../views/markets/supply_in_warehouse.vue";
 import transfered_products from "../views/transfer_history/transfered_products.vue";
 import building_products from "../views/product/building_product.vue";
+import main_warehouse_product from "../views/product/product_in_main_w.vue";
 import building_works from "../views/buildings/building_works.vue";
+import work_info from "../views/buildings/building_info.vue";
 import menu from "./../utils/main/menu.vue";
 import notfound from "./../utils/notfound/notfound.vue";
 import settings from "../views/settings/settings.vue";
@@ -385,6 +387,28 @@ let routes = [
       role: ["pto"],
     },
     component: building_works,
+  },
+  {
+    path: "/work_info",
+    name: "work_info",
+    meta: {
+      requiresAuth: true,
+      title: "Иш маълумотлари",
+      icon: "fa-solid fa-clipboard-list",
+      role: ["pto"],
+    },
+    component: work_info,
+  },
+  {
+    path: "/main_warehouse_product",
+    name: "main_warehouse_product",
+    meta: {
+      requiresAuth: true,
+      title: "База материаллари",
+      icon: "fa-solid fa-box",
+      role: ["bazachi"],
+    },
+    component: main_warehouse_product,
   },
 ];
 

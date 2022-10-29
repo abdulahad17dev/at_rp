@@ -391,64 +391,6 @@
         </div>
         <div class="card-footer bg-white">
           <div class="d-flex justify-content-center">
-            <div
-              class="coll mx-1"
-              v-if="item.status == 'wait' && role == 'pto'"
-            >
-              <button
-                class="btn btn-sm btn-warning"
-                data-bs-toggle="modal"
-                data-bs-target="#building_put"
-                @click="items(item)"
-              >
-                <i class="fa fa-edit text-white"></i>
-              </button>
-            </div>
-            <div
-              class="coll mx-1"
-              v-else-if="item.status == 'start' && role == 'pto'"
-            >
-              <button class="btn btn-sm btn-success" @click="finish(item)">
-                <i class="fa-solid fa-flag-checkered"></i>
-              </button>
-            </div>
-            <div
-              class="coll mx-1"
-              v-else-if="item.status == 'end' && role == 'pto'"
-            >
-              <button class="btn btn-sm btn-primary" @click="start(item)">
-                <i class="fa-solid fa-play"></i>
-              </button>
-            </div>
-            <div class="coll mx-1" v-if="role == 'admin' || role == 'pto'">
-              <button
-                class="btn btn-sm btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#foremans_warehousemans"
-                @click="select_id(item.id, item.name, 1)"
-              >
-                <i class="fa-solid fa-users"></i>
-              </button>
-            </div>
-            <div class="coll mx-1">
-              <a
-                target="_blank"
-                :href="`https://www.google.com/maps/@${item.map_lat},${item.map_long},8z`"
-                class="btn btn-sm btn-primary"
-              >
-                <i class="fa-solid fa-location-dot"></i>
-              </a>
-            </div>
-            <div class="coll mx-1" v-if="role == 'pto'">
-              <button
-                class="btn btn-sm btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#building_document"
-                @click="select_id(item.id, item.name, 2)"
-              >
-                <i class="fa-solid fa-file-arrow-up"></i>
-              </button>
-            </div>
             <div class="coll mx-1" v-if="role == 'admin'">
               <router-link
                 :to="{
@@ -471,12 +413,25 @@
                 <i class="fa-solid fa-right-long"></i>
               </router-link>
             </div>
-            <div
-              class="coll mx-1"
-              v-if="item.status == 'wait' && role == 'pto'"
-            >
-              <button class="btn btn-sm btn-primary" @click="start(item)">
-                <i class="fa-solid fa-play"></i>
+            <div class="coll mx-1">
+              <router-link
+                :to="{
+                  name: 'building_works',
+                  query: { id: item.id, name: item.name },
+                }"
+                class="btn btn-sm btn-primary"
+              >
+                <i class="fa-solid fa-clipboard-list"></i>
+              </router-link>
+            </div>
+            <div class="coll mx-1" v-if="role == 'admin' || role == 'pto'">
+              <button
+                class="btn btn-sm btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#foremans_warehousemans"
+                @click="select_id(item.id, item.name, 1)"
+              >
+                <i class="fa-solid fa-users"></i>
               </button>
             </div>
             <div class="coll mx-1">
@@ -490,16 +445,63 @@
                 <i class="fa-solid fa-box"></i>
               </router-link>
             </div>
+            <div class="coll mx-1" v-if="role == 'pto'">
+              <button
+                class="btn btn-sm btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#building_document"
+                @click="select_id(item.id, item.name, 2)"
+              >
+                <i class="fa-solid fa-file-arrow-up"></i>
+              </button>
+            </div>
             <div class="coll mx-1">
-              <router-link
-                :to="{
-                  name: 'building_works',
-                  query: { id: item.id, name: item.name },
-                }"
+              <a
+                target="_blank"
+                :href="`https://www.google.com/maps/@${item.map_lat},${item.map_long},8z`"
                 class="btn btn-sm btn-primary"
               >
-                <i class="fa-solid fa-clipboard-list"></i>
-              </router-link>
+                <i class="fa-solid fa-location-dot"></i>
+              </a>
+            </div>
+
+            <div
+              class="coll mx-1"
+              v-if="item.status == 'start' && role == 'pto'"
+            >
+              <button class="btn btn-sm btn-success" @click="finish(item)">
+                <i class="fa-solid fa-flag-checkered"></i>
+              </button>
+            </div>
+            <div
+              class="coll mx-1"
+              v-else-if="item.status == 'end' && role == 'pto'"
+            >
+              <button class="btn btn-sm btn-primary" @click="start(item)">
+                <i class="fa-solid fa-play"></i>
+              </button>
+            </div>
+
+            <div
+              class="coll mx-1"
+              v-if="item.status == 'wait' && role == 'pto'"
+            >
+              <button class="btn btn-sm btn-primary" @click="start(item)">
+                <i class="fa-solid fa-play"></i>
+              </button>
+            </div>
+            <div
+              class="coll mx-1"
+              v-if="item.status == 'wait' && role == 'pto'"
+            >
+              <button
+                class="btn btn-sm btn-warning"
+                data-bs-toggle="modal"
+                data-bs-target="#building_put"
+                @click="items(item)"
+              >
+                <i class="fa fa-edit text-white"></i>
+              </button>
             </div>
           </div>
         </div>

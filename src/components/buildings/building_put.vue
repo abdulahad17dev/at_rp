@@ -79,7 +79,7 @@
                   required
                 />
               </div>
-              <div class="col-10 mx-auto">
+              <!-- <div class="col-10 mx-auto">
                 <label for="map_long"> Узунлик: </label>
                 <input
                   type="text"
@@ -100,7 +100,7 @@
                   required
                   placeholder="Кенглик"
                 />
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="modal-footer">

@@ -1017,3 +1017,16 @@ export function remove_other_work(id) {
 export function work_confirmation(id, data) {
   return instance.post(`work_confirmation/${id}`, data);
 }
+
+export function get_spent_items_to_work(
+  work_id,
+  worker_id,
+  type,
+  user_id,
+  page,
+  limit
+) {
+  return instance.get(
+    `get_spent_items_to_work?work_id=${work_id}&worker_id=${worker_id}&type=${type}&user_id=${user_id}&page=${page}&limit=${limit}`
+  );
+}

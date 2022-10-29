@@ -32,6 +32,15 @@
             >
               <i class="fa fa-edit text-white"></i>
             </button>
+            <router-link
+              :to="{
+                name: 'main_warehouse_product',
+                query: { id: item.id, name: item.name },
+              }"
+              class="btn btn-sm btn-primary mx-1"
+            >
+              <i class="fa-solid fa-right-long"></i>
+            </router-link>
           </td>
         </tr>
       </tbody>

@@ -73,7 +73,6 @@
             class="form-control form-control-sm mx-2 form-select smeta_sort"
             v-model="smeta_status"
           >
-            <option value="">барчаси</option>
             <option value="wait">кутиш</option>
             <option value="re-check">қайта-текширув</option>
             <option value="confirmed">тасдиқланган</option>
@@ -95,7 +94,7 @@
           <thead>
             <tr>
               <th style="width: 5%">ШНК</th>
-              <th style="width: 20%">Номи</th>
+              <th style="width: 15%">Номи</th>
               <th style="width: 5%">Ўлчов бирлиги</th>
               <th style="width: 10%">Ҳажм</th>
               <th style="width: 10%">Ишчи учун ажратилган вақт</th>
@@ -104,7 +103,7 @@
               <th style="width: 5%">Муддат</th>
               <th style="width: 10%">Бошлаш сана</th>
               <th style="width: 10%">Тугаш сана</th>
-              <th style="width: 5%"></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -153,7 +152,10 @@
               <td>
                 <button
                   class="btn btn-sm btn-success"
-                  v-if="item.Smeta.status == 'wait'"
+                  v-if="
+                    item.Smeta.status == 'wait' ||
+                    item.Smeta.status == 're-check'
+                  "
                   @click="work_id = item.Smeta.id"
                   data-bs-toggle="modal"
                   data-bs-target="#confirm_modal"
@@ -162,16 +164,29 @@
                 </button>
                 <button
                   class="btn btn-sm btn-primary mx-1"
-                  v-if="
-                    item.Smeta.status == 'wait' ||
-                    item.Smeta.status == 're-check'
-                  "
+                  v-if="item.Smeta.status == 'wait'"
                   @click="work_id = item.Smeta.id"
                   data-bs-toggle="modal"
                   data-bs-target="#recheck_modal"
                 >
                   <i class="fa-solid fa-rotate"></i>
                 </button>
+                <button
+                  class="btn btn-sm btn-danger"
+                  v-if="item.Smeta.status == 'confirmed'"
+                  @click="remove(item.Smeta.id, 'smeta_work_remove_confirmed')"
+                >
+                  <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+                <router-link
+                  :to="{
+                    name: 'work_info',
+                    query: { id: item.Smeta.id, type: 'smeta_work' },
+                  }"
+                  class="btn btn-sm btn-primary"
+                >
+                  <i class="fa-solid fa-circle-info"></i>
+                </router-link>
               </td>
             </tr>
           </tbody>
@@ -268,7 +283,6 @@
             class="form-control form-control-sm mx-2 form-select smeta_sort"
             v-model="other_status"
           >
-            <option value="">барчаси</option>
             <option value="wait">кутиш</option>
             <option value="re-check">қайта-текширув</option>
             <option value="confirmed">тасдиқланган</option>
@@ -315,7 +329,10 @@
               <td>
                 <button
                   class="btn btn-sm btn-success"
-                  v-if="item.Other_works.status == 'wait'"
+                  v-if="
+                    item.Other_works.status == 'wait' ||
+                    item.Other_works.status == 're-check'
+                  "
                   @click="work_id = item.Other_works.id"
                   data-bs-toggle="modal"
                   data-bs-target="#confirm_modal"
@@ -324,16 +341,31 @@
                 </button>
                 <button
                   class="btn btn-sm btn-primary mx-1"
-                  v-if="
-                    item.Other_works.status == 'wait' ||
-                    item.Other_works.status == 're-check'
-                  "
+                  v-if="item.Other_works.status == 'wait'"
                   @click="work_id = item.Other_works.id"
                   data-bs-toggle="modal"
                   data-bs-target="#recheck_modal"
                 >
                   <i class="fa-solid fa-rotate"></i>
                 </button>
+                <button
+                  class="btn btn-sm btn-danger"
+                  v-if="item.Other_works.status == 'confirmed'"
+                  @click="
+                    remove(item.Other_works.id, 'other_work_remove_confirmed')
+                  "
+                >
+                  <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+                <router-link
+                  :to="{
+                    name: 'work_info',
+                    query: { id: item.Other_works.id, type: 'other_work' },
+                  }"
+                  class="btn btn-sm btn-primary"
+                >
+                  <i class="fa-solid fa-circle-info"></i>
+                </router-link>
               </td>
             </tr>
           </tbody>
@@ -798,6 +830,45 @@ export default {
           catchError(err);
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("recheck_d").disabled = false;
+        });
+    },
+    remove(e, type) {
+      let data = new FormData();
+      data.append("type", type);
+      data.append("status", "");
+      data.append("file", "");
+      data.append("comment", "");
+      data.append("time_to_recheck", "");
+      data.append("attached_price", "");
+      this.$store.dispatch("setLoading", { isLoading: true });
+      work_confirmation(e, data)
+        .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
+          success(res).then(() => {
+            if (type == "smeta_work_remove_confirmed") {
+              this.get_smeta_work(
+                this.smeta_page,
+                this.smeta_limit,
+                this.smeta_search,
+                this.smeta_type,
+                this.smeta_status,
+                this.smeta_building_id
+              );
+            } else {
+              this.get_other_work(
+                this.other_search,
+                this.other_building_id,
+                this.other_status,
+                this.other_user_id,
+                this.other_page,
+                this.other_limit
+              );
+            }
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
   },
