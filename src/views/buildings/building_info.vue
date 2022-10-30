@@ -1,24 +1,67 @@
 <template>
-  <Header_item />
+  <Header_item :name="this.$route.query.name" />
   <div class="table-responsive">
     <table class="table table-sm table-hover">
       <thead>
         <tr>
           <th style="width: 10%">№</th>
-          <th style="width: 45%">Иш</th>
-          <th style="width: 15%">Ҳажм</th>
-          <th style="width: 15%">Нарх</th>
-          <th style="width: 15%">Сана</th>
+          <th style="width: 10%">Уста</th>
+          <th style="width: 10%">Ҳажм</th>
+          <th style="width: 10%">Ўлчов бирлиги</th>
+          <th style="width: 10%">Нарх</th>
+          <th style="width: 10%">Сана</th>
+          <th style="width: 10%">Техника/Материал</th>
+          <th style="width: 10%">Сарфланган соат</th>
+          <th style="width: 10%">Прорап</th>
+          <th style="width: 10%">
+            <select class="form-select form-select-sm" v-model="type">
+              <option :value="this.$route.query.type">
+                {{
+                  this.$route.query.type == "smeta_work"
+                    ? "сметадаги иш"
+                    : "сметадан ташқари иш"
+                }}
+              </option>
+              <option
+                :value="
+                  this.$route.query.type == 'smeta_work'
+                    ? 'machine_for_smeta_work'
+                    : 'machine_for_other_work'
+                "
+              >
+                {{
+                  this.$route.query.type == "smeta_work"
+                    ? "сарфланган техника"
+                    : "сарфланган техника"
+                }}
+              </option>
+              <option
+                :value="
+                  this.$route.query.type == 'smeta_work'
+                    ? 'w_product_for_smeta_work'
+                    : 'w_product_for_other_work'
+                "
+              >
+                {{
+                  this.$route.query.type == "smeta_work"
+                    ? "сарфланган материал"
+                    : "сарфланган материал"
+                }}
+              </option>
+            </select>
+          </th>
         </tr>
       </thead>
-      <!-- work, time, quantity, price -->
       <tbody>
         <tr v-for="(item, inc) in info" :key="item">
           <td>{{ inc + 1 }}</td>
-          <td>{{ item.work }}</td>
-          <td>{{ item.Spent_items_to_work.quantity }}</td>
+          <td>{{ item.worker }}</td>
           <td>
-            {{ new Intl.NumberFormat().format(item.Spent_items_to_work.price) }}
+            <Format_numbers :number="item.Spent_items_to_work.quantity" />
+          </td>
+          <td>{{ this.$route.query.olchov }}</td>
+          <td>
+            <Format_numbers :number="item.Spent_items_to_work.price" />
             сўм
           </td>
           <td>
@@ -32,6 +75,28 @@
                 .slice(0, 10)
             }}
           </td>
+          <td>
+            {{
+              item.Spent_items_to_work.type == "machine_for_smeta_work" ||
+              item.Spent_items_to_work.type == "machine_for_other_work" ||
+              item.Spent_items_to_work.type == "w_product_for_other_work" ||
+              item.Spent_items_to_work.type == "w_product_for_smeta_work"
+                ? item.item
+                : ""
+            }}
+          </td>
+          <td>
+            {{
+              item.Spent_items_to_work.type == "machine_for_smeta_work" ||
+              item.Spent_items_to_work.type == "machine_for_other_work" ||
+              item.Spent_items_to_work.type == "w_product_for_other_work" ||
+              item.Spent_items_to_work.type == "w_product_for_smeta_work"
+                ? item.Spent_items_to_work.time_spent
+                : ""
+            }}
+          </td>
+          <td>{{ item.user }}</td>
+          <td></td>
         </tr>
       </tbody>
     </table>
@@ -97,10 +162,11 @@ import Header_item from "@/components/header/header_item.vue";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import { get_spent_items_to_work } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 
 export default {
   name: "Work_Info",
-  components: { Header_item, Data_notfound },
+  components: { Header_item, Data_notfound, Format_numbers },
   data() {
     return {
       work_id: this.$route.query.id,
@@ -136,6 +202,17 @@ export default {
       );
       document.getElementById("scroll").scrollTop = 0;
     },
+    type(e) {
+      this.page = 0;
+      this.get_work_info(
+        this.work_id,
+        this.worker_id,
+        e,
+        this.user_id,
+        this.page,
+        this.limit
+      );
+    },
   },
   methods: {
     get_work_info(work_id, worker_id, type, user_id, page, limit) {
@@ -168,7 +245,7 @@ export default {
 
 <style lang="scss" scoped>
 table {
-  min-width: 900px;
+  min-width: 1200px;
   width: 100%;
 }
 

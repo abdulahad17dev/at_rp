@@ -96,11 +96,9 @@
             </td>
             <td>{{ item.product }}</td>
             <td>
-              {{
-                new Intl.NumberFormat().format(
-                  item.Supplies_by_bank_account.quantity
-                )
-              }}
+              <Format_numbers
+                :number="item.Supplies_by_bank_account.quantity"
+              />
             </td>
             <td>{{ item.Supplies_by_bank_account.olchov_birligi }}</td>
             <td>
@@ -129,8 +127,11 @@
                 />
                 <span class="input-group-text bg-white">сўм</span>
               </div>
-              <span v-else
-                >{{ item.Supplies_by_bank_account.total_price }} сўм</span
+              <span v-else>
+                <Format_numbers
+                  :number="item.Supplies_by_bank_account.total_price"
+                />
+                сўм</span
               >
             </td>
             <td>
@@ -435,6 +436,7 @@ import {
 } from "@/utils/request/request";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
   name: "SupplyRequest",
   data() {
@@ -788,7 +790,7 @@ export default {
       },
     },
   },
-  components: { Header_item, Data_notfound },
+  components: { Header_item, Data_notfound, Format_numbers },
 };
 </script>
 

@@ -173,7 +173,7 @@
             </td>
             <td>{{ item.product }}</td>
             <td>
-              {{ new Intl.NumberFormat().format(item.Supplies.quantity) }}
+              <Format_numbers :number="item.Supplies.quantity" />
             </td>
             <td>{{ item.Supplies.olchov_birligi }}</td>
             <td>
@@ -187,7 +187,10 @@
                   .slice(0, 10)
               }}
             </td>
-            <td>{{ item.Supplies.price }} сўм</td>
+            <td>
+              <Format_numbers :number="item.Supplies.price" />
+              сўм
+            </td>
             <td>
               <button
                 class="btn btn-sm btn-danger mx-1"
@@ -287,6 +290,7 @@ import {
 } from "@/utils/request/request";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
   name: "ProcheHistory",
   data() {
@@ -514,7 +518,7 @@ export default {
       this.limit
     );
   },
-  components: { Data_notfound },
+  components: { Data_notfound, Format_numbers },
 };
 </script>
 

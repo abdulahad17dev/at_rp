@@ -383,7 +383,7 @@
                       <tr>
                         <td scope="col">Ҳажм</td>
                         <td>
-                          {{ new Intl.NumberFormat().format(item.quantity) }}
+                          <Format_numbers :number="item.quantity" />
                           {{ item.olchov_birligi }}
                         </td>
                       </tr>
@@ -393,7 +393,10 @@
                       </tr>
                       <tr>
                         <td scope="col">Нарх</td>
-                        <td>{{ item.allotted_price }} сўм</td>
+                        <td>
+                          <Format_numbers :number="item.allotted_price" />
+                          сўм
+                        </td>
                       </tr>
                       <tr>
                         <td scope="col">Муддат</td>
@@ -460,7 +463,7 @@
                         <td>{{ inc + 1 }}</td>
                         <td>{{ item.name }}</td>
                         <td>
-                          {{ new Intl.NumberFormat().format(item.quantity) }}
+                          <Format_numbers :number="item.quantity" />
                         </td>
                         <td>{{ item.olchov_birligi }}</td>
                         <td>
@@ -765,6 +768,7 @@ import {
   success,
 } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
   name: "Sm_request",
   data() {
@@ -1191,7 +1195,7 @@ export default {
       },
     },
   },
-  components: { Data_notfound },
+  components: { Data_notfound, Format_numbers },
 };
 </script>
 

@@ -203,9 +203,7 @@
                 {{ item.Proche_sorovlar.name }}
               </td>
               <td>
-                {{
-                  new Intl.NumberFormat().format(item.Proche_sorovlar.quantity)
-                }}
+                <Format_numbers :number="item.Proche_sorovlar.quantity" />
               </td>
               <td>
                 {{ item.Proche_sorovlar.olchov_birligi }}

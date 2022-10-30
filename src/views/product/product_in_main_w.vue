@@ -160,8 +160,12 @@
             }}
           </td>
           <td>{{ item.Warehouse_products.olchov_birligi }}</td>
-          <td>{{ item.Warehouse_products.quantity }}</td>
-          <td>{{ item.Warehouse_products.price }}</td>
+          <td>
+            <Format_numbers :number="item.Warehouse_products.quantity" />
+          </td>
+          <td>
+            <Format_numbers :number="item.Warehouse_products.price" />
+          </td>
           <td>{{ item.building }}</td>
           <td>
             <button
@@ -231,10 +235,11 @@ import Header_item from "@/components/header/header_item.vue";
 import { warehouse_products } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 
 export default {
   name: "ProductMainWarehouse",
-  components: { Header_item, Data_notfound },
+  components: { Header_item, Data_notfound, Format_numbers },
   data() {
     return {
       type: "proche",

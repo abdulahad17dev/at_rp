@@ -393,7 +393,7 @@ let routes = [
     name: "work_info",
     meta: {
       requiresAuth: true,
-      title: "Иш маълумотлари",
+      title: "Бажарилган иш маълумотлари",
       icon: "fa-solid fa-clipboard-list",
       role: ["pto"],
     },

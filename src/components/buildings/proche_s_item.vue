@@ -35,7 +35,7 @@
             {{ item.Proche_sorovlar.name }}
           </td>
           <td style="width: 20%">
-            {{ new Intl.NumberFormat().format(item.Proche_sorovlar.quantity) }}
+            <Format_numbers :number="item.Proche_sorovlar.quantity" />
           </td>
           <td style="width: 20%">
             {{ item.Proche_sorovlar.olchov_birligi }}
@@ -71,9 +71,12 @@
 </template>
 
 <script>
+import Format_numbers from "@/utils/format/format_numbers.vue";
+
 export default {
   name: "ProcheSorovItem",
   props: ["data"],
+  components: { Format_numbers },
 };
 </script>
 

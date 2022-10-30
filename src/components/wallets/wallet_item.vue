@@ -13,7 +13,10 @@
         <tr v-for="(item, inc) in data || []" :key="item">
           <td>{{ inc + 1 }}</td>
           <td>{{ item.name }}</td>
-          <td>{{ new Intl.NumberFormat().format(item.balance) }} сўм</td>
+          <td>
+            <Format_numbers :number="item.balance" />
+            сўм
+          </td>
           <td>
             <button
               class="btn btn-sm btn-warning"
@@ -48,10 +51,13 @@
 </template>
 
 <script>
+import Format_numbers from "@/utils/format/format_numbers.vue";
+
 export default {
   name: "WalletItem",
   props: ["data"],
   emits: ["item", "get_w_id"],
+  components: { Format_numbers },
 };
 </script>
 

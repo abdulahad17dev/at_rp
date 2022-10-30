@@ -73,6 +73,7 @@
             class="form-control form-control-sm mx-2 form-select smeta_sort"
             v-model="smeta_status"
           >
+            <option value=" ">бажарилаётганлар</option>
             <option value="wait">кутиш</option>
             <option value="re-check">қайта-текширув</option>
             <option value="confirmed">тасдиқланган</option>
@@ -93,40 +94,72 @@
         <table class="table table-sm table-hover smeta work">
           <thead>
             <tr>
+              <th></th>
               <th style="width: 5%">ШНК</th>
               <th style="width: 15%">Номи</th>
               <th style="width: 5%">Ўлчов бирлиги</th>
               <th style="width: 10%">Ҳажм</th>
               <th style="width: 10%">Ишчи учун ажратилган вақт</th>
               <th style="width: 10%">Машина учун ажратилган вақт</th>
-              <th style="width: 10%">Сумма</th>
+              <th style="width: 10%">Ажратилган сумма</th>
               <th style="width: 5%">Муддат</th>
-              <th style="width: 10%">Бошлаш сана</th>
-              <th style="width: 10%">Тугаш сана</th>
+              <th style="width: 10%">Изох</th>
+              <th style="width: 10%">Сана</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in smeta_works" :key="item">
+              <td>
+                <span
+                  class="badge rounded-pill"
+                  style="padding: 7.8px 7.8px"
+                  :class="
+                    date < item.Smeta.end_date &&
+                    date_sort(item.Smeta.end_date) > 5
+                      ? 'bg-success text-success'
+                      : date < item.Smeta.end_date &&
+                        date_sort(item.Smeta.end_date) <= 5 &&
+                        date_sort(item.Smeta.end_date) >= 3
+                      ? 'bg-warning text-warning'
+                      : 'bg-danger text-danger'
+                  "
+                  ><i class="fa-solid fa-circle"></i>
+                </span>
+              </td>
               <td>{{ item.Smeta.shnk }}</td>
               <td>{{ item.Smeta.name }}</td>
               <td>{{ item.Smeta.olchov_birligi }}</td>
               <td>
-                {{ new Intl.NumberFormat().format(item.Smeta.quantity) }}
+                <span class="d-flex">
+                  <Format_numbers :number="item.Smeta.quantity" class="mx-1" />/
+                  {{ item.completed_quantity ? item.completed_quantity : 0 }}
+                </span>
               </td>
               <td>
-                {{ item.Smeta.allotted_time_for_worker }}
+                <Format_numbers :number="item.Smeta.allotted_time_for_worker" />
               </td>
               <td>
-                {{ item.Smeta.allotted_time_for_machine }}
+                <Format_numbers
+                  :number="item.Smeta.allotted_time_for_machine"
+                />
               </td>
               <td>
-                <span v-if="item.Smeta.alotted_price">{{
-                  item.Smeta.alotted_price
-                }}</span>
-                <span v-else>0</span> сўм
+                <span v-if="item.Smeta.allotted_price" class="d-flex">
+                  <Format_numbers
+                    :number="item.Smeta.allotted_price"
+                    class="mx-1"
+                  />
+                  сўм
+                </span>
+                <span v-else>бириктирилмаган</span>
               </td>
               <td>{{ item.Smeta.muddat }} кун</td>
+              <td>
+                {{ item.Smeta.comment }}
+                <hr class="m-0" />
+                {{ item.Smeta.comment_prorap }}
+              </td>
               <td>
                 {{
                   new Date(item.Smeta.start_date)
@@ -135,11 +168,8 @@
                       month: "numeric",
                       day: "numeric",
                     })
-                    .slice(0, 10)
-                }}
-              </td>
-              <td>
-                {{
+                    .slice(0, 10) +
+                  " | " +
                   new Date(item.Smeta.end_date)
                     .toLocaleDateString("en-us", {
                       year: "numeric",
@@ -151,7 +181,7 @@
               </td>
               <td>
                 <button
-                  class="btn btn-sm btn-success"
+                  class="btn btn-sm btn-success mx-1"
                   v-if="
                     item.Smeta.status == 'wait' ||
                     item.Smeta.status == 're-check'
@@ -172,8 +202,11 @@
                   <i class="fa-solid fa-rotate"></i>
                 </button>
                 <button
-                  class="btn btn-sm btn-danger"
-                  v-if="item.Smeta.status == 'confirmed'"
+                  class="btn btn-sm btn-danger mx-1"
+                  v-if="
+                    item.Smeta.status == 'confirmed' ||
+                    item.Smeta.status == 're-check'
+                  "
                   @click="remove(item.Smeta.id, 'smeta_work_remove_confirmed')"
                 >
                   <i class="fa-solid fa-circle-xmark"></i>
@@ -181,12 +214,25 @@
                 <router-link
                   :to="{
                     name: 'work_info',
-                    query: { id: item.Smeta.id, type: 'smeta_work' },
+                    query: {
+                      id: item.Smeta.id,
+                      type: 'smeta_work',
+                      name: item.Smeta.name,
+                      olchov: item.Smeta.olchov_birligi,
+                    },
                   }"
-                  class="btn btn-sm btn-primary"
+                  class="btn btn-sm btn-primary mx-1"
                 >
                   <i class="fa-solid fa-circle-info"></i>
                 </router-link>
+                <a
+                  v-if="item.Smeta.file"
+                  target="_blank"
+                  :href="img_path + item.Smeta.file"
+                  class="btn btn-sm btn-primary mx-1"
+                >
+                  <i class="fa-regular fa-image"></i>
+                </a>
               </td>
             </tr>
           </tbody>
@@ -283,6 +329,7 @@
             class="form-control form-control-sm mx-2 form-select smeta_sort"
             v-model="other_status"
           >
+            <option value=" ">бажарилаётганлар</option>
             <option value="wait">кутиш</option>
             <option value="re-check">қайта-текширув</option>
             <option value="confirmed">тасдиқланган</option>
@@ -303,18 +350,45 @@
         <table class="table table-sm table-hover smeta other_work">
           <thead>
             <tr>
-              <th style="width: 20%">Номи</th>
-              <th style="width: 20%">Ўлчов бирлиги</th>
-              <th style="width: 20%">Ҳажм</th>
-              <th style="width: 20%">Сана</th>
-              <th style="width: 20%"></th>
+              <th style="width: 10%">Номи</th>
+              <th style="width: 10%">Ўлчов бирлиги</th>
+              <th style="width: 10%">Ҳажм</th>
+              <th style="width: 10%">Ажратилган сумма</th>
+              <th style="width: 10%">Сана</th>
+              <th style="width: 10%">Қайта текширув сана</th>
+              <th style="width: 10%">Прорап</th>
+              <th style="width: 10%">Пто</th>
+              <th style="width: 10%">Изох</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in other_works" :key="item">
               <td>{{ item.Other_works.name }}</td>
               <td>{{ item.Other_works.olchov_birligi }}</td>
-              <td>{{ item.Other_works.quantity }}</td>
+              <td>
+                <span class="d-flex">
+                  <Format_numbers
+                    :number="item.Other_works.quantity"
+                    class="mx-1"
+                  />
+                  {{
+                    " / " + item.completed_quantity
+                      ? item.completed_quantity
+                      : 0
+                  }}
+                </span>
+              </td>
+              <td>
+                <span v-if="item.Other_works.attached_price" class="d-flex">
+                  <Format_numbers
+                    :number="item.Other_works.attached_price"
+                    class="mx-1"
+                  />
+                  сўм
+                </span>
+                <span v-else> бириктирилмаган </span>
+              </td>
               <td>
                 {{
                   new Date(item.Other_works.time)
@@ -327,8 +401,28 @@
                 }}
               </td>
               <td>
+                {{
+                  item.Other_works.time_to_recheck == "0000-00-00"
+                    ? "бириктирилмаган"
+                    : new Date(item.Other_works.time_to_recheck)
+                        .toLocaleDateString("en-us", {
+                          year: "numeric",
+                          month: "numeric",
+                          day: "numeric",
+                        })
+                        .slice(0, 10)
+                }}
+              </td>
+              <td>{{ item.prorap }}</td>
+              <td>{{ item.pto }}</td>
+              <td>
+                {{ item.Other_works.comment_prorap }}
+                <hr class="m-0" />
+                {{ item.Other_works.comment }}
+              </td>
+              <td>
                 <button
-                  class="btn btn-sm btn-success"
+                  class="btn btn-sm btn-success mx-1"
                   v-if="
                     item.Other_works.status == 'wait' ||
                     item.Other_works.status == 're-check'
@@ -349,8 +443,11 @@
                   <i class="fa-solid fa-rotate"></i>
                 </button>
                 <button
-                  class="btn btn-sm btn-danger"
-                  v-if="item.Other_works.status == 'confirmed'"
+                  class="btn btn-sm btn-danger mx-1"
+                  v-if="
+                    item.Other_works.status == 'confirmed' ||
+                    item.Other_works.status == 're-check'
+                  "
                   @click="
                     remove(item.Other_works.id, 'other_work_remove_confirmed')
                   "
@@ -360,12 +457,25 @@
                 <router-link
                   :to="{
                     name: 'work_info',
-                    query: { id: item.Other_works.id, type: 'other_work' },
+                    query: {
+                      id: item.Other_works.id,
+                      type: 'other_work',
+                      name: item.Other_works.name,
+                      olchov: item.Other_works.olchov_birligi,
+                    },
                   }"
-                  class="btn btn-sm btn-primary"
+                  class="btn btn-sm btn-primary mx-1"
                 >
                   <i class="fa-solid fa-circle-info"></i>
                 </router-link>
+                <a
+                  v-if="item.Other_works.file"
+                  target="_blank"
+                  :href="img_path + item.Other_works.file"
+                  class="btn btn-sm btn-primary mx-1"
+                >
+                  <i class="fa-regular fa-image"></i>
+                </a>
               </td>
             </tr>
           </tbody>
@@ -464,6 +574,26 @@
         <form @submit.prevent="confirm">
           <div class="modal-body">
             <div class="row gap-2">
+              <div
+                class="col-10 mx-auto"
+                v-if="confirm_body.type == 'other_work'"
+              >
+                <div class="form-group">
+                  <label for="number">Ажратилган сумма: </label>
+                  <div class="input-group">
+                    <input
+                      type="number"
+                      class="form-control form-control-sm"
+                      v-model="confirm_body.attached_price"
+                      step="any"
+                      min="1"
+                      required
+                      placeholder="Ажратилган сумма"
+                    />
+                    <span class="input-group-text bg-white">сўм</span>
+                  </div>
+                </div>
+              </div>
               <div class="col-10 mx-auto">
                 <div class="form-group">
                   <label for="file">Файл юклаш: </label>
@@ -478,6 +608,7 @@
                 <div class="form-group">
                   <label for="comment">Изох: </label>
                   <textarea
+                    placeholder="Изох"
                     v-model="confirm_body.comment"
                     class="form-control form-control-sm"
                   />
@@ -590,12 +721,13 @@ import {
   smeta_get,
   work_confirmation,
 } from "@/utils/request/request";
-import { catchError, success } from "@/utils/request/handle_api_err";
+import { catchError, link, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 
 export default {
   name: "BuildingWorks",
-  components: { Header_item, Data_notfound },
+  components: { Header_item, Data_notfound, Format_numbers },
   data() {
     return {
       smeta_building_id: this.$route.query.id,
@@ -631,6 +763,7 @@ export default {
         time_to_recheck: "",
         attached_price: "",
       },
+      date: new Date().toISOString().slice(0, 10),
     };
   },
   watch: {
@@ -871,6 +1004,15 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
+    date_sort(e) {
+      let date1 = new Date(e);
+      let date2 = new Date(this.date);
+
+      const diffTime = Math.abs(date1 - date2);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      return Number(diffDays);
+    },
   },
   created() {
     this.get_smeta_work(
@@ -881,6 +1023,11 @@ export default {
       this.smeta_status,
       this.smeta_building_id
     );
+  },
+  computed: {
+    img_path() {
+      return link;
+    },
   },
 };
 </script>
@@ -918,7 +1065,7 @@ table.work {
 }
 
 table.other_work {
-  min-width: 1000px;
+  min-width: 1700px;
   width: 100%;
   zoom: 75%;
 }

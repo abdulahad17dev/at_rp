@@ -20,14 +20,18 @@
           <td style="width: 20%">{{ item.Smeta.name }}</td>
           <td style="width: 5%">{{ item.Smeta.olchov_birligi }}</td>
           <td style="width: 10%">
-            {{ new Intl.NumberFormat().format(item.Smeta.quantity) }}
+            <Format_numbers :number="item.Smeta.quantity" />
           </td>
-          <td style="width: 10%">{{ item.Smeta.allotted_time_for_worker }}</td>
-          <td style="width: 10%">{{ item.Smeta.allotted_time_for_machine }}</td>
           <td style="width: 10%">
-            <span v-if="item.Smeta.alotted_price">{{
-              item.Smeta.alotted_price
-            }}</span>
+            <Format_numbers :number="item.Smeta.allotted_time_for_worker" />
+          </td>
+          <td style="width: 10%">
+            <Format_numbers :number="item.Smeta.allotted_time_for_machine" />
+          </td>
+          <td style="width: 10%">
+            <span v-if="item.Smeta.alotted_price">
+              <Format_numbers :number="item.Smeta.alotted_price" />
+            </span>
             <span v-else>0</span> сўм
           </td>
           <td style="width: 5%">{{ item.Smeta.muddat }} кун</td>
@@ -84,11 +88,15 @@
           <td></td>
           <td>{{ item.Smeta.name }}</td>
           <td>{{ item.Smeta.olchov_birligi }}</td>
-          <td>{{ item.Smeta.norm }}</td>
-          <td>{{ new Intl.NumberFormat().format(item.Smeta.quantity) }}</td>
+          <td>
+            <Format_numbers :number="item.Smeta.norm" />
+          </td>
+          <td>
+            <Format_numbers :number="item.Smeta.quantity" />
+          </td>
           <td colspan="6">
             <span v-if="item.Smeta.alotted_price">
-              {{ item.Smeta.alotted_price }}
+              <Format_numbers :number="item.Smeta.alotted_price" />
             </span>
             <span v-else>0</span> сўм
           </td>
@@ -100,11 +108,15 @@
           <td></td>
           <td>{{ item.Smeta.name }}</td>
           <td>{{ item.Smeta.olchov_birligi }}</td>
-          <td>{{ item.Smeta.norm }}</td>
-          <td>{{ new Intl.NumberFormat().format(item.Smeta.quantity) }}</td>
+          <td>
+            <Format_numbers :number="item.Smeta.norm" />
+          </td>
+          <td>
+            <Format_numbers :number="item.Smeta.quantity" />
+          </td>
           <td colspan="6">
             <span v-if="item.Smeta.alotted_price">
-              {{ item.Smeta.alotted_price }}
+              <Format_numbers :number="item.Smeta.alotted_price" />
             </span>
             <span v-else>0</span> сўм
           </td>
@@ -113,11 +125,15 @@
           <td></td>
           <td>{{ item.product_name }}</td>
           <td>{{ item.product_olchov_birligi }}</td>
-          <td>{{ item.Smeta.norm }}</td>
-          <td>{{ new Intl.NumberFormat().format(item.Smeta.quantity) }}</td>
+          <td>
+            <Format_numbers :number="item.Smeta.norm" />
+          </td>
+          <td>
+            <Format_numbers :number="item.Smeta.quantity" />
+          </td>
           <td colspan="6">
             <span v-if="item.Smeta.alotted_price">
-              {{ item.Smeta.alotted_price }}
+              <Format_numbers :number="item.Smeta.alotted_price" />
             </span>
             <span v-else>0</span> сўм
           </td>
@@ -128,6 +144,8 @@
 </template>
 
 <script>
+import Format_numbers from "@/utils/format/format_numbers.vue";
+
 export default {
   name: "SmetaItems",
   props: { data: Array },
@@ -142,6 +160,7 @@ export default {
       role: localStorage.getItem("role"),
     };
   },
+  components: { Format_numbers },
 };
 </script>
 

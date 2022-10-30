@@ -152,7 +152,7 @@
             {{ item.Proche_sorovlar.name }}
           </td>
           <td>
-            {{ new Intl.NumberFormat().format(item.Proche_sorovlar.quantity) }}
+            <Format_numbers :number="item.Proche_sorovlar.quantity" />
           </td>
           <td>
             {{ item.Proche_sorovlar.olchov_birligi }}
@@ -232,9 +232,10 @@
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import { building_get, proche_s_get } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
   name: "ProcheHistoryZakupshik",
-  components: { Data_notfound },
+  components: { Data_notfound, Format_numbers },
   data() {
     return {
       limit: 25,

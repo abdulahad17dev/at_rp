@@ -165,8 +165,12 @@
             }}
           </td>
           <td>{{ item.Warehouse_products.olchov_birligi }}</td>
-          <td>{{ item.Warehouse_products.quantity }}</td>
-          <td>{{ item.Warehouse_products.price }}</td>
+          <td>
+            <Format_numbers :number="item.Warehouse_products.quantity" />
+          </td>
+          <td>
+            <Format_numbers :number="item.Warehouse_products.price" /> сўм
+          </td>
           <td>{{ item.building }}</td>
           <td>
             <button
@@ -414,6 +418,7 @@ import {
 } from "@/utils/request/request";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
   name: "ProductInWarehouse",
   data() {
@@ -634,7 +639,7 @@ export default {
       this.limit
     );
   },
-  components: { Data_notfound },
+  components: { Data_notfound, Format_numbers },
 };
 </script>
 

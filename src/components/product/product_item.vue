@@ -112,7 +112,7 @@
                   <td style="width: 10%">{{ idx + 1 }}</td>
                   <td style="width: 20%">{{ item.name }}</td>
                   <td style="width: 20%">
-                    {{ new Intl.NumberFormat().format(item.quantity) }}
+                    <Format_numbers :number="item.quantity" />
                   </td>
                   <td style="width: 20%">{{ item.olchov_birligi }}</td>
                   <td style="width: 10%">
@@ -135,6 +135,7 @@
 </template>
 
 <script>
+import Format_numbers from "@/utils/format/format_numbers.vue";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import {
   product_composition_add,
@@ -164,7 +165,6 @@ export default {
       this.body.product_id = e;
       this.product_id = e;
       this.product_item = item;
-
       product_composition_get(e)
         .then((res) => {
           this.product_composition = res.data;
@@ -213,6 +213,7 @@ export default {
         });
     },
   },
+  components: { Format_numbers },
 };
 </script>
 

@@ -130,7 +130,7 @@
               <td>{{ item.product_olchov_birligi }}</td>
               <td>{{ item.Smeta.norm }}</td>
               <td>
-                {{ new Intl.NumberFormat().format(item.Smeta.quantity) }}
+                <Format_numbers :number="item.Smeta.quantity" />
               </td>
               <td></td>
             </tr>
@@ -205,6 +205,7 @@
 import { building_get, smeta_request_get } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
   name: "SmetaHistoryZakupshik",
   data() {
@@ -366,7 +367,7 @@ export default {
       this.user_id
     );
   },
-  components: { Data_notfound },
+  components: { Data_notfound, Format_numbers },
 };
 </script>
 

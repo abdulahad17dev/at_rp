@@ -144,7 +144,7 @@
             </td>
             <td>{{ item.product }}</td>
             <td>
-              {{ new Intl.NumberFormat().format(item.Supplies.quantity) }}
+              <Format_numbers :number="item.Supplies.quantity" />
             </td>
             <td>{{ item.Supplies.olchov_birligi }}</td>
             <td>
@@ -173,7 +173,10 @@
                 />
                 <span class="input-group-text bg-white">сўм</span>
               </div>
-              <span v-else>{{ item.Supplies.price }} сўм</span>
+              <span v-else>
+                <Format_numbers :number="item.Supplies.price" />
+                сўм</span
+              >
             </td>
             <td>
               <button
@@ -297,6 +300,7 @@ import {
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Header_item from "@/components/header/header_item.vue";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
   name: "SupplyHistory",
   data() {
@@ -633,7 +637,7 @@ export default {
       },
     },
   },
-  components: { Data_notfound, Header_item },
+  components: { Data_notfound, Header_item, Format_numbers },
 };
 </script>
 

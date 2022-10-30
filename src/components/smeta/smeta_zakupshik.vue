@@ -143,7 +143,7 @@
           <td>{{ item.product_olchov_birligi }}</td>
           <td>{{ item.Smeta.norm }}</td>
           <td>
-            {{ new Intl.NumberFormat().format(item.Smeta.quantity) }}
+            <Format_numbers :number="item.Smeta.quantity" />
           </td>
           <td></td>
           <td>
@@ -256,7 +256,8 @@
                 <tr>
                   <td scope="col">Ҳажм</td>
                   <td>
-                    {{ new Intl.NumberFormat().format(item.quantity) }}
+                    <Format_numbers :number="item.quantity" />
+
                     {{ item.olchov_birligi }}
                   </td>
                 </tr>
@@ -328,6 +329,7 @@ import {
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Accept_smeta_request from "./accept_smeta_request.vue";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
   name: "SmetaZakupshik",
   data() {
@@ -555,7 +557,7 @@ export default {
       this.user_id
     );
   },
-  components: { Data_notfound, Accept_smeta_request },
+  components: { Data_notfound, Accept_smeta_request, Format_numbers },
 };
 </script>
 

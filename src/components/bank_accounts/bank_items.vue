@@ -14,7 +14,8 @@
           <td>{{ inc + 1 }}</td>
           <td>{{ item.Bank_accounts.name }}</td>
           <td>
-            {{ new Intl.NumberFormat().format(item.Bank_accounts.balance) }} сўм
+            <Format_numbers :number="item.Bank_accounts.balance" />
+            сўм
           </td>
           <td>
             <button
@@ -78,6 +79,7 @@ import {
 import Bank_item_put from "./bank_item_put.vue";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Transfers from "./transfers.vue";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
   name: "BankAccounsItem",
   props: { data: Array },
@@ -188,7 +190,7 @@ export default {
         });
     },
   },
-  components: { Bank_item_put, Transfers },
+  components: { Bank_item_put, Transfers, Format_numbers },
 };
 </script>
 

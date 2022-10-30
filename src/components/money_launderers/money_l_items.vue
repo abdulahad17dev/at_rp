@@ -15,7 +15,8 @@
           <td>{{ inc + 1 }}</td>
           <td>{{ item.name }}</td>
           <td :class="item.balance >= 0 ? 'text-success' : 'text-danger'">
-            {{ new Intl.NumberFormat().format(item.balance) }} сўм
+            <Format_numbers :number="item.balance" />
+            сўм
           </td>
           <td>
             <a
@@ -60,6 +61,7 @@
 </template>
 
 <script>
+import Format_numbers from "@/utils/format/format_numbers.vue";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 export default {
   name: "MoneyLaundererItems",
@@ -79,7 +81,7 @@ export default {
       );
     },
   },
-  components: { Data_notfound },
+  components: { Data_notfound, Format_numbers },
 };
 </script>
 

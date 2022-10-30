@@ -79,9 +79,9 @@
               required
             />
 
-            <span v-else>{{
-              new Intl.NumberFormat().format(item.Proche_sorovlar.quantity)
-            }}</span>
+            <span v-else>
+              <Format_numbers :number="item.Proche_sorovlar.quantity" />
+            </span>
           </td>
           <td>
             <input
@@ -213,9 +213,10 @@
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import { proche_s_get, proche_s_put } from "@/utils/request/request";
 import { catchError, success } from "@/utils/request/handle_api_err";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
   name: "ProcheSorovAdmin",
-  components: { Data_notfound },
+  components: { Data_notfound, Format_numbers },
   data() {
     return {
       limit: 25,

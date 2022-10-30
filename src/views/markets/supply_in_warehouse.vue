@@ -229,7 +229,7 @@
                 <td>{{ item.product }}</td>
 
                 <td>
-                  {{ new Intl.NumberFormat().format(item.Supplies.quantity) }}
+                  <Format_numbers :number="item.Supplies.quantity" />
                 </td>
                 <td>{{ item.Supplies.olchov_birligi }}</td>
                 <td>
@@ -419,6 +419,7 @@ import { catchError, success } from "@/utils/request/handle_api_err";
 import Header_item from "@/components/header/header_item.vue";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Product_in_warehouse from "@/components/product/product_in_warehouse.vue";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
   name: "SupplyInWarehouse",
   data() {
@@ -687,7 +688,12 @@ export default {
       this.limit
     );
   },
-  components: { Header_item, Data_notfound, Product_in_warehouse },
+  components: {
+    Header_item,
+    Data_notfound,
+    Product_in_warehouse,
+    Format_numbers,
+  },
 };
 </script>
 

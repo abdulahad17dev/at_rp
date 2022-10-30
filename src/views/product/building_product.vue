@@ -108,8 +108,12 @@
                 }}
               </td>
               <td>{{ item.Warehouse_products.olchov_birligi }}</td>
-              <td>{{ item.Warehouse_products.quantity }}</td>
-              <td>{{ item.Warehouse_products.price }}</td>
+              <td>
+                <Format_numbers :number="item.Warehouse_products.quantity" />
+              </td>
+              <td>
+                <Format_numbers :number="item.Warehouse_products.price" />
+              </td>
               <td>
                 <form
                   @submit.prevent="
@@ -268,7 +272,9 @@
               <td>
                 {{ item.product }}
               </td>
-              <td>{{ item.Invalid_products.quantity }}</td>
+              <td>
+                <Format_numbers :number="item.Invalid_products.quantity" />
+              </td>
               <td>
                 {{
                   new Date(item.Invalid_products.time)
@@ -378,10 +384,11 @@ import {
 } from "@/utils/request/request";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 
 export default {
   name: "BuildingProducts",
-  components: { Header_item, Data_notfound },
+  components: { Header_item, Data_notfound, Format_numbers },
   data() {
     return {
       valid_type: "proche",

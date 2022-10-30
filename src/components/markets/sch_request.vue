@@ -18,11 +18,9 @@
             <td>{{ inc + 1 }}</td>
             <td>{{ item.product }}</td>
             <td>
-              {{
-                new Intl.NumberFormat().format(
-                  item.Supplies_by_bank_account.quantity
-                )
-              }}
+              <Format_numbers
+                :number="item.Supplies_by_bank_account.quantity"
+              />
             </td>
             <td>{{ item.Supplies_by_bank_account.olchov_birligi }}</td>
             <td>
@@ -36,7 +34,12 @@
                   .slice(0, 10)
               }}
             </td>
-            <td>{{ item.Supplies_by_bank_account.total_price }} сўм</td>
+            <td>
+              <Format_numbers
+                :number="item.Supplies_by_bank_account.total_price"
+              />
+              сўм
+            </td>
             <td>
               <button
                 class="btn btn-sm btn-success"
@@ -196,6 +199,7 @@ import {
   success,
 } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
   name: "ShotRequest",
   data() {
@@ -376,7 +380,7 @@ export default {
       this.limit
     );
   },
-  components: { Data_notfound },
+  components: { Data_notfound, Format_numbers },
 };
 </script>
 

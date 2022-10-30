@@ -171,11 +171,9 @@
             </td>
             <td>{{ item.product }}</td>
             <td>
-              {{
-                new Intl.NumberFormat().format(
-                  item.Supplies_by_bank_account.quantity
-                )
-              }}
+              <Format_numbers
+                :number="item.Supplies_by_bank_account.quantity"
+              />
             </td>
             <td>
               {{ item.Supplies_by_bank_account.olchov_birligi }}
@@ -192,7 +190,10 @@
               }}
             </td>
             <td colspan="2">
-              {{ item.Supplies_by_bank_account.total_price }} сўм
+              <Format_numbers
+                :number="item.Supplies_by_bank_account.total_price"
+              />
+              сўм
             </td>
           </tr>
         </tbody>
@@ -279,6 +280,7 @@
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import { markets_get, shot_request } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
   name: "ShotHistory",
   data() {
@@ -484,7 +486,7 @@ export default {
       this.limit
     );
   },
-  components: { Data_notfound },
+  components: { Data_notfound, Format_numbers },
 };
 </script>
 
