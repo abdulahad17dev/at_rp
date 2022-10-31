@@ -24,19 +24,6 @@
       >
         Проче сўровлар
       </button>
-      <button
-        class="btn btn-sm btn-light shadow-sm"
-        id="pills-homee-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-homee"
-        type="button"
-        role="tab"
-        aria-controls="pills-homee"
-        aria-selected="true"
-        @click="proche_history = true"
-      >
-        <i class="fa-solid fa-clock-rotate-left"></i>
-      </button>
     </li>
     <li class="nav-item d-flex mx-1" role="presentation">
       <button
@@ -51,19 +38,6 @@
         @click="smeta = true"
       >
         Сметалар
-      </button>
-      <button
-        class="btn btn-sm btn-light shadow-sm"
-        id="pills-profilee-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-profilee"
-        type="button"
-        role="tab"
-        aria-controls="pills-profilee"
-        aria-selected="false"
-        @click="smeta_history = true"
-      >
-        <i class="fa-solid fa-clock-rotate-left"></i>
       </button>
     </li>
   </ul>
@@ -193,7 +167,16 @@
                   </ul>
                 </div>
               </th>
-              <th></th>
+              <th>
+                <select class="form-select form-select-sm" v-model="status">
+                  <option value="zakupshikda_proche">закупшикда</option>
+                  <option value="taminotchida_proche">таминотчида</option>
+                  <option value="taminotchida_proche_qabul_qilindi">
+                    қабул қилинди
+                  </option>
+                  <option value="rejected_proche">руҳсат этилмаган</option>
+                </select>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -311,27 +294,11 @@
     </div>
     <div
       class="tab-pane fade"
-      id="pills-homee"
-      role="tabpanel"
-      aria-labelledby="pills-homee-tab"
-    >
-      <Proche_history_zakupshik v-if="proche_history" />
-    </div>
-    <div
-      class="tab-pane fade"
       id="pills-profile"
       role="tabpanel"
       aria-labelledby="pills-profile-tab"
     >
       <Smeta_zakupshik v-if="smeta" />
-    </div>
-    <div
-      class="tab-pane fade"
-      id="pills-profilee"
-      role="tabpanel"
-      aria-labelledby="pills-profilee-tab"
-    >
-      <Smeta_history_zakupshik v-if="smeta_history" />
     </div>
   </div>
 </template>
@@ -347,8 +314,7 @@ import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Accept_request from "@/components/buildings/accept_request.vue";
 import Smeta_zakupshik from "@/components/smeta/smeta_zakupshik.vue";
-import Smeta_history_zakupshik from "@/components/supply_history/smeta_history_zakupshik.vue";
-import Proche_history_zakupshik from "@/components/supply_history/proche_history_zakupshik.vue";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
   name: "ProcheSorovZakupshik",
   data() {
@@ -369,8 +335,6 @@ export default {
       buildings: [],
       text_building: "объектлар",
       smeta: false,
-      smeta_history: false,
-      proche_history: false,
     };
   },
   watch: {
@@ -381,6 +345,17 @@ export default {
         e,
         this.building_id,
         this.status,
+        this.user_id,
+        this.search
+      );
+    },
+    status(e) {
+      this.page = 0;
+      this.get_proche_s(
+        this.page,
+        this.limit,
+        this.building_id,
+        e,
         this.user_id,
         this.search
       );
@@ -505,8 +480,7 @@ export default {
     Data_notfound,
     Accept_request,
     Smeta_zakupshik,
-    Smeta_history_zakupshik,
-    Proche_history_zakupshik,
+    Format_numbers,
   },
 };
 </script>

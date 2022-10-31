@@ -5,9 +5,8 @@
         <tr>
           <td style="width: 8%">№</td>
           <td style="width: 32%">Номи</td>
-          <td style="width: 10%">Ўлчов бирлиги</td>
-          <td style="width: 15%">Норма</td>
-          <td style="width: 15%">Ҳажм</td>
+          <td style="width: 20%">Ўлчов бирлиги</td>
+          <td style="width: 20%">Ҳажм</td>
           <td style="width: 10%">
             <div class="dropdown">
               <button
@@ -117,8 +116,8 @@
           </td>
           <td style="width: 10%">
             <select class="form-select form-select-sm" v-model="status">
-              <option value=" ">қаъбул қилинмаганлар</option>
-              <option value="wait">қаъбул қилинганлар</option>
+              <option value=" ">бириктирилган</option>
+              <option value="wait">бириктирилмаган</option>
             </select>
           </td>
         </tr>
@@ -129,7 +128,12 @@
             class="td_grafik"
             data-bs-toggle="modal"
             data-bs-target="#smeta_grafik"
-            @click="get_grafik(item)"
+            @click="
+              get_grafik(item);
+              sum_supply_by_b_a_quantity = item.sum_supply_by_b_a_quantity;
+              sum_supply_quantity = item.sum_supply_quantity;
+              product_olchov_birligi = item.product_olchov_birligi;
+            "
           >
             {{ inc + 1 }}
             <button class="btn btn-sm">
@@ -141,7 +145,7 @@
           </td>
           <td>{{ item.product_name }}</td>
           <td>{{ item.product_olchov_birligi }}</td>
-          <td>{{ item.Smeta.norm }}</td>
+
           <td>
             <Format_numbers :number="item.Smeta.quantity" />
           </td>
@@ -236,7 +240,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <p class="modal-title" id="smeta_grafik_labek">
-            {{ product_name }} ни графиклиги
+            {{ product_name }}
           </p>
           <button
             type="button"
@@ -246,67 +250,114 @@
           ></button>
         </div>
         <div class="modal-body">
-          <div class="table-responsive">
-            <table class="table table-sm table-hover">
-              <tbody style="font-size: 12px">
-                <tr>
-                  <td scope="col">Номи</td>
-                  <td>{{ item.name }}</td>
-                </tr>
-                <tr>
-                  <td scope="col">Ҳажм</td>
-                  <td>
-                    <Format_numbers :number="item.quantity" />
+          <ul
+            class="nav nav-pills nav-justified nav-fill mb-3"
+            id="pills-tab"
+            role="tablist"
+          >
+            <li class="nav-item mx-1" role="presentation">
+              <button
+                class="btn btn-sm btn-light w-100 active"
+                id="pills-homme-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#pills-homme"
+                type="button"
+                role="tab"
+                aria-controls="pills-homme"
+                aria-selected="true"
+              >
+                График
+              </button>
+            </li>
+            <li class="nav-item mx-1" role="presentation">
+              <button
+                class="btn btn-sm btn-light w-100"
+                id="pills-profille-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#pills-profille"
+                type="button"
+                role="tab"
+                aria-controls="pills-profille"
+                aria-selected="false"
+              >
+                Олинган ҳажм
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content" id="pills-tabContent">
+            <div
+              class="tab-pane fade show active"
+              id="pills-homme"
+              role="tabpanel"
+              aria-labelledby="pills-homme-tab"
+            >
+              <div class="table-responsive">
+                <table class="table table-sm table-hover">
+                  <tbody style="font-size: 12px">
+                    <tr>
+                      <td scope="col">Номи</td>
+                      <td>{{ item.name }}</td>
+                    </tr>
+                    <tr>
+                      <td scope="col">Ҳажм</td>
+                      <td>
+                        <Format_numbers :number="item.quantity" />
 
-                    {{ item.olchov_birligi }}
-                  </td>
-                </tr>
-                <tr>
-                  <td scope="col">ШНК</td>
-                  <td>{{ item.shnk }}</td>
-                </tr>
-                <tr>
-                  <td scope="col">Нарх</td>
-                  <td>{{ item.allotted_price }} сўм</td>
-                </tr>
-                <tr>
-                  <td scope="col">Муддат</td>
-                  <td>{{ item.muddat }}</td>
-                </tr>
-                <tr>
-                  <td scope="col">Бошланиш санаси</td>
-                  <td>
-                    {{
-                      new Date(item.start_date)
-                        .toLocaleDateString({
-                          year: "numeric",
-                          month: "numeric",
-                          day: "numeric",
-                        })
-                        .slice(0, 10)
-                    }}
-                  </td>
-                </tr>
-                <tr>
-                  <td scope="col">Тугаш санаси</td>
-                  <td>
-                    {{
-                      new Date(item.end_date)
-                        .toLocaleDateString({
-                          year: "numeric",
-                          month: "numeric",
-                          day: "numeric",
-                        })
-                        .slice(0, 10)
-                    }}
-                  </td>
-                </tr>
-                <tr>
-                  <td scope="col">Норма</td>
-                  <td>{{ item.norm }}</td>
-                </tr>
-              </tbody>
-            </table>
+                        {{ item.olchov_birligi }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td scope="col">ШНК</td>
+                      <td>{{ item.shnk }}</td>
+                    </tr>
+                    <tr>
+                      <td scope="col">Муддат</td>
+                      <td>{{ item.muddat }}</td>
+                    </tr>
+                    <tr>
+                      <td scope="col">Бошланиш санаси</td>
+                      <td>
+                        {{
+                          new Date(item.start_date)
+                            .toLocaleDateString({
+                              year: "numeric",
+                              month: "numeric",
+                              day: "numeric",
+                            })
+                            .slice(0, 10)
+                        }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td scope="col">Тугаш санаси</td>
+                      <td>
+                        {{
+                          new Date(item.end_date)
+                            .toLocaleDateString({
+                              year: "numeric",
+                              month: "numeric",
+                              day: "numeric",
+                            })
+                            .slice(0, 10)
+                        }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="pills-profille"
+              role="tabpanel"
+              aria-labelledby="pills-profille-tab"
+            >
+              <h6>
+                <b>Олинган ҳажм: </b>
+                {{ sum_supply_by_b_a_quantity + sum_supply_quantity }}
+                {{ product_olchov_birligi }}
+              </h6>
+            </div>
           </div>
         </div>
       </div>
@@ -351,6 +402,9 @@ export default {
       search_building: "",
       buildings: [],
       text_building: "объектлар",
+      sum_supply_by_b_a_quantity: null,
+      sum_supply_quantity: null,
+      product_olchov_birligi: "",
     };
   },
   watch: {
