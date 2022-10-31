@@ -178,9 +178,9 @@
           class="form-control form-control-sm mx-2 form-select"
           v-model="limit"
         >
+          <option value="25">25</option>
+          <option value="50">50</option>
           <option value="100">100</option>
-          <option value="250">250</option>
-          <option value="500">500</option>
         </select>
       </div>
       <li class="page-item">
@@ -278,7 +278,7 @@
                   <td>
                     {{
                       new Date(item.start_date)
-                        .toLocaleDateString("en-us", {
+                        .toLocaleDateString({
                           year: "numeric",
                           month: "numeric",
                           day: "numeric",
@@ -292,7 +292,7 @@
                   <td>
                     {{
                       new Date(item.end_date)
-                        .toLocaleDateString("en-us", {
+                        .toLocaleDateString({
                           year: "numeric",
                           month: "numeric",
                           day: "numeric",
@@ -336,7 +336,7 @@ export default {
     return {
       smeta: [],
       pages: null,
-      limit: 100,
+      limit: 25,
       page: 0,
       search: "",
       building_id: 0,

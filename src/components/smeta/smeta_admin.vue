@@ -6,9 +6,9 @@
         class="form-control form-control-sm mx-2 form-select smeta_sort"
         v-model="limit"
       >
+        <option value="25">25</option>
+        <option value="50">50</option>
         <option value="100">100</option>
-        <option value="250">250</option>
-        <option value="500">500</option>
       </select>
       <select
         class="form-control form-control-sm mx-2 form-select smeta_sort"
@@ -74,7 +74,7 @@
           <td style="width: 10%">
             {{
               new Date(item.Smeta.start_date)
-                .toLocaleDateString("en-us", {
+                .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
@@ -85,7 +85,7 @@
           <td style="width: 10%">
             {{
               new Date(item.Smeta.end_date)
-                .toLocaleDateString("en-us", {
+                .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
@@ -232,7 +232,7 @@ export default {
   data() {
     return {
       building_id: this.$route.query.id,
-      limit: 100,
+      limit: 25,
       page: 0,
       pages: null,
       smeta: [],

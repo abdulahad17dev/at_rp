@@ -67,7 +67,7 @@
           <td>
             {{
               new Date(item.Spent_items_to_work.time)
-                .toLocaleDateString("en-us", {
+                .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",

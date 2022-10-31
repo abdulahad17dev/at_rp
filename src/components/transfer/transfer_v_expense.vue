@@ -16,7 +16,7 @@
           <td>
             {{
               new Date(item.Expenses.time)
-                .toLocaleDateString("en-us", {
+                .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",

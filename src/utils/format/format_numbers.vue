@@ -34,9 +34,20 @@ export default {
       if (this.all_num == false) {
         this.format_num = false;
         this.all_num = true;
-        navigator.clipboard.writeText(this.number);
         document.getElementById(`copied${this.id}`).style.transform =
           "scale(1)";
+        // navigator.clipboard.writeText(this.number);
+        const textArea = document.createElement("textarea");
+        textArea.value = String(this.number);
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+          document.execCommand("copy");
+        } catch (err) {
+          console.error("Unable to copy to clipboard", err);
+        }
+        document.body.removeChild(textArea);
         setTimeout(() => {
           document.getElementById(`copied${this.id}`).style.transform =
             "scale(0)";

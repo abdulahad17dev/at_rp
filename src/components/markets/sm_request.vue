@@ -407,7 +407,7 @@
                         <td>
                           {{
                             new Date(item.start_date)
-                              .toLocaleDateString("en-us", {
+                              .toLocaleDateString({
                                 year: "numeric",
                                 month: "numeric",
                                 day: "numeric",
@@ -421,7 +421,7 @@
                         <td>
                           {{
                             new Date(item.end_date)
-                              .toLocaleDateString("en-us", {
+                              .toLocaleDateString({
                                 year: "numeric",
                                 month: "numeric",
                                 day: "numeric",
@@ -775,7 +775,7 @@ export default {
     return {
       smeta: [],
       pages: null,
-      limit: 100,
+      limit: 25,
       page: 0,
       search: "",
       search2: "",

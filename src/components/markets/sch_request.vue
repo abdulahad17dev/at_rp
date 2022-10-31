@@ -26,7 +26,7 @@
             <td>
               {{
                 new Date(item.Supplies_by_bank_account.time)
-                  .toLocaleDateString("en-us", {
+                  .toLocaleDateString({
                     year: "numeric",
                     month: "numeric",
                     day: "numeric",

@@ -211,7 +211,7 @@
               <td>
                 {{
                   new Date(item.Proche_sorovlar.time)
-                    .toLocaleDateString("en-us", {
+                    .toLocaleDateString({
                       year: "numeric",
                       month: "numeric",
                       day: "numeric",

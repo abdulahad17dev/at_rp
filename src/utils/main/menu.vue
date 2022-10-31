@@ -107,7 +107,7 @@ export default {
         {
           to: "/product_request_zakupshik",
           icon: "fa-solid fa-rectangle-list fa-2x",
-          title: "Олиниши керак бўлган материаллар",
+          title: "Тақсимланиши керак бўлган материаллар",
           role: ["zakupshik"],
         },
         {

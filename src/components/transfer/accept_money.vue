@@ -56,7 +56,7 @@
           <td>
             {{
               new Date(item.time)
-                .toLocaleDateString("en-us", {
+                .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",

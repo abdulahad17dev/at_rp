@@ -235,7 +235,7 @@
                 <td>
                   {{
                     new Date(item.Supplies.time)
-                      .toLocaleDateString("en-us", {
+                      .toLocaleDateString({
                         year: "numeric",
                         month: "numeric",
                         day: "numeric",

@@ -278,7 +278,7 @@
               <td>
                 {{
                   new Date(item.Invalid_products.time)
-                    .toLocaleDateString("en-us", {
+                    .toLocaleDateString({
                       year: "numeric",
                       month: "numeric",
                       day: "numeric",

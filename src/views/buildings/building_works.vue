@@ -65,9 +65,9 @@
             class="form-control form-control-sm mx-2 form-select smeta_sort"
             v-model="smeta_limit"
           >
+            <option value="25">25</option>
+            <option value="50">50</option>
             <option value="100">100</option>
-            <option value="250">250</option>
-            <option value="500">500</option>
           </select>
           <select
             class="form-control form-control-sm mx-2 form-select smeta_sort"
@@ -163,7 +163,7 @@
               <td>
                 {{
                   new Date(item.Smeta.start_date)
-                    .toLocaleDateString("en-us", {
+                    .toLocaleDateString({
                       year: "numeric",
                       month: "numeric",
                       day: "numeric",
@@ -171,7 +171,7 @@
                     .slice(0, 10) +
                   " | " +
                   new Date(item.Smeta.end_date)
-                    .toLocaleDateString("en-us", {
+                    .toLocaleDateString({
                       year: "numeric",
                       month: "numeric",
                       day: "numeric",
@@ -372,11 +372,8 @@
                     :number="item.Other_works.quantity"
                     class="mx-1"
                   />
-                  {{
-                    " / " + item.completed_quantity
-                      ? item.completed_quantity
-                      : 0
-                  }}
+                  /
+                  {{ item.completed_quantity ? item.completed_quantity : 0 }}
                 </span>
               </td>
               <td>
@@ -392,7 +389,7 @@
               <td>
                 {{
                   new Date(item.Other_works.time)
-                    .toLocaleDateString("en-us", {
+                    .toLocaleDateString({
                       year: "numeric",
                       month: "numeric",
                       day: "numeric",
@@ -405,7 +402,7 @@
                   item.Other_works.time_to_recheck == "0000-00-00"
                     ? "бириктирилмаган"
                     : new Date(item.Other_works.time_to_recheck)
-                        .toLocaleDateString("en-us", {
+                        .toLocaleDateString({
                           year: "numeric",
                           month: "numeric",
                           day: "numeric",
@@ -731,7 +728,7 @@ export default {
   data() {
     return {
       smeta_building_id: this.$route.query.id,
-      smeta_limit: 100,
+      smeta_limit: 25,
       smeta_page: 0,
       smeta_pages: null,
       smeta_search: "",

@@ -24,7 +24,7 @@
           <td>
             {{
               new Date(item.start_date)
-                .toLocaleDateString("en-us", {
+                .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
@@ -35,7 +35,7 @@
           <td>
             {{
               new Date(item.end_date)
-                .toLocaleDateString("en-us", {
+                .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
@@ -140,7 +140,7 @@
           <td>
             {{
               new Date(item.start_date)
-                .toLocaleDateString("en-us", {
+                .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
@@ -151,7 +151,7 @@
           <td>
             {{
               new Date(item.end_date)
-                .toLocaleDateString("en-us", {
+                .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
@@ -208,7 +208,7 @@
           <td>
             {{
               new Date(item.start_date)
-                .toLocaleDateString("en-us", {
+                .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
@@ -219,7 +219,7 @@
           <td>
             {{
               new Date(item.end_date)
-                .toLocaleDateString("en-us", {
+                .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
@@ -353,7 +353,7 @@
             <b>Бошлаш санаси: </b>
             {{
               new Date(item.start_date)
-                .toLocaleDateString("en-us", {
+                .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
@@ -365,7 +365,7 @@
             <b>Тугаш санаси: </b>
             {{
               new Date(item.end_date)
-                .toLocaleDateString("en-us", {
+                .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",

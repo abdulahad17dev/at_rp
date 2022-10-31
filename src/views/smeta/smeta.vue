@@ -8,9 +8,9 @@
         class="form-control form-control-sm mx-2 form-select smeta_sort"
         v-model="limit"
       >
+        <option value="25">25</option>
+        <option value="50">50</option>
         <option value="100">100</option>
-        <option value="250">250</option>
-        <option value="500">500</option>
       </select>
       <select
         class="form-control form-control-sm mx-2 form-select smeta_sort"
@@ -115,7 +115,7 @@ export default {
   data() {
     return {
       building_id: this.$route.query.id,
-      limit: 100,
+      limit: 25,
       page: 0,
       pages: null,
       smeta: [],
@@ -254,29 +254,57 @@ export default {
         });
     },
     remove(id) {
-      document.getElementById("remove_smeta").disabled = true;
-      this.$store.dispatch("setLoading", { isLoading: true });
-      smeta_remove(id, "smeta_id")
-        .then((res) => {
-          this.$store.dispatch("setLoading", { isLoading: false });
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 10000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
 
-          success(res).then(() => {
-            this.get_smeta(
-              this.page,
-              this.limit,
-              this.search,
-              this.type,
-              this.status,
-              this.building_id
-            );
-          });
-          document.getElementById("remove_smeta").disabled = false;
-        })
-        .catch((err) => {
-          catchError(err);
-          this.$store.dispatch("setLoading", { isLoading: false });
-          document.getElementById("remove_smeta").disabled = false;
-        });
+      Toast.fire({
+        icon: "warning",
+        width: 600,
+        title: "Smeta o'chirilishiga rozimisiz !",
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonText: "<i class='fa-solid fa-circle-check'></i>",
+        cancelButtonText: "<i class='fa-solid fa-circle-xmark'></i>",
+        confirmButtonColor: "#0D6EFD",
+        cancelButtonColor: "#DC3545",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          document.getElementById("remove_smeta").disabled = true;
+          this.$store.dispatch("setLoading", { isLoading: true });
+          smeta_remove(id, "smeta_id")
+            .then((res) => {
+              this.$store.dispatch("setLoading", { isLoading: false });
+
+              success(res).then(() => {
+                this.get_smeta(
+                  this.page,
+                  this.limit,
+                  this.search,
+                  this.type,
+                  this.status,
+                  this.building_id
+                );
+              });
+              document.getElementById("remove_smeta").disabled = false;
+            })
+            .catch((err) => {
+              catchError(err);
+              this.$store.dispatch("setLoading", { isLoading: false });
+              document.getElementById("remove_smeta").disabled = false;
+            });
+        } else {
+          result;
+        }
+      });
     },
     remove_all_smeta() {
       const Toast = Swal.mixin({

@@ -38,7 +38,7 @@
           <td style="width: 10%">
             {{
               new Date(item.Smeta.start_date)
-                .toLocaleDateString("en-us", {
+                .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
@@ -49,7 +49,7 @@
           <td style="width: 10%">
             {{
               new Date(item.Smeta.end_date)
-                .toLocaleDateString("en-us", {
+                .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
