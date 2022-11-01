@@ -345,6 +345,13 @@
             >
               яна</span
             >
+            <span
+              class="badge rounded-pill float-end"
+              :class="`bg-${item.status_work} text-${item.status_work}`"
+              style="padding: 3.5px 6.5px !important; user-select: none"
+              v-if="item.status_work"
+              >1
+            </span>
           </h5>
         </div>
         <div class="card-body text-center">

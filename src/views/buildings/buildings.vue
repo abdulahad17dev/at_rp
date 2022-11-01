@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import { building_add, building_get } from "@/utils/request/request";
+import { building_add, building_get, smeta_get } from "@/utils/request/request";
 import {
   catchError,
   position_err,
@@ -121,6 +121,7 @@ export default {
       long: "",
       status: "",
       role: localStorage.getItem("role"),
+      date: new Date().toISOString().slice(0, 10),
     };
   },
   watch: {
@@ -155,8 +156,12 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       building_get(page, limit, search, status)
         .then((res) => {
-          this.buildings = res.data.data;
-          this.pages = res.data.pages;
+          if (this.role == "pto") {
+            this.get_item_works(res.data, 0);
+          } else {
+            this.buildings = res.data.data;
+            this.pages = res.data.pages;
+          }
           this.$store.dispatch("setLoading", { isLoading: false });
         })
         .catch((err) => {
@@ -202,6 +207,41 @@ export default {
           catchError(err);
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("building_disabled").disabled = false;
+        });
+    },
+    date_sort(e) {
+      let date1 = new Date(e);
+      let date2 = new Date(this.date);
+
+      const diffTime = Math.abs(date1 - date2);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      return Number(diffDays);
+    },
+    get_item_works(data, index) {
+      this.$store.dispatch("setLoading", { isLoading: true });
+      smeta_get(0, 1, "", "grafik", " ", data.data[index].id)
+        .then((child) => {
+          if (
+            this.date < child.data.data[0]?.Smeta.end_date &&
+            this.date_sort(child.data.data[0]?.Smeta.end_date) <= 5 &&
+            this.date_sort(child.data.data[0]?.Smeta.end_date) >= 3
+          ) {
+            data.data[index].status_work = "warning";
+          } else if (this.date > child.data.data[0]?.Smeta.end_date) {
+            data.data[index].status_work = "danger";
+          }
+          if (index !== data.data.length - 1) {
+            this.get_item_works(data, index + 1);
+          } else {
+            this.buildings = data.data;
+            this.pages = data.pages;
+            this.$store.dispatch("setLoading", { isLoading: false });
+          }
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
   },
