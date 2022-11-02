@@ -161,8 +161,8 @@ export default {
           } else {
             this.buildings = res.data.data;
             this.pages = res.data.pages;
+            this.$store.dispatch("setLoading", { isLoading: false });
           }
-          this.$store.dispatch("setLoading", { isLoading: false });
         })
         .catch((err) => {
           catchError(err);
@@ -219,7 +219,6 @@ export default {
       return Number(diffDays);
     },
     get_item_works(data, index) {
-      this.$store.dispatch("setLoading", { isLoading: true });
       smeta_get(0, 1, "", "grafik", " ", data.data[index].id)
         .then((child) => {
           if (

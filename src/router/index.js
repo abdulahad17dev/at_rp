@@ -25,6 +25,7 @@ import supply_history from "../views/markets/supply_history.vue";
 import supply_request from "../views/schot_request/supply_request.vue";
 import supply_accept from "../views/markets/supply_in_warehouse.vue";
 import transfered_products from "../views/transfer_history/transfered_products.vue";
+import transfered_products_main_w from "../views/transfer_history/transfered_product_main_w.vue";
 import building_products from "../views/product/building_product.vue";
 import main_warehouse_product from "../views/product/product_in_main_w.vue";
 import building_works from "../views/buildings/building_works.vue";
@@ -365,6 +366,17 @@ let routes = [
       role: ["omborchi"],
     },
     component: transfered_products,
+  },
+  {
+    path: "/transfered_products_main_w",
+    name: "transfered_products_main_w",
+    meta: {
+      requiresAuth: true,
+      title: "Ўтказилган материаллар тарихи",
+      icon: "fa-solid fa-clock-rotate-left",
+      role: ["bazachi"],
+    },
+    component: transfered_products_main_w,
   },
   {
     path: "/building_products",
