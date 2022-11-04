@@ -143,12 +143,8 @@ export default {
       }
     },
     status(e) {
-      if (e.length > 0) {
-        this.get_buildings(this.page, this.limit, this.search, this.status);
-      } else if (e.length == 0) {
-        this.get_buildings(this.page, this.limit, this.search, this.status);
-        this.page = 0;
-      }
+      this.page = 0;
+      this.get_buildings(this.page, this.limit, this.search, e);
     },
   },
   methods: {
@@ -156,7 +152,7 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       building_get(page, limit, search, status)
         .then((res) => {
-          if (this.role == "pto") {
+          if (this.role == "pto" && res.data.data.length) {
             this.get_item_works(res.data, 0);
           } else {
             this.buildings = res.data.data;
@@ -219,7 +215,15 @@ export default {
       return Number(diffDays);
     },
     get_item_works(data, index) {
-      smeta_get(0, 1, "", "grafik", " ", data.data[index].id)
+      smeta_get(
+        0,
+        1,
+        "",
+        "grafik",
+        "for_colour",
+        data.data[index].id,
+        "end_date"
+      )
         .then((child) => {
           if (
             this.date < child.data.data[0]?.Smeta.end_date &&
@@ -234,6 +238,11 @@ export default {
             this.get_item_works(data, index + 1);
           } else {
             this.buildings = data.data;
+            // .sort((a) => {
+            //   if (a.status_work == "danger") return -1;
+            //   else if (a.status_work == "warning") return 0;
+            //   else return 1;
+            // });
             this.pages = data.pages;
             this.$store.dispatch("setLoading", { isLoading: false });
           }

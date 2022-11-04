@@ -203,3 +203,35 @@
     background: #1e1e2e;
     border: 1px solid #fff;
 }
+
+.dark .card.wallet:hover .overlay,
+.dark .card.wallet .overlay {
+    background: rgb(50, 70, 100, 0.2);
+}
+
+.dark .card.card.wallet .circle::after {
+    background: rgb(50, 70, 100);
+}
+
+.dark .card.card.wallet .circle {
+    border: 2px solid rgb(50, 70, 100);
+    background: var(--dark);
+}
+
+.dark .card.card.wallet:hover .circle {
+    background: rgb(50, 70, 100, 0.2);
+}
+
+.dark strong.str {
+    color: #fff !important;
+}
+
+.dark .dark_img {
+    background: rgb(0, 0, 0, 0.5);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+}

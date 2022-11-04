@@ -257,7 +257,8 @@
                   smeta_search,
                   smeta_type,
                   smeta_status,
-                  smeta_building_id
+                  smeta_building_id,
+                  smeta_order_by
                 )
               "
             >
@@ -734,6 +735,7 @@ export default {
       smeta_search: "",
       smeta_status: "wait",
       smeta_type: "grafik",
+      smeta_order_by: "",
       smeta_works: [],
       other_search: "",
       other_building_id: this.$route.query.id,
@@ -772,7 +774,8 @@ export default {
         this.smeta_search,
         this.smeta_type,
         this.smeta_status,
-        this.smeta_building_id
+        this.smeta_building_id,
+        this.smeta_order_by
       );
     },
     smeta_page(e) {
@@ -782,7 +785,8 @@ export default {
         this.smeta_search,
         this.smeta_type,
         this.smeta_status,
-        this.smeta_building_id
+        this.smeta_building_id,
+        this.smeta_order_by
       );
       document.getElementById("scroll").scrollTop = 0;
     },
@@ -794,7 +798,8 @@ export default {
         this.smeta_search,
         this.smeta_type,
         e,
-        this.smeta_building_id
+        this.smeta_building_id,
+        this.smeta_order_by
       );
     },
     smeta_status(e) {
@@ -805,7 +810,8 @@ export default {
         this.smeta_search,
         this.smeta_type,
         e,
-        this.smeta_building_id
+        this.smeta_building_id,
+        this.smeta_order_by
       );
     },
     other_search(e) {
@@ -832,9 +838,17 @@ export default {
     },
   },
   methods: {
-    get_smeta_work(page, limit, search, type, status, building_id) {
+    get_smeta_work(
+      page,
+      limit,
+      search,
+      type,
+      status,
+      building_id,
+      smeta_order_by
+    ) {
       this.$store.dispatch("setLoading", { isLoading: true });
-      smeta_get(page, limit, search, type, status, building_id)
+      smeta_get(page, limit, search, type, status, building_id, smeta_order_by)
         .then((res) => {
           this.smeta_works = res.data.data;
           this.smeta_pages = res.data.pages;
@@ -887,7 +901,8 @@ export default {
                 this.smeta_search,
                 this.smeta_type,
                 this.smeta_status,
-                this.smeta_building_id
+                this.smeta_building_id,
+                this.smeta_order_by
               );
             } else {
               this.get_other_work(
@@ -939,7 +954,8 @@ export default {
                 this.smeta_search,
                 this.smeta_type,
                 this.smeta_status,
-                this.smeta_building_id
+                this.smeta_building_id,
+                this.smeta_order_by
               );
             } else {
               this.get_other_work(
@@ -982,7 +998,8 @@ export default {
                 this.smeta_search,
                 this.smeta_type,
                 this.smeta_status,
-                this.smeta_building_id
+                this.smeta_building_id,
+                this.smeta_order_by
               );
             } else {
               this.get_other_work(
@@ -1018,7 +1035,8 @@ export default {
       this.smeta_search,
       this.smeta_type,
       this.smeta_status,
-      this.smeta_building_id
+      this.smeta_building_id,
+      this.smeta_order_by
     );
   },
   computed: {

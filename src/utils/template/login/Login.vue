@@ -1,5 +1,6 @@
 <template>
   <div class="login">
+    <div class="dark_img"></div>
     <div class="container login_container">
       <div class="row">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
@@ -113,6 +114,7 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
+  position: relative;
 }
 
 .btn-login {
@@ -133,5 +135,9 @@ export default {
 
 .img-responsive {
   border-radius: 10px;
+}
+
+.dark_image {
+  display: none;
 }
 </style>

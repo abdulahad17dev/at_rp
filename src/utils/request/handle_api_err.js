@@ -43,7 +43,7 @@ export function catchError(error) {
       },
     }).fire({
       icon: "warning",
-      title: "Сервер билан алоқа мавжуд эмас",
+      title: "Интернет билан алоқа мавжуд эмас",
     });
   } else if (error.response.status == 422) {
     return Swal.mixin({

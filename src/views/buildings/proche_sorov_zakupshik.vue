@@ -37,7 +37,7 @@
         aria-selected="false"
         @click="smeta = true"
       >
-        Сметалар
+        Сметадаги материаллар
       </button>
     </li>
   </ul>
@@ -215,10 +215,20 @@
                       item.Proche_sorovlar.name
                     )
                   "
+                  v-if="item.Proche_sorovlar.status == 'zakupshikda_proche'"
                   data-bs-toggle="modal"
                   data-bs-target="#accept_request"
                 >
                   <i class="fa-solid fa-circle-check text-white"></i>
+                </button>
+
+                <button
+                  class="btn btn-sm btn-danger"
+                  @click="remove(item.Proche_sorovlar.id)"
+                  v-if="item.Proche_sorovlar.status == 'taminotchida_proche'"
+                  :id="item.Proche_sorovlar.id"
+                >
+                  <i class="fa-solid fa-circle-xmark text-white"></i>
                 </button>
               </td>
             </tr>
@@ -335,6 +345,13 @@ export default {
       buildings: [],
       text_building: "объектлар",
       smeta: false,
+      body: {
+        name: "string",
+        quantity: 0,
+        olchov_birligi: "string",
+        comment: "string",
+        building_id: 0,
+      },
     };
   },
   watch: {
@@ -473,6 +490,30 @@ export default {
       this.building_id = id;
       this.text_building = name;
       document.getElementById("select_bank_building").click();
+    },
+    remove(e) {
+      document.getElementById(e).disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      proche_s_put(e, "false", 0, this.body)
+        .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById(e).disabled = false;
+          success(res).then(() => {
+            this.get_proche_s(
+              this.page,
+              this.limit,
+              this.building_id,
+              this.status,
+              this.user_id,
+              this.search
+            );
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById(e).disabled = false;
+        });
     },
   },
   components: {

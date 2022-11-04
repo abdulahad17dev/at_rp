@@ -12,13 +12,15 @@
       :key="item"
     >
       <router-link :to="item.to" class="text-decoration-none">
-        <div class="card shadow border-0">
-          <div class="card-body text-center">
+        <a href="#" class="card wallet">
+          <div class="overlay mt-4"></div>
+          <div class="circle mt-4 mb-3">
             <i :class="item.icon"></i>
-            <hr />
-            <strong>{{ item.title }}</strong>
           </div>
-        </div>
+          <strong class="str mb-4 text-center" id="title">{{
+            item.title
+          }}</strong>
+        </a>
       </router-link>
     </div>
   </div>
@@ -119,7 +121,7 @@ export default {
         {
           to: "/supply_request",
           icon: "fa-solid fa-box fa-2x",
-          title: "Омбордаги материаллар",
+          title: "Ҳисоб рақамидан олинган таминотлар",
           role: ["bugalter"],
         },
         {
@@ -137,6 +139,17 @@ export default {
       ],
     };
   },
+  mounted() {
+    let title = document.querySelectorAll("#title");
+    title.forEach((element) => {
+      let item = element.innerHTML;
+      if (item.length > 25) {
+        element.style.fontSize = "16px";
+      } else {
+        element.style.fontSize = "17px";
+      }
+    });
+  },
   components: { Header_item },
 };
 </script>
@@ -144,5 +157,112 @@ export default {
 <style lang="scss">
 .card-body {
   color: #2c3e50;
+}
+
+.wallet {
+  --bg-color: #2c3e50;
+  --bg-color-light: #4e667f;
+  --text-color-hover: #fff;
+  --box-shadow-color: rgb(79, 102, 127, 0.48);
+}
+
+.card.wallet {
+  background: #fff;
+  border-top-right-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease-out;
+  text-decoration: none;
+  color: #fff;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.11), 0 2px 8px var(--box-shadow-color);
+}
+
+.card.wallet strong {
+  color: #2c3e50;
+}
+
+.card.wallet:hover {
+  transform: translateY(-5px) scale(1.005) translateZ(0);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.11), 0 4px 12px var(--box-shadow-color);
+}
+
+.card.wallet:hover .overlay {
+  transform: scale(5) translateZ(0);
+}
+
+.card.wallet:hover .circle {
+  border-color: var(--bg-color-light);
+  background: var(--bg-color);
+}
+
+.card.wallet:hover .circle:after {
+  background: var(--bg-color-light);
+}
+
+.card.wallet:hover .str {
+  color: var(--text-color-hover);
+}
+
+.card.wallet:active {
+  transform: scale(1) translateZ(0);
+  box-shadow: 0 15px 24px rgba(0, 0, 0, 0.11),
+    0 15px 24px var(--box-shadow-color);
+}
+
+.card.wallet .str {
+  font-size: 17px;
+  color: #4c5656;
+  z-index: 1000;
+  transition: color 0.3s ease-out;
+}
+
+.circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--bg-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease-out;
+}
+
+.circle:after {
+  content: "";
+  width: 85px;
+  height: 85px;
+  display: block;
+  position: absolute;
+  background: var(--bg-color);
+  border-radius: 50%;
+  // top: 5px;
+  // left: 5px;
+  transition: opacity 0.3s ease-out;
+}
+
+.circle svg {
+  z-index: 10000;
+  transform: translateZ(0);
+}
+
+.overlay {
+  width: 87px;
+  position: absolute;
+  height: 87px;
+  border-radius: 50%;
+  background: var(--bg-color);
+  justify-content: center;
+  top: 10px;
+  z-index: 0;
+  transition: transform 0.3s ease-out;
 }
 </style>

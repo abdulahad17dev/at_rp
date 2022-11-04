@@ -103,7 +103,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, inc) in products_accept" :key="item">
+            <tr v-for="(item, inc) in products_share" :key="item">
               <td>{{ inc + 1 }}</td>
               <td>{{ item.product }}</td>
               <td>{{ item.sum_quantity }}</td>
@@ -132,13 +132,13 @@
             </tr>
           </tbody>
         </table>
-        <Data_notfound v-if="products_accept == ''" />
+        <Data_notfound v-if="products_share == ''" />
       </div>
 
       <nav
         aria-label="Page navigation example"
         class="mt-2"
-        v-if="products_accept != ''"
+        v-if="products_share != ''"
       >
         <ul class="pagination pagination-sm justify-content-end">
           <li class="page-item">
@@ -146,7 +146,7 @@
               type="button"
               class="page-link"
               @click="
-                get_transfered_product(
+                get_transfered_product_sh(
                   sh_status2,
                   sh_type,
                   sh_from,
@@ -464,7 +464,7 @@ export default {
     },
     sh_limit(e) {
       this.page = 0;
-      this.get_transfered_product(
+      this.get_transfered_product_sh(
         this.sh_status2,
         this.sh_type,
         this.sh_from,
@@ -476,7 +476,7 @@ export default {
       );
     },
     sh_page(e) {
-      this.get_transfered_product(
+      this.get_transfered_product_sh(
         this.sh_status2,
         this.sh_type,
         this.sh_from,
@@ -490,7 +490,7 @@ export default {
     },
     sh_search(e) {
       this.page = 0;
-      this.get_transfered_product(
+      this.get_transfered_product_sh(
         this.sh_status2,
         this.sh_type,
         this.sh_from,
@@ -503,7 +503,7 @@ export default {
     },
     sh_type(e) {
       this.page = 0;
-      this.get_transfered_product(
+      this.get_transfered_product_sh(
         this.sh_status2,
         e,
         this.sh_from,
@@ -516,7 +516,7 @@ export default {
     },
     sh_status(e) {
       this.page = 0;
-      this.get_transfered_product(
+      this.get_transfered_product_sh(
         this.sh_status2,
         this.sh_type,
         this.sh_from,
@@ -589,7 +589,7 @@ export default {
 
       transfered_products(status2, type, from, to, status, search, page, limit)
         .then((res) => {
-          this.products_accept = res.data.data;
+          this.products_share = res.data.data;
           this.sh_pages = res.data.pages;
           this.$store.dispatch("setLoading", { isLoading: false });
         })

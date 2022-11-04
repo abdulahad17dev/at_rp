@@ -84,10 +84,9 @@
           <thead class="">
             <tr>
               <th style="width: 10%">№</th>
-              <th style="width: 20%">Номи</th>
-              <th style="width: 15%">Ўлчов бирлиги</th>
-              <th style="width: 20%">Ҳажм</th>
-              <th style="width: 15%">Нарх</th>
+              <th style="width: 25%">Номи</th>
+              <th style="width: 25%">Ўлчов бирлиги</th>
+              <th style="width: 25%">Ҳажм</th>
               <th>
                 <select class="form-select form-select-sm" v-model="valid_type">
                   <option value="proche">проче</option>
@@ -110,9 +109,6 @@
               <td>{{ item.Warehouse_products.olchov_birligi }}</td>
               <td>
                 <Format_numbers :number="item.Warehouse_products.quantity" />
-              </td>
-              <td>
-                <Format_numbers :number="item.Warehouse_products.price" />
               </td>
               <td>
                 <form

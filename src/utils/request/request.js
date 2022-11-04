@@ -85,38 +85,64 @@ export function building_put(data) {
 
 // smeta
 
-export function smeta_get(page, limit, search, type, status, id) {
-  if (search && status && type) {
+export function smeta_get(page, limit, search, type, status, id, order_by) {
+  if (search && status && type && order_by)
+    return instance.get(
+      `get_smeta/${id}?search=${search}&status=${status}&type=${type}&order_by=${order_by}&page=${page}&limit=${limit}`
+    );
+  else if (search && status && type && !order_by)
     return instance.get(
       `get_smeta/${id}?search=${search}&status=${status}&type=${type}&page=${page}&limit=${limit}`
     );
-  } else if (search && status && !type) {
+  else if (search && status && !type && order_by)
+    return instance.get(
+      `get_smeta/${id}?search=${search}&status=${status}&order_by=${order_by}&page=${page}&limit=${limit}`
+    );
+  else if (search && !status && type && order_by)
+    return instance.get(
+      `get_smeta/${id}?search=${search}&type=${type}&order_by=${order_by}&page=${page}&limit=${limit}`
+    );
+  else if (!search && status && type && order_by)
+    return instance.get(
+      `get_smeta/${id}?status=${status}&type=${type}&order_by=${order_by}&page=${page}&limit=${limit}`
+    );
+  else if (search && status && !type && !order_by)
     return instance.get(
       `get_smeta/${id}?search=${search}&status=${status}&page=${page}&limit=${limit}`
     );
-  } else if (search && !status && type) {
+  else if (!search && !status && type && order_by)
+    return instance.get(
+      `get_smeta/${id}?type=${type}&order_by=${order_by}&page=${page}&limit=${limit}`
+    );
+  else if (!search && status && !type && order_by)
+    return instance.get(
+      `get_smeta/${id}?status=${status}&order_by=${order_by}&page=${page}&limit=${limit}`
+    );
+  else if (search && !status && type && !order_by)
     return instance.get(
       `get_smeta/${id}?search=${search}&type=${type}&page=${page}&limit=${limit}`
     );
-  } else if (!search && status && type) {
+  else if (!search && status && type && !order_by)
     return instance.get(
       `get_smeta/${id}?status=${status}&type=${type}&page=${page}&limit=${limit}`
     );
-  } else if (search && !status && !type) {
+  else if (search && !status && !type && !order_by)
     return instance.get(
       `get_smeta/${id}?search=${search}&page=${page}&limit=${limit}`
     );
-  } else if (!search && !status && type) {
-    return instance.get(
-      `get_smeta/${id}?type=${type}&page=${page}&limit=${limit}`
-    );
-  } else if (!search && status && !type) {
+  else if (!search && status && !type && !order_by)
     return instance.get(
       `get_smeta/${id}?status=${status}&page=${page}&limit=${limit}`
     );
-  } else {
-    return instance.get(`get_smeta/${id}?page=${page}&limit=${limit}`);
-  }
+  else if (!search && !status && type && !order_by)
+    return instance.get(
+      `get_smeta/${id}?type=${type}&page=${page}&limit=${limit}`
+    );
+  else if (!search && !status && !type && order_by)
+    return instance.get(
+      `get_smeta/${id}?order_by=${order_by}&page=${page}&limit=${limit}`
+    );
+  else return instance.get(`get_smeta/${id}?page=${page}&limit=${limit}`);
 }
 
 export function smeta_request_get(page, limit, search, status, id, user_id) {

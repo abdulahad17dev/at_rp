@@ -66,152 +66,11 @@
       role="tabpanel"
       aria-labelledby="pills-home-tab"
     >
-      <div class="shadow-sm rounded">
-        <form @submit.prevent="transfer">
-          <div class="row m-1 mb-2">
-            <div class="col-md-3 col-lg-3 col-sm-6 my-1">
-              <label for="balance">
-                Сумма:
-                <span class="text-primary"
-                  >{{ new Intl.NumberFormat().format(body.money) }} сўм
-                </span></label
-              >
-              <div class="input-group input-group-sm">
-                <input
-                  id="balance"
-                  type="number"
-                  step="any"
-                  class="form-control"
-                  v-model="body.money"
-                  required
-                  min="1"
-                />
-                <span class="input-group-text bg-white">сўм</span>
-              </div>
-            </div>
-            <div class="col-md-3 col-lg-3 col-sm-6 my-1">
-              <label for="user">Ходим: </label>
-              <div class="dropdown">
-                <button
-                  class="btn btn-light btn-sm dropdown-toggle"
-                  type="button"
-                  id="user_text"
-                  data-bs-toggle="dropdown"
-                  data-bs-auto-close="outside"
-                  aria-expanded="false"
-                  @click="
-                    users.length
-                      ? ''
-                      : get_users(page_user, limit_user, search_user)
-                  "
-                >
-                  {{ text }}
-                </button>
-                <ul
-                  class="dropdown-menu border-top-0"
-                  aria-labelledby="user_text"
-                >
-                  <li>
-                    <input
-                      type="search"
-                      class="form-control form-control-sm"
-                      placeholder="қидириш ..."
-                      v-model="search_user"
-                    />
-                  </li>
-                  <li>
-                    <ul class="dropdown-items">
-                      <li
-                        v-for="item in users"
-                        :key="item"
-                        @click="select(item.id, item.name)"
-                      >
-                        <a class="dropdown-item">{{ item.name }}</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li v-if="users != ''">
-                    <hr class="dropdown-divider m-0" />
-                  </li>
-                  <li>
-                    <nav
-                      aria-label="Page navigation example"
-                      class="mt-2"
-                      v-if="users != ''"
-                    >
-                      <ul class="pagination pagination-sm justify-content-end">
-                        <li class="page-item">
-                          <button
-                            type="button"
-                            class="page-link"
-                            @click="
-                              users_get(page_user, limit_user, search_user)
-                            "
-                          >
-                            <i class="fa-solid fa-rotate"></i>
-                          </button>
-                        </li>
-                        <li class="page-item">
-                          <button
-                            type="button"
-                            class="page-link"
-                            @click="page_user--"
-                            :disabled="page_user == 0"
-                          >
-                            <i class="fa-solid fa-angle-left text-dark"></i>
-                          </button>
-                        </li>
-                        <li class="page-item">
-                          <button
-                            type="button"
-                            class="page-link text-dark"
-                            disabled
-                          >
-                            {{ page_user + 1 }}
-                          </button>
-                        </li>
-                        <li class="page-item">
-                          <button
-                            type="button"
-                            class="page-link"
-                            @click="page_user++"
-                            :disabled="page_user == pages_user - 1"
-                          >
-                            <i class="fa-solid fa-angle-right text-dark"></i>
-                          </button>
-                        </li>
-                      </ul>
-                    </nav>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-md-3 col-lg-3 col-sm-6 my-1">
-              <label for="comment">Изох: </label>
-              <textarea
-                id="comment"
-                class="form-control form-control-sm"
-                v-model="body.comment"
-              ></textarea>
-            </div>
-            <div class="col-md-3 col-lg-3 col-sm-6 my-1">
-              <label>ㅤ</label>
-              <button
-                class="btn btn-primary btn-sm w-100"
-                type="submit"
-                :disabled="!body.money || !body.to_ || !body.comment"
-                id="transfer_disabled"
-              >
-                <i class="fa-solid fa-circle-check"></i>
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
+      <div class="shadow-sm rounded"></div>
 
       <form @submit.prevent="time">
-        <div class="row m-1">
-          <div class="col">
+        <div class="row">
+          <div class="col mt-1">
             <input
               type="date"
               class="form-control form-control-sm"
@@ -219,7 +78,7 @@
               required
             />
           </div>
-          <div class="col">
+          <div class="col mt-1">
             <input
               type="date"
               class="form-control form-control-sm"
@@ -227,7 +86,7 @@
               required
             />
           </div>
-          <div class="col">
+          <div class="col mt-1 mb-1">
             <div class="btn-group w-100">
               <button
                 class="btn btn-outline-primary btn-sm w-80"
@@ -241,6 +100,14 @@
                 v-if="from_time && to_time"
               >
                 <i class="fa-solid fa-circle-xmark"></i>
+              </button>
+              <button
+                class="btn btn-sm btn-outline-secondary"
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#pay"
+              >
+                <i class="fa-solid fa-money-bill-transfer"></i>
               </button>
             </div>
           </div>
@@ -324,6 +191,173 @@
           </li>
         </ul>
       </nav>
+    </div>
+  </div>
+
+  <div class="modal fade" id="pay">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Пул ўтказиш</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            id="transfer_close"
+          ></button>
+        </div>
+        <form @submit.prevent="transfer">
+          <div class="modal-body">
+            <div class="row m-1 mb-2">
+              <div class="col-10 mx-auto my-1">
+                <label for="balance">
+                  Сумма:
+                  <span class="text-primary"
+                    >{{ new Intl.NumberFormat().format(body.money) }} сўм
+                  </span></label
+                >
+                <div class="input-group input-group-sm">
+                  <input
+                    id="balance"
+                    type="number"
+                    step="any"
+                    class="form-control"
+                    v-model="body.money"
+                    required
+                    min="1"
+                  />
+                  <span class="input-group-text bg-white">сўм</span>
+                </div>
+              </div>
+              <div class="col-10 mx-auto my-1">
+                <label for="user">Ходим: </label>
+                <div class="dropdown">
+                  <button
+                    class="btn btn-light btn-sm dropdown-toggle"
+                    type="button"
+                    id="user_text"
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                    aria-expanded="false"
+                    @click="
+                      users.length
+                        ? ''
+                        : get_users(page_user, limit_user, search_user)
+                    "
+                  >
+                    {{ text }}
+                  </button>
+                  <ul
+                    class="dropdown-menu border-top-0"
+                    aria-labelledby="user_text"
+                  >
+                    <li>
+                      <input
+                        type="search"
+                        class="form-control form-control-sm"
+                        placeholder="қидириш ..."
+                        v-model="search_user"
+                      />
+                    </li>
+                    <li>
+                      <ul class="dropdown-items">
+                        <li
+                          v-for="item in users"
+                          :key="item"
+                          @click="select(item.id, item.name)"
+                        >
+                          <a class="dropdown-item">{{ item.name }}</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li v-if="users != ''">
+                      <hr class="dropdown-divider m-0" />
+                    </li>
+                    <li>
+                      <nav
+                        aria-label="Page navigation example"
+                        class="mt-2"
+                        v-if="users != ''"
+                      >
+                        <ul
+                          class="pagination pagination-sm justify-content-end"
+                        >
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link"
+                              @click="
+                                users_get(page_user, limit_user, search_user)
+                              "
+                            >
+                              <i class="fa-solid fa-rotate"></i>
+                            </button>
+                          </li>
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link"
+                              @click="page_user--"
+                              :disabled="page_user == 0"
+                            >
+                              <i class="fa-solid fa-angle-left text-dark"></i>
+                            </button>
+                          </li>
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link text-dark"
+                              disabled
+                            >
+                              {{ page_user + 1 }}
+                            </button>
+                          </li>
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link"
+                              @click="page_user++"
+                              :disabled="page_user == pages_user - 1"
+                            >
+                              <i class="fa-solid fa-angle-right text-dark"></i>
+                            </button>
+                          </li>
+                        </ul>
+                      </nav>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-10 mx-auto my-1">
+                <label for="comment">Изох: </label>
+                <textarea
+                  id="comment"
+                  class="form-control form-control-sm"
+                  v-model="body.comment"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="submit"
+              class="btn btn-outline-primary btn-sm"
+              id="transfer_disabled"
+              :disabled="!body.money || !body.to_ || !body.comment"
+            >
+              <i class="fa-solid fa-circle-check"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-danger btn-sm"
+              data-bs-dismiss="modal"
+            >
+              <i class="fa-solid fa-circle-xmark"></i>
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -440,6 +474,7 @@ export default {
       transfer_money_to_users(this.body)
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("transfer_close").click();
           document.getElementById("transfer_disabled").disabled = false;
           success(res).then(() => {
             this.transfer_to_users(

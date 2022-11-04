@@ -116,8 +116,8 @@
           </td>
           <td style="width: 10%">
             <select class="form-select form-select-sm" v-model="status">
-              <option value=" ">бириктирилган</option>
-              <option value="wait">бириктирилмаган</option>
+              <option value=" ">бириктирилмаган</option>
+              <option value="wait">бириктирилган</option>
             </select>
           </td>
         </tr>
@@ -163,7 +163,10 @@
             <button
               class="btn btn-sm btn-danger"
               @click="remove(item.Smeta.id)"
-              v-if="status == 'wait'"
+              v-if="
+                status == 'wait' &&
+                item.sum_supply_by_b_a_quantity + item.sum_supply_quantity == 0
+              "
               :id="item.Smeta.id"
             >
               <i class="fa-solid fa-circle-xmark text-white"></i>
@@ -269,7 +272,11 @@
                 График
               </button>
             </li>
-            <li class="nav-item mx-1" role="presentation">
+            <li
+              class="nav-item mx-1"
+              role="presentation"
+              v-if="sum_supply_by_b_a_quantity + sum_supply_quantity != 0"
+            >
               <button
                 class="btn btn-sm btn-light w-100"
                 id="pills-profille-tab"
@@ -351,6 +358,7 @@
               id="pills-profille"
               role="tabpanel"
               aria-labelledby="pills-profille-tab"
+              v-if="sum_supply_by_b_a_quantity + sum_supply_quantity != 0"
             >
               <h6>
                 <b>Олинган ҳажм: </b>

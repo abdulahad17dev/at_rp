@@ -62,7 +62,9 @@
         <button
           type="button"
           class="page-link"
-          @click="get_smeta(page, limit, search, type, status, building_id)"
+          @click="
+            get_smeta(page, limit, search, type, status, building_id, order_by)
+          "
         >
           <i class="fa-solid fa-rotate"></i>
         </button>
@@ -122,6 +124,7 @@ export default {
       search: "",
       status: "",
       type: "",
+      order_by: "",
       role: localStorage.getItem("role"),
     };
   },
@@ -134,7 +137,8 @@ export default {
         this.search,
         this.type,
         this.status,
-        this.building_id
+        this.building_id,
+        this.order_by
       );
     },
     page(e) {
@@ -144,7 +148,8 @@ export default {
         this.search,
         this.type,
         this.status,
-        this.building_id
+        this.building_id,
+        this.order_by
       );
       document.getElementById("scroll").scrollTop = 0;
     },
@@ -157,7 +162,8 @@ export default {
           this.search,
           this.type,
           this.status,
-          this.building_id
+          this.building_id,
+          this.order_by
         );
       } else if (e.length == 0) {
         this.get_smeta(
@@ -166,7 +172,8 @@ export default {
           this.search,
           this.type,
           this.status,
-          this.building_id
+          this.building_id,
+          this.order_by
         );
         this.page = 0;
       }
@@ -185,7 +192,8 @@ export default {
           this.search,
           this.type,
           this.status,
-          this.building_id
+          this.building_id,
+          this.order_by
         );
       } else if (e.length == 0) {
         this.get_smeta(
@@ -194,16 +202,17 @@ export default {
           this.search,
           this.type,
           this.status,
-          this.building_id
+          this.building_id,
+          this.order_by
         );
         this.page = 0;
       }
     },
   },
   methods: {
-    get_smeta(page, limit, search, type, status, building_id) {
+    get_smeta(page, limit, search, type, status, building_id, order_by) {
       this.$store.dispatch("setLoading", { isLoading: true });
-      smeta_get(page, limit, search, type, status, building_id)
+      smeta_get(page, limit, search, type, status, building_id, order_by)
         .then((res) => {
           this.smeta = res.data.data;
           this.pages = res.data.pages;
@@ -229,7 +238,8 @@ export default {
               this.search,
               this.type,
               this.status,
-              this.building_id
+              this.building_id,
+              this.order_by
             );
             e.file = "";
             document.getElementById("file-6").value = null;
@@ -244,7 +254,8 @@ export default {
               this.search,
               this.type,
               this.status,
-              this.building_id
+              this.building_id,
+              this.order_by
             );
           });
           this.$store.dispatch("setLoading2", { isLoading2: false });
@@ -291,7 +302,8 @@ export default {
                   this.search,
                   this.type,
                   this.status,
-                  this.building_id
+                  this.building_id,
+                  this.order_by
                 );
               });
               document.getElementById("remove_smeta").disabled = false;
@@ -342,7 +354,8 @@ export default {
                   this.search,
                   this.type,
                   this.status,
-                  this.building_id
+                  this.building_id,
+                  this.order_by
                 );
               });
             })
@@ -363,7 +376,8 @@ export default {
       this.search,
       this.type,
       this.status,
-      this.building_id
+      this.building_id,
+      this.order_by
     );
   },
   components: { Smeta_add, Smeta_item, Data_notfound, Header_item },

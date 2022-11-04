@@ -219,20 +219,13 @@ table {
 }
 
 .table-responsive {
-  min-height: 52vh;
-  max-height: 52vh;
-}
-
-@media (max-width: 575px) {
-  .table-responsive {
-    min-height: 41vh;
-    max-height: 41vh;
-  }
+  min-height: 63vh;
+  max-height: 63vh;
 }
 @media (max-width: 500px) {
   .table-responsive {
-    min-height: 58vh;
-    max-height: 58vh;
+    min-height: 80vh;
+    max-height: 80vh;
   }
 }
 </style>

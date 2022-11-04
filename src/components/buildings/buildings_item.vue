@@ -331,8 +331,11 @@
       v-for="(item, inc) in data"
       :key="item"
     >
-      <div class="card shadow">
-        <div class="card-header bg-white">
+      <div
+        class="card"
+        :class="item.status_work ? item.status_work : 'success'"
+      >
+        <div class="card-body text-center">
           <span class="float-start badge bg-primary">{{ inc + 1 }}</span>
           <h5 class="card-title text-center mb-0">
             <span class="descinline"> {{ shorttext(item.name) }} </span>
@@ -345,16 +348,11 @@
             >
               яна</span
             >
-            <span
-              class="badge rounded-pill float-end"
-              :class="`bg-${item.status_work} text-${item.status_work}`"
-              style="padding: 3.5px 6.5px !important; user-select: none"
-              v-if="item.status_work"
-              >1
-            </span>
           </h5>
-        </div>
-        <div class="card-body text-center">
+          <hr
+            class="mt-2 mb-2"
+            :class="item.status_work ? item.status_work : 'success'"
+          />
           <h6><b>Манзил: </b> {{ item.address }}</h6>
           <h6>
             <b>Бошлаш санаси: </b>
@@ -395,9 +393,11 @@
             v-else-if="item.status == 'end'"
             >якунланди</span
           >
-        </div>
-        <div class="card-footer bg-white">
-          <div class="d-flex justify-content-center">
+          <hr
+            class="mt-2 mb-2"
+            :class="item.status_work ? item.status_work : 'success'"
+          />
+          <div class="d-flex justify-content-center zoom">
             <div class="coll mx-1" v-if="role == 'admin'">
               <router-link
                 :to="{
@@ -663,7 +663,7 @@ export default {
           icon: "warning",
           width: 600,
           title:
-            "Obyekt qurilishi boshlanganidan so'ng uning ma'lumotlarini o'zgartirib bo'lmaydi",
+            "Обект қурилиши бошланганидан сўнг унинг маълумотларини ўзгартириб бўлмайди",
           showCancelButton: true,
           showConfirmButton: true,
           confirmButtonText: "<i class='fa-solid fa-circle-check'></i>",
@@ -692,19 +692,47 @@ export default {
       }
     },
     finish(e) {
-      this.$store.dispatch("setLoading", { isLoading: true });
-      e.status = "end";
-      building_put(e)
-        .then((res) => {
-          this.$store.dispatch("setLoading", { isLoading: false });
-          success(res).then(() => {
-            this.$emit("get_buildings");
-          });
-        })
-        .catch((err) => {
-          catchError(err);
-          this.$store.dispatch("setLoading", { isLoading: false });
-        });
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 10000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
+      Toast.fire({
+        icon: "warning",
+        width: 600,
+        title: "Объектни ростанҳам якунламоқчимисиз",
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonText: "<i class='fa-solid fa-circle-check'></i>",
+        cancelButtonText: "<i class='fa-solid fa-circle-xmark'></i>",
+        confirmButtonColor: "#0D6EFD",
+        cancelButtonColor: "#DC3545",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$store.dispatch("setLoading", { isLoading: true });
+          e.status = "end";
+          building_put(e)
+            .then((res) => {
+              this.$store.dispatch("setLoading", { isLoading: false });
+              success(res).then(() => {
+                this.$emit("get_buildings");
+              });
+            })
+            .catch((err) => {
+              catchError(err);
+              this.$store.dispatch("setLoading", { isLoading: false });
+            });
+        } else {
+          result;
+        }
+      });
     },
     select_id(id, name, nm) {
       this.building_id = id;
@@ -847,7 +875,68 @@ div.row_building {
   display: none;
 }
 
-.card-footer div {
+.d-flex.justify-content-center.zoom {
   zoom: 93%;
+}
+
+hr {
+  border: none;
+  opacity: 1;
+  border-radius: 50px;
+}
+
+hr.success {
+  background: green;
+  animation: success 0.8s infinite alternate linear;
+}
+
+hr.danger {
+  background: red;
+  animation: danger 0.8s infinite alternate linear;
+}
+
+hr.warning {
+  background: #ffc107;
+  animation: warning 0.8s infinite alternate linear;
+}
+
+.card.success {
+  border: 1px solid green;
+  animation: success 0.8s infinite alternate linear;
+}
+
+.card.danger {
+  border: 1px solid red;
+  animation: danger 0.8s infinite alternate linear;
+}
+
+.card.warning {
+  border: 1px solid #ffc107;
+  animation: warning 0.8s infinite alternate linear;
+}
+
+@keyframes success {
+  0% {
+    box-shadow: 0 0 0 1.8px rgb(0, 128, 0, 0.4);
+  }
+}
+@keyframes danger {
+  0% {
+    box-shadow: 0 0 0 1.8px rgb(255, 0, 0, 0.4);
+  }
+}
+@keyframes warning {
+  0% {
+    box-shadow: 0 0 0 1.8px rgb(255, 193, 7, 0.4);
+  }
+}
+
+.zoom .coll:hover {
+  transform: scale(1.2);
+}
+
+.zoom .coll {
+  margin: 5px 0px;
+  transition: all 0.1s linear;
 }
 </style>

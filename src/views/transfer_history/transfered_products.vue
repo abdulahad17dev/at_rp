@@ -103,7 +103,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, inc) in products_accept" :key="item">
+            <tr v-for="(item, inc) in products_share" :key="item">
               <td>{{ inc + 1 }}</td>
               <td>{{ item.product }}</td>
               <td>{{ item.sum_quantity }}</td>
@@ -133,12 +133,12 @@
           </tbody>
         </table>
       </div>
-      <Data_notfound v-if="products_accept == ''" />
+      <Data_notfound v-if="products_share == ''" />
 
       <nav
         aria-label="Page navigation example"
         class="mt-2"
-        v-if="products_accept != ''"
+        v-if="products_share != ''"
       >
         <ul class="pagination pagination-sm justify-content-end">
           <li class="page-item">
@@ -543,7 +543,7 @@ export default {
 
       transfered_products(status2, type, from, to, status, search, page, limit)
         .then((res) => {
-          this.products_accept = res.data.data;
+          this.products_share = res.data.data;
           this.sh_pages = res.data.pages;
           this.$store.dispatch("setLoading", { isLoading: false });
         })
