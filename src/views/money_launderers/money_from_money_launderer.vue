@@ -22,7 +22,7 @@
         aria-selected="true"
         @click="money_to_l_history = true"
       >
-        қабул қилинган пуллар
+        ўтказилган пуллар
       </button>
     </li>
     <li class="nav-item mx-1" role="presentation">
@@ -37,7 +37,7 @@
         aria-selected="false"
         @click="money_from_l_history = true"
       >
-        ўтказилган пуллар
+        қабул қилинган пуллар
       </button>
     </li>
   </ul>

@@ -51,6 +51,7 @@
               type="submit"
               class="btn btn-outline-primary btn-sm"
               id="smeta_disabled"
+              :disabled="!data.file"
             >
               <i class="fa-solid fa-circle-check"></i>
             </button>

@@ -191,7 +191,7 @@ export default {
           success(res).then(() => {
             this.$emit("get", this.building_id, "", 1);
             this.body.user_id = null;
-            this.text = "прорап танлаш";
+            this.text = "омборчи танлаш";
           });
         })
         .catch((err) => {
@@ -199,7 +199,7 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("send_btn2").disabled = true;
           this.body.user_id = null;
-          this.text = "прорап танлаш";
+          this.text = "омборчи танлаш";
         });
     },
     remove_warehouseman(e) {

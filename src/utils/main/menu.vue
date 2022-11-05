@@ -144,7 +144,7 @@ export default {
     title.forEach((element) => {
       let item = element.innerHTML;
       if (item.length > 25) {
-        element.style.fontSize = "16px";
+        element.style.fontSize = "14px";
       } else {
         element.style.fontSize = "17px";
       }
@@ -167,8 +167,11 @@ export default {
 }
 
 .card.wallet {
+  min-height: 189.5px;
+}
+
+.card.wallet {
   background: #fff;
-  border-top-right-radius: 10px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -193,7 +196,7 @@ export default {
 }
 
 .card.wallet:hover .overlay {
-  transform: scale(5) translateZ(0);
+  transform: scale(8) translateZ(0);
 }
 
 .card.wallet:hover .circle {
@@ -263,6 +266,6 @@ export default {
   justify-content: center;
   top: 10px;
   z-index: 0;
-  transition: transform 0.3s ease-out;
+  transition: transform 0.4s ease-out;
 }
 </style>

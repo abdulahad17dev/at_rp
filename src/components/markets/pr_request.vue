@@ -286,7 +286,7 @@
             id="supply_add"
           ></button>
         </div>
-        <form @submit.prevent="take">
+        <form @submit.prevent="take(proche_name)">
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
@@ -398,6 +398,7 @@ import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import {
   building_get,
   proche_s_get,
+  warehouse_products,
   take_supply_proche,
 } from "@/utils/request/request";
 import {
@@ -405,6 +406,7 @@ import {
   position_err,
   success,
 } from "@/utils/request/handle_api_err";
+import Swal from "sweetalert2";
 export default {
   name: "Pr_request",
   data() {
@@ -596,9 +598,75 @@ export default {
         $event.preventDefault();
       }
     },
-    take() {
+    take(e) {
       document.getElementById("supply_disabled").disabled = true;
       this.$store.dispatch("setLoading", { isLoading: true });
+      warehouse_products("proche", 0, e, "main_warehouse", 0, 1)
+        .then((res) => {
+          if (res.data.data.length) {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 10000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "warning",
+              width: 600,
+              title: "Ушбу материал базада мавжуд",
+              showCancelButton: true,
+              showConfirmButton: true,
+              confirmButtonText: "<i class='fa-solid fa-circle-check'></i>",
+              cancelButtonText: "<i class='fa-solid fa-circle-xmark'></i>",
+              confirmButtonColor: "#0D6EFD",
+              cancelButtonColor: "#DC3545",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.post();
+              } else {
+                document.getElementById("supply_add").click();
+                document.getElementById("supply_disabled").disabled = false;
+                this.body = {
+                  related_id: null,
+                  product_composition: "",
+                  sup_by_b_a_id: 0,
+                  quantity: null,
+                  price: null,
+                  market_phone: null,
+                  type: "",
+                  didox_link: "",
+                  map_long: "",
+                  map_lat: "",
+                  building_id: null,
+                };
+              }
+            });
+          } else {
+            this.post();
+          }
+          this.$store.dispatch("setLoading", { isLoading: false });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          this.post();
+        });
+    },
+    show_quantity(e) {
+      let show = document.getElementById(`show_${e}`);
+      if (show.style.display == "none") {
+        show.style.display = "block";
+      } else {
+        show.style.display = "none";
+      }
+    },
+    post() {
       take_supply_proche(this.body)
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
@@ -633,14 +701,6 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("supply_disabled").disabled = false;
         });
-    },
-    show_quantity(e) {
-      let show = document.getElementById(`show_${e}`);
-      if (show.style.display == "none") {
-        show.style.display = "block";
-      } else {
-        show.style.display = "none";
-      }
     },
   },
   created() {

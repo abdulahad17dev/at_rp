@@ -15,8 +15,10 @@
           <td>{{ inc + 1 }}</td>
           <td>{{ item.name }}</td>
           <td :class="item.balance >= 0 ? 'text-success' : 'text-danger'">
-            <Format_numbers :number="item.balance" />
-            сўм
+            <span class="d-flex">
+              <Format_numbers :number="item.balance" />
+              <span class="mx-1"> сўм </span>
+            </span>
           </td>
           <td>
             <a

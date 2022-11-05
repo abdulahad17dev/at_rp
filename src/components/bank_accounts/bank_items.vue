@@ -14,8 +14,10 @@
           <td>{{ inc + 1 }}</td>
           <td>{{ item.Bank_accounts.name }}</td>
           <td>
-            <Format_numbers :number="item.Bank_accounts.balance" />
-            сўм
+            <span class="d-flex">
+              <Format_numbers :number="item.Bank_accounts.balance" />
+              <span class="mx-1"> сўм </span>
+            </span>
           </td>
           <td>
             <button
