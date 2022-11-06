@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="number > 0">
     <span class="badge bg-secondary" :id="`copied${id}`">копия олинди</span>
     <span @dblclick="format" v-if="format_num">
       {{ Intl.NumberFormat().format(number_format) }}
@@ -15,6 +15,7 @@
       }}
     </span>
   </div>
+  <span v-else> 0 </span>
 </template>
 
 <script>

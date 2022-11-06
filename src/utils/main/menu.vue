@@ -121,7 +121,7 @@ export default {
         {
           to: "/supply_request",
           icon: "fa-solid fa-box fa-2x",
-          title: "Ҳисоб рақамидан олинган таминотлар",
+          title: "Ҳисоб рақамидан пул тўлаш",
           role: ["bugalter"],
         },
         {

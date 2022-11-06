@@ -1,259 +1,307 @@
 <template>
   <Header_item />
-  <div class="request">
-    <form @submit.prevent="time">
-      <div class="row">
-        <div class="col">
-          <input
-            type="date"
-            class="form-control form-control-sm"
-            v-model="from_time"
-            required
-          />
+
+  <ul
+    class="nav nav-pills nav-fill nav-justified mb-3"
+    id="pills-tab"
+    role="tablist"
+  >
+    <li class="nav-item mx-1" role="presentation">
+      <button
+        class="btn btn-sm btn-light w-100 active"
+        id="pills-home-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-home"
+        type="button"
+        role="tab"
+        aria-controls="pills-home"
+        aria-selected="true"
+      >
+        Ҳисоб рақамидан олинган таминотлар
+      </button>
+    </li>
+    <li class="nav-item mx-1" role="presentation">
+      <button
+        class="btn btn-sm btn-light w-100"
+        id="pills-profile-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-profile"
+        type="button"
+        role="tab"
+        aria-controls="pills-profile"
+        aria-selected="false"
+        @click="pay_for = true"
+      >
+        Қарзга олинган таминотлар
+      </button>
+    </li>
+  </ul>
+  <div class="tab-content" id="pills-tabContent">
+    <div
+      class="tab-pane fade show active"
+      id="pills-home"
+      role="tabpanel"
+      aria-labelledby="pills-home-tab"
+    >
+      <div class="request">
+        <form @submit.prevent="time">
+          <div class="row">
+            <div class="col">
+              <input
+                type="date"
+                class="form-control form-control-sm"
+                v-model="from_time"
+                required
+              />
+            </div>
+            <div class="col">
+              <input
+                type="date"
+                class="form-control form-control-sm"
+                v-model="to_time"
+                required
+              />
+            </div>
+            <div class="col">
+              <div class="btn-group w-100">
+                <button
+                  class="btn btn-outline-primary btn-sm w-80"
+                  :disabled="from_time == '' || to_time == ''"
+                >
+                  <i class="fa-solid fa-search"></i>
+                </button>
+                <button
+                  class="btn btn-outline-danger btn-sm w-20"
+                  @click="reset"
+                  v-if="from_time && to_time"
+                >
+                  <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="row my-1">
+            <div class="col">
+              <select class="form-select form-select-sm" v-model="type">
+                <option value="">барчаси</option>
+                <option value="proche">проче</option>
+                <option value="smeta">смета</option>
+                <option value="tarkib">таркиб</option>
+              </select>
+            </div>
+            <div class="col">
+              <select class="form-select form-select-sm" v-model="paid_status">
+                <option value="">барчаси</option>
+                <option value="true">тўланди</option>
+                <option value="false">тўланмади</option>
+              </select>
+            </div>
+            <div class="col"></div>
+          </div>
+        </form>
+        <div class="table-responsive mt-3">
+          <table class="table table-sm table-hover">
+            <thead class="">
+              <tr>
+                <th style="width: 10%">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    v-model="checkAll"
+                    v-if="paid_status == 'false' && requests.length"
+                  />
+                  №
+                </th>
+                <th style="width: 15%">Махсулот</th>
+                <th style="width: 15%">Ҳажм</th>
+                <th style="width: 15%">Ўлчов бирлиги</th>
+                <th style="width: 15%">Сана</th>
+                <th style="width: 15%">Сумма</th>
+                <th style="width: 8%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(item, inc) in requests || []" :key="item">
+                <td>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    :value="item"
+                    v-model="checked"
+                    v-if="paid_status == 'false'"
+                  />
+                  {{ inc + 1 }}
+                </td>
+                <td>{{ item.product }}</td>
+                <td>
+                  <Format_numbers
+                    :number="item.Supplies_by_bank_account.quantity"
+                  />
+                </td>
+                <td>{{ item.Supplies_by_bank_account.olchov_birligi }}</td>
+                <td>
+                  {{
+                    new Date(item.Supplies_by_bank_account.time)
+                      .toLocaleDateString({
+                        year: "numeric",
+                        month: "numeric",
+                        day: "numeric",
+                      })
+                      .slice(0, 10)
+                  }}
+                </td>
+                <td>
+                  <div
+                    class="input-group input-group-sm"
+                    v-if="item.Supplies_by_bank_account.paid_status == false"
+                    :luboy="'input' + item.Supplies_by_bank_account.id"
+                  >
+                    <input
+                      type="number"
+                      step="any"
+                      class="form-control"
+                      v-model="item.total_price"
+                      @change="valid($event, item.Supplies_by_bank_account)"
+                    />
+                    <span class="input-group-text bg-white">сўм</span>
+                  </div>
+                  <span v-else>
+                    <Format_numbers
+                      :number="item.Supplies_by_bank_account.total_price"
+                    />
+                    сўм</span
+                  >
+                </td>
+                <td>
+                  <button
+                    class="btn btn-sm btn-primary"
+                    v-if="
+                      item.Supplies_by_bank_account.paid_status == false &&
+                      !checked.length
+                    "
+                    @click="get_item(item)"
+                    id="pay_supply_d"
+                    :luboy="'button' + item.Supplies_by_bank_account.id"
+                    data-bs-toggle="modal"
+                    data-bs-target="#pay_by_b_a"
+                  >
+                    <i class="fa-solid fa-money-bill-transfer"></i>
+                  </button>
+                  <button
+                    class="btn btn-sm btn-danger mx-1"
+                    v-if="
+                      item.Supplies_by_bank_account.status == false &&
+                      !checked.length
+                    "
+                    @click="remove(item.Supplies_by_bank_account.id)"
+                    id="remove_supply"
+                  >
+                    <i class="fa-solid fa-circle-xmark"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <Data_notfound v-if="requests == ''" />
         </div>
-        <div class="col">
-          <input
-            type="date"
-            class="form-control form-control-sm"
-            v-model="to_time"
-            required
-          />
-        </div>
-        <div class="col">
-          <div class="btn-group w-100">
+
+        <div class="row mt-2" v-if="checked.length">
+          <div class="col-12">
             <button
-              class="btn btn-outline-primary btn-sm w-80"
-              :disabled="from_time == '' || to_time == ''"
+              class="btn btn-sm btn-outline-success w-100"
+              @click="get_item(item)"
+              id="pay_supply_d"
+              :disabled="disabled"
+              data-bs-toggle="modal"
+              data-bs-target="#pay_by_b_a"
             >
-              <i class="fa-solid fa-search"></i>
-            </button>
-            <button
-              class="btn btn-outline-danger btn-sm w-20"
-              @click="reset"
-              v-if="from_time && to_time"
-            >
-              <i class="fa-solid fa-circle-xmark"></i>
+              <i class="fa-solid fa-circle-check"></i> тўлаш
             </button>
           </div>
         </div>
-      </div>
-      <div class="row my-1">
-        <div class="col">
-          <select class="form-select form-select-sm" v-model="type">
-            <option value="proche">проче</option>
-            <option value="smeta">смета</option>
-            <option value="tarkib">таркиб</option>
-          </select>
-        </div>
-        <div class="col">
-          <select class="form-select form-select-sm" v-model="paid_status">
-            <option value="">барчаси</option>
-            <option value="true">тўланди</option>
-            <option value="false">тўланмади</option>
-          </select>
-        </div>
-        <div class="col">
-          <select class="form-select form-select-sm" v-model="status">
-            <option value="">барчаси</option>
-            <option value="true">қабул қилинди</option>
-            <option value="false">қабул қилинмади</option>
-          </select>
-        </div>
-      </div>
-    </form>
-    <div class="table-responsive mt-3">
-      <table class="table table-sm table-hover">
-        <thead class="">
-          <tr>
-            <th style="width: 10%">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                v-model="checkAll"
-                v-if="paid_status == 'false' && requests.length"
-              />
-              №
-            </th>
-            <th style="width: 15%">Махсулот</th>
-            <th style="width: 15%">Ҳажм</th>
-            <th style="width: 15%">Ўлчов бирлиги</th>
-            <th style="width: 15%">Сана</th>
-            <th style="width: 15%">Сумма</th>
-            <th style="width: 8%"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, inc) in requests || []" :key="item">
-            <td>
-              <input
-                class="form-check-input"
-                type="checkbox"
-                :value="item"
-                v-model="checked"
-                v-if="paid_status == 'false'"
-              />
-              {{ inc + 1 }}
-            </td>
-            <td>{{ item.product }}</td>
-            <td>
-              <Format_numbers
-                :number="item.Supplies_by_bank_account.quantity"
-              />
-            </td>
-            <td>{{ item.Supplies_by_bank_account.olchov_birligi }}</td>
-            <td>
-              {{
-                new Date(item.Supplies_by_bank_account.time)
-                  .toLocaleDateString({
-                    year: "numeric",
-                    month: "numeric",
-                    day: "numeric",
-                  })
-                  .slice(0, 10)
-              }}
-            </td>
-            <td>
-              <div
-                class="input-group input-group-sm"
-                v-if="item.Supplies_by_bank_account.paid_status == false"
-                :luboy="'input' + item.Supplies_by_bank_account.id"
-              >
-                <input
-                  type="number"
-                  step="any"
-                  class="form-control"
-                  v-model="item.total_price"
-                  @change="valid($event, item.Supplies_by_bank_account)"
-                />
-                <span class="input-group-text bg-white">сўм</span>
-              </div>
-              <span v-else>
-                <Format_numbers
-                  :number="item.Supplies_by_bank_account.total_price"
-                />
-                сўм</span
-              >
-            </td>
-            <td>
-              <button
-                class="btn btn-sm btn-primary"
-                v-if="
-                  item.Supplies_by_bank_account.paid_status == false &&
-                  !checked.length
-                "
-                @click="get_item(item)"
-                id="pay_supply_d"
-                :luboy="'button' + item.Supplies_by_bank_account.id"
-                data-bs-toggle="modal"
-                data-bs-target="#pay_by_b_a"
-              >
-                <i class="fa-solid fa-money-bill-transfer"></i>
-              </button>
-              <button
-                class="btn btn-sm btn-danger mx-1"
-                v-if="
-                  item.Supplies_by_bank_account.status == false &&
-                  !checked.length
-                "
-                @click="remove(item.Supplies_by_bank_account.id)"
-                id="remove_supply"
-              >
-                <i class="fa-solid fa-circle-xmark"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <Data_notfound v-if="requests == ''" />
-    </div>
 
-    <div class="row mt-2" v-if="checked.length">
-      <div class="col-12">
-        <button
-          class="btn btn-sm btn-outline-success w-100"
-          @click="get_item(item)"
-          id="pay_supply_d"
-          :disabled="disabled"
-          data-bs-toggle="modal"
-          data-bs-target="#pay_by_b_a"
+        <nav
+          aria-label="Page navigation example"
+          class="mt-2"
+          v-if="requests != ''"
         >
-          <i class="fa-solid fa-circle-check"></i> тўлаш
-        </button>
+          <ul class="pagination pagination-sm justify-content-end">
+            <li class="page-item">
+              <select
+                class="form-control form-control-sm form-select mx-1"
+                v-model="limit"
+              >
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </li>
+            <li class="page-item">
+              <button
+                type="button"
+                class="page-link"
+                @click="
+                  get_supply(
+                    market_id,
+                    status,
+                    paid_status,
+                    building_id,
+                    type,
+                    from_time,
+                    to_time,
+                    page,
+                    limit
+                  )
+                "
+              >
+                <i class="fa-solid fa-rotate"></i>
+              </button>
+            </li>
+            <li class="page-item">
+              <button class="page-link" @click="page = 0" :disabled="page == 0">
+                <i class="fa-solid fa-angles-left text-dark"></i>
+              </button>
+            </li>
+            <li class="page-item">
+              <button class="page-link" @click="page--" :disabled="page == 0">
+                <i class="fa-solid fa-angle-left text-dark"></i>
+              </button>
+            </li>
+            <li class="page-item">
+              <button class="page-link text-dark" disabled>
+                {{ page + 1 }}
+              </button>
+            </li>
+            <li class="page-item">
+              <button
+                class="page-link"
+                @click="page++"
+                :disabled="page == pages - 1"
+              >
+                <i class="fa-solid fa-angle-right text-dark"></i>
+              </button>
+            </li>
+            <li class="page-item">
+              <button
+                class="page-link"
+                @click="page = pages - 1"
+                :disabled="page == pages - 1"
+              >
+                <i class="fa-solid fa-angles-right text-dark"></i>
+              </button>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
-
-    <nav
-      aria-label="Page navigation example"
-      class="mt-2"
-      v-if="requests != ''"
+    <div
+      class="tab-pane fade"
+      id="pills-profile"
+      role="tabpanel"
+      aria-labelledby="pills-profile-tab"
     >
-      <ul class="pagination pagination-sm justify-content-end">
-        <li class="page-item">
-          <select
-            class="form-control form-control-sm form-select mx-1"
-            v-model="limit"
-          >
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select>
-        </li>
-        <li class="page-item">
-          <button
-            type="button"
-            class="page-link"
-            @click="
-              get_supply(
-                market_id,
-                status,
-                paid_status,
-                building_id,
-                type,
-                from_time,
-                to_time,
-                page,
-                limit
-              )
-            "
-          >
-            <i class="fa-solid fa-rotate"></i>
-          </button>
-        </li>
-        <li class="page-item">
-          <button class="page-link" @click="page = 0" :disabled="page == 0">
-            <i class="fa-solid fa-angles-left text-dark"></i>
-          </button>
-        </li>
-        <li class="page-item">
-          <button class="page-link" @click="page--" :disabled="page == 0">
-            <i class="fa-solid fa-angle-left text-dark"></i>
-          </button>
-        </li>
-        <li class="page-item">
-          <button class="page-link text-dark" disabled>
-            {{ page + 1 }}
-          </button>
-        </li>
-        <li class="page-item">
-          <button
-            class="page-link"
-            @click="page++"
-            :disabled="page == pages - 1"
-          >
-            <i class="fa-solid fa-angle-right text-dark"></i>
-          </button>
-        </li>
-        <li class="page-item">
-          <button
-            class="page-link"
-            @click="page = pages - 1"
-            :disabled="page == pages - 1"
-          >
-            <i class="fa-solid fa-angles-right text-dark"></i>
-          </button>
-        </li>
-      </ul>
-    </nav>
+      <Pay_for_b_a />
+    </div>
   </div>
 
   <!-- Modal -->
@@ -437,6 +485,7 @@ import {
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Format_numbers from "@/utils/format/format_numbers.vue";
+import Pay_for_b_a from "./pay_for_b_a.vue";
 export default {
   name: "SupplyRequest",
   data() {
@@ -468,6 +517,7 @@ export default {
       search_account: "",
       text_account: "ҳисоб рақамлар",
       bank_accounts: [],
+      pay_for: false,
     };
   },
   watch: {
@@ -790,7 +840,7 @@ export default {
       },
     },
   },
-  components: { Header_item, Data_notfound, Format_numbers },
+  components: { Header_item, Data_notfound, Format_numbers, Pay_for_b_a },
 };
 </script>
 
@@ -799,13 +849,13 @@ export default {
   zoom: 75%;
 }
 .table-responsive {
-  max-height: 90vh;
-  min-height: 90vh;
+  max-height: 85vh;
+  min-height: 85vh;
 }
 @media (max-width: 500px) {
   .table-responsive {
-    max-height: 133vh;
-    min-height: 133vh;
+    max-height: 128vh;
+    min-height: 128vh;
   }
 }
 table {

@@ -1,4 +1,41 @@
 <template>
+  <form @submit.prevent="time">
+    <div class="row">
+      <div class="col">
+        <input
+          type="date"
+          class="form-control form-control-sm"
+          v-model="from_time"
+          required
+        />
+      </div>
+      <div class="col">
+        <input
+          type="date"
+          class="form-control form-control-sm"
+          v-model="to_time"
+          required
+        />
+      </div>
+      <div class="col">
+        <div class="btn-group w-100">
+          <button
+            class="btn btn-outline-primary btn-sm w-80"
+            :disabled="from_time == '' || to_time == ''"
+          >
+            <i class="fa-solid fa-search"></i>
+          </button>
+          <button
+            class="btn btn-outline-danger btn-sm w-20"
+            @click="reset"
+            v-if="from_time && to_time"
+          >
+            <i class="fa-solid fa-circle-xmark"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
   <div class="table-responsive m-1">
     <table class="table table-sm table-hover">
       <thead>
@@ -38,6 +75,9 @@
                 </li>
                 <li>
                   <ul class="dropdown-items">
+                    <li @click="select_expense(0, 'барчаси')">
+                      <a class="dropdown-item">барчаси</a>
+                    </li>
                     <li
                       v-for="item in expenses"
                       :key="item"
@@ -47,15 +87,11 @@
                     </li>
                   </ul>
                 </li>
-                <li v-if="expenses != ''">
+                <li>
                   <hr class="dropdown-divider m-0" />
                 </li>
                 <li>
-                  <nav
-                    aria-label="Page navigation example"
-                    class="mt-2"
-                    v-if="expenses != ''"
-                  >
+                  <nav aria-label="Page navigation example" class="mt-2">
                     <ul class="pagination pagination-sm justify-content-end">
                       <li class="page-item">
                         <button
@@ -154,7 +190,17 @@
         <button
           type="button"
           class="page-link"
-          @click="fixed_history_get(page, limit, from, to, user_id)"
+          @click="
+            fixed_history_get(
+              page,
+              limit,
+              from,
+              to,
+              user_id,
+              from_time,
+              to_time
+            )
+          "
         >
           <i class="fa-solid fa-rotate"></i>
         </button>
@@ -207,6 +253,8 @@ export default {
       from: this.$route.query.id,
       to: 0,
       user_id: 0,
+      from_time: "",
+      to_time: "",
       page_expense: 0,
       pages_expense: null,
       limit_expense: 25,
@@ -218,15 +266,39 @@ export default {
   watch: {
     limit(e) {
       this.page = 0;
-      this.fixed_history_get(this.page, e, this.from, this.to, this.user_id);
+      this.fixed_history_get(
+        this.page,
+        e,
+        this.from,
+        this.to,
+        this.user_id,
+        this.from_time,
+        this.to_time
+      );
     },
     page(e) {
-      this.fixed_history_get(e, this.limit, this.from, this.to, this.user_id);
+      this.fixed_history_get(
+        e,
+        this.limit,
+        this.from,
+        this.to,
+        this.user_id,
+        this.from_time,
+        this.to_time
+      );
       document.getElementById("scroll").scrollTop = 0;
     },
     to(e) {
       this.page = 0;
-      this.fixed_history_get(this.page, this.limit, this.from, e, this.user_id);
+      this.fixed_history_get(
+        this.page,
+        this.limit,
+        this.from,
+        e,
+        this.user_id,
+        this.from_time,
+        this.to_time
+      );
     },
     limit_expense(e) {
       this.page_account = 0;
@@ -255,9 +327,9 @@ export default {
     },
   },
   methods: {
-    fixed_history_get(page, limit, from, to, user_id) {
+    fixed_history_get(page, limit, from, to, user_id, from_time, to_time) {
       this.$store.dispatch("setLoading", { isLoading: true });
-      get_fixed_history(page, limit, from, to, user_id)
+      get_fixed_history(page, limit, from, to, user_id, from_time, to_time)
         .then((res) => {
           this.fixed_history = res.data.data;
           this.pages = res.data.pages;
@@ -286,6 +358,32 @@ export default {
       this.to = id;
       this.text_expense = name;
       document.getElementById("expenses_select").click();
+    },
+    time() {
+      this.fixed_history_get(
+        this.page,
+        this.limit,
+        this.from,
+        this.to,
+        this.user_id,
+        this.from_time,
+        this.to_time
+      );
+      this.page = 0;
+    },
+    reset() {
+      this.from_time = "";
+      this.to_time = "";
+      this.fixed_history_get(
+        this.page,
+        this.limit,
+        this.from,
+        this.to,
+        this.user_id,
+        this.from_time,
+        this.to_time
+      );
+      this.page = 0;
     },
   },
   created() {

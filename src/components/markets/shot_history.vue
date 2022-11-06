@@ -76,7 +76,11 @@
                     :key="item"
                     @click="select(item.Markets.id, item.Markets.name)"
                   >
-                    <a class="dropdown-item">{{ item.Markets.name }}</a>
+                    <a class="dropdown-item"
+                      >{{ item.Markets.name }} ({{
+                        "+998 " + item.Markets.phone
+                      }})</a
+                    >
                   </li>
                 </ul>
               </li>
@@ -143,13 +147,7 @@
             <option value="false">тўланмади</option>
           </select>
         </div>
-        <div class="col">
-          <!-- <select class="form-select form-select-sm" v-model="status">
-            <option value="">барчаси</option>
-            <option value="true">қабул қилинди</option>
-            <option value="false">қабул қилинмади</option>
-          </select> -->
-        </div>
+        <div class="col"></div>
       </div>
     </form>
     <div class="table-responsive mt-3">
@@ -166,8 +164,19 @@
         </thead>
         <tbody>
           <tr v-for="(item, inc) in requests || []" :key="item">
-            <td>
+            <td class="shadow_n">
               {{ inc + 1 }}
+              <button
+                class="btn btn-sm"
+                @click="get_dates(item.Supplies_by_bank_account.related_id)"
+                data-bs-toggle="modal"
+                data-bs-target="#shot_modal"
+              >
+                <i
+                  class="fa-solid fa-circle-question product"
+                  style="font-size: 17px"
+                ></i>
+              </button>
             </td>
             <td>{{ item.product }}</td>
             <td>
@@ -190,10 +199,12 @@
               }}
             </td>
             <td colspan="2">
-              <Format_numbers
-                :number="item.Supplies_by_bank_account.total_price"
-              />
-              сўм
+              <span class="d-flex">
+                <Format_numbers
+                  :number="item.Supplies_by_bank_account.total_price"
+                />
+                <span class="mx-1"> сўм </span>
+              </span>
             </td>
           </tr>
         </tbody>
@@ -274,11 +285,129 @@
       </ul>
     </nav>
   </div>
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="shot_modal"
+    tabindex="-1"
+    aria-labelledby="shot_modal_label"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title" id="shot_modal_label">Олинганлар</p>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="table-responsive">
+            <table class="table table-sm table-hover">
+              <thead>
+                <tr>
+                  <th style="width: 10%">Т/р</th>
+                  <th style="width: 15%">Ҳажм</th>
+                  <th style="width: 15%">Ўлчов бирлиги</th>
+                  <th style="width: 15%">Нарх</th>
+                  <th style="width: 20%">Сана</th>
+                  <th style="width: 25%">Корхона</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(item, inc) in dates" :key="item">
+                  <td>{{ inc + 1 }}</td>
+                  <td>{{ item.Supplies.quantity }}</td>
+                  <td>{{ item.Supplies.olchov_birligi }}</td>
+                  <td>{{ item.Supplies.price }}</td>
+                  <td>{{ item.Supplies.time }}</td>
+                  <td>{{ item.Supplies.market }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <Data_notfound v-if="!dates.length" />
+          </div>
+
+          <nav
+            aria-label="Page navigation example"
+            class="mt-2"
+            v-if="dates.length"
+          >
+            <ul class="pagination pagination-sm justify-content-end">
+              <li class="page-item">
+                <select
+                  class="form-control form-control-sm form-select mx-1"
+                  v-model="d_limit"
+                >
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+              </li>
+              <li class="page-item">
+                <button type="button" class="page-link" @click="get_dates(id)">
+                  <i class="fa-solid fa-rotate"></i>
+                </button>
+              </li>
+              <li class="page-item">
+                <button
+                  class="page-link"
+                  @click="d_page = 0"
+                  :disabled="d_page == 0"
+                >
+                  <i class="fa-solid fa-angles-left text-dark"></i>
+                </button>
+              </li>
+              <li class="page-item">
+                <button
+                  class="page-link"
+                  @click="d_page--"
+                  :disabled="d_page == 0"
+                >
+                  <i class="fa-solid fa-angle-left text-dark"></i>
+                </button>
+              </li>
+              <li class="page-item">
+                <button class="page-link text-dark" disabled>
+                  {{ d_page + 1 }}
+                </button>
+              </li>
+              <li class="page-item">
+                <button
+                  class="page-link"
+                  @click="d_page++"
+                  :disabled="d_page == d_pages - 1"
+                >
+                  <i class="fa-solid fa-angle-right text-dark"></i>
+                </button>
+              </li>
+              <li class="page-item">
+                <button
+                  class="page-link"
+                  @click="d_page = d_pages - 1"
+                  :disabled="d_page == d_pages - 1"
+                >
+                  <i class="fa-solid fa-angles-right text-dark"></i>
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
-import { markets_get, shot_request } from "@/utils/request/request";
+import {
+  get_supplies,
+  markets_get,
+  shot_request,
+} from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
 import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
@@ -302,6 +431,11 @@ export default {
       limit_market: 25,
       search_market: "",
       markets: [],
+      d_page: 0,
+      d_pages: null,
+      d_limit: 25,
+      dates: [],
+      id: null,
     };
   },
   watch: {
@@ -359,20 +493,7 @@ export default {
     },
     search_market(e) {
       this.page_market = 0;
-      if (e.length > 0) {
-        this.get_markets(
-          this.page_market,
-          this.limit_market,
-          this.search_market
-        );
-      } else if (e.length == 0) {
-        this.get_markets(
-          this.page_market,
-          this.limit_market,
-          this.search_market
-        );
-        this.page_market = 0;
-      }
+      this.get_markets(this.page_market, this.limit_market, e);
     },
     market_id(e) {
       this.page = 0;
@@ -387,6 +508,14 @@ export default {
         this.page,
         this.limit
       );
+    },
+    d_limit() {
+      this.d_page = 0;
+      this.get_dates(this.id);
+    },
+    d_page() {
+      this.get_dates(this.id);
+      document.getElementById("scroll").scrollTop = 0;
     },
   },
   methods: {
@@ -472,6 +601,20 @@ export default {
       this.text_market = name;
       document.getElementById("select_bank_market3").click();
     },
+    get_dates(e) {
+      this.id = e;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      get_supplies(0, "", "", 0, "", "", "", this.d_page, this.d_limit, e, "0")
+        .then((res) => {
+          this.d_pages = res.data.pages;
+          this.dates = res.data.data;
+          this.$store.dispatch("setLoading", { isLoading: false });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        });
+    },
   },
   created() {
     this.get_supply(
@@ -494,18 +637,38 @@ export default {
 .request {
   zoom: 75%;
 }
-.table-responsive {
+.mt-3.table-responsive {
   max-height: 83vh;
   min-height: 83vh;
 }
+
+.modal-body .table-responsive {
+  max-height: 70vh;
+  min-height: 70vh;
+}
+
 @media (max-width: 500px) {
-  .table-responsive {
+  .mt-3.table-responsive {
     max-height: 110vh;
     min-height: 110vh;
   }
+  .modal-body .table-responsive {
+    max-height: 82vh;
+    min-height: 82vh;
+  }
 }
-table {
+.mt-3 table {
   min-width: 1150px;
   width: 100%;
+}
+
+.modal-body .table-responsive table {
+  min-width: 900px;
+  width: 100%;
+  zoom: 75%;
+}
+
+.shadow_n button:focus {
+  box-shadow: none;
 }
 </style>

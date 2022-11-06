@@ -30,6 +30,44 @@
     </div>
   </div>
 
+  <form @submit.prevent="time">
+    <div class="row">
+      <div class="col">
+        <input
+          type="date"
+          class="form-control form-control-sm"
+          v-model="h_from_time"
+          required
+        />
+      </div>
+      <div class="col">
+        <input
+          type="date"
+          class="form-control form-control-sm"
+          v-model="h_to_time"
+          required
+        />
+      </div>
+      <div class="col">
+        <div class="btn-group w-100">
+          <button
+            class="btn btn-outline-primary btn-sm w-80"
+            :disabled="h_from_time == '' || h_to_time == ''"
+          >
+            <i class="fa-solid fa-search"></i>
+          </button>
+          <button
+            class="btn btn-outline-danger btn-sm w-20"
+            @click="reset"
+            v-if="h_from_time && h_to_time"
+          >
+            <i class="fa-solid fa-circle-xmark"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
   <Fixed :fixed_history="fixed_history" @from="sort_from" @to="sort_to" />
 
   <nav
@@ -52,7 +90,17 @@
         <button
           type="button"
           class="page-link"
-          @click="fixed_history_get(h_page, h_limit, h_from, h_to, h_user_id)"
+          @click="
+            fixed_history_get(
+              h_page,
+              h_limit,
+              h_from,
+              h_to,
+              h_user_id,
+              h_from_time,
+              h_to_time
+            )
+          "
         >
           <i class="fa-solid fa-rotate"></i>
         </button>
@@ -136,7 +184,15 @@
         @click="
           fixed_history.length
             ? ''
-            : fixed_history_get(h_page, h_limit, h_from, h_to, h_user_id)
+            : fixed_history_get(
+                h_page,
+                h_limit,
+                h_from,
+                h_to,
+                h_user_id,
+                h_from_time,
+                h_to_time
+              )
         "
       >
         Доимий чиқимлар
@@ -278,7 +334,15 @@
               type="button"
               class="page-link"
               @click="
-                fixed_history_get(h_page, h_limit, h_from, h_to, h_user_id)
+                fixed_history_get(
+                  h_page,
+                  h_limit,
+                  h_from,
+                  h_to,
+                  h_user_id,
+                  h_from_time,
+                  h_to_time
+                )
               "
             >
               <i class="fa-solid fa-rotate"></i>
@@ -573,6 +637,8 @@ export default {
       h_page: 0,
       h_pages: null,
       h_from: 0,
+      h_from_time: "",
+      h_to_time: "",
       h_to: 0,
       h_user_id: 0,
       v_limit: 25,
@@ -608,7 +674,9 @@ export default {
         e,
         this.h_from,
         this.h_to,
-        this.h_user_id
+        this.h_user_id,
+        this.h_from_time,
+        this.h_to_time
       );
     },
     h_page(e) {
@@ -617,7 +685,9 @@ export default {
         this.h_limit,
         this.h_from,
         this.h_to,
-        this.h_user_id
+        this.h_user_id,
+        this.h_from_time,
+        this.h_to_time
       );
       document.getElementById("scroll").scrollTop = 0;
     },
@@ -724,7 +794,9 @@ export default {
               this.h_limit,
               this.h_from,
               this.h_to,
-              this.h_user_id
+              this.h_user_id,
+              this.h_from_time,
+              this.h_to_time
             );
             e.money = null;
             e.from_ = null;
@@ -742,9 +814,25 @@ export default {
           document.getElementById("pay_f_e_disabled").disabled = false;
         });
     },
-    fixed_history_get(h_page, h_limit, h_from, h_to, h_user_id) {
+    fixed_history_get(
+      h_page,
+      h_limit,
+      h_from,
+      h_to,
+      h_user_id,
+      h_from_time,
+      h_to_time
+    ) {
       this.$store.dispatch("setLoading", { isLoading: true });
-      get_fixed_history(h_page, h_limit, h_from, h_to, h_user_id)
+      get_fixed_history(
+        h_page,
+        h_limit,
+        h_from,
+        h_to,
+        h_user_id,
+        h_from_time,
+        h_to_time
+      )
         .then((res) => {
           this.fixed_history = res.data.data;
           this.h_pages = res.data.pages;
@@ -763,7 +851,9 @@ export default {
         this.h_limit,
         this.h_from,
         this.h_to,
-        this.h_user_id
+        this.h_user_id,
+        this.h_from_time,
+        this.h_to_time
       );
     },
     sort_to(e) {
@@ -774,7 +864,9 @@ export default {
         this.h_limit,
         this.h_from,
         this.h_to,
-        this.h_user_id
+        this.h_user_id,
+        this.h_from_time,
+        this.h_to_time
       );
     },
     pay_v_expense(e) {
@@ -829,6 +921,32 @@ export default {
         this.v_user_id
       );
     },
+    time() {
+      this.fixed_history_get(
+        this.h_page,
+        this.h_limit,
+        this.h_from,
+        this.h_to,
+        this.h_user_id,
+        this.h_from_time,
+        this.h_to_time
+      );
+      this.page = 0;
+    },
+    reset() {
+      this.h_from_time = "";
+      this.h_to_time = "";
+      this.fixed_history_get(
+        this.h_page,
+        this.h_limit,
+        this.h_from,
+        this.h_to,
+        this.h_user_id,
+        this.h_from_time,
+        this.h_to_time
+      );
+      this.page = 0;
+    },
   },
   created() {
     this.fixed_history_get(
@@ -836,7 +954,9 @@ export default {
       this.h_limit,
       this.h_from,
       this.h_to,
-      this.h_user_id
+      this.h_user_id,
+      this.h_from_time,
+      this.h_to_time
     );
   },
 };
@@ -849,16 +969,5 @@ export default {
 }
 .col .input-group {
   width: 200px;
-}
-@media (max-width: 632px) {
-  .row {
-    display: block;
-  }
-  .row .col .input-group {
-    width: 600px;
-  }
-  .row .col select {
-    width: 50%;
-  }
 }
 </style>

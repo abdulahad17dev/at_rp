@@ -339,7 +339,7 @@ let routes = [
     name: "supply_request",
     meta: {
       requiresAuth: true,
-      title: "Ҳисоб рақамидан олинган таминотлар",
+      title: "Ҳисоб рақамидан пул тўлаш",
       icon: "fa-solid fa-box",
       role: ["bugalter"],
     },

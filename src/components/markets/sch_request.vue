@@ -10,7 +10,14 @@
             <th style="width: 15%">Ўлчов бирлиги</th>
             <th style="width: 15%">Сана</th>
             <th style="width: 15%">Жами сумма</th>
-            <th style="width: 8%"></th>
+            <th style="width: 8%">
+              <select class="form-select form-select-sm" v-model="type">
+                <option value="">барчаси</option>
+                <option value="proche">проче</option>
+                <option value="smeta">смета</option>
+                <option value="tarkib">таркиб</option>
+              </select>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -18,9 +25,13 @@
             <td>{{ inc + 1 }}</td>
             <td>{{ item.product }}</td>
             <td>
-              <Format_numbers
-                :number="item.Supplies_by_bank_account.quantity"
-              />
+              <span class="d-flex">
+                <Format_numbers
+                  :number="item.Supplies_by_bank_account.quantity"
+                />
+                (олинган ҳажм:
+                <Format_numbers :number="item.sum_supply_quantity" />)
+              </span>
             </td>
             <td>{{ item.Supplies_by_bank_account.olchov_birligi }}</td>
             <td>
@@ -35,10 +46,12 @@
               }}
             </td>
             <td>
-              <Format_numbers
-                :number="item.Supplies_by_bank_account.total_price"
-              />
-              сўм
+              <span class="d-flex">
+                <Format_numbers
+                  :number="item.Supplies_by_bank_account.total_price"
+                />
+                <span class="mx-1"> сўм </span>
+              </span>
             </td>
             <td>
               <button
@@ -260,6 +273,20 @@ export default {
       );
       document.getElementById("scroll").scrollTop = 0;
     },
+    type(e) {
+      this.page = 0;
+      this.get_shot_r(
+        this.market_id,
+        this.status,
+        this.paid_status,
+        this.building_id,
+        e,
+        this.from_time,
+        this.to_time,
+        this.page,
+        this.limit
+      );
+    },
   },
   methods: {
     get_shot_r(
@@ -389,13 +416,13 @@ export default {
   zoom: 75%;
 }
 .table-responsive {
-  max-height: 94vh;
-  min-height: 94vh;
+  max-height: 92vh;
+  min-height: 92vh;
 }
 @media (max-width: 500px) {
   .table-responsive {
-    max-height: 124vh;
-    min-height: 124vh;
+    max-height: 123vh;
+    min-height: 123vh;
   }
 }
 table {

@@ -76,7 +76,11 @@
                     :key="item"
                     @click="select(item.Markets.id, item.Markets.name)"
                   >
-                    <a class="dropdown-item">{{ item.Markets.name }}</a>
+                    <a class="dropdown-item"
+                      >{{ item.Markets.name }} ({{
+                        "+998 " + item.Markets.phone
+                      }})</a
+                    >
                   </li>
                 </ul>
               </li>
@@ -163,6 +167,7 @@
             <th style="width: 15%">Ўлчов бирлиги</th>
             <th style="width: 15%">Сана</th>
             <th style="width: 15%">Сумма</th>
+            <th>Счётга ўтказиш</th>
             <th></th>
           </tr>
         </thead>
@@ -188,8 +193,29 @@
               }}
             </td>
             <td>
-              <Format_numbers :number="item.Supplies.price" />
-              сўм
+              <span class="d-flex">
+                <Format_numbers :number="item.Supplies.price" />
+                <span class="mx-1"> сўм </span>
+              </span>
+            </td>
+            <td>
+              <div
+                class="form-check form-switch"
+                v-if="item.Supplies.type == 'qarz_proche'"
+              >
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  :id="'flexSwitch' + item.Supplies.id"
+                  :checked="item.Supplies.by_b_a"
+                  @change="share_to_b_a(item.Supplies.id, item.Supplies.by_b_a)"
+                />
+                <label
+                  class="form-check-label"
+                  :for="'flexSwitch' + item.Supplies.id"
+                ></label>
+              </div>
             </td>
             <td>
               <button
@@ -287,6 +313,7 @@ import {
   get_supplies,
   markets_get,
   remove_supply,
+  share_supply_to_b_a,
 } from "@/utils/request/request";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
@@ -407,7 +434,9 @@ export default {
         from_time,
         to_time,
         page,
-        limit
+        limit,
+        0,
+        "0"
       )
         .then((res) => {
           res.data.data.forEach((element) => {
@@ -502,6 +531,34 @@ export default {
           catchError(err);
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_supplies").disabled = false;
+        });
+    },
+    share_to_b_a(e, status) {
+      document.getElementById("flexSwitch" + e).disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      status = !status;
+      share_supply_to_b_a(e, status)
+        .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
+          success(res).then(() => {
+            this.get_supply(
+              this.market_id,
+              this.status,
+              this.paid_status,
+              this.building_id,
+              this.type,
+              this.from_time,
+              this.to_time,
+              this.page,
+              this.limit
+            );
+            document.getElementById("flexSwitch" + e).disabled = false;
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          document.getElementById("flexSwitch" + e).disabled = false;
+          this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
   },

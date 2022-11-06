@@ -302,20 +302,12 @@
                 <table class="table table-sm table-hover">
                   <tbody style="font-size: 12px">
                     <tr>
-                      <td scope="col">Номи</td>
-                      <td>{{ item.name }}</td>
-                    </tr>
-                    <tr>
-                      <td scope="col">Ҳажм</td>
-                      <td>
-                        <Format_numbers :number="item.quantity" />
-
-                        {{ item.olchov_birligi }}
-                      </td>
-                    </tr>
-                    <tr>
                       <td scope="col">ШНК</td>
                       <td>{{ item.shnk }}</td>
+                    </tr>
+                    <tr>
+                      <td scope="col">Номи</td>
+                      <td>{{ item.name }}</td>
                     </tr>
                     <tr>
                       <td scope="col">Муддат</td>

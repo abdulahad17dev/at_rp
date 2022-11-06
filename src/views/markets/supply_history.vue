@@ -173,10 +173,10 @@
                 />
                 <span class="input-group-text bg-white">сўм</span>
               </div>
-              <span v-else>
+              <span class="d-flex" v-else>
                 <Format_numbers :number="item.Supplies.price" />
-                сўм</span
-              >
+                <span class="mx-1"> сўм </span>
+              </span>
             </td>
             <td>
               <button
@@ -429,7 +429,9 @@ export default {
         from_time,
         to_time,
         page,
-        limit
+        limit,
+        0,
+        "0"
       )
         .then((res) => {
           res.data.data.forEach((element) => {
