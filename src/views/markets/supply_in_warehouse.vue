@@ -544,7 +544,7 @@ export default {
         page,
         limit,
         0,
-        "0"
+        ""
       )
         .then((res) => {
           this.requests = res.data.data;

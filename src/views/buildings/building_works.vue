@@ -584,7 +584,7 @@
                       class="form-control form-control-sm"
                       v-model="confirm_body.attached_price"
                       step="any"
-                      min="1"
+                      min="0"
                       required
                       placeholder="Ажратилган сумма"
                     />

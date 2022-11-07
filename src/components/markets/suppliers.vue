@@ -69,12 +69,12 @@
             >
               <i class="fa-solid fa-location-dot"></i>
             </a>
-            <router-link
+            <!-- <router-link
               :to="{ name: 'supply_history', query: { id: item.Markets.id } }"
               class="btn btn-sm btn-secondary"
             >
               <i class="fa-solid fa-clock-rotate-left"></i>
-            </router-link>
+            </router-link> -->
           </td>
         </tr>
       </tbody>
@@ -241,7 +241,7 @@ export default {
 }
 
 table {
-  min-width: 1050px;
+  min-width: 1150px;
   width: 100%;
 }
 

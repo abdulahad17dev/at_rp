@@ -431,7 +431,7 @@ export default {
         page,
         limit,
         0,
-        "0"
+        ""
       )
         .then((res) => {
           res.data.data.forEach((element) => {
@@ -670,8 +670,4 @@ table {
   border-right: 1px solid red;
   border-radius: 0.2rem;
 }
-
-// .dropdown-menu li:first-child:hover > .open {
-//   display: none;
-// }
 </style>

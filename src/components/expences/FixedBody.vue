@@ -367,7 +367,7 @@
                     step="any"
                     v-model="pay_body.money"
                     required
-                    min="1"
+                    min="0"
                   />
                   <span class="input-group-text bg-white">сўм</span>
                 </div>

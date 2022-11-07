@@ -7,7 +7,7 @@
   >
     <li class="nav-item mx-1" role="presentation">
       <button
-        class="btn btn-sm btn-light w-100 shadow-sm"
+        class="btn btn-sm btn-light w-100 shadow-sm active"
         id="pills-home-tab"
         data-bs-toggle="pill"
         data-bs-target="#pills-home"
@@ -15,7 +15,6 @@
         role="tab"
         aria-controls="pills-home"
         aria-selected="true"
-        @click="users = true"
       >
         Таминотчилар
       </button>
@@ -38,12 +37,12 @@
   </ul>
   <div class="tab-content" id="pills-tabContent">
     <div
-      class="tab-pane fade"
+      class="tab-pane fade active show"
       id="pills-home"
       role="tabpanel"
       aria-labelledby="pills-home-tab"
     >
-      <Suppliers v-if="users == true" />
+      <Suppliers />
     </div>
     <div
       class="tab-pane fade"
@@ -64,7 +63,7 @@ export default {
   name: "MarketItems",
   data() {
     return {
-      users: false,
+      users: true,
       market: false,
     };
   },

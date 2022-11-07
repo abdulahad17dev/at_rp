@@ -322,8 +322,18 @@
                   <td>{{ inc + 1 }}</td>
                   <td>{{ item.Supplies.quantity }}</td>
                   <td>{{ item.Supplies.olchov_birligi }}</td>
-                  <td>{{ item.Supplies.price }}</td>
-                  <td>{{ item.Supplies.time }}</td>
+                  <td>{{ item.Supplies.price }} сўм</td>
+                  <td>
+                    {{
+                      new Date(item.Supplies.time)
+                        .toLocaleDateString({
+                          year: "numeric",
+                          month: "numeric",
+                          day: "numeric",
+                        })
+                        .slice(0, 10)
+                    }}
+                  </td>
                   <td>{{ item.Supplies.market }}</td>
                 </tr>
               </tbody>
@@ -540,7 +550,8 @@ export default {
         from_time,
         to_time,
         page,
-        limit
+        limit,
+        0
       )
         .then((res) => {
           this.requests = res.data.data;
@@ -604,7 +615,7 @@ export default {
     get_dates(e) {
       this.id = e;
       this.$store.dispatch("setLoading", { isLoading: true });
-      get_supplies(0, "", "", 0, "", "", "", this.d_page, this.d_limit, e, "0")
+      get_supplies(0, "", "", 0, "", "", "", this.d_page, this.d_limit, e, "")
         .then((res) => {
           this.d_pages = res.data.pages;
           this.dates = res.data.data;

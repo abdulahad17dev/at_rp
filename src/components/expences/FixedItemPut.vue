@@ -93,7 +93,7 @@
                     v-model="body.limit_of_expense"
                     required
                     @keyup="input"
-                    min="1"
+                    min="0"
                   />
                   <span class="input-group-text bg-white"> сўм </span>
                 </div>

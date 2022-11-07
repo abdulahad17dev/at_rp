@@ -348,7 +348,7 @@ export default {
         page,
         limit,
         0,
-        "0"
+        ""
       )
         .then((res) => {
           res.data.data.forEach((element) => {

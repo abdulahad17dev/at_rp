@@ -22,7 +22,23 @@
         </thead>
         <tbody>
           <tr v-for="(item, inc) in shot_requests || []" :key="item">
-            <td>{{ inc + 1 }}</td>
+            <td>
+              {{ inc + 1 }}
+              <button
+                class="btn btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#get_quantity_shot"
+                @click="
+                  get_quantity(item.Supplies_by_bank_account.id);
+                  name = item.product;
+                "
+              >
+                <i
+                  class="fa-solid fa-circle-question product"
+                  style="font-size: 17px"
+                ></i>
+              </button>
+            </td>
             <td>{{ item.product }}</td>
             <td>
               <span class="d-flex">
@@ -61,6 +77,14 @@
                 data-bs-target="#accept_shot_request"
               >
                 <i class="fa-solid fa-circle-check text-white"></i>
+              </button>
+              <button
+                class="btn btn-sm btn-danger mx-1"
+                v-if="item.Supplies_by_bank_account.status == false"
+                @click="remove(item.Supplies_by_bank_account.id)"
+                id="remove_supply_smetaa"
+              >
+                <i class="fa-solid fa-circle-xmark"></i>
               </button>
             </td>
           </tr>
@@ -168,17 +192,20 @@
             <div class="row gap-2">
               <div class="col-10 mx-auto">
                 <label for="quantity"> Ҳажм: ({{ quantity }})</label>
-                <input
-                  type="number"
-                  id="quantity"
-                  class="form-control form-control-sm"
-                  v-model="body.quantity"
-                  placeholder="Ҳажм"
-                  step="any"
-                  min="1"
-                  :max="quantity"
-                  required
-                />
+                <div class="input-group input-group-sm">
+                  <input
+                    type="number"
+                    id="quantity"
+                    class="form-control form-control-sm"
+                    v-model="body.quantity"
+                    placeholder="Ҳажм"
+                    step="any"
+                    min="0"
+                    :max="quantity"
+                    required
+                  />
+                  <span class="input-group-text bg-white">{{ olchov }}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -202,10 +229,347 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="get_quantity_shot"
+    tabindex="-1"
+    aria-labelledby="get_quantity_shot_label"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title" id="get_quantity_shot_label">{{ name }}</p>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <ul
+            class="nav nav-pills nav-fill nav-justified mb-3"
+            id="pills-tab"
+            role="tablist"
+          >
+            <li class="nav-item mx-1" role="presentation">
+              <button
+                class="btn btn-sm btn-light w-100 active"
+                id="pills-home-quantity2-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#pills-home-quantity2"
+                type="button"
+                role="tab"
+                aria-controls="pills-home-quantity2"
+                aria-selected="true"
+              >
+                Таъминотлар тарихи
+              </button>
+            </li>
+            <li class="nav-item mx-1" role="presentation">
+              <button
+                class="btn btn-sm btn-light w-100"
+                id="pills-profile-sh-quantity2-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#pills-profile-sh-quantity2"
+                type="button"
+                role="tab"
+                aria-controls="pills-profile-sh-quantity2"
+                aria-selected="false"
+              >
+                Тўловлар тарихи
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content" id="pills-tabContent">
+            <div
+              class="tab-pane fade show active"
+              id="pills-home-quantity2"
+              role="tabpanel"
+              aria-labelledby="pills-home-quantity2-tab"
+            >
+              <div class="table-responsive">
+                <table class="table table-sm table-hover">
+                  <thead>
+                    <tr>
+                      <th style="width: 10%">Т/р</th>
+                      <th style="width: 15%">Ҳажм</th>
+                      <th style="width: 20%">Ўлчов бирлиги</th>
+                      <th style="width: 15%">Сана</th>
+                      <th style="width: 20%">Корхона</th>
+                      <th>
+                        <select
+                          class="form-select form-select-sm"
+                          v-model="m_status"
+                        >
+                          <option value="">барчаси</option>
+                          <option value="true">қабул қилинди</option>
+                          <option value="false">қабул қилинмади</option>
+                        </select>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item, inc) in quantities" :key="item">
+                      <td>{{ inc + 1 }}</td>
+                      <td>{{ item.Supplies.quantity }}</td>
+                      <td>{{ item.Supplies.olchov_birligi }}</td>
+                      <td>
+                        {{
+                          new Date(item.Supplies.time)
+                            .toLocaleDateString({
+                              year: "numeric",
+                              month: "numeric",
+                              day: "numeric",
+                            })
+                            .slice(0, 10)
+                        }}
+                      </td>
+                      <td>
+                        {{ item.market }}(<a
+                          class="text-decoration-none text-dark"
+                          :href="`tel:+998${item.market_phone}`"
+                        >
+                          +998 {{ item.market_phone }} </a
+                        >)
+                      </td>
+                      <td>
+                        <button
+                          class="btn btn-sm btn-danger mx-1"
+                          v-if="item.Supplies.status == false"
+                          @click="remove_s(item.Supplies.id)"
+                          id="remove_suppliesss"
+                        >
+                          <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <Data_notfound v-if="!quantities.length" />
+              </div>
+
+              <nav
+                aria-label="Page navigation example"
+                class="mt-2"
+                v-if="quantities.length"
+              >
+                <ul class="pagination pagination-sm justify-content-end">
+                  <li class="page-item">
+                    <select
+                      class="form-control form-control-sm form-select mx-1"
+                      v-model="quantity_limit"
+                    >
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                    </select>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      type="button"
+                      class="page-link"
+                      @click="get_quantity(id)"
+                    >
+                      <i class="fa-solid fa-rotate"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="quantity_page = 0"
+                      :disabled="quantity_page == 0"
+                    >
+                      <i class="fa-solid fa-angles-left text-dark"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="quantity_page--"
+                      :disabled="quantity_page == 0"
+                    >
+                      <i class="fa-solid fa-angle-left text-dark"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button class="page-link text-dark" disabled>
+                      {{ quantity_page + 1 }}
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="quantity_page++"
+                      :disabled="quantity_page == quantity_pages - 1"
+                    >
+                      <i class="fa-solid fa-angle-right text-dark"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="quantity_page = quantity_pages - 1"
+                      :disabled="quantity_page == quantity_pages - 1"
+                    >
+                      <i class="fa-solid fa-angles-right text-dark"></i>
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="pills-profile-sh-quantity2"
+              role="tabpanel"
+              aria-labelledby="pills-profile-sh-quantity2-tab"
+            >
+              <div class="table-responsive">
+                <table class="table table-sm table-hover">
+                  <thead>
+                    <tr>
+                      <th style="width: 10%">Т/р</th>
+                      <th style="width: 20%">Сумма</th>
+                      <th style="width: 20%">Сана</th>
+                      <th style="width: 20%">Ходим</th>
+                      <th style="width: 20%">Ҳисоб рақам</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item, inc) in paid_moneys" :key="item">
+                      <td>{{ inc + 1 }}</td>
+                      <td>
+                        {{ Intl.NumberFormat().format(item.Expenses.money) }}
+                        сўм
+                      </td>
+                      <td>
+                        {{
+                          new Date(item.Expenses.time)
+                            .toLocaleDateString({
+                              year: "numeric",
+                              month: "numeric",
+                              day: "numeric",
+                            })
+                            .slice(0, 10)
+                        }}
+                      </td>
+                      <td>{{ item.user }}</td>
+                      <td>
+                        {{
+                          item.Expenses.type == "market_expense_shot_supply" ||
+                          item.Expenses.type == "market_expense_shot"
+                            ? item.Bank_accounts.name
+                            : ""
+                        }}
+                      </td>
+                      <td>
+                        <button
+                          class="btn btn-sm btn-danger"
+                          v-if="
+                            item.Expenses.type == 'market_expense_naxt' &&
+                            item.Supplies.type == 'qarz_proche'
+                          "
+                          @click="remove_paid_m(item.Expenses.id)"
+                          id="remove_paid_money"
+                        >
+                          <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <Data_notfound v-if="!paid_moneys.length" />
+              </div>
+
+              <nav
+                aria-label="Page navigation example"
+                class="mt-2"
+                v-if="paid_moneys.length"
+              >
+                <ul class="pagination pagination-sm justify-content-end">
+                  <li class="page-item">
+                    <select
+                      class="form-control form-control-sm form-select mx-1"
+                      v-model="m_limit"
+                    >
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                    </select>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      type="button"
+                      class="page-link"
+                      @click="get_paid_moneys(id)"
+                    >
+                      <i class="fa-solid fa-rotate"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="m_page = 0"
+                      :disabled="m_page == 0"
+                    >
+                      <i class="fa-solid fa-angles-left text-dark"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="m_page--"
+                      :disabled="m_page == 0"
+                    >
+                      <i class="fa-solid fa-angle-left text-dark"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button class="page-link text-dark" disabled>
+                      {{ m_page + 1 }}
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="m_page++"
+                      :disabled="m_page == m_pages - 1"
+                    >
+                      <i class="fa-solid fa-angle-right text-dark"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="m_page = m_pages - 1"
+                      :disabled="m_page == m_pages - 1"
+                    >
+                      <i class="fa-solid fa-angles-right text-dark"></i>
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import { shot_request, take_supply_b_a } from "@/utils/request/request";
+import {
+  get_market_expenses,
+  get_supplies,
+  remove_supply,
+  remove_supply_by_b_a,
+  shot_request,
+  take_supply_b_a,
+} from "@/utils/request/request";
 import {
   catchError,
   position_err,
@@ -242,6 +606,18 @@ export default {
         building_id: 0,
       },
       quantity: "",
+      id: null,
+      quantity_pages: null,
+      quantity_page: 0,
+      quantity_limit: 25,
+      quantities: [],
+      name: "",
+      m_pages: null,
+      m_page: 0,
+      m_limit: 25,
+      m_status: "",
+      paid_moneys: [],
+      olchov: "",
     };
   },
   watch: {
@@ -287,6 +663,26 @@ export default {
         this.limit
       );
     },
+    quantity_limit() {
+      this.quantity_page = 0;
+      this.get_quantity(this.id);
+    },
+    quantity_page() {
+      this.get_quantity(this.id);
+      document.getElementById("scroll").scrollTop = 0;
+    },
+    m_limit() {
+      this.m_page = 0;
+      this.get_paid_moneys(this.id);
+    },
+    m_status() {
+      this.m_page = 0;
+      this.get_quantity(this.id);
+    },
+    m_page() {
+      this.get_paid_moneys(this.id);
+      document.getElementById("scroll").scrollTop = 0;
+    },
   },
   methods: {
     get_shot_r(
@@ -310,7 +706,8 @@ export default {
         from_time,
         to_time,
         page,
-        limit
+        limit,
+        0
       )
         .then((res) => {
           this.shot_requests = res.data.data;
@@ -323,6 +720,7 @@ export default {
         });
     },
     get_item(e) {
+      this.olchov = e.olchov_birligi;
       this.body = {
         related_id: e.related_id,
         product_composition: e.product_composition,
@@ -393,6 +791,101 @@ export default {
           document.getElementById("supply_disabled_shot").disabled = false;
         });
     },
+    remove(e) {
+      document.getElementById("remove_supply_smetaa").disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      remove_supply_by_b_a(e)
+        .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("remove_supply_smetaa").disabled = false;
+          success(res).then(() => {
+            this.get_shot_r(
+              this.market_id,
+              this.status,
+              this.paid_status,
+              this.building_id,
+              this.type,
+              this.from_time,
+              this.to_time,
+              this.page,
+              this.limit
+            );
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("remove_supply_smetaa").disabled = false;
+        });
+    },
+    get_quantity(e) {
+      this.id = e;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      get_supplies(
+        0,
+        this.m_status,
+        "",
+        0,
+        "shot",
+        "",
+        "",
+        this.quantity_page,
+        this.quantity_limit,
+        e,
+        ""
+      )
+        .then((res) => {
+          this.quantity_pages = res.data.pages;
+          this.quantities = res.data.data;
+          this.get_paid_moneys(e);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        });
+    },
+    get_paid_moneys(e) {
+      this.$store.dispatch("setLoading", { isLoading: true });
+      get_market_expenses(0, 0, e, 0, "", this.m_page, this.m_limit)
+        .then((res) => {
+          this.m_pages = res.data.pages;
+          this.paid_moneys = res.data.data;
+          this.$store.dispatch("setLoading", { isLoading: false });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        });
+    },
+    remove_s(e) {
+      document.getElementById("remove_suppliesss").disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      remove_supply(e)
+        .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("remove_suppliesss").disabled = false;
+          success(res).then(() => {
+            this.get_quantity(this.id);
+            this.get_shot_r(
+              this.market_id,
+              this.status,
+              this.paid_status,
+              this.building_id,
+              this.type,
+              this.from_time,
+              this.to_time,
+              this.page,
+              this.limit
+            );
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("remove_suppliesss").disabled = false;
+        });
+    },
   },
   created() {
     this.get_shot_r(
@@ -415,18 +908,32 @@ export default {
 .request {
   zoom: 75%;
 }
-.table-responsive {
+.mt-3.table-responsive {
   max-height: 92vh;
   min-height: 92vh;
 }
 @media (max-width: 500px) {
-  .table-responsive {
+  .mt-3.table-responsive {
     max-height: 123vh;
     min-height: 123vh;
   }
+  .modal-body .table-responsive {
+    max-height: 79vh;
+    min-height: 79vh;
+  }
 }
-table {
+.mt-3.table-responsive table {
   min-width: 1150px;
   width: 100%;
+}
+.modal-body .table-responsive {
+  max-height: 67vh;
+  min-height: 67vh;
+}
+
+.modal-body .table-responsive table {
+  min-width: 900px;
+  width: 100%;
+  zoom: 75%;
 }
 </style>

@@ -40,7 +40,7 @@
             </td>
             <td style="width: 25%">Номи</td>
             <td style="width: 15%">Ўлчов бирлиги</td>
-            <td style="width: 15%">Норма</td>
+            <td style="width: 15%">Сана</td>
             <td style="width: 15%">Ҳажм</td>
             <td style="width: 10%">
               <div class="dropdown">
@@ -164,7 +164,7 @@
               {{ inc + 1 }}
               <button
                 class="btn btn-sm"
-                @click="get_grafik(item)"
+                @click="get_grafik(item, item.Smeta.id)"
                 data-bs-toggle="modal"
                 data-bs-target="#smeta_grafik"
                 v-if="!search2"
@@ -177,12 +177,26 @@
             </td>
             <td>{{ item.product_name }}</td>
             <td>{{ item.product_olchov_birligi }}</td>
-            <td>{{ item.Smeta.norm }}</td>
-            <td
-              style="cursor: pointer; user-select: none"
-              @dblclick="sort_name(item.product_name)"
-              @click="show_quantity(inc)"
-            >
+            <td>
+              {{
+                new Date(item.grafik.start_date)
+                  .toLocaleDateString({
+                    year: "numeric",
+                    month: "numeric",
+                    day: "numeric",
+                  })
+                  .slice(0, 10) != "0000-00-00"
+                  ? new Date(item.grafik.start_date)
+                      .toLocaleDateString({
+                        year: "numeric",
+                        month: "numeric",
+                        day: "numeric",
+                      })
+                      .slice(0, 10)
+                  : ""
+              }}
+            </td>
+            <td>
               <span>
                 {{
                   new Intl.NumberFormat().format(item.Smeta.quantity) +
@@ -190,24 +204,6 @@
                   (item.sum_supply_by_b_a_quantity + item.sum_supply_quantity) +
                   ")"
                 }}
-              </span>
-              <span
-                class="text-primary"
-                style="display: none"
-                :id="`show_smeta_${inc}`"
-              >
-                <p class="mb-0">
-                  счётдан олинган:
-                  {{
-                    new Intl.NumberFormat().format(
-                      item.sum_supply_by_b_a_quantity
-                    )
-                  }}
-                </p>
-                <p class="mb-0">
-                  олинган:
-                  {{ new Intl.NumberFormat().format(item.sum_supply_quantity) }}
-                </p>
               </span>
             </td>
             <td>
@@ -219,6 +215,13 @@
                 data-bs-target="#accept_smeta"
               >
                 <i class="fa-solid fa-circle-check text-white"></i>
+              </button>
+              <button
+                v-if="search2 != item.product_name"
+                class="btn btn-sm btn-primary mx-1"
+                @dblclick="sort_name(item.product_name)"
+              >
+                <i class="fa-solid fa-search"></i>
               </button>
             </td>
           </tr>
@@ -322,11 +325,11 @@
         </div>
         <div class="modal-body">
           <ul
-            class="nav nav-pills nav-fill nav-justified mb-3"
+            class="nav nav-pills nav-fill nav-justified mb-2"
             id="pills-tabs"
             role="tablist"
           >
-            <li class="nav-item" role="presentation">
+            <li class="nav-item mx-1" role="presentation">
               <button
                 class="btn btn-light btn-sm w-100 active"
                 id="grafik-tab"
@@ -340,7 +343,7 @@
                 Графиги
               </button>
             </li>
-            <li class="nav-item" role="presentation">
+            <li class="nav-item mx-1" role="presentation">
               <button
                 class="btn btn-light btn-sm w-100"
                 id="composition-tab"
@@ -352,6 +355,20 @@
                 aria-selected="false"
               >
                 Таркиби
+              </button>
+            </li>
+            <li class="nav-item mx-1" role="presentation">
+              <button
+                class="btn btn-light btn-sm w-100"
+                id="get-quantity-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#get-quantity"
+                type="button"
+                role="tab"
+                aria-controls="get-quantity"
+                aria-selected="false"
+              >
+                Олинган ҳажм
               </button>
             </li>
           </ul>
@@ -366,26 +383,12 @@
                 <table class="table table-sm table-hover">
                   <tbody style="font-size: 12px">
                     <tr>
-                      <td scope="col">Номи</td>
-                      <td>{{ item.name }}</td>
-                    </tr>
-                    <tr>
-                      <td scope="col">Ҳажм</td>
-                      <td>
-                        <Format_numbers :number="item.quantity" />
-                        {{ item.olchov_birligi }}
-                      </td>
-                    </tr>
-                    <tr>
                       <td scope="col">ШНК</td>
                       <td>{{ item.shnk }}</td>
                     </tr>
                     <tr>
-                      <td scope="col">Нарх</td>
-                      <td>
-                        <Format_numbers :number="item.allotted_price" />
-                        сўм
-                      </td>
+                      <td scope="col">Номи</td>
+                      <td>{{ item.name }}</td>
                     </tr>
                     <tr>
                       <td scope="col">Муддат</td>
@@ -418,10 +421,6 @@
                             .slice(0, 10)
                         }}
                       </td>
-                    </tr>
-                    <tr>
-                      <td scope="col">Норма</td>
-                      <td>{{ item.norm }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -468,6 +467,307 @@
                 </table>
               </div>
             </div>
+            <div
+              class="tab-pane fade"
+              id="get-quantity"
+              role="tabpanel"
+              aria-labelledby="get-quantity-tab"
+            >
+              <ul
+                class="nav nav-pills nav-fill nav-justified mb-2"
+                id="pills-tab2"
+                role="tablist"
+              >
+                <li class="nav-item mx-1" role="presentation">
+                  <button
+                    style="padding: 1px 1px"
+                    class="btn btn-sm btn-light w-100 active"
+                    id="naxt-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#naxt"
+                    type="button"
+                    role="tab"
+                    aria-controls="naxt"
+                    aria-selected="true"
+                  >
+                    Нахт тўлов орқали
+                  </button>
+                </li>
+                <li class="nav-item mx-1" role="presentation">
+                  <button
+                    style="padding: 1px 1px"
+                    class="btn btn-sm btn-light w-100"
+                    id="shot-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#shot"
+                    type="button"
+                    role="tab"
+                    aria-controls="shot"
+                    aria-selected="false"
+                  >
+                    Ҳисоб рақам орқали
+                  </button>
+                </li>
+              </ul>
+              <div class="tab-content" id="pills-tab2Content">
+                <div
+                  class="tab-pane fade quantity show active"
+                  id="naxt"
+                  role="tabpanel"
+                  aria-labelledby="naxt-tab"
+                >
+                  <div class="table-responsive">
+                    <table class="table table-sm table-hover">
+                      <thead>
+                        <tr>
+                          <th style="width: 10%">Т/р</th>
+                          <th style="width: 15%">Ҳажм</th>
+                          <th style="width: 15%">Ўлчов бирлиги</th>
+                          <th style="width: 15%">Нарх</th>
+                          <th style="width: 15%">Сана</th>
+                          <th style="width: 20%">Корхона</th>
+                          <th>
+                            <select
+                              class="form-select form-select-sm"
+                              v-model="quantity_type"
+                            >
+                              <option value="smeta">смета</option>
+                              <option value="tarkib">таркиб</option>
+                            </select>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(item, inc) in filtering" :key="item">
+                          <td>{{ inc + 1 }}</td>
+                          <td>{{ item.Supplies.quantity }}</td>
+                          <td>{{ item.Supplies.olchov_birligi }}</td>
+                          <td>{{ item.Supplies.price }} сўм</td>
+                          <td>
+                            {{
+                              new Date(item.Supplies.time)
+                                .toLocaleDateString({
+                                  year: "numeric",
+                                  month: "numeric",
+                                  day: "numeric",
+                                })
+                                .slice(0, 10)
+                            }}
+                          </td>
+                          <td>
+                            {{ item.market }}(<a
+                              class="text-decoration-none text-dark"
+                              :href="`tel:+998${item.market_phone}`"
+                            >
+                              +998 {{ item.market_phone }} </a
+                            >)
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <Data_notfound v-if="!filtering.length" />
+                  </div>
+
+                  <nav
+                    aria-label="Page navigation example"
+                    class="mt-2"
+                    v-if="filtering.length"
+                  >
+                    <ul class="pagination pagination-sm justify-content-end">
+                      <li class="page-item">
+                        <select
+                          class="form-control form-control-sm form-select mx-1"
+                          v-model="quantity_limit"
+                        >
+                          <option value="25">25</option>
+                          <option value="50">50</option>
+                          <option value="100">100</option>
+                        </select>
+                      </li>
+                      <li class="page-item">
+                        <button
+                          type="button"
+                          class="page-link"
+                          @click="get_quantity(id)"
+                        >
+                          <i class="fa-solid fa-rotate"></i>
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button
+                          class="page-link"
+                          @click="quantity_page = 0"
+                          :disabled="quantity_page == 0"
+                        >
+                          <i class="fa-solid fa-angles-left text-dark"></i>
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button
+                          class="page-link"
+                          @click="quantity_page--"
+                          :disabled="quantity_page == 0"
+                        >
+                          <i class="fa-solid fa-angle-left text-dark"></i>
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button class="page-link text-dark" disabled>
+                          {{ quantity_page + 1 }}
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button
+                          class="page-link"
+                          @click="quantity_page++"
+                          :disabled="quantity_page == quantity_pages - 1"
+                        >
+                          <i class="fa-solid fa-angle-right text-dark"></i>
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button
+                          class="page-link"
+                          @click="quantity_page = quantity_pages - 1"
+                          :disabled="quantity_page == quantity_pages - 1"
+                        >
+                          <i class="fa-solid fa-angles-right text-dark"></i>
+                        </button>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+                <div
+                  class="tab-pane fade quantity"
+                  id="shot"
+                  role="tabpanel"
+                  aria-labelledby="shot-tab"
+                >
+                  <div class="table-responsive">
+                    <table class="table table-sm table-hover">
+                      <thead>
+                        <tr>
+                          <th style="width: 10%">Т/р</th>
+                          <th style="width: 25%">Ҳажм</th>
+                          <th style="width: 20%">Ўлчов бирлиги</th>
+                          <th style="width: 15%">Сана</th>
+                          <th style="width: 20%">Корхона</th>
+                          <th>
+                            <select
+                              class="form-select form-select-sm"
+                              v-model="sh_quantity_type"
+                            >
+                              <option value="smeta">смета</option>
+                              <option value="tarkib">таркиб</option>
+                            </select>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(item, inc) in sh_quantities" :key="item">
+                          <td>{{ inc + 1 }}</td>
+                          <td>{{ item.Supplies_by_bank_account.quantity }}</td>
+                          <td>
+                            {{ item.Supplies_by_bank_account.olchov_birligi }}
+                          </td>
+                          <td>
+                            {{
+                              new Date(item.Supplies_by_bank_account.time)
+                                .toLocaleDateString({
+                                  year: "numeric",
+                                  month: "numeric",
+                                  day: "numeric",
+                                })
+                                .slice(0, 10)
+                            }}
+                          </td>
+                          <td>
+                            {{ item.market }}(<a
+                              class="text-decoration-none text-dark"
+                              :href="`tel:+998${item.market_phone}`"
+                            >
+                              +998 {{ item.market_phone }} </a
+                            >)
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <Data_notfound v-if="!sh_quantities.length" />
+                  </div>
+
+                  <nav
+                    aria-label="Page navigation example"
+                    class="mt-2"
+                    v-if="sh_quantities.length"
+                  >
+                    <ul class="pagination pagination-sm justify-content-end">
+                      <li class="page-item">
+                        <select
+                          class="form-control form-control-sm form-select mx-1"
+                          v-model="sh_quantity_limit"
+                        >
+                          <option value="25">25</option>
+                          <option value="50">50</option>
+                          <option value="100">100</option>
+                        </select>
+                      </li>
+                      <li class="page-item">
+                        <button
+                          type="button"
+                          class="page-link"
+                          @click="get_sh_quantity(id)"
+                        >
+                          <i class="fa-solid fa-rotate"></i>
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button
+                          class="page-link"
+                          @click="sh_quantity_page = 0"
+                          :disabled="sh_quantity_page == 0"
+                        >
+                          <i class="fa-solid fa-angles-left text-dark"></i>
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button
+                          class="page-link"
+                          @click="sh_quantity_page--"
+                          :disabled="sh_quantity_page == 0"
+                        >
+                          <i class="fa-solid fa-angle-left text-dark"></i>
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button class="page-link text-dark" disabled>
+                          {{ sh_quantity_page + 1 }}
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button
+                          class="page-link"
+                          @click="sh_quantity_page++"
+                          :disabled="sh_quantity_page == sh_quantity_pages - 1"
+                        >
+                          <i class="fa-solid fa-angle-right text-dark"></i>
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button
+                          class="page-link"
+                          @click="sh_quantity_page = sh_quantity_pages - 1"
+                          :disabled="sh_quantity_page == sh_quantity_pages - 1"
+                        >
+                          <i class="fa-solid fa-angles-right text-dark"></i>
+                        </button>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -512,7 +812,7 @@
                     v-model="body.quantity"
                     placeholder="Ҳажм"
                     step="any"
-                    min="1"
+                    min="0"
                     required
                   />
                   <span class="input-group-text bg-white">{{
@@ -534,7 +834,7 @@
                     step="any"
                     class="form-control"
                     v-model="body.price"
-                    min="1"
+                    min="0"
                     placeholder="Нарх"
                     required
                   />
@@ -617,7 +917,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <p class="modal-title" id="productacceptL">
-            {{ body2.product_composition }}ни қабул қилиш
+            {{ product_name }}: {{ body2.product_composition }} ни қабул қилиш
           </p>
           <button
             type="button"
@@ -640,7 +940,7 @@
                   class="form-control form-control-sm"
                   v-model="body2.quantity"
                   placeholder="Ҳажм"
-                  min="1"
+                  min="0"
                   step="any"
                   required
                 />
@@ -659,7 +959,7 @@
                     step="any"
                     class="form-control"
                     v-model="body2.price"
-                    min="1"
+                    min="0"
                     placeholder="Нарх"
                     required
                   />
@@ -736,7 +1036,9 @@
 <script>
 import {
   building_get,
+  get_supplies,
   product_composition_get,
+  shot_request,
   smeta_request_get,
   take_product_request,
   take_supply_smeta,
@@ -803,6 +1105,17 @@ export default {
         map_lat: "",
         building_id: null,
       },
+      id: null,
+      quantity_pages: null,
+      quantity_page: 0,
+      quantity_limit: 25,
+      quantity_type: "smeta",
+      quantities: [],
+      sh_quantity_pages: null,
+      sh_quantity_page: 0,
+      sh_quantity_limit: 25,
+      sh_quantity_type: "smeta",
+      sh_quantities: [],
     };
   },
   watch: {
@@ -912,6 +1225,31 @@ export default {
       this.page_building = 0;
       this.buildings_get(this.page_building, this.limit_building, e);
     },
+
+    quantity_limit() {
+      this.quantity_page = 0;
+      this.get_quantity(this.id);
+    },
+    quantity_page() {
+      this.get_quantity(this.id);
+      document.getElementById("scroll").scrollTop = 0;
+    },
+    sh_quantity_limit() {
+      this.sh_quantity_page = 0;
+      this.get_sh_quantity(this.id);
+    },
+    sh_quantity_page() {
+      this.get_sh_quantity(this.id);
+      document.getElementById("scroll").scrollTop = 0;
+    },
+    sh_quantity_type() {
+      this.sh_quantity_page = 0;
+      this.get_sh_quantity(this.id);
+    },
+    quantity_type() {
+      this.quantity_page = 0;
+      this.get_quantity(this.id);
+    },
   },
   methods: {
     get_smeta(page, limit, search, status, building_id, user_id) {
@@ -927,7 +1265,8 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
-    get_grafik(item) {
+    get_grafik(item, id) {
+      this.id = id;
       const success = (position) => {
         this.body2.map_lat = position.coords.latitude;
         this.body2.map_long = position.coords.longitude;
@@ -949,6 +1288,7 @@ export default {
         .then((res) => {
           this.product_composition = res.data;
           this.$store.dispatch("setLoading", { isLoading: false });
+          this.get_quantity(this.id);
         })
         .catch((err) => {
           catchError(err);
@@ -1254,13 +1594,57 @@ export default {
           document.getElementById("supply_take_product").click();
         });
     },
-    show_quantity(e) {
-      let show = document.getElementById(`show_smeta_${e}`);
-      if (show.style.display == "none") {
-        show.style.display = "block";
-      } else {
-        show.style.display = "none";
-      }
+    get_quantity(e) {
+      this.id = e;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      get_supplies(
+        0,
+        "",
+        "",
+        0,
+        this.quantity_type,
+        "",
+        "",
+        this.quantity_page,
+        this.quantity_limit,
+        e,
+        ""
+      )
+        .then((res) => {
+          this.quantity_pages = res.data.pages;
+          this.quantities = res.data.data;
+          this.get_sh_quantity(this.id);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        });
+    },
+    get_sh_quantity(e) {
+      this.$store.dispatch("setLoading", { isLoading: true });
+      shot_request(
+        0,
+        "",
+        "",
+        0,
+        this.sh_quantity_type,
+        "",
+        "",
+        this.sh_quantity_page,
+        this.sh_quantity_limit,
+        e
+      )
+        .then((res) => {
+          console.log(res.data.data);
+          this.sh_quantity_pages = res.data.pages;
+          this.sh_quantities = res.data.data;
+          this.$store.dispatch("setLoading", { isLoading: false });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        });
     },
   },
   created() {
@@ -1288,6 +1672,15 @@ export default {
         this.checked = checked;
       },
     },
+    filtering() {
+      return this.quantities.filter((e) => {
+        if (this.quantity_type == "smeta") {
+          return e.Supplies.type != "shot_smeta";
+        } else {
+          return e.Supplies.type != "shot_tarkib";
+        }
+      });
+    },
   },
   components: { Data_notfound, Format_numbers },
 };
@@ -1302,6 +1695,10 @@ export default {
 .table-responsive.smeta {
   max-height: 86vh;
   min-height: 86vh;
+}
+.quantity .table-responsive {
+  max-height: 62vh;
+  min-height: 62vh;
 }
 
 #composition .composition {
@@ -1338,9 +1735,18 @@ td.td_grafik {
     max-height: 113vh;
     min-height: 113vh;
   }
+  .quantity .table-responsive {
+    max-height: 74vh;
+    min-height: 74vh;
+  }
 
   #composition .composition {
     max-height: 100vh;
   }
+}
+.quantity .table-responsive table {
+  min-width: 900px;
+  width: 100%;
+  zoom: 75%;
 }
 </style>

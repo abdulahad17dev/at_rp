@@ -122,7 +122,7 @@
                         type="number"
                         class="form-control"
                         required
-                        min="0.1"
+                        min="0"
                         step="any"
                         placeholder="Ҳажм"
                         v-model="item.invalid_quantity"

@@ -125,3 +125,7 @@ table thead tr,
 table tbody tr {
   vertical-align: middle;
 }
+
+.td_grafik button:focus {
+  box-shadow: none;
+}

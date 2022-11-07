@@ -32,7 +32,7 @@
                     step="any"
                     class="form-control"
                     v-model="data.money"
-                    min="1"
+                    min="0"
                     required
                   />
                   <span class="input-group-text bg-white">сўм</span>

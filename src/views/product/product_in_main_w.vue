@@ -160,7 +160,7 @@
                       class="form-control"
                       v-model="body.quantity"
                       placeholder="Ҳажм"
-                      min="1"
+                      min="0"
                       required
                     />
                     <span class="input-group-text bg-white">{{

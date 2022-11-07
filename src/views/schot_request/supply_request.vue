@@ -613,7 +613,8 @@ export default {
         from_time,
         to_time,
         page,
-        limit
+        limit,
+        0
       )
         .then((res) => {
           res.data.data.forEach((element) => {
