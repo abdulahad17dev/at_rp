@@ -38,18 +38,16 @@
       <thead class="">
         <tr>
           <th style="width: 10%">№</th>
-          <th style="width: 20%">Номи</th>
+          <th style="width: 30%">Номи</th>
           <th style="width: 20%">Ўлчов бирлиги</th>
-          <th style="width: 15%">Ҳажм</th>
-          <th style="width: 15%">Нарх</th>
-          <th style="width: 10%">
+          <th style="width: 20%">Ҳажм</th>
+          <th style="width: 20%">
             <select class="form-select form-select-sm" v-model="type">
               <option value="proche">проче</option>
               <option value="smeta">смета</option>
               <option value="tarkib">таркиб</option>
             </select>
           </th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -59,6 +57,8 @@
             {{
               item.Warehouse_products.type == "proche"
                 ? item.Warehouse_products.name
+                : item.Warehouse_products.type == "tarkib"
+                ? item.product_name + ":" + item.Warehouse_products.name
                 : item.product_name
             }}
           </td>
@@ -66,10 +66,6 @@
           <td>
             <Format_numbers :number="item.Warehouse_products.quantity" />
           </td>
-          <td>
-            <Format_numbers :number="item.Warehouse_products.price" />
-          </td>
-          <td>{{ item.building }}</td>
           <td>
             <button
               class="btn btn-sm btn-success mx-1"
@@ -415,7 +411,7 @@ export default {
     buildings_get(page_building, limit_building, search_building) {
       this.$store.dispatch("setLoading", { isLoading: true });
 
-      building_get(page_building, limit_building, search_building)
+      building_get(page_building, limit_building, search_building, "start")
         .then((res) => {
           this.buildings = res.data.data;
           this.pages_building = res.data.pages;

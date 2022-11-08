@@ -235,7 +235,7 @@ let routes = [
     meta: {
       requiresAuth: true,
       title: "Базалар",
-      icon: "fa-solid fa-users-line",
+      icon: "fa-solid fa-warehouse",
       role: ["bazachi"],
     },
     component: main_warehouses,

@@ -1125,9 +1125,18 @@ export function get_spent_items_to_work(
   page,
   limit
 ) {
-  return instance.get(
-    `get_spent_items_to_work?work_id=${work_id}&worker_id=${worker_id}&type=${type}&user_id=${user_id}&page=${page}&limit=${limit}`
-  );
+  if (
+    type == "w_product_for_other_work" ||
+    type == "w_product_for_smeta_work"
+  ) {
+    return instance.get(
+      `get_spent_products_to_work?work_id=${work_id}&type=${type}&user_id=${user_id}&page=${page}&limit=${limit}`
+    );
+  } else {
+    return instance.get(
+      `get_spent_items_to_work?work_id=${work_id}&worker_id=${worker_id}&type=${type}&user_id=${user_id}&page=${page}&limit=${limit}`
+    );
+  }
 }
 
 // share to bank account
@@ -1162,4 +1171,31 @@ export function get_market_expenses(
 
 export function take_back_money_from_supply_expense(id) {
   return instance.delete(`take_back_money_from_supply_expense/${id}`);
+}
+
+// spent products
+
+export function get_spent_products_to_work(
+  work_id,
+  type,
+  user_id,
+  item,
+  page,
+  limit
+) {
+  let item_filter = "";
+  if (item) {
+    item_filter = `&item=${item}`;
+  } else {
+    item_filter = "";
+  }
+  let type_filter = "";
+  if (type) {
+    type_filter = `&type=${type}`;
+  } else {
+    type_filter = "";
+  }
+  return instance.get(
+    `get_spent_products_to_work?work_id=${work_id}${type_filter}&user_id=${user_id}${item_filter}&page=${page}&limit=${limit}`
+  );
 }

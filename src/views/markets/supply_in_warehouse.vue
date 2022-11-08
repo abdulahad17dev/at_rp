@@ -226,8 +226,15 @@
                 <td>
                   {{ inc + 1 }}
                 </td>
-                <td>{{ item.product }}</td>
-
+                <td>
+                  {{
+                    item.Supplies.type == "qarz_tarkib" ||
+                    item.Supplies.type == "naxt_tarkib" ||
+                    item.Supplies.type == "shot_tarkib"
+                      ? item.product + ":" + item.Supplies.product_composition
+                      : item.product
+                  }}
+                </td>
                 <td>
                   <Format_numbers :number="item.Supplies.quantity" />
                 </td>
@@ -480,7 +487,6 @@ export default {
       );
     },
     status(e) {
-      this.paid_status = "";
       this.page = 0;
       this.get_supply(
         this.market_id,

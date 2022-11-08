@@ -28,7 +28,7 @@
           data-bs-target="#main_warehouse_add"
           @click="get_position"
         >
-          <i class="fa-solid fa-user-plus"></i>
+          <i class="fa-solid fa-circle-plus"></i>
         </button>
       </div>
     </div>

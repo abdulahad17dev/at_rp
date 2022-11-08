@@ -76,13 +76,22 @@
             }}
           </td>
           <td>
-            {{
+            <!-- {{
               item.Spent_items_to_work.type == "machine_for_smeta_work" ||
               item.Spent_items_to_work.type == "machine_for_other_work" ||
               item.Spent_items_to_work.type == "w_product_for_other_work" ||
               item.Spent_items_to_work.type == "w_product_for_smeta_work"
                 ? item.item
                 : ""
+            }} -->
+            {{
+              item.item.split("//=>//", 4)[3] == "smeta"
+                ? item.item.split("//=>//", 4)[0]
+                : item.item.split("//=>//", 4)[3] == "tarkib"
+                ? item.item.split("//=>//", 4)[0] +
+                  ":" +
+                  item.item.split("//=>//", 4)[1]
+                : item.item.split("//=>//", 4)[1]
             }}
           </td>
           <td>

@@ -164,11 +164,17 @@
         </thead>
         <tbody>
           <tr v-for="(item, inc) in requests || []" :key="item">
-            <td class="shadow_n">
+            <td class="td_grafik">
               {{ inc + 1 }}
               <button
                 class="btn btn-sm"
-                @click="get_dates(item.Supplies_by_bank_account.related_id)"
+                @click="
+                  get_quantity(
+                    item.Supplies_by_bank_account.related_id,
+                    item.Supplies_by_bank_account.id
+                  );
+                  name = item.product;
+                "
                 data-bs-toggle="modal"
                 data-bs-target="#shot_modal"
               >
@@ -296,7 +302,7 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <p class="modal-title" id="shot_modal_label">Олинганлар</p>
+          <p class="modal-title" id="shot_modal_label">{{ name }}</p>
           <button
             type="button"
             class="btn-close"
@@ -305,106 +311,311 @@
           ></button>
         </div>
         <div class="modal-body">
-          <div class="table-responsive">
-            <table class="table table-sm table-hover">
-              <thead>
-                <tr>
-                  <th style="width: 10%">Т/р</th>
-                  <th style="width: 15%">Ҳажм</th>
-                  <th style="width: 15%">Ўлчов бирлиги</th>
-                  <th style="width: 15%">Нарх</th>
-                  <th style="width: 20%">Сана</th>
-                  <th style="width: 25%">Корхона</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(item, inc) in dates" :key="item">
-                  <td>{{ inc + 1 }}</td>
-                  <td>{{ item.Supplies.quantity }}</td>
-                  <td>{{ item.Supplies.olchov_birligi }}</td>
-                  <td>{{ item.Supplies.price }} сўм</td>
-                  <td>
-                    {{
-                      new Date(item.Supplies.time)
-                        .toLocaleDateString({
-                          year: "numeric",
-                          month: "numeric",
-                          day: "numeric",
-                        })
-                        .slice(0, 10)
-                    }}
-                  </td>
-                  <td>{{ item.Supplies.market }}</td>
-                </tr>
-              </tbody>
-            </table>
-            <Data_notfound v-if="!dates.length" />
-          </div>
-
-          <nav
-            aria-label="Page navigation example"
-            class="mt-2"
-            v-if="dates.length"
+          <ul
+            class="nav nav-pills nav-fill nav-justified mb-3"
+            id="pills-tab"
+            role="tablist"
           >
-            <ul class="pagination pagination-sm justify-content-end">
-              <li class="page-item">
-                <select
-                  class="form-control form-control-sm form-select mx-1"
-                  v-model="d_limit"
-                >
-                  <option value="25">25</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                </select>
-              </li>
-              <li class="page-item">
-                <button type="button" class="page-link" @click="get_dates(id)">
-                  <i class="fa-solid fa-rotate"></i>
-                </button>
-              </li>
-              <li class="page-item">
-                <button
-                  class="page-link"
-                  @click="d_page = 0"
-                  :disabled="d_page == 0"
-                >
-                  <i class="fa-solid fa-angles-left text-dark"></i>
-                </button>
-              </li>
-              <li class="page-item">
-                <button
-                  class="page-link"
-                  @click="d_page--"
-                  :disabled="d_page == 0"
-                >
-                  <i class="fa-solid fa-angle-left text-dark"></i>
-                </button>
-              </li>
-              <li class="page-item">
-                <button class="page-link text-dark" disabled>
-                  {{ d_page + 1 }}
-                </button>
-              </li>
-              <li class="page-item">
-                <button
-                  class="page-link"
-                  @click="d_page++"
-                  :disabled="d_page == d_pages - 1"
-                >
-                  <i class="fa-solid fa-angle-right text-dark"></i>
-                </button>
-              </li>
-              <li class="page-item">
-                <button
-                  class="page-link"
-                  @click="d_page = d_pages - 1"
-                  :disabled="d_page == d_pages - 1"
-                >
-                  <i class="fa-solid fa-angles-right text-dark"></i>
-                </button>
-              </li>
-            </ul>
-          </nav>
+            <li class="nav-item mx-1" role="presentation">
+              <button
+                class="btn btn-sm btn-light w-100 active"
+                id="pills-home-quantity2-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#pills-home-quantity2"
+                type="button"
+                role="tab"
+                aria-controls="pills-home-quantity2"
+                aria-selected="true"
+              >
+                Таъминотлар тарихи
+              </button>
+            </li>
+            <li class="nav-item mx-1" role="presentation">
+              <button
+                class="btn btn-sm btn-light w-100"
+                id="pills-profile-sh-quantity2-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#pills-profile-sh-quantity2"
+                type="button"
+                role="tab"
+                aria-controls="pills-profile-sh-quantity2"
+                aria-selected="false"
+              >
+                Тўловлар тарихи
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content" id="pills-tabContent">
+            <div
+              class="tab-pane fade show active"
+              id="pills-home-quantity2"
+              role="tabpanel"
+              aria-labelledby="pills-home-quantity2-tab"
+            >
+              <div class="table-responsive">
+                <table class="table table-sm table-hover">
+                  <thead>
+                    <tr>
+                      <th style="width: 10%">Т/р</th>
+                      <th style="width: 15%">Ҳажм</th>
+                      <th style="width: 20%">Ўлчов бирлиги</th>
+                      <th style="width: 15%">Сана</th>
+                      <th style="width: 20%">Корхона</th>
+                      <th>
+                        <select
+                          class="form-select form-select-sm"
+                          v-model="m_status"
+                        >
+                          <option value="">барчаси</option>
+                          <option value="true">қабул қилинди</option>
+                          <option value="false">қабул қилинмади</option>
+                        </select>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item, inc) in quantities" :key="item">
+                      <td>{{ inc + 1 }}</td>
+                      <td>{{ item.Supplies.quantity }}</td>
+                      <td>{{ item.Supplies.olchov_birligi }}</td>
+                      <td>
+                        {{
+                          new Date(item.Supplies.time)
+                            .toLocaleDateString({
+                              year: "numeric",
+                              month: "numeric",
+                              day: "numeric",
+                            })
+                            .slice(0, 10)
+                        }}
+                      </td>
+                      <td>
+                        {{ item.market }}(<a
+                          class="text-decoration-none text-dark"
+                          :href="`tel:+998${item.market_phone}`"
+                        >
+                          +998 {{ item.market_phone }} </a
+                        >)
+                      </td>
+                      <td>
+                        <button
+                          class="btn btn-sm btn-danger mx-1"
+                          v-if="item.Supplies.status == false"
+                          @click="remove_s(item.Supplies.id)"
+                          id="remove_suppliess"
+                        >
+                          <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <Data_notfound v-if="!quantities.length" />
+              </div>
+
+              <nav
+                aria-label="Page navigation example"
+                class="mt-2"
+                v-if="quantities.length"
+              >
+                <ul class="pagination pagination-sm justify-content-end">
+                  <li class="page-item">
+                    <select
+                      class="form-control form-control-sm form-select mx-1"
+                      v-model="quantity_limit"
+                    >
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                    </select>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      type="button"
+                      class="page-link"
+                      @click="get_quantity(related_id, id)"
+                    >
+                      <i class="fa-solid fa-rotate"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="quantity_page = 0"
+                      :disabled="quantity_page == 0"
+                    >
+                      <i class="fa-solid fa-angles-left text-dark"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="quantity_page--"
+                      :disabled="quantity_page == 0"
+                    >
+                      <i class="fa-solid fa-angle-left text-dark"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button class="page-link text-dark" disabled>
+                      {{ quantity_page + 1 }}
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="quantity_page++"
+                      :disabled="quantity_page == quantity_pages - 1"
+                    >
+                      <i class="fa-solid fa-angle-right text-dark"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="quantity_page = quantity_pages - 1"
+                      :disabled="quantity_page == quantity_pages - 1"
+                    >
+                      <i class="fa-solid fa-angles-right text-dark"></i>
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="pills-profile-sh-quantity2"
+              role="tabpanel"
+              aria-labelledby="pills-profile-sh-quantity2-tab"
+            >
+              <div class="table-responsive">
+                <table class="table table-sm table-hover">
+                  <thead>
+                    <tr>
+                      <th style="width: 10%">Т/р</th>
+                      <th style="width: 20%">Сумма</th>
+                      <th style="width: 20%">Сана</th>
+                      <th style="width: 20%">Ходим</th>
+                      <th style="width: 20%">Ҳисоб рақам</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item, inc) in paid_moneys" :key="item">
+                      <td>{{ inc + 1 }}</td>
+                      <td>
+                        {{ Intl.NumberFormat().format(item.Expenses.money) }}
+                        сўм
+                      </td>
+                      <td>
+                        {{
+                          new Date(item.Expenses.time)
+                            .toLocaleDateString({
+                              year: "numeric",
+                              month: "numeric",
+                              day: "numeric",
+                            })
+                            .slice(0, 10)
+                        }}
+                      </td>
+                      <td>{{ item.user }}</td>
+                      <td>
+                        {{
+                          item.Expenses.type == "market_expense_shot_supply" ||
+                          item.Expenses.type == "market_expense_shot"
+                            ? item.Bank_accounts.name
+                            : ""
+                        }}
+                      </td>
+                      <td>
+                        <button
+                          class="btn btn-sm btn-danger"
+                          v-if="
+                            item.Expenses.type == 'market_expense_naxt' &&
+                            item.Supplies.type == 'qarz_proche'
+                          "
+                          @click="remove_paid_m(item.Expenses.id)"
+                          id="remove_paid_money"
+                        >
+                          <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <Data_notfound v-if="!paid_moneys.length" />
+              </div>
+
+              <nav
+                aria-label="Page navigation example"
+                class="mt-2"
+                v-if="paid_moneys.length"
+              >
+                <ul class="pagination pagination-sm justify-content-end">
+                  <li class="page-item">
+                    <select
+                      class="form-control form-control-sm form-select mx-1"
+                      v-model="m_limit"
+                    >
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                    </select>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      type="button"
+                      class="page-link"
+                      @click="get_paid_moneys(id)"
+                    >
+                      <i class="fa-solid fa-rotate"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="m_page = 0"
+                      :disabled="m_page == 0"
+                    >
+                      <i class="fa-solid fa-angles-left text-dark"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="m_page--"
+                      :disabled="m_page == 0"
+                    >
+                      <i class="fa-solid fa-angle-left text-dark"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button class="page-link text-dark" disabled>
+                      {{ m_page + 1 }}
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="m_page++"
+                      :disabled="m_page == m_pages - 1"
+                    >
+                      <i class="fa-solid fa-angle-right text-dark"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      class="page-link"
+                      @click="m_page = m_pages - 1"
+                      :disabled="m_page == m_pages - 1"
+                    >
+                      <i class="fa-solid fa-angles-right text-dark"></i>
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -414,11 +625,13 @@
 <script>
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import {
+  get_market_expenses,
   get_supplies,
   markets_get,
+  remove_supply,
   shot_request,
 } from "@/utils/request/request";
-import { catchError } from "@/utils/request/handle_api_err";
+import { catchError, success } from "@/utils/request/handle_api_err";
 import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
   name: "ShotHistory",
@@ -441,11 +654,18 @@ export default {
       limit_market: 25,
       search_market: "",
       markets: [],
-      d_page: 0,
-      d_pages: null,
-      d_limit: 25,
-      dates: [],
+      name: "",
       id: null,
+      related_id: null,
+      quantity_pages: null,
+      quantity_page: 0,
+      quantity_limit: 25,
+      quantities: [],
+      m_pages: null,
+      m_page: 0,
+      m_limit: 25,
+      m_status: "",
+      paid_moneys: [],
     };
   },
   watch: {
@@ -464,7 +684,6 @@ export default {
       );
     },
     status(e) {
-      this.paid_status = "";
       this.page = 0;
       this.get_supply(
         this.market_id,
@@ -479,7 +698,6 @@ export default {
       );
     },
     paid_status(e) {
-      this.status = "";
       this.page = 0;
       this.get_supply(
         this.market_id,
@@ -525,6 +743,27 @@ export default {
     },
     d_page() {
       this.get_dates(this.id);
+      document.getElementById("scroll").scrollTop = 0;
+    },
+
+    quantity_limit() {
+      this.quantity_page = 0;
+      this.get_quantity(this.related_id, this.id);
+    },
+    quantity_page() {
+      this.get_quantity(this.related_id, this.id);
+      document.getElementById("scroll").scrollTop = 0;
+    },
+    m_limit() {
+      this.m_page = 0;
+      this.get_paid_moneys(this.id);
+    },
+    m_status() {
+      this.m_page = 0;
+      this.get_quantity(this.related_id, this.id);
+    },
+    m_page() {
+      this.get_paid_moneys(this.id);
       document.getElementById("scroll").scrollTop = 0;
     },
   },
@@ -612,18 +851,73 @@ export default {
       this.text_market = name;
       document.getElementById("select_bank_market3").click();
     },
-    get_dates(e) {
-      this.id = e;
+    get_quantity(related_id, id) {
+      this.related_id = related_id;
+      this.id = id;
       this.$store.dispatch("setLoading", { isLoading: true });
-      get_supplies(0, "", "", 0, "", "", "", this.d_page, this.d_limit, e, "")
+      get_supplies(
+        0,
+        this.m_status,
+        "",
+        0,
+        "shot",
+        "",
+        "",
+        this.quantity_page,
+        this.quantity_limit,
+        related_id,
+        ""
+      )
         .then((res) => {
-          this.d_pages = res.data.pages;
-          this.dates = res.data.data;
+          this.quantity_pages = res.data.pages;
+          this.quantities = res.data.data;
+          this.get_paid_moneys(id);
           this.$store.dispatch("setLoading", { isLoading: false });
         })
         .catch((err) => {
           catchError(err);
           this.$store.dispatch("setLoading", { isLoading: false });
+        });
+    },
+    get_paid_moneys(e) {
+      this.$store.dispatch("setLoading", { isLoading: true });
+      get_market_expenses(0, 0, e, 0, "", this.m_page, this.m_limit)
+        .then((res) => {
+          this.m_pages = res.data.pages;
+          this.paid_moneys = res.data.data;
+          this.$store.dispatch("setLoading", { isLoading: false });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        });
+    },
+    remove_s(e) {
+      document.getElementById("remove_suppliess").disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      remove_supply(e)
+        .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("remove_suppliess").disabled = false;
+          success(res).then(() => {
+            this.get_quantity(this.related_id, this.id);
+            this.get_supply(
+              this.market_id,
+              this.status,
+              this.paid_status,
+              this.building_id,
+              this.type,
+              this.from_time,
+              this.to_time,
+              this.page,
+              this.limit
+            );
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("remove_suppliess").disabled = false;
         });
     },
   },
@@ -653,19 +947,14 @@ export default {
   min-height: 83vh;
 }
 
-.modal-body .table-responsive {
-  max-height: 70vh;
-  min-height: 70vh;
-}
-
 @media (max-width: 500px) {
   .mt-3.table-responsive {
     max-height: 110vh;
     min-height: 110vh;
   }
   .modal-body .table-responsive {
-    max-height: 82vh;
-    min-height: 82vh;
+    max-height: 79vh;
+    min-height: 79vh;
   }
 }
 .mt-3 table {
@@ -673,13 +962,14 @@ export default {
   width: 100%;
 }
 
+.modal-body .table-responsive {
+  max-height: 67vh;
+  min-height: 67vh;
+}
+
 .modal-body .table-responsive table {
   min-width: 900px;
   width: 100%;
   zoom: 75%;
-}
-
-.shadow_n button:focus {
-  box-shadow: none;
 }
 </style>

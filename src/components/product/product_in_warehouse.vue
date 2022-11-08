@@ -34,10 +34,9 @@
       <thead class="">
         <tr>
           <th style="width: 10%">№</th>
-          <th style="width: 15%">Номи</th>
-          <th style="width: 15%">Ўлчов бирлиги</th>
-          <th style="width: 15%">Ҳажм</th>
-          <th style="width: 15%">Нарх</th>
+          <th style="width: 20%">Номи</th>
+          <th style="width: 20%">Ўлчов бирлиги</th>
+          <th style="width: 20%">Ҳажм</th>
           <th>
             <div class="dropdown">
               <button
@@ -161,15 +160,14 @@
             {{
               item.Warehouse_products.type == "proche"
                 ? item.Warehouse_products.name
+                : item.Warehouse_products.type == "tarkib"
+                ? item.product_name + ":" + item.Warehouse_products.name
                 : item.product_name
             }}
           </td>
           <td>{{ item.Warehouse_products.olchov_birligi }}</td>
           <td>
             <Format_numbers :number="item.Warehouse_products.quantity" />
-          </td>
-          <td>
-            <Format_numbers :number="item.Warehouse_products.price" /> сўм
           </td>
           <td>{{ item.building }}</td>
           <td>
@@ -544,6 +542,31 @@ export default {
           this.search_building
         );
         this.page_building = 0;
+      }
+    },
+    limit_warehouse(e) {
+      this.page_warehouse = 0;
+      this.warehouses_get(this.page_warehouse, e, this.search_warehouse);
+    },
+    page_warehouse(e) {
+      this.warehouses_get(e, this.limit_warehouse, this.search_warehouse);
+      document.getElementById("scroll").scrollTop = 0;
+    },
+    search_warehouse(e) {
+      this.page_warehouse = 0;
+      if (e.length > 0) {
+        this.warehouses_get(
+          this.page_warehouse,
+          this.limit_warehouse,
+          this.search_warehouse
+        );
+      } else if (e.length == 0) {
+        this.warehouses_get(
+          this.page_warehouse,
+          this.limit_warehouse,
+          this.search_warehouse
+        );
+        this.page_warehouse = 0;
       }
     },
   },

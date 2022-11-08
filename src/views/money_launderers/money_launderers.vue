@@ -257,4 +257,19 @@ export default {
     width: 100%;
   }
 }
+
+table {
+  min-width: 700px;
+  width: 100%;
+}
+
+.table-responsive {
+  max-height: 70vh;
+}
+
+@media (max-width: 500px) {
+  .table-responsive {
+    max-height: 95vh;
+  }
+}
 </style>

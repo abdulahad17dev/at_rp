@@ -165,15 +165,15 @@
               {{ item.Proche_sorovlar.name }}
             </td>
             <td>
-              {{
-                new Intl.NumberFormat().format(item.Proche_sorovlar.quantity)
-              }}
-              <br class="m-0" />
-              {{
-                " (олинган ҳажм: " +
-                (item.sum_supply_by_b_a_quantity + item.sum_supply_quantity) +
-                ")"
-              }}
+              <Format_numbers :number="item.Proche_sorovlar.quantity" />
+              <span class="d-flex">
+                олинган ҳажм:
+                <Format_numbers
+                  :number="
+                    item.sum_supply_by_b_a_quantity + item.sum_supply_quantity
+                  "
+                />
+              </span>
             </td>
             <td>{{ item.Proche_sorovlar.olchov_birligi }}</td>
             <td>
@@ -701,6 +701,7 @@ import {
   success,
 } from "@/utils/request/handle_api_err";
 import Swal from "sweetalert2";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
   name: "Pr_request",
   data() {
@@ -1057,7 +1058,7 @@ export default {
       });
     },
   },
-  components: { Data_notfound },
+  components: { Data_notfound, Format_numbers },
 };
 </script>
 

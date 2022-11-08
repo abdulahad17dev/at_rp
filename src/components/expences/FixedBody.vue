@@ -570,7 +570,7 @@ export default {
     buildings_get(page_building, limit_building, search_building) {
       this.$store.dispatch("setLoading", { isLoading: true });
 
-      building_get(page_building, limit_building, search_building)
+      building_get(page_building, limit_building, search_building, "start")
         .then((res) => {
           this.buildings = res.data.data;
           this.pages_building = res.data.pages;

@@ -556,7 +556,6 @@ export default {
       );
     },
     status(e) {
-      this.paid_status = "";
       this.page = 0;
       this.get_supply(
         this.market_id,
@@ -585,7 +584,6 @@ export default {
       );
     },
     paid_status(e) {
-      this.status = "";
       this.page = 0;
       this.get_supply(
         this.market_id,

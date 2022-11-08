@@ -238,7 +238,7 @@
         </thead>
         <tbody>
           <tr v-for="(item, inc) in requests || []" :key="item">
-            <td>
+            <td class="td_grafik">
               <input
                 class="form-check-input"
                 type="checkbox"

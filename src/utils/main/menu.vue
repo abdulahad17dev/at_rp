@@ -66,7 +66,7 @@ export default {
         },
         {
           to: "/main_warehouses",
-          icon: "fa-solid fa-users-line fa-2x",
+          icon: "fa-solid fa-warehouse fa-2x",
           title: "Базалар",
           role: ["bazachi"],
         },

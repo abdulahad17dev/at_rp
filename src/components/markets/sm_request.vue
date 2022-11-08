@@ -197,13 +197,16 @@
               }}
             </td>
             <td>
-              <span>
-                {{
-                  new Intl.NumberFormat().format(item.Smeta.quantity) +
-                  " (олинган ҳажм: " +
-                  (item.sum_supply_by_b_a_quantity + item.sum_supply_quantity) +
-                  ")"
-                }}
+              <Format_numbers :number="item.Smeta.quantity" />
+              <span class="d-flex">
+                олинган ҳажм:
+                <Format_numbers
+                  :number="
+                    item.sum_supply_by_b_a_quantity +
+                    item.sum_supply_quantity +
+                    item.max_supply_from_composition
+                  "
+                />
               </span>
             </td>
             <td>
@@ -521,10 +524,32 @@
                       <thead>
                         <tr>
                           <th style="width: 10%">Т/р</th>
+                          <th
+                            style="width: 15%"
+                            v-if="quantity_type == 'tarkib'"
+                          >
+                            Номи
+                          </th>
                           <th style="width: 15%">Ҳажм</th>
                           <th style="width: 15%">Ўлчов бирлиги</th>
-                          <th style="width: 15%">Нарх</th>
-                          <th style="width: 15%">Сана</th>
+                          <th
+                            :style="
+                              quantity_type == 'tarkib'
+                                ? 'width: 10%'
+                                : 'width: 15%'
+                            "
+                          >
+                            Нарх
+                          </th>
+                          <th
+                            :style="
+                              quantity_type == 'tarkib'
+                                ? 'width: 10%'
+                                : 'width: 15%'
+                            "
+                          >
+                            Сана
+                          </th>
                           <th style="width: 20%">Корхона</th>
                           <th>
                             <select
@@ -540,6 +565,9 @@
                       <tbody>
                         <tr v-for="(item, inc) in filtering" :key="item">
                           <td>{{ inc + 1 }}</td>
+                          <td v-if="quantity_type == 'tarkib'">
+                            {{ item.Supplies.product_composition }}
+                          </td>
                           <td>{{ item.Supplies.quantity }}</td>
                           <td>{{ item.Supplies.olchov_birligi }}</td>
                           <td>{{ item.Supplies.price }} сўм</td>
@@ -649,7 +677,13 @@
                       <thead>
                         <tr>
                           <th style="width: 10%">Т/р</th>
-                          <th style="width: 25%">Ҳажм</th>
+                          <th
+                            style="width: 15%"
+                            v-if="sh_quantity_type == 'tarkib'"
+                          >
+                            Номи
+                          </th>
+                          <th style="width: 20%">Ҳажм</th>
                           <th style="width: 20%">Ўлчов бирлиги</th>
                           <th style="width: 15%">Сана</th>
                           <th style="width: 20%">Корхона</th>
@@ -667,6 +701,11 @@
                       <tbody>
                         <tr v-for="(item, inc) in sh_quantities" :key="item">
                           <td>{{ inc + 1 }}</td>
+                          <td v-if="sh_quantity_type == 'tarkib'">
+                            {{
+                              item.Supplies_by_bank_account.product_composition
+                            }}
+                          </td>
                           <td>{{ item.Supplies_by_bank_account.quantity }}</td>
                           <td>
                             {{ item.Supplies_by_bank_account.olchov_birligi }}
@@ -1636,7 +1675,6 @@ export default {
         e
       )
         .then((res) => {
-          console.log(res.data.data);
           this.sh_quantity_pages = res.data.pages;
           this.sh_quantities = res.data.data;
           this.$store.dispatch("setLoading", { isLoading: false });

@@ -15,6 +15,11 @@
         role="tab"
         aria-controls="pills-home"
         aria-selected="true"
+        @click="
+          page_warehouse = 0;
+          limit_warehouse = 25;
+          search_warehouse = '';
+        "
       >
         Базага жўнатилган материаллар
       </button>
@@ -41,10 +46,28 @@
                 a_search,
                 a_page,
                 a_limit
-              )
+              );
+          page_warehouse = 0;
+          limit_warehouse = 25;
+          search_warehouse = '';
         "
       >
         Базадан қабул қилинган материаллар
+      </button>
+    </li>
+    <li class="nav-item mx-1" role="presentation">
+      <button
+        class="btn btn-sm btn-light w-100"
+        id="pills-contact-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-contact"
+        type="button"
+        role="tab"
+        aria-controls="pills-contact"
+        aria-selected="false"
+        @click="spent_product = true"
+      >
+        Сарфланган материаллар тарихи
       </button>
     </li>
   </ul>
@@ -83,18 +106,127 @@
           <thead>
             <tr>
               <th style="width: 10%">№</th>
-              <th style="width: 20%">Материаллар</th>
-              <th style="width: 15%">Ҳажм</th>
+              <th style="width: 15%">Материаллар</th>
+              <th style="width: 10%">Ҳажм</th>
               <th style="width: 15%">Ўлчов бирлиги</th>
               <th style="width: 10%">Сана</th>
-              <th>
+              <th style="width: 20%">
+                <div class="dropdown">
+                  <button
+                    class="btn btn-light btn-sm dropdown-toggle"
+                    type="button"
+                    id="warehouse_text"
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                    aria-expanded="false"
+                    @click="
+                      warehouses.length
+                        ? ''
+                        : warehouses_get(
+                            page_warehouse,
+                            limit_warehouse,
+                            search_warehouse
+                          )
+                    "
+                  >
+                    {{ text_warehouse }}
+                  </button>
+                  <ul
+                    class="dropdown-menu border-top-0"
+                    aria-labelledby="warehouse_text"
+                  >
+                    <li>
+                      <input
+                        type="search"
+                        class="form-control form-control-sm"
+                        placeholder="қидириш ..."
+                        v-model="search_warehouse"
+                      />
+                    </li>
+                    <li>
+                      <ul class="dropdown-items">
+                        <li @click="select_w(0, 'барчаси', true)">
+                          <a class="dropdown-item">барчаси</a>
+                        </li>
+                        <li
+                          v-for="item in warehouses"
+                          :key="item"
+                          @click="select_w(item.id, item.name, true)"
+                        >
+                          <a class="dropdown-item">{{ item.name }}</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li v-if="warehouses != ''">
+                      <hr class="dropdown-divider m-0" />
+                    </li>
+                    <li>
+                      <nav
+                        aria-label="Page navigation example"
+                        class="mt-2"
+                        v-if="warehouses != ''"
+                      >
+                        <ul
+                          class="pagination pagination-sm justify-content-end"
+                        >
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link"
+                              @click="
+                                warehouses_get(
+                                  page_warehouse,
+                                  limit_warehouse,
+                                  search_warehouse
+                                )
+                              "
+                            >
+                              <i class="fa-solid fa-rotate"></i>
+                            </button>
+                          </li>
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link"
+                              @click="page_warehouse--"
+                              :disabled="page_warehouse == 0"
+                            >
+                              <i class="fa-solid fa-angle-left text-dark"></i>
+                            </button>
+                          </li>
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link text-dark"
+                              disabled
+                            >
+                              {{ page_warehouse + 1 }}
+                            </button>
+                          </li>
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link"
+                              @click="page_warehouse++"
+                              :disabled="page_warehouse == pages_warehouse - 1"
+                            >
+                              <i class="fa-solid fa-angle-right text-dark"></i>
+                            </button>
+                          </li>
+                        </ul>
+                      </nav>
+                    </li>
+                  </ul>
+                </div>
+              </th>
+              <th style="width: 8%">
                 <select class="form-select form-select-sm" v-model="sh_type">
                   <option value="proche">проче</option>
                   <option value="tarkib">таркиб</option>
                   <option value="smeta">смета</option>
                 </select>
               </th>
-              <th>
+              <th style="width: 12%">
                 <select class="form-select form-select-sm" v-model="sh_status">
                   <option value="true">қаъбул қилинди</option>
                   <option value="false">қаъбул қилинмади</option>
@@ -119,6 +251,7 @@
                     .slice(0, 10)
                 }}
               </td>
+              <td>{{ item.for_to }}</td>
               <td></td>
               <td>
                 <button
@@ -132,8 +265,8 @@
             </tr>
           </tbody>
         </table>
+        <Data_notfound v-if="products_share == ''" />
       </div>
-      <Data_notfound v-if="products_share == ''" />
 
       <nav
         aria-label="Page navigation example"
@@ -239,18 +372,127 @@
           <thead>
             <tr>
               <th style="width: 10%">№</th>
-              <th style="width: 20%">Материаллар</th>
-              <th style="width: 15%">Ҳажм</th>
+              <th style="width: 15%">Материаллар</th>
+              <th style="width: 10%">Ҳажм</th>
               <th style="width: 15%">Ўлчов бирлиги</th>
               <th style="width: 10%">Сана</th>
-              <th>
+              <th style="width: 20%">
+                <div class="dropdown">
+                  <button
+                    class="btn btn-light btn-sm dropdown-toggle"
+                    type="button"
+                    id="warehouse_text"
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                    aria-expanded="false"
+                    @click="
+                      warehouses.length
+                        ? ''
+                        : warehouses_get(
+                            page_warehouse,
+                            limit_warehouse,
+                            search_warehouse
+                          )
+                    "
+                  >
+                    {{ text_warehouse }}
+                  </button>
+                  <ul
+                    class="dropdown-menu border-top-0"
+                    aria-labelledby="warehouse_text"
+                  >
+                    <li>
+                      <input
+                        type="search"
+                        class="form-control form-control-sm"
+                        placeholder="қидириш ..."
+                        v-model="search_warehouse"
+                      />
+                    </li>
+                    <li>
+                      <ul class="dropdown-items">
+                        <li @click="select_w(0, 'барчаси', false)">
+                          <a class="dropdown-item">барчаси</a>
+                        </li>
+                        <li
+                          v-for="item in warehouses"
+                          :key="item"
+                          @click="select_w(item.id, item.name, false)"
+                        >
+                          <a class="dropdown-item">{{ item.name }}</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li v-if="warehouses != ''">
+                      <hr class="dropdown-divider m-0" />
+                    </li>
+                    <li>
+                      <nav
+                        aria-label="Page navigation example"
+                        class="mt-2"
+                        v-if="warehouses != ''"
+                      >
+                        <ul
+                          class="pagination pagination-sm justify-content-end"
+                        >
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link"
+                              @click="
+                                warehouses_get(
+                                  page_warehouse,
+                                  limit_warehouse,
+                                  search_warehouse
+                                )
+                              "
+                            >
+                              <i class="fa-solid fa-rotate"></i>
+                            </button>
+                          </li>
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link"
+                              @click="page_warehouse--"
+                              :disabled="page_warehouse == 0"
+                            >
+                              <i class="fa-solid fa-angle-left text-dark"></i>
+                            </button>
+                          </li>
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link text-dark"
+                              disabled
+                            >
+                              {{ page_warehouse + 1 }}
+                            </button>
+                          </li>
+                          <li class="page-item">
+                            <button
+                              type="button"
+                              class="page-link"
+                              @click="page_warehouse++"
+                              :disabled="page_warehouse == pages_warehouse - 1"
+                            >
+                              <i class="fa-solid fa-angle-right text-dark"></i>
+                            </button>
+                          </li>
+                        </ul>
+                      </nav>
+                    </li>
+                  </ul>
+                </div>
+              </th>
+              <th style="width: 8%">
                 <select class="form-select form-select-sm" v-model="a_type">
                   <option value="proche">проче</option>
                   <option value="tarkib">таркиб</option>
                   <option value="smeta">смета</option>
                 </select>
               </th>
-              <th>
+              <th style="width: 12%">
                 <select class="form-select form-select-sm" v-model="a_status">
                   <option value="true">қаъбул қилинди</option>
                   <option value="false">қаъбул қилинмади</option>
@@ -275,6 +517,7 @@
                     .slice(0, 10)
                 }}
               </td>
+              <td>{{ item.for_from }}</td>
               <td></td>
               <td>
                 <button
@@ -357,6 +600,14 @@
         </ul>
       </nav>
     </div>
+    <div
+      class="tab-pane fade"
+      id="pills-contact"
+      role="tabpanel"
+      aria-labelledby="pills-contact-tab"
+    >
+      <Spent_products v-if="spent_product" />
+    </div>
   </div>
 </template>
 
@@ -364,13 +615,15 @@
 import Header_item from "@/components/header/header_item.vue";
 import {
   acceptance_transfered_product,
+  main_warehouses_get,
   take_back_transfered_product,
   transfered_products,
 } from "@/utils/request/request";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
+import Spent_products from "./spent_products.vue";
 export default {
-  components: { Header_item, Data_notfound },
+  components: { Header_item, Data_notfound, Spent_products },
   name: "TransferedProducts",
   data() {
     return {
@@ -394,6 +647,13 @@ export default {
       a_page: 0,
       a_limit: 25,
       a_pages: null,
+      page_warehouse: 0,
+      pages_warehouse: null,
+      limit_warehouse: 25,
+      search_warehouse: "",
+      warehouses: [],
+      text_warehouse: "базалар",
+      spent_product: false,
     };
   },
   watch: {
@@ -408,6 +668,19 @@ export default {
         this.sh_search,
         this.sh_page,
         e
+      );
+    },
+    sh_to(e) {
+      this.page = 0;
+      this.get_transfered_product(
+        this.sh_status2,
+        this.sh_type,
+        this.sh_from,
+        e,
+        this.sh_status,
+        this.sh_search,
+        this.sh_page,
+        this.sh_limit
       );
     },
     sh_page(e) {
@@ -475,6 +748,19 @@ export default {
         e
       );
     },
+    a_from(e) {
+      this.page = 0;
+      this.get_transfered_product_a(
+        this.a_status2,
+        this.a_type,
+        e,
+        this.a_to,
+        this.a_status,
+        this.a_search,
+        this.a_page,
+        this.a_limit
+      );
+    },
     a_page(e) {
       this.get_transfered_product_a(
         this.a_status2,
@@ -526,6 +812,31 @@ export default {
         this.a_page,
         this.a_limit
       );
+    },
+    limit_warehouse(e) {
+      this.page_warehouse = 0;
+      this.warehouses_get(this.page_warehouse, e, this.search_warehouse);
+    },
+    page_warehouse(e) {
+      this.warehouses_get(e, this.limit_warehouse, this.search_warehouse);
+      document.getElementById("scroll").scrollTop = 0;
+    },
+    search_warehouse(e) {
+      this.page_warehouse = 0;
+      if (e.length > 0) {
+        this.warehouses_get(
+          this.page_warehouse,
+          this.limit_warehouse,
+          this.search_warehouse
+        );
+      } else if (e.length == 0) {
+        this.warehouses_get(
+          this.page_warehouse,
+          this.limit_warehouse,
+          this.search_warehouse
+        );
+        this.page_warehouse = 0;
+      }
     },
   },
   methods: {
@@ -621,6 +932,29 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
+    warehouses_get(page_warehouse, limit_warehouse, search_warehouse) {
+      this.$store.dispatch("setLoading", { isLoading: true });
+
+      main_warehouses_get(page_warehouse, limit_warehouse, search_warehouse)
+        .then((res) => {
+          this.warehouses = res.data.data;
+          this.pages_warehouse = res.data.pages;
+          this.$store.dispatch("setLoading", { isLoading: false });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        });
+    },
+    select_w(id, name, e) {
+      if (e == true) {
+        this.a_from = id;
+      } else {
+        this.sh_to = id;
+      }
+      this.text_warehouse = name;
+      document.getElementById("warehouse_text").click();
+    },
   },
   created() {
     this.get_transfered_product_a(
@@ -638,10 +972,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media (max-width: 500px) {
-  ul.nav {
-    zoom: 70%;
-  }
+ul.nav {
+  zoom: 75%;
 }
 .col select {
   width: 80px;
@@ -664,17 +996,19 @@ export default {
 }
 
 table {
-  min-width: 800px;
+  min-width: 1150px;
   width: 100%;
 }
 
 .table-responsive {
   max-height: 62vh;
+  min-height: 62vh;
 }
 
 @media (max-width: 500px) {
   .table-responsive {
     max-height: 84vh;
+    min-height: 84vh;
   }
 }
 </style>

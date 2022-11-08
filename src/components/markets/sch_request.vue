@@ -22,14 +22,17 @@
         </thead>
         <tbody>
           <tr v-for="(item, inc) in shot_requests || []" :key="item">
-            <td>
+            <td class="td_grafik">
               {{ inc + 1 }}
               <button
                 class="btn btn-sm"
                 data-bs-toggle="modal"
                 data-bs-target="#get_quantity_shot"
                 @click="
-                  get_quantity(item.Supplies_by_bank_account.id);
+                  get_quantity(
+                    item.Supplies_by_bank_account.related_id,
+                    item.Supplies_by_bank_account.id
+                  );
                   name = item.product;
                 "
               >
@@ -39,14 +42,22 @@
                 ></i>
               </button>
             </td>
-            <td>{{ item.product }}</td>
             <td>
+              {{
+                item.Supplies_by_bank_account.type == "tarkib"
+                  ? item.product +
+                    ":" +
+                    item.Supplies_by_bank_account.product_composition
+                  : item.product
+              }}
+            </td>
+            <td>
+              <Format_numbers
+                :number="item.Supplies_by_bank_account.quantity"
+              />
               <span class="d-flex">
-                <Format_numbers
-                  :number="item.Supplies_by_bank_account.quantity"
-                />
-                (олинган ҳажм:
-                <Format_numbers :number="item.sum_supply_quantity" />)
+                олинган ҳажм:
+                <Format_numbers :number="item.sum_supply_quantity" />
               </span>
             </td>
             <td>{{ item.Supplies_by_bank_account.olchov_birligi }}</td>
@@ -372,7 +383,7 @@
                     <button
                       type="button"
                       class="page-link"
-                      @click="get_quantity(id)"
+                      @click="get_quantity(related_id, id)"
                     >
                       <i class="fa-solid fa-rotate"></i>
                     </button>
@@ -607,6 +618,7 @@ export default {
       },
       quantity: "",
       id: null,
+      related_id: null,
       quantity_pages: null,
       quantity_page: 0,
       quantity_limit: 25,
@@ -665,10 +677,10 @@ export default {
     },
     quantity_limit() {
       this.quantity_page = 0;
-      this.get_quantity(this.id);
+      this.get_quantity(this.related_id, this.id);
     },
     quantity_page() {
-      this.get_quantity(this.id);
+      this.get_quantity(this.related_id, this.id);
       document.getElementById("scroll").scrollTop = 0;
     },
     m_limit() {
@@ -677,7 +689,7 @@ export default {
     },
     m_status() {
       this.m_page = 0;
-      this.get_quantity(this.id);
+      this.get_quantity(this.related_id, this.id);
     },
     m_page() {
       this.get_paid_moneys(this.id);
@@ -818,8 +830,9 @@ export default {
           document.getElementById("remove_supply_smetaa").disabled = false;
         });
     },
-    get_quantity(e) {
-      this.id = e;
+    get_quantity(related_id, id) {
+      this.related_id = related_id;
+      this.id = id;
       this.$store.dispatch("setLoading", { isLoading: true });
       get_supplies(
         0,
@@ -831,13 +844,13 @@ export default {
         "",
         this.quantity_page,
         this.quantity_limit,
-        e,
+        related_id,
         ""
       )
         .then((res) => {
           this.quantity_pages = res.data.pages;
           this.quantities = res.data.data;
-          this.get_paid_moneys(e);
+          this.get_paid_moneys(id);
           this.$store.dispatch("setLoading", { isLoading: false });
         })
         .catch((err) => {
@@ -866,7 +879,7 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_suppliesss").disabled = false;
           success(res).then(() => {
-            this.get_quantity(this.id);
+            this.get_quantity(this.related_id, this.id);
             this.get_shot_r(
               this.market_id,
               this.status,
