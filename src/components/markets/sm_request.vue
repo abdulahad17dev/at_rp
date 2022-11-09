@@ -162,6 +162,20 @@
                 v-if="search2 == item.product_name"
               />
               {{ inc + 1 }}
+              <span
+                class="fa-solid fa-circle product rounded-circle"
+                style="font-size: 17px"
+                :class="
+                  date < item.Smeta.time && date_sort(item.Smeta.time) > 5
+                    ? 'bg-success text-success'
+                    : date < item.Smeta.time &&
+                      date_sort(item.Smeta.time) <= 5 &&
+                      date_sort(item.Smeta.time) >= 3
+                    ? 'bg-warning text-warning'
+                    : 'bg-danger text-danger'
+                "
+              >
+              </span>
               <button
                 class="btn btn-sm"
                 @click="get_grafik(item, item.Smeta.id)"
@@ -1155,6 +1169,7 @@ export default {
       sh_quantity_limit: 25,
       sh_quantity_type: "smeta",
       sh_quantities: [],
+      date: new Date().toISOString().slice(0, 10),
     };
   },
   watch: {
@@ -1683,6 +1698,15 @@ export default {
           catchError(err);
           this.$store.dispatch("setLoading", { isLoading: false });
         });
+    },
+    date_sort(e) {
+      let date1 = new Date(e);
+      let date2 = new Date(this.date);
+
+      const diffTime = Math.abs(date1 - date2);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      return Number(diffDays);
     },
   },
   created() {

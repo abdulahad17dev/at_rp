@@ -57,7 +57,7 @@
           <td>{{ inc + 1 }}</td>
           <td>{{ item.worker }}</td>
           <td>
-            <Format_numbers :number="item.Spent_items_to_work.quantity" />
+            <Format_numbers :number="item.Spent_items_to_work.sum_quantity" />
           </td>
           <td>{{ this.$route.query.olchov }}</td>
           <td>

@@ -149,6 +149,21 @@
           <tr v-for="(item, inc) in product_requests || []" :key="item">
             <td class="td_grafik">
               {{ inc + 1 }}
+              <span
+                class="fa-solid fa-circle product rounded-circle"
+                style="font-size: 17px"
+                :class="
+                  date < item.Proche_sorovlar.time &&
+                  date_sort(item.Proche_sorovlar.time) > 5
+                    ? 'bg-success text-success'
+                    : date < item.Proche_sorovlar.time &&
+                      date_sort(item.Proche_sorovlar.time) <= 5 &&
+                      date_sort(item.Proche_sorovlar.time) >= 3
+                    ? 'bg-warning text-warning'
+                    : 'bg-danger text-danger'
+                "
+              >
+              </span>
               <button
                 class="btn btn-sm"
                 data-bs-toggle="modal"
@@ -745,6 +760,7 @@ export default {
       sh_quantity_page: 0,
       sh_quantity_limit: 25,
       sh_quantities: [],
+      date: new Date().toISOString().slice(0, 10),
     };
   },
   watch: {
@@ -1039,6 +1055,15 @@ export default {
           catchError(err);
           this.$store.dispatch("setLoading", { isLoading: false });
         });
+    },
+    date_sort(e) {
+      let date1 = new Date(e);
+      let date2 = new Date(this.date);
+
+      const diffTime = Math.abs(date1 - date2);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      return Number(diffDays);
     },
   },
   created() {
