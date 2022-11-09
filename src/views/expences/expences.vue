@@ -68,7 +68,12 @@
     </div>
   </form>
 
-  <Fixed :fixed_history="fixed_history" @from="sort_from" @to="sort_to" />
+  <Fixed
+    :fixed_history="fixed_history"
+    @from="sort_from"
+    @to="sort_to"
+    @remove="remove"
+  />
 
   <nav
     aria-label="Page navigation example"
@@ -598,6 +603,7 @@ import {
   get_variable_history,
   pay_for_fixed_expense,
   pay_for_variable_expense,
+  take_back_money_from_expense,
 } from "@/utils/request/request";
 import Fixed from "@/components/expences/Fixed.vue";
 import Variable from "@/components/expences/Variable.vue";
@@ -804,8 +810,14 @@ export default {
             e.for_ = 0;
             e.comment = "";
           });
-          document.getElementById("bank_account_text").innerHTML =
-            "ҳисоб рақамлар";
+          let bank_a = document.getElementById("bank_account_text");
+          if (bank_a) {
+            document.getElementById("bank_account_text").innerHTML =
+              "ҳисоб рақамлар";
+          } else {
+            document.getElementById("select_bank_building").innerHTML =
+              "объектлар";
+          }
           document.getElementById("expenses_text").innerHTML = "чиқимлар";
         })
         .catch((err) => {
@@ -946,6 +958,31 @@ export default {
         this.h_to_time
       );
       this.page = 0;
+    },
+    remove(e) {
+      document.getElementById("remove_expense").disabled = true;
+      this.$store.dispatch("setLoading", { isLoading: true });
+      take_back_money_from_expense(e, "fixed")
+        .then((res) => {
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("remove_expense").disabled = false;
+          success(res).then(() => {
+            this.fixed_history_get(
+              this.h_page,
+              this.h_limit,
+              this.h_from,
+              this.h_to,
+              this.h_user_id,
+              this.h_from_time,
+              this.h_to_time
+            );
+          });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById("remove_expense").disabled = false;
+        });
     },
   },
   created() {

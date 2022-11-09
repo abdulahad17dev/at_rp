@@ -135,7 +135,7 @@
                   </ul>
                 </div>
               </div>
-              <div class="col-10 mx-auto" v-if="role != 'bugalter'">
+              <div class="col-10 mx-auto" v-else-if="role == 'taminotchi'">
                 <label for="from">Объектлар: </label>
                 <div class="dropdown">
                   <button
@@ -437,8 +437,8 @@ export default {
       text_expense: "чиқимлар",
       pay_body: {
         money: null,
-        from_: null,
-        to_: null,
+        from_: 0,
+        to_: 0,
         for_: 0,
         comment: "",
       },

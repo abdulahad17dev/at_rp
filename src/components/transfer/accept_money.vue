@@ -52,10 +52,12 @@
           :key="item"
         >
           <td>{{ inc + 1 }}</td>
-          <td>{{ new Intl.NumberFormat().format(item.money) }} сўм</td>
+          <td>
+            {{ new Intl.NumberFormat().format(item.Transfers.money) }} сўм
+          </td>
           <td>
             {{
-              new Date(item.time)
+              new Date(item.Transfers.time)
                 .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
@@ -64,7 +66,7 @@
                 .slice(0, 10)
             }}
           </td>
-          <td>{{ item.comment }}</td>
+          <td>{{ item.Transfers.comment }}</td>
         </tr>
       </tbody>
     </table>

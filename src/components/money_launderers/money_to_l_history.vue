@@ -40,9 +40,11 @@
     <table class="table table-sm table-hover">
       <thead>
         <tr>
-          <th style="width: 5%">№</th>
-          <th style="width: 25%">Сумма</th>
-          <th style="width: 20%">Сана</th>
+          <th style="width: 10%">№</th>
+          <th style="width: 20%">Сумма</th>
+          <th style="width: 20%">Ўтказилган Сумма</th>
+          <th style="width: 20%">Фойиз</th>
+          <th style="width: 10%">Сана</th>
           <th style="width: 20%">Изох</th>
         </tr>
       </thead>
@@ -50,8 +52,17 @@
         <tr v-for="(item, inc) in money_history" :key="item">
           <td>{{ inc + 1 }}</td>
           <td>
+            {{
+              new Intl.NumberFormat().format(
+                (item.Transfers.money / item.Transfers.percent) * 100
+              )
+            }}
+            сўм
+          </td>
+          <td>
             {{ new Intl.NumberFormat().format(item.Transfers.money) }} сўм
           </td>
+          <td>{{ item.Transfers.percent }}%</td>
           <td>
             {{
               new Date(item.Transfers.time)

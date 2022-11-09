@@ -38,6 +38,9 @@
                 </li>
                 <li>
                   <ul class="dropdown-items">
+                    <li @click="select(0, 'барчаси')">
+                      <a class="dropdown-item">барчаси</a>
+                    </li>
                     <li
                       v-for="item in users"
                       :key="item"

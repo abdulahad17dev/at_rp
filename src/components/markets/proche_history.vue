@@ -776,8 +776,13 @@ export default {
     },
     select(id, name, phone) {
       this.market_id = id;
-      this.text_market = name + " +998 " + phone;
-      document.getElementById("select_bank_market").click();
+      if (phone) {
+        this.text_market = name + " +998 " + phone;
+        document.getElementById("select_bank_market").click();
+      } else {
+        this.text_market = name;
+        document.getElementById("select_bank_market").click();
+      }
     },
     remove(e) {
       document.getElementById("remove_supplies").disabled = true;

@@ -6,7 +6,7 @@
           <th style="width: 5%">№</th>
           <th style="width: 20%">Сумма</th>
           <th style="width: 20%">Сана</th>
-          <th style="width: 30%">Изох</th>
+          <th style="width: 20%">Изох</th>
           <th v-if="role == 'bugalter'">
             <div class="dropdown">
               <button
@@ -116,7 +116,7 @@
               </ul>
             </div>
           </th>
-          <th v-else-if="role == 'taminotchi' || role == 'kassir'">
+          <th v-else-if="role == 'taminotchi'">
             <div class="dropdown">
               <button
                 class="btn btn-light btn-sm dropdown-toggle"
@@ -326,6 +326,7 @@
               </ul>
             </div>
           </th>
+          <th style="width: 10%"></th>
         </tr>
       </thead>
       <tbody>
@@ -344,11 +345,20 @@
             }}
           </td>
           <td>{{ item.Expenses.comment }}</td>
-          <td v-if="role == 'bugalter' || role == 'taminotchi'">
+          <td v-if="role == 'bugalter'">
             <b class="text-primary"> {{ item.name_for_from }}</b>
           </td>
           <td>
             <b class="text-primary"> {{ item.fixed_expense }}</b>
+          </td>
+          <td>
+            <button
+              class="btn btn-sm btn-danger"
+              @click="$emit('remove', item.Expenses.id)"
+              id="remove_expense"
+            >
+              <i class="fa-solid fa-circle-xmark"></i>
+            </button>
           </td>
         </tr>
       </tbody>

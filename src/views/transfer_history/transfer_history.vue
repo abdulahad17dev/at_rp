@@ -71,7 +71,7 @@
       </button>
     </li>
     <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
-      <button
+      <!-- <button
         class="btn btn-sm btn-light shadow-sm w-100"
         id="pills-profile-tab2"
         data-bs-toggle="pill"
@@ -83,7 +83,7 @@
         @click="transfer_f_expense = true"
       >
         доимий чиқим тарихи
-      </button>
+      </button> -->
     </li>
     <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
       <!-- <button

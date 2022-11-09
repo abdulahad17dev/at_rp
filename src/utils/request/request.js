@@ -1199,3 +1199,13 @@ export function get_spent_products_to_work(
     `get_spent_products_to_work?work_id=${work_id}${type_filter}&user_id=${user_id}${item_filter}&page=${page}&limit=${limit}`
   );
 }
+
+// expense remove
+
+export function take_back_money_from_expense(id, type) {
+  return instance.delete(`take_back_money_from_expense/${id}/${type}`);
+}
+
+export function take_back_money_from_supply_by_b_a_expense(id) {
+  return instance.delete(`take_back_money_from_supply_by_b_a_expense/${id}`);
+}

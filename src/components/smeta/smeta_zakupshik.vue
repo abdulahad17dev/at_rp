@@ -1,12 +1,36 @@
 <template>
-  <div class="table-responsive smeta mt-3">
+  <div class="row">
+    <div class="col mt-1 d-flex align-items-center">
+      <span class="d-none d-md-block d-sm-block d-lg-block d-xll-block mx-2"
+        >Лимит</span
+      >
+      <select class="form-control form-control-sm form-select" v-model="limit">
+        <option value="25" selected>25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </div>
+    <div class="col mt-2 d-flex align-items-center justify-content-end">
+      <span>Қидириш: </span>
+      <div class="input-group input-group-sm mx-2">
+        <input
+          type="search"
+          v-model="search"
+          class="form-control form-control-sm"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive smeta mt-2">
     <table class="table table-sm table-hover">
       <thead>
         <tr>
-          <td style="width: 8%">№</td>
-          <td style="width: 32%">Номи</td>
+          <td style="width: 10%">№</td>
+          <td style="width: 20%">Номи</td>
           <td style="width: 20%">Ўлчов бирлиги</td>
           <td style="width: 20%">Ҳажм</td>
+          <th style="width: 10%">Бошланиш санаси</th>
           <td style="width: 10%">
             <div class="dropdown">
               <button
@@ -124,19 +148,34 @@
       </thead>
       <tbody>
         <tr v-for="(item, inc) in smeta" :key="item" class="product">
-          <td
-            class="td_grafik"
-            data-bs-toggle="modal"
-            data-bs-target="#smeta_grafik"
-            @click="
-              get_grafik(item);
-              sum_supply_by_b_a_quantity = item.sum_supply_by_b_a_quantity;
-              sum_supply_quantity = item.sum_supply_quantity;
-              product_olchov_birligi = item.product_olchov_birligi;
-            "
-          >
+          <td class="td_grafik">
             {{ inc + 1 }}
-            <button class="btn btn-sm">
+            <span
+              class="fa-solid fa-circle product rounded-circle"
+              style="font-size: 17px"
+              :class="
+                date < item.grafik.start_date &&
+                date_sort(item.grafik.start_date) > 5
+                  ? 'bg-success text-success'
+                  : date < item.grafik.start_date &&
+                    date_sort(item.grafik.start_date) <= 5 &&
+                    date_sort(item.grafik.start_date) >= 3
+                  ? 'bg-warning text-warning'
+                  : 'bg-danger text-danger'
+              "
+            >
+            </span>
+            <button
+              class="btn btn-sm"
+              data-bs-toggle="modal"
+              data-bs-target="#smeta_grafik"
+              @click="
+                get_grafik(item);
+                sum_supply_by_b_a_quantity = item.sum_supply_by_b_a_quantity;
+                sum_supply_quantity = item.sum_supply_quantity;
+                product_olchov_birligi = item.product_olchov_birligi;
+              "
+            >
               <i
                 class="fa-solid fa-circle-question product"
                 style="font-size: 17px"
@@ -145,9 +184,19 @@
           </td>
           <td>{{ item.product_name }}</td>
           <td>{{ item.product_olchov_birligi }}</td>
-
           <td>
             <Format_numbers :number="item.Smeta.quantity" />
+          </td>
+          <td>
+            {{
+              new Date(item.grafik.start_date)
+                .toLocaleDateString({
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                })
+                .slice(0, 10)
+            }}
           </td>
           <td></td>
           <td>
@@ -180,16 +229,6 @@
 
   <nav aria-label="Page navigation example" class="mt-2" v-if="smeta != ''">
     <ul class="pagination pagination-sm justify-content-end">
-      <div class="page-item">
-        <select
-          class="form-control form-control-sm mx-2 form-select"
-          v-model="limit"
-        >
-          <option value="25">25</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-        </select>
-      </div>
       <li class="page-item">
         <button
           type="button"
@@ -405,6 +444,7 @@ export default {
       sum_supply_by_b_a_quantity: null,
       sum_supply_quantity: null,
       product_olchov_birligi: "",
+      date: new Date().toISOString().slice(0, 10),
     };
   },
   watch: {
@@ -432,26 +472,14 @@ export default {
     },
     search(e) {
       this.page = 0;
-      if (e.length > 0) {
-        this.get_smeta(
-          this.page,
-          this.limit,
-          this.search,
-          this.status,
-          this.building_id,
-          this.user_id
-        );
-      } else if (e.length == 0) {
-        this.get_smeta(
-          this.page,
-          this.limit,
-          this.search,
-          this.status,
-          this.building_id,
-          this.user_id
-        );
-        this.page = 0;
-      }
+      this.get_smeta(
+        this.page,
+        this.limit,
+        e,
+        this.status,
+        this.building_id,
+        this.user_id
+      );
     },
     status(e) {
       this.page = 0;
@@ -600,6 +628,15 @@ export default {
       this.text_building = name;
       document.getElementById("select_bank_building").click();
     },
+    date_sort(e) {
+      let date1 = new Date(e);
+      let date2 = new Date(this.date);
+
+      const diffTime = Math.abs(date1 - date2);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      return Number(diffDays);
+    },
   },
   created() {
     this.get_smeta(
@@ -623,14 +660,14 @@ export default {
 }
 
 .smeta {
-  max-height: 70vh;
-  min-height: 70vh;
+  max-height: 64vh;
+  min-height: 64vh;
 }
 
 @media (max-width: 500px) {
   .smeta {
-    max-height: 100vh;
-    min-height: 100vh;
+    max-height: 94vh;
+    min-height: 94vh;
   }
 }
 
@@ -644,5 +681,24 @@ td.td_grafik {
 
 .dropdown-menu {
   transform: translate3d(0px, 32.8px, 0px) !important;
+}
+.col select {
+  width: 80px;
+  height: 30px;
+}
+.col .input-group {
+  width: 200px;
+}
+
+@media (max-width: 509px) {
+  .row {
+    display: block;
+  }
+  .row .col .input-group {
+    width: 100%;
+  }
+  .row .col select {
+    width: 100%;
+  }
 }
 </style>

@@ -166,16 +166,18 @@
                 class="fa-solid fa-circle product rounded-circle"
                 style="font-size: 17px"
                 :class="
-                  date < item.Smeta.time && date_sort(item.Smeta.time) > 5
+                  date < item.grafik.start_date &&
+                  date_sort(item.grafik.start_date) > 5
                     ? 'bg-success text-success'
-                    : date < item.Smeta.time &&
-                      date_sort(item.Smeta.time) <= 5 &&
-                      date_sort(item.Smeta.time) >= 3
+                    : date < item.grafik.start_date &&
+                      date_sort(item.grafik.start_date) <= 5 &&
+                      date_sort(item.grafik.start_date) >= 3
                     ? 'bg-warning text-warning'
                     : 'bg-danger text-danger'
                 "
               >
               </span>
+              {{ date_sort(item.grafik.start_date) }}
               <button
                 class="btn btn-sm"
                 @click="get_grafik(item, item.Smeta.id)"

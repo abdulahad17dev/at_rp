@@ -48,7 +48,32 @@
       role="tabpanel"
       aria-labelledby="pills-home-tab"
     >
-      <div class="table-responsive">
+      <div class="row">
+        <div class="col mt-1 d-flex align-items-center">
+          <span class="d-none d-md-block d-sm-block d-lg-block d-xll-block mx-2"
+            >Лимит</span
+          >
+          <select
+            class="form-control form-control-sm form-select"
+            v-model="limit"
+          >
+            <option value="25" selected>25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+        <div class="col mt-2 d-flex align-items-center justify-content-end">
+          <span>Қидириш: </span>
+          <div class="input-group input-group-sm mx-2">
+            <input
+              type="search"
+              v-model="search"
+              class="form-control form-control-sm"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive mt-2">
         <table class="table table-sm table-hover">
           <thead class="">
             <tr>
@@ -181,7 +206,20 @@
           </thead>
           <tbody>
             <tr v-for="(item, inc) in product_requests" :key="item">
-              <td>{{ inc + 1 }}</td>
+              <td class="td_grafik">
+                {{ inc + 1 }}
+                <button
+                  class="btn btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#users"
+                  @click="users = item"
+                >
+                  <i
+                    class="fa-solid fa-circle-question product"
+                    style="font-size: 17px"
+                  ></i>
+                </button>
+              </td>
               <td>
                 {{ item.Proche_sorovlar.name }}
               </td>
@@ -244,16 +282,6 @@
       >
         <ul class="pagination pagination-sm justify-content-end">
           <li class="page-item">
-            <select
-              class="form-control form-control-sm form-select mx-1"
-              v-model="limit"
-            >
-              <option value="25">25</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-            </select>
-          </li>
-          <li class="page-item">
             <button
               type="button"
               class="page-link"
@@ -311,6 +339,57 @@
       <Smeta_zakupshik v-if="smeta" />
     </div>
   </div>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="users"
+    tabindex="-1"
+    aria-labelledby="users_label"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="users_label">Ҳодимлар</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="table-responsive">
+            <table class="table table-sm table-hover">
+              <tbody style="font-size: 12px">
+                <tr>
+                  <td scope="col">Прорап :</td>
+                  <td>{{ users.prorap }}</td>
+                </tr>
+                <tr>
+                  <td scope="col">Оператор :</td>
+                  <td>{{ users.operator }}</td>
+                </tr>
+                <tr>
+                  <td scope="col">Админ :</td>
+                  <td>{{ users.admin }}</td>
+                </tr>
+                <tr>
+                  <td scope="col">Закупшик :</td>
+                  <td>{{ users.zakuvshik }}</td>
+                </tr>
+                <tr>
+                  <td scope="col">Таминотчи :</td>
+                  <td>{{ users.taminotchi }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -352,6 +431,7 @@ export default {
         comment: "string",
         building_id: 0,
       },
+      users: {},
     };
   },
   watch: {
@@ -364,6 +444,17 @@ export default {
         this.status,
         this.user_id,
         this.search
+      );
+    },
+    search(e) {
+      this.page = 0;
+      this.get_proche_s(
+        this.page,
+        this.limit,
+        this.building_id,
+        this.status,
+        this.user_id,
+        e
       );
     },
     status(e) {
@@ -409,20 +500,7 @@ export default {
     },
     search_building(e) {
       this.page_building = 0;
-      if (e.length > 0) {
-        this.buildings_get(
-          this.page_building,
-          this.limit_building,
-          this.search_building
-        );
-      } else if (e.length == 0) {
-        this.buildings_get(
-          this.page_building,
-          this.limit_building,
-          this.search_building
-        );
-        this.page_building = 0;
-      }
+      this.buildings_get(this.page_building, this.limit_building, e);
     },
   },
   methods: {
@@ -527,19 +605,38 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table-responsive {
-  max-height: 70vh;
-  min-height: 70vh;
+#pills-home .table-responsive {
+  max-height: 64vh;
+  min-height: 64vh;
 }
 
 @media (max-width: 500px) {
-  .table-responsive {
-    max-height: 100vh;
-    min-height: 100vh;
+  #pills-home .table-responsive {
+    max-height: 94vh;
+    min-height: 94vh;
   }
 }
-table {
+#pills-home table {
   min-width: 1150px;
   width: 100%;
+}
+.col select {
+  width: 80px;
+  height: 30px;
+}
+.col .input-group {
+  width: 200px;
+}
+
+@media (max-width: 509px) {
+  .row {
+    display: block;
+  }
+  .row .col .input-group {
+    width: 100%;
+  }
+  .row .col select {
+    width: 100%;
+  }
 }
 </style>
