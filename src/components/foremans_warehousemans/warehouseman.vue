@@ -156,7 +156,6 @@ export default {
     },
     page(e) {
       this.get_omborchi(e, this.limit, this.search, this.role);
-      document.getElementById("scroll").scrollTop = 0;
     },
   },
   methods: {

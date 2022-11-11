@@ -122,7 +122,6 @@ export default {
     },
     page(e) {
       this.bank_accounts_get(e, this.limit, this.search);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search(e) {
       this.page = 0;

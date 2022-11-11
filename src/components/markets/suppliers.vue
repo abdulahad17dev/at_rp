@@ -152,7 +152,6 @@ export default {
     },
     page(e) {
       this.get_markets(e, this.limit, this.search);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search(e) {
       this.page = 0;

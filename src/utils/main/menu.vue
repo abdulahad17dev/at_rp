@@ -1,7 +1,7 @@
 <template>
   <Header_item />
 
-  <div class="row">
+  <div class="row menu_row">
     <div
       class="col-md-4 col-lg-3 col-sm-6 my-1"
       v-for="item in routes.filter((item) => {
@@ -35,16 +35,16 @@ export default {
       role: localStorage.getItem("role"),
       routes: [
         {
-          to: "/users",
-          icon: "fa-solid fa-users fa-2x",
-          title: "Ҳодимлар",
-          role: ["admin"],
-        },
-        {
           to: "/buildings",
           icon: "fa-solid fa-building fa-2x",
           title: "Объектлар",
           role: ["pto", "admin", "prorap", "operator"],
+        },
+        {
+          to: "/users",
+          icon: "fa-solid fa-users fa-2x",
+          title: "Ҳодимлар",
+          role: ["admin"],
         },
         {
           to: "/products",
@@ -247,8 +247,6 @@ export default {
   position: absolute;
   background: var(--bg-color);
   border-radius: 50%;
-  // top: 5px;
-  // left: 5px;
   transition: opacity 0.3s ease-out;
 }
 
@@ -267,5 +265,11 @@ export default {
   top: 10px;
   z-index: 0;
   transition: transform 0.4s ease-out;
+}
+
+@media (max-width: 600px) {
+  .menu_row {
+    margin-bottom: 80px;
+  }
 }
 </style>

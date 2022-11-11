@@ -415,7 +415,6 @@ export default {
     },
     page(e) {
       this.get_cashier(e, this.limit, this.search, this.role);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search(e) {
       this.page = 0;
@@ -448,7 +447,6 @@ export default {
         this.t_from_time,
         this.t_to_time
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
   },
   methods: {

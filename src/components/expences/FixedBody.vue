@@ -458,7 +458,6 @@ export default {
     },
     page_account(e) {
       this.bank_accounts_get(e, this.limit_account, this.search_account);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search_account(e) {
       this.page_account = 0;
@@ -483,7 +482,6 @@ export default {
     },
     page_expense(e) {
       this.expense_get(e, this.limit_expense, this.search_expense);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search_expense(e) {
       this.page_expense = 0;
@@ -508,7 +506,6 @@ export default {
     },
     page_building(e) {
       this.buildings_get(e, this.limit_building, this.search_building);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search_building(e) {
       this.page_building = 0;

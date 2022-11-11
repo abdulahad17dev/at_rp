@@ -179,7 +179,6 @@ export default {
     },
     page(e) {
       this.get_cashier(e, this.limit, this.search, this.role);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search(e) {
       this.page = 0;

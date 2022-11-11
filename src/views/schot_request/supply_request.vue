@@ -1021,7 +1021,6 @@ export default {
     },
     page_account(e) {
       this.bank_accounts_get(e, this.limit_account, this.search_account);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search_account(e) {
       this.page_account = 0;
@@ -1033,7 +1032,6 @@ export default {
     },
     page_building(e) {
       this.buildings_get(e, this.limit_building, this.search_building);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search_building(e) {
       this.page_building = 0;
@@ -1045,7 +1043,6 @@ export default {
     },
     page_market(e) {
       this.get_markets(e, this.limit_market, this.search_market);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search_market(e) {
       this.page_market = 0;
@@ -1057,7 +1054,6 @@ export default {
     },
     m_page() {
       this.get_paid_moneys(this.id);
-      document.getElementById("scroll").scrollTop = 0;
     },
   },
   methods: {

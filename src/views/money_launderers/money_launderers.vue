@@ -132,7 +132,6 @@ export default {
     },
     page(e) {
       this.get_money_launderers(e, this.limit, this.search);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search(e) {
       this.page = 0;

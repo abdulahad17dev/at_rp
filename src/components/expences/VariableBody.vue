@@ -226,7 +226,6 @@ export default {
     },
     page_account(e) {
       this.bank_accounts_get(e, this.limit_account, this.search_account);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search_account(e) {
       this.page_account = 0;

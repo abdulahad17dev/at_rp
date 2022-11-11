@@ -615,9 +615,9 @@ export function take_supply_proche(data) {
   }
 }
 
-export function proche_s_put(p_s_id, status, t_id, data) {
+export function proche_s_put(status, t_id, data) {
   return instance.put(
-    `confirm_or_reject_product_request/${p_s_id}?status=${status}&taminotchi_id=${t_id}`,
+    `confirm_or_reject_product_request?status=${status}&taminotchi_id=${t_id}`,
     data
   );
 }
@@ -1180,6 +1180,7 @@ export function get_spent_products_to_work(
   type,
   user_id,
   item,
+  building_id,
   page,
   limit
 ) {
@@ -1196,7 +1197,7 @@ export function get_spent_products_to_work(
     type_filter = "";
   }
   return instance.get(
-    `get_spent_products_to_work?work_id=${work_id}${type_filter}&user_id=${user_id}${item_filter}&page=${page}&limit=${limit}`
+    `get_spent_products_to_work?work_id=${work_id}${type_filter}&user_id=${user_id}${item_filter}&building_id=${building_id}&page=${page}&limit=${limit}`
   );
 }
 

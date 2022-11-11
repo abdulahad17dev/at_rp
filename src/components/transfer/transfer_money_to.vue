@@ -181,6 +181,13 @@
           </td>
         </tr>
       </tbody>
+      <tfoot v-if="total_price > 0">
+        <tr>
+          <td colspan="5" class="text-center">
+            <b> Жами сумма: <Format_numbers :number="total_price" /> сўм </b>
+          </td>
+        </tr>
+      </tfoot>
     </table>
     <Data_notfound v-if="hisob_raqamidan_otkazilgan_pullar == ''" />
   </div>
@@ -251,6 +258,7 @@ import {
   transfer_history_get,
 } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
   name: "TransferMoney",
   data() {
@@ -265,13 +273,13 @@ export default {
       id: this.$route.query.id,
       from_time: "",
       to_time: "",
-
       page_account: 0,
       pages_account: null,
       limit_account: 25,
       search_account: "",
       bank_accounts: [],
       text_account: "ҳисоб рақамлар",
+      total_price: null,
     };
   },
   watch: {
@@ -309,7 +317,6 @@ export default {
         this.from_time,
         this.to_time
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
 
     limit_account(e) {
@@ -318,7 +325,6 @@ export default {
     },
     page_account(e) {
       this.bank_accounts_get(e, this.limit_account, this.search_account);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search_account(e) {
       this.page_account = 0;
@@ -331,6 +337,10 @@ export default {
 
       transfer_history_get(page, limit, from, to, type, from_time, to_time)
         .then((res) => {
+          this.total_price = null;
+          res.data.data.forEach((element) => {
+            this.total_price += element.Transfers.money;
+          });
           this.hisob_raqamidan_otkazilgan_pullar = res.data.data;
           this.pages = res.data.pages;
           this.$store.dispatch("setLoading", { isLoading: false });
@@ -396,7 +406,7 @@ export default {
       this.to_time
     );
   },
-  components: { Data_notfound },
+  components: { Data_notfound, Format_numbers },
 };
 </script>
 

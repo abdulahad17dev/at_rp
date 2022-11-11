@@ -126,7 +126,6 @@ export default {
     },
     page(e) {
       this.get_workers(e, this.limit, this.search, this.building_id);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search(e) {
       this.page = 0;

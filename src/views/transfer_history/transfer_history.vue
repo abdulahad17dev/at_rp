@@ -84,6 +84,19 @@
       >
         доимий чиқим тарихи
       </button> -->
+      <button
+        class="btn btn-sm btn-light shadow-sm w-100"
+        id="pills-profile-tab2"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-profile2"
+        type="button"
+        role="tab"
+        aria-controls="pills-profile2"
+        aria-selected="false"
+        @click="paid_moneys = true"
+      >
+        таъминот учун тўловлар
+      </button>
     </li>
     <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
       <!-- <button
@@ -140,7 +153,8 @@
       role="tabpanel"
       aria-labelledby="pills-profile-tab2"
     >
-      <Transfer_f_expense v-if="transfer_f_expense == true" />
+      <!-- <Transfer_f_expense v-if="transfer_f_expense == true" /> -->
+      <Market_expense_history v-if="paid_moneys" />
     </div>
     <div
       class="tab-pane fade"
@@ -159,8 +173,9 @@ import Accept_money from "../../components/transfer/accept_money.vue";
 import Transfer_money_from from "@/components/transfer/transfer_money_from.vue";
 import Transfer_money_to from "@/components/transfer/transfer_money_to.vue";
 import Transfer_to_cashier from "@/components/transfer/transfer_to_cashier.vue";
-import Transfer_f_expense from "@/components/transfer/transfer_f_expense.vue";
+// import Transfer_f_expense from "@/components/transfer/transfer_f_expense.vue";
 import Transfer_v_expense from "@/components/transfer/transfer_v_expense.vue";
+import Market_expense_history from "./market_expense_history.vue";
 export default {
   data() {
     return {
@@ -170,6 +185,7 @@ export default {
       transfer_to_cashier: false,
       transfer_f_expense: false,
       transfer_v_expense: false,
+      paid_moneys: false,
     };
   },
   components: {
@@ -178,8 +194,9 @@ export default {
     Transfer_money_from,
     Transfer_money_to,
     Transfer_to_cashier,
-    Transfer_f_expense,
+    // Transfer_f_expense,
     Transfer_v_expense,
+    Market_expense_history,
   },
 };
 </script>

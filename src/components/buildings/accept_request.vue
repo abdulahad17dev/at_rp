@@ -166,6 +166,7 @@ export default {
         name: "",
       },
       data: {
+        id: null,
         name: "string",
         quantity: 0,
         olchov_birligi: "string",
@@ -176,7 +177,7 @@ export default {
   },
   watch: {
     item(e) {
-      this.body.proche_sorov_id = e.id;
+      this.data.id = e.id;
     },
     limit(e) {
       this.page = 0;
@@ -184,7 +185,6 @@ export default {
     },
     page(e) {
       this.get_users(e, this.limit, this.search, this.role);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search(e) {
       this.page = 0;

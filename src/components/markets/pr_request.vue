@@ -784,7 +784,6 @@ export default {
         this.user_id,
         this.search
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     search(e) {
       this.page = 0;
@@ -814,7 +813,6 @@ export default {
     },
     page_building(e) {
       this.buildings_get(e, this.limit_building, this.search_building);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search_building(e) {
       this.page_building = 0;
@@ -826,7 +824,6 @@ export default {
     },
     quantity_page() {
       this.get_quantity(this.id);
-      document.getElementById("scroll").scrollTop = 0;
     },
     sh_quantity_limit() {
       this.sh_quantity_page = 0;
@@ -834,7 +831,6 @@ export default {
     },
     sh_quantity_page() {
       this.get_sh_quantity(this.id);
-      document.getElementById("scroll").scrollTop = 0;
     },
   },
   methods: {

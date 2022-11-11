@@ -271,6 +271,13 @@
                         <Format_numbers :number="item.Supplies.price" />
                         <span class="mx-1"> сўм </span>
                       </span>
+                      <hr class="m-0 w-50" />
+                      <span class="d-flex">
+                        <Format_numbers
+                          :number="item.Supplies.price * item.Supplies.quantity"
+                        />
+                        <span class="mx-1"> сўм </span>
+                      </span>
                     </td>
                   </tr>
                 </tbody>
@@ -479,7 +486,7 @@
                     <td>
                       <span class="d-flex">
                         <Format_numbers
-                          :number="item.Supplies_by_bank_account.price"
+                          :number="item.Supplies_by_bank_account.total_price"
                         />
                         <span class="mx-1"> сўм </span>
                       </span>
@@ -937,7 +944,6 @@ export default {
     },
     m_page() {
       this.get_paid_moneys();
-      document.getElementById("scroll").scrollTop = 0;
     },
   },
   methods: {

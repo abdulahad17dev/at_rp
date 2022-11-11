@@ -1,5 +1,279 @@
 <template>
-  <div class="table-responsive mt-3" v-if="role != 'pto'">
+  <div class="row row_building" v-if="role == 'admin'">
+    <div
+      class="col-md-4 col-sm-6 col-lg-4 col-xxl-4 my-1"
+      v-for="(item, inc) in data"
+      :key="item"
+    >
+      <div
+        class="card"
+        :class="item.status_work ? item.status_work : 'success'"
+      >
+        <div class="card-body text-center">
+          <span class="float-start badge bg-primary">{{ inc + 1 }}</span>
+          <h5 class="card-title text-center mb-0">
+            <span class="descinline"> {{ shorttext(item.name) }} </span>
+            <span class="descempty"> {{ item.name }} </span>
+            <span
+              class="text-primary"
+              style="cursor: pointer"
+              @click="toggler($event)"
+              v-if="item.name.length > 15"
+            >
+              яна</span
+            >
+          </h5>
+          <hr
+            class="mt-2 mb-2"
+            :class="item.status_work ? item.status_work : 'success'"
+          />
+          <h6><b>Манзил: </b> {{ item.address }}</h6>
+          <h6>
+            <b>Бошлаш санаси: </b>
+            {{
+              new Date(item.start_date)
+                .toLocaleDateString({
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                })
+                .slice(0, 10)
+            }}
+          </h6>
+          <h6>
+            <b>Тугаш санаси: </b>
+            {{
+              new Date(item.end_date)
+                .toLocaleDateString({
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                })
+                .slice(0, 10)
+            }}
+          </h6>
+          <span
+            class="badge rounded-pill bg-warning"
+            v-if="item.status == 'wait'"
+            >кутилмоқда</span
+          >
+          <span
+            class="badge rounded-pill bg-primary"
+            v-else-if="item.status == 'start'"
+            >қурилмоқда</span
+          >
+          <span
+            class="badge rounded-pill bg-success"
+            v-else-if="item.status == 'end'"
+            >якунланди</span
+          >
+          <hr
+            class="mt-2 mb-2"
+            :class="item.status_work ? item.status_work : 'success'"
+          />
+          <div class="d-flex justify-content-center zoom">
+            <button
+              class="btn btn-sm btn-primary mx-1"
+              data-bs-toggle="modal"
+              data-bs-target="#foremans_warehousemans"
+              @click="select_id(item.id, item.name, 1)"
+              v-if="role == 'admin'"
+            >
+              <i class="fa-solid fa-users"></i>
+            </button>
+            <a
+              target="_blank"
+              :href="`https://www.google.com/maps/@${item.map_lat},${item.map_long},8z`"
+              class="btn btn-sm btn-primary mx-1"
+            >
+              <i class="fa-solid fa-location-dot"></i>
+            </a>
+
+            <router-link
+              v-if="role == 'admin'"
+              :to="{
+                name: 'building',
+                query: { id: item.id, name: item.name },
+              }"
+              class="btn btn-sm btn-primary mx-1"
+            >
+              <i class="fa-solid fa-right-long"></i>
+            </router-link>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row row_building" v-else-if="role == 'pto'">
+    <div
+      class="col-md-4 col-sm-6 col-lg-4 col-xxl-4 my-1"
+      v-for="(item, inc) in data"
+      :key="item"
+    >
+      <div
+        class="card"
+        :class="item.status_work ? item.status_work : 'success'"
+      >
+        <div class="card-body text-center">
+          <span class="float-start badge bg-primary">{{ inc + 1 }}</span>
+          <h5 class="card-title text-center mb-0">
+            <span class="descinline"> {{ shorttext(item.name) }} </span>
+            <span class="descempty"> {{ item.name }} </span>
+            <span
+              class="text-primary"
+              style="cursor: pointer"
+              @click="toggler($event)"
+              v-if="item.name.length > 15"
+            >
+              яна</span
+            >
+          </h5>
+          <hr
+            class="mt-2 mb-2"
+            :class="item.status_work ? item.status_work : 'success'"
+          />
+          <h6><b>Манзил: </b> {{ item.address }}</h6>
+          <h6>
+            <b>Бошлаш санаси: </b>
+            {{
+              new Date(item.start_date)
+                .toLocaleDateString({
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                })
+                .slice(0, 10)
+            }}
+          </h6>
+          <h6>
+            <b>Тугаш санаси: </b>
+            {{
+              new Date(item.end_date)
+                .toLocaleDateString({
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                })
+                .slice(0, 10)
+            }}
+          </h6>
+          <span
+            class="badge rounded-pill bg-warning"
+            v-if="item.status == 'wait'"
+            >кутилмоқда</span
+          >
+          <span
+            class="badge rounded-pill bg-primary"
+            v-else-if="item.status == 'start'"
+            >қурилмоқда</span
+          >
+          <span
+            class="badge rounded-pill bg-success"
+            v-else-if="item.status == 'end'"
+            >якунланди</span
+          >
+          <hr
+            class="mt-2 mb-2"
+            :class="item.status_work ? item.status_work : 'success'"
+          />
+          <div class="d-flex justify-content-center zoom">
+            <div class="coll mx-1">
+              <router-link
+                :to="{
+                  name: 'smeta',
+                  query: { id: item.id, name: item.name },
+                }"
+                class="btn btn-sm btn-primary"
+              >
+                <i class="fa-solid fa-right-long"></i>
+              </router-link>
+            </div>
+            <div class="coll mx-1">
+              <router-link
+                :to="{
+                  name: 'building_works',
+                  query: { id: item.id, name: item.name },
+                }"
+                class="btn btn-sm btn-primary"
+              >
+                <i class="fa-solid fa-clipboard-list"></i>
+              </router-link>
+            </div>
+            <div class="coll mx-1">
+              <button
+                class="btn btn-sm btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#foremans_warehousemans"
+                @click="select_id(item.id, item.name, 1)"
+              >
+                <i class="fa-solid fa-users"></i>
+              </button>
+            </div>
+            <div class="coll mx-1">
+              <router-link
+                :to="{
+                  name: 'building_products',
+                  query: { id: item.id, name: item.name },
+                }"
+                class="btn btn-sm btn-primary"
+              >
+                <i class="fa-solid fa-box"></i>
+              </router-link>
+            </div>
+            <div class="coll mx-1">
+              <button
+                class="btn btn-sm btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#building_document"
+                @click="select_id(item.id, item.name, 2)"
+              >
+                <i class="fa-solid fa-file-arrow-up"></i>
+              </button>
+            </div>
+            <div class="coll mx-1">
+              <a
+                target="_blank"
+                :href="`https://www.google.com/maps/@${item.map_lat},${item.map_long},8z`"
+                class="btn btn-sm btn-primary"
+              >
+                <i class="fa-solid fa-location-dot"></i>
+              </a>
+            </div>
+
+            <div class="coll mx-1" v-if="item.status == 'start'">
+              <button class="btn btn-sm btn-success" @click="finish(item)">
+                <i class="fa-solid fa-flag-checkered"></i>
+              </button>
+            </div>
+            <div class="coll mx-1" v-else-if="item.status == 'end'">
+              <button class="btn btn-sm btn-primary" @click="start(item)">
+                <i class="fa-solid fa-play"></i>
+              </button>
+            </div>
+
+            <div class="coll mx-1" v-if="item.status == 'wait'">
+              <button class="btn btn-sm btn-primary" @click="start(item)">
+                <i class="fa-solid fa-play"></i>
+              </button>
+            </div>
+            <div class="coll mx-1" v-if="item.status == 'wait'">
+              <button
+                class="btn btn-sm btn-warning"
+                data-bs-toggle="modal"
+                data-bs-target="#building_put"
+                @click="items(item)"
+              >
+                <i class="fa fa-edit text-white"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive mt-3" v-else>
     <table class="table table-sm table-hover building">
       <thead class="">
         <tr>
@@ -103,7 +377,7 @@
             >
               <i class="fa-solid fa-right-long"></i>
             </router-link>
-            <router-link
+            <!-- <router-link
               v-if="item.status == 'start'"
               :to="{
                 name: 'proche_sorovlar',
@@ -112,7 +386,7 @@
               class="btn btn-sm btn-primary mx-1"
             >
               <i class="fa-solid fa-rectangle-list"></i>
-            </router-link>
+            </router-link> -->
             <button
               class="btn btn-sm btn-primary mx-1 d-block mt-1"
               v-if="item.status == 'wait' && role == 'pto'"
@@ -198,322 +472,7 @@
           </td>
         </tr>
       </tbody>
-      <tbody v-else>
-        <tr v-for="(item, inc) in data" :key="item">
-          <td>{{ inc + 1 }}</td>
-          <td>
-            <p style="min-width: 250px; width: 250px">{{ item.name }}</p>
-          </td>
-          <td>{{ item.address }}</td>
-          <td>
-            {{
-              new Date(item.start_date)
-                .toLocaleDateString({
-                  year: "numeric",
-                  month: "numeric",
-                  day: "numeric",
-                })
-                .slice(0, 10)
-            }}
-          </td>
-          <td>
-            {{
-              new Date(item.end_date)
-                .toLocaleDateString({
-                  year: "numeric",
-                  month: "numeric",
-                  day: "numeric",
-                })
-                .slice(0, 10)
-            }}
-          </td>
-          <td>
-            <span
-              class="badge rounded-pill bg-warning"
-              v-if="item.status == 'wait'"
-              >кутилмоқда</span
-            >
-            <span
-              class="badge rounded-pill bg-primary"
-              v-else-if="item.status == 'start'"
-              >қурилмоқда</span
-            >
-            <span
-              class="badge rounded-pill bg-success"
-              v-else-if="item.status == 'end'"
-              >якунланди</span
-            >
-          </td>
-          <td>
-            <button
-              class="btn btn-sm btn-warning mx-1"
-              data-bs-toggle="modal"
-              data-bs-target="#building_put"
-              @click="items(item)"
-              v-if="item.status == 'wait' && role == 'pto'"
-            >
-              <i class="fa fa-edit text-white"></i>
-            </button>
-
-            <button
-              class="btn btn-sm btn-success mx-1"
-              v-else-if="item.status == 'start' && role == 'pto'"
-              @click="finish(item)"
-            >
-              <i class="fa-solid fa-flag-checkered"></i>
-            </button>
-
-            <button
-              class="btn btn-sm btn-primary mx-1"
-              data-bs-toggle="modal"
-              data-bs-target="#foremans_warehousemans"
-              @click="select_id(item.id, item.name, 1)"
-              v-if="role == 'admin' || role == 'pto'"
-            >
-              <i class="fa-solid fa-users"></i>
-            </button>
-            <a
-              target="_blank"
-              :href="`https://www.google.com/maps/@${item.map_lat},${item.map_long},8z`"
-              class="btn btn-sm btn-primary mx-1"
-            >
-              <i class="fa-solid fa-location-dot"></i>
-            </a>
-
-            <button
-              class="btn btn-sm btn-primary mx-1"
-              data-bs-toggle="modal"
-              data-bs-target="#building_document"
-              v-if="role == 'pto'"
-              @click="select_id(item.id, item.name, 2)"
-            >
-              <i class="fa-solid fa-file-arrow-up"></i>
-            </button>
-
-            <router-link
-              v-if="role == 'admin'"
-              :to="{
-                name: 'building',
-                query: { id: item.id, name: item.name },
-              }"
-              class="btn btn-sm btn-primary mx-1"
-            >
-              <i class="fa-solid fa-right-long"></i>
-            </router-link>
-
-            <router-link
-              v-else
-              :to="{
-                name: 'smeta',
-                query: { id: item.id, name: item.name },
-              }"
-              class="btn btn-sm btn-primary mx-1"
-            >
-              <i class="fa-solid fa-right-long"></i>
-            </router-link>
-
-            <button
-              class="btn btn-sm btn-primary mx-1 d-block mt-1"
-              v-if="item.status == 'wait' && role == 'pto'"
-              @click="start(item)"
-            >
-              бошлаш
-            </button>
-          </td>
-        </tr>
-      </tbody>
     </table>
-  </div>
-
-  <div class="row row_building" v-else-if="role == 'pto'">
-    <div
-      class="col-md-4 col-sm-6 col-lg-4 col-xxl-4 my-1"
-      v-for="(item, inc) in data"
-      :key="item"
-    >
-      <div
-        class="card"
-        :class="item.status_work ? item.status_work : 'success'"
-      >
-        <div class="card-body text-center">
-          <span class="float-start badge bg-primary">{{ inc + 1 }}</span>
-          <h5 class="card-title text-center mb-0">
-            <span class="descinline"> {{ shorttext(item.name) }} </span>
-            <span class="descempty"> {{ item.name }} </span>
-            <span
-              class="text-primary"
-              style="cursor: pointer"
-              @click="toggler($event)"
-              v-if="item.name.length > 15"
-            >
-              яна</span
-            >
-          </h5>
-          <hr
-            class="mt-2 mb-2"
-            :class="item.status_work ? item.status_work : 'success'"
-          />
-          <h6><b>Манзил: </b> {{ item.address }}</h6>
-          <h6>
-            <b>Бошлаш санаси: </b>
-            {{
-              new Date(item.start_date)
-                .toLocaleDateString({
-                  year: "numeric",
-                  month: "numeric",
-                  day: "numeric",
-                })
-                .slice(0, 10)
-            }}
-          </h6>
-          <h6>
-            <b>Тугаш санаси: </b>
-            {{
-              new Date(item.end_date)
-                .toLocaleDateString({
-                  year: "numeric",
-                  month: "numeric",
-                  day: "numeric",
-                })
-                .slice(0, 10)
-            }}
-          </h6>
-          <span
-            class="badge rounded-pill bg-warning"
-            v-if="item.status == 'wait'"
-            >кутилмоқда</span
-          >
-          <span
-            class="badge rounded-pill bg-primary"
-            v-else-if="item.status == 'start'"
-            >қурилмоқда</span
-          >
-          <span
-            class="badge rounded-pill bg-success"
-            v-else-if="item.status == 'end'"
-            >якунланди</span
-          >
-          <hr
-            class="mt-2 mb-2"
-            :class="item.status_work ? item.status_work : 'success'"
-          />
-          <div class="d-flex justify-content-center zoom">
-            <div class="coll mx-1" v-if="role == 'admin'">
-              <router-link
-                :to="{
-                  name: 'building',
-                  query: { id: item.id, name: item.name },
-                }"
-                class="btn btn-sm btn-primary"
-              >
-                <i class="fa-solid fa-right-long"></i>
-              </router-link>
-            </div>
-            <div class="coll mx-1" v-else>
-              <router-link
-                :to="{
-                  name: 'smeta',
-                  query: { id: item.id, name: item.name },
-                }"
-                class="btn btn-sm btn-primary"
-              >
-                <i class="fa-solid fa-right-long"></i>
-              </router-link>
-            </div>
-            <div class="coll mx-1">
-              <router-link
-                :to="{
-                  name: 'building_works',
-                  query: { id: item.id, name: item.name },
-                }"
-                class="btn btn-sm btn-primary"
-              >
-                <i class="fa-solid fa-clipboard-list"></i>
-              </router-link>
-            </div>
-            <div class="coll mx-1" v-if="role == 'admin' || role == 'pto'">
-              <button
-                class="btn btn-sm btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#foremans_warehousemans"
-                @click="select_id(item.id, item.name, 1)"
-              >
-                <i class="fa-solid fa-users"></i>
-              </button>
-            </div>
-            <div class="coll mx-1">
-              <router-link
-                :to="{
-                  name: 'building_products',
-                  query: { id: item.id, name: item.name },
-                }"
-                class="btn btn-sm btn-primary"
-              >
-                <i class="fa-solid fa-box"></i>
-              </router-link>
-            </div>
-            <div class="coll mx-1" v-if="role == 'pto'">
-              <button
-                class="btn btn-sm btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#building_document"
-                @click="select_id(item.id, item.name, 2)"
-              >
-                <i class="fa-solid fa-file-arrow-up"></i>
-              </button>
-            </div>
-            <div class="coll mx-1">
-              <a
-                target="_blank"
-                :href="`https://www.google.com/maps/@${item.map_lat},${item.map_long},8z`"
-                class="btn btn-sm btn-primary"
-              >
-                <i class="fa-solid fa-location-dot"></i>
-              </a>
-            </div>
-
-            <div
-              class="coll mx-1"
-              v-if="item.status == 'start' && role == 'pto'"
-            >
-              <button class="btn btn-sm btn-success" @click="finish(item)">
-                <i class="fa-solid fa-flag-checkered"></i>
-              </button>
-            </div>
-            <div
-              class="coll mx-1"
-              v-else-if="item.status == 'end' && role == 'pto'"
-            >
-              <button class="btn btn-sm btn-primary" @click="start(item)">
-                <i class="fa-solid fa-play"></i>
-              </button>
-            </div>
-
-            <div
-              class="coll mx-1"
-              v-if="item.status == 'wait' && role == 'pto'"
-            >
-              <button class="btn btn-sm btn-primary" @click="start(item)">
-                <i class="fa-solid fa-play"></i>
-              </button>
-            </div>
-            <div
-              class="coll mx-1"
-              v-if="item.status == 'wait' && role == 'pto'"
-            >
-              <button
-                class="btn btn-sm btn-warning"
-                data-bs-toggle="modal"
-                data-bs-target="#building_put"
-                @click="items(item)"
-              >
-                <i class="fa fa-edit text-white"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <Building_put :object="item" @put="put" />

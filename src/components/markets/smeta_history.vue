@@ -687,7 +687,38 @@ export default {
     };
   },
   watch: {
+    page(e) {
+      this.checked = [];
+      this.page = 0;
+      this.get_supply(
+        this.market_id,
+        this.status,
+        this.paid_status,
+        this.building_id,
+        this.type,
+        this.from_time,
+        this.to_time,
+        e,
+        this.limit
+      );
+    },
+    limit(e) {
+      this.checked = [];
+      this.page = 0;
+      this.get_supply(
+        this.market_id,
+        this.status,
+        this.paid_status,
+        this.building_id,
+        this.type,
+        this.from_time,
+        this.to_time,
+        this.page,
+        e
+      );
+    },
     type(e) {
+      this.checked = [];
       this.page = 0;
       this.get_supply(
         this.market_id,
@@ -702,6 +733,7 @@ export default {
       );
     },
     status(e) {
+      this.checked = [];
       this.page = 0;
       this.get_supply(
         this.market_id,
@@ -716,6 +748,7 @@ export default {
       );
     },
     market_id(e) {
+      this.checked = [];
       this.page = 0;
       this.get_supply(
         e,
@@ -730,6 +763,7 @@ export default {
       );
     },
     paid_status(e) {
+      this.checked = [];
       this.page = 0;
       this.get_supply(
         this.market_id,
@@ -749,7 +783,6 @@ export default {
     },
     page_market(e) {
       this.get_markets(e, this.limit_market, this.search_market);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search_market(e) {
       this.page_market = 0;
@@ -774,7 +807,6 @@ export default {
     },
     m_page() {
       this.get_paid_moneys(this.id);
-      document.getElementById("scroll").scrollTop = 0;
     },
   },
   methods: {

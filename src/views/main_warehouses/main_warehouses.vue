@@ -133,7 +133,6 @@ export default {
     },
     page(e) {
       this.get_main_warehouses(e, this.limit, this.search);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search(e) {
       this.page = 0;

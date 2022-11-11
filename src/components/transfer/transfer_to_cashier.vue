@@ -190,6 +190,14 @@
           </td>
         </tr>
       </tbody>
+
+      <tfoot v-if="total_price > 0">
+        <tr>
+          <td colspan="7" class="text-center">
+            <b> Жами сумма: <Format_numbers :number="total_price" /> сўм </b>
+          </td>
+        </tr>
+      </tfoot>
     </table>
     <Data_notfound v-if="transfer_cashier == ''" />
   </div>
@@ -269,6 +277,7 @@ import {
 } from "@/utils/request/request";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
   name: "TransferToCashier",
   data() {
@@ -290,6 +299,7 @@ export default {
       user_page: 0,
       user_pages: null,
       text: "кассирлар",
+      total_price: null,
     };
   },
   watch: {
@@ -315,7 +325,6 @@ export default {
         this.from_time,
         this.to_time
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     to(e) {
       this.page = 0;
@@ -347,7 +356,6 @@ export default {
     },
     user_page(e) {
       this.get_cashier(e, this.user_limit, this.user_search, this.user_role);
-      document.getElementById("scroll").scrollTop = 0;
     },
     user_search(e) {
       this.user_page = 0;
@@ -374,6 +382,10 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       transfer_cashier_get(page, limit, from, to, status, from_time, to_time)
         .then((res) => {
+          this.total_price = null;
+          res.data.data.forEach((element) => {
+            this.total_price += element.Transfers.money;
+          });
           this.transfer_cashier = res.data.data;
           this.pages = res.data.pages;
           this.$store.dispatch("setLoading", { isLoading: false });
@@ -465,7 +477,7 @@ export default {
       this.to_time
     );
   },
-  components: { Data_notfound },
+  components: { Data_notfound, Format_numbers },
 };
 </script>
 

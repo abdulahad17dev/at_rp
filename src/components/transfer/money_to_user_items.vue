@@ -178,7 +178,6 @@ export default {
     },
     page_user(e) {
       this.get_users(e, this.limit_user, this.search_user);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search_user(e) {
       this.page_user = 0;

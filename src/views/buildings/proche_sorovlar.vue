@@ -96,6 +96,7 @@ export default {
       status: "",
       search: "",
       body: {
+        id: null,
         name: "string",
         quantity: 0,
         olchov_birligi: "string",
@@ -125,7 +126,6 @@ export default {
         this.user_id,
         this.search
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     status(e) {
       this.page = 0;
@@ -184,9 +184,10 @@ export default {
         });
     },
     remove(e) {
+      this.body.id = e;
       document.getElementById("remove_proche").disabled = true;
       this.$store.dispatch("setLoading", { isLoading: true });
-      proche_s_put(e, "false", 0, this.body)
+      proche_s_put("false", 0, Array(this.body))
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_proche").disabled = false;

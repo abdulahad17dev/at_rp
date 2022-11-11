@@ -1,17 +1,19 @@
 <template>
-  <span class="badge bg-secondary" :id="`copied${id}`">копия олинди</span>
-  <span @dblclick="format" v-if="format_num">
-    {{ Intl.NumberFormat().format(number_format) }}
-  </span>
-  <span v-if="all_num" @dblclick="format">
-    {{
-      Intl.NumberFormat("en-US", {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-        maximumSignificantDigits: number.length,
-        minimumSignificantDigits: 1,
-      }).format(number)
-    }}
+  <span>
+    <span class="badge bg-secondary" :id="`copied${id}`">копия олинди</span>
+    <span @dblclick="format" v-if="format_num">
+      {{ Intl.NumberFormat().format(number_format) }}
+    </span>
+    <span v-if="all_num" @dblclick="format">
+      {{
+        Intl.NumberFormat("en-US", {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+          maximumSignificantDigits: number.length,
+          minimumSignificantDigits: 1,
+        }).format(number)
+      }}
+    </span>
   </span>
 </template>
 

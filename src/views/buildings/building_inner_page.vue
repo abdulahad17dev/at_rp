@@ -4,7 +4,7 @@
       <b class="text-secondary"> {{ name }}</b>
     </h5>
     <ul class="nav nav-pills nav-fill mb-3" id="pills-tab" role="tablist">
-      <li class="nav-item" role="presentation">
+      <li class="nav-item mx-1" role="presentation">
         <button
           class="btn btn-sm w-100 btn-light"
           id="pills-home-tab"
@@ -19,7 +19,7 @@
           Смета
         </button>
       </li>
-      <li class="nav-item" role="presentation">
+      <li class="nav-item mx-1" role="presentation">
         <button
           class="btn btn-sm w-100 btn-light"
           id="pills-profile-tab"

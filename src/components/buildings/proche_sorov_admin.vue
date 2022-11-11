@@ -1,51 +1,76 @@
 <template>
   <div class="table-responsive">
-    <table class="table table-sm">
+    <table class="table table-sm" id="table-responsive">
       <thead class="">
         <tr>
-          <th style="width: 10%">№</th>
-          <th style="width: 12%">Сана</th>
-          <th style="width: 20%">Номи</th>
-          <th style="width: 20%">Ҳажм</th>
-          <th style="width: 20%">Ўлчов бирлиги</th>
-          <th style="width: 28%">Изох</th>
           <th>
-            <select
-              class="form-control form-control-sm form-select"
-              v-model="status"
-            >
-              <option value="" selected>барчаси</option>
-              <option value="adminda_proche">админда</option>
-              <option value="zakupshikda_proche">закупшикда</option>
-              <option value="taminotchida_proche">таминотчида</option>
-              <option value="taminotchida_proche_qabul_qilindi">
-                қабул қилинди
-              </option>
-              <option value="rejected_proche">руҳсат этилмаган</option>
-            </select>
+            <input
+              class="form-check-input"
+              type="checkbox"
+              v-model="checkAll"
+              v-if="status == 'adminda_proche' && product_requests.length"
+            />
+            №
           </th>
+          <th>Сана</th>
+          <th>Номи</th>
+          <th>Ҳажм</th>
+          <th>Ўлчов бирлиги</th>
+          <th>Изох</th>
+          <th>
+            <div class="input-group">
+              <select
+                class="form-control form-control-sm form-select"
+                v-model="status"
+              >
+                <option value="" selected>барчаси</option>
+                <option value="adminda_proche">админда</option>
+                <option value="zakupshikda_proche">закупшикда</option>
+                <option value="taminotchida_proche">таминотчида</option>
+                <option value="taminotchida_proche_qabul_qilindi">
+                  қабул қилинди
+                </option>
+                <option value="rejected_proche">руҳсат этилмаган</option>
+              </select>
+              <button class="btn btn-sm" @click="open_filter">
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </th>
+          <th v-if="filter">Таминотчи</th>
+          <th v-if="filter">Прорап</th>
+          <th v-if="filter">Закупшик</th>
+          <th v-if="filter">Админ</th>
+          <th v-if="filter">Оператор</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(item, inc) in product_requests || []" :key="item">
-          <td>{{ inc + 1 }}</td>
           <td>
-            <span v-if="item.Proche_sorovlar.time">
-              {{
-                new Date(item.Proche_sorovlar.time)
-                  .toLocaleDateString({
-                    year: "numeric",
-                    month: "numeric",
-                    day: "numeric",
-                  })
-                  .slice(0, 10)
-              }}
-            </span>
+            <input
+              class="form-check-input"
+              type="checkbox"
+              :value="item"
+              v-model="checked"
+              v-if="status == 'adminda_proche'"
+            />
+            {{ inc + 1 }}
+          </td>
+          <td>
+            {{
+              new Date(item.Proche_sorovlar.time)
+                .toLocaleDateString({
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                })
+                .slice(0, 10)
+            }}
           </td>
           <td>
             <form
               @submit.prevent="
-                accept(item.Proche_sorovlar.id, true, item.Proche_sorovlar)
+                accept(item.Proche_sorovlar.id, item.Proche_sorovlar)
               "
               :id="`form${inc}`"
             >
@@ -118,12 +143,29 @@
               {{ item.Proche_sorovlar.comment }}
             </span>
           </td>
-
           <td>
+            <button
+              class="btn btn-sm btn-danger mx-1"
+              :id="`remove_proche${item.Proche_sorovlar.id}`"
+              v-if="
+                (item.Proche_sorovlar.status == 'adminda_proche' &&
+                  !checked.length) ||
+                (item.Proche_sorovlar.status == 'taminotchida_proche' &&
+                  !checked.length) ||
+                (item.Proche_sorovlar.status == 'zakupshikda_proche' &&
+                  !checked.length)
+              "
+              @click="remove(item.Proche_sorovlar.id, false)"
+            >
+              <i class="fa-solid fa-circle-xmark text-white"></i>
+            </button>
             <button
               class="btn btn-sm btn-success"
               :id="`accept_proche${item.Proche_sorovlar.id}`"
-              v-if="item.Proche_sorovlar.status == 'adminda_proche'"
+              v-if="
+                item.Proche_sorovlar.status == 'adminda_proche' &&
+                !checked.length
+              "
               :form="`form${inc}`"
               :disabled="
                 !item.Proche_sorovlar.name ||
@@ -134,26 +176,32 @@
             >
               <i class="fa-solid fa-circle-check text-white"></i>
             </button>
-            <button
-              class="btn btn-sm btn-danger mx-1"
-              :id="`remove_proche${item.Proche_sorovlar.id}`"
-              v-if="item.Proche_sorovlar.status == 'adminda_proche'"
-              @click="remove(item.Proche_sorovlar.id, false)"
-            >
-              <i class="fa-solid fa-circle-xmark text-white"></i>
-            </button>
           </td>
+          <td v-if="filter">{{ item.taminotchi }}</td>
+          <td v-if="filter">{{ item.porap }}</td>
+          <td v-if="filter">{{ item.zakupshik }}</td>
+          <td v-if="filter">{{ item.admin }}</td>
+          <td v-if="filter">{{ item.operator }}</td>
         </tr>
       </tbody>
     </table>
     <Data_notfound v-if="product_requests == ''" />
   </div>
 
-  <nav
-    aria-label="Page navigation example"
-    class="mt-2"
-    v-if="product_requests != ''"
-  >
+  <div class="row mt-2" v-if="checked.length">
+    <div class="col-12">
+      <button
+        class="btn btn-sm btn-outline-success w-100"
+        @click="accept()"
+        id="accept_proche"
+      >
+        <i class="fa-solid fa-circle-check"></i> қабул қилиш
+      </button>
+    </div>
+  </div>
+
+  <nav aria-label="Page navigation example" class="mt-2">
+    <!-- v-if="product_requests != ''" -->
     <ul class="pagination pagination-sm justify-content-end">
       <li class="page-item">
         <select
@@ -228,6 +276,7 @@ export default {
       search: "",
       user_id: 0,
       body: {
+        id: null,
         name: "",
         quantity: 0,
         olchov_birligi: "",
@@ -235,6 +284,9 @@ export default {
         building_id: 0,
       },
       utils: "",
+      checked: [],
+      total_price: null,
+      filter: false,
     };
   },
   watch: {
@@ -258,7 +310,6 @@ export default {
         this.user_id,
         this.search
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     status(e) {
       this.page = 0;
@@ -287,20 +338,35 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
-    accept(id, status, item) {
-      this.body = {
-        name: item.name,
-        quantity: item.quantity,
-        olchov_birligi: item.olchov_birligi,
-        comment: item.comment,
-        building_id: 0,
-      };
-      document.getElementById(`accept_proche${id}`).disabled = true;
+    accept(id, item) {
+      let array = [];
+      if (this.checked.length) {
+        var arr = this.checked.map((el) => ({
+          id: el.Proche_sorovlar.id,
+          name: el.Proche_sorovlar.name,
+          quantity: el.Proche_sorovlar.quantity,
+          olchov_birligi: el.Proche_sorovlar.olchov_birligi,
+          comment: el.Proche_sorovlar.comment,
+          building_id: 0,
+        }));
+
+        array = arr;
+      } else {
+        this.body = {
+          id: id,
+          name: item.name,
+          quantity: item.quantity,
+          olchov_birligi: item.olchov_birligi,
+          comment: item.comment,
+          building_id: 0,
+        };
+      }
+
       this.$store.dispatch("setLoading", { isLoading: true });
-      proche_s_put(id, status, 0, this.body)
+      proche_s_put(true, 0, this.checked.length ? array : Array(this.body))
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
-          document.getElementById(`accept_proche${id}`).disabled = false;
+          this.checked = [];
           success(res).then(() => {
             this.get_proche_s(
               this.page,
@@ -310,18 +376,25 @@ export default {
               this.user_id,
               this.search
             );
+            this.body = {
+              name: "",
+              quantity: 0,
+              olchov_birligi: "",
+              comment: "",
+              building_id: 0,
+            };
           });
         })
         .catch((err) => {
           catchError(err);
           this.$store.dispatch("setLoading", { isLoading: false });
-          document.getElementById(`accept_proche${id}`).disabled = false;
         });
     },
     remove(id, status) {
+      this.body.id = id;
       document.getElementById(`remove_proche${id}`).disabled = true;
       this.$store.dispatch("setLoading", { isLoading: true });
-      proche_s_put(id, status, 0, this.body)
+      proche_s_put(status, 0, Array(this.body))
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById(`remove_proche${id}`).disabled = false;
@@ -350,6 +423,15 @@ export default {
         .querySelector(`[${attr}="${id}"]`)
         .setAttribute("readonly", true);
     },
+    open_filter() {
+      if (this.filter == true) {
+        this.filter = false;
+        document.getElementById("table-responsive").style.minWidth = "auto";
+      } else {
+        this.filter = true;
+        document.getElementById("table-responsive").style.minWidth = "2000px";
+      }
+    },
   },
   created() {
     this.get_proche_s(
@@ -361,28 +443,62 @@ export default {
       this.search
     );
   },
+  computed: {
+    checkAll: {
+      get: function () {
+        return this.product_requests
+          ? this.checked.length == this.product_requests.length
+          : false;
+      },
+      set: function (value) {
+        var checked = [];
+        if (value) {
+          this.product_requests.forEach(function (requests) {
+            checked.push(requests);
+          });
+        }
+        this.checked = checked;
+      },
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-th select {
-  width: 170px;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
-}
-
 .table-responsive {
-  max-height: 76vh;
+  max-height: 74vh;
+  min-height: 74vh;
 }
 
 @media (max-width: 500px) {
   .table-responsive {
     max-height: 100vh;
   }
+  table {
+    zoom: 65%;
+  }
+}
+
+@media (max-width: 400px) {
+  .table-responsive {
+    max-height: 100vh;
+  }
+  table {
+    min-width: 900px;
+  }
 }
 
 table {
-  min-width: 1150px;
+  table-layout: fixed;
   width: 100%;
+  min-width: 1000px;
+}
+
+table thead {
+  transition: all 0.5s ease-in;
+}
+
+.input-group button:focus {
+  box-shadow: none;
 }
 </style>

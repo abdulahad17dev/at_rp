@@ -199,7 +199,6 @@
                   <option value="taminotchida_proche_qabul_qilindi">
                     қабул қилинди
                   </option>
-                  <option value="rejected_proche">руҳсат этилмаган</option>
                 </select>
               </th>
             </tr>
@@ -383,6 +382,18 @@
                   <td scope="col">Таминотчи :</td>
                   <td>{{ users.taminotchi }}</td>
                 </tr>
+                <tr v-if="status == 'taminotchida_proche'">
+                  <td scope="col">Олинган ҳажм :</td>
+                  <td>
+                    <Format_numbers
+                      :number="
+                        users.sum_supply_quantity +
+                        users.sum_supply_by_b_a_quantity
+                      "
+                    />
+                    {{ users.Proche_sorovlar?.olchov_birligi }}
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -425,6 +436,7 @@ export default {
       text_building: "объектлар",
       smeta: false,
       body: {
+        id: null,
         name: "string",
         quantity: 0,
         olchov_birligi: "string",
@@ -477,7 +489,6 @@ export default {
         this.user_id,
         this.search
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     building_id(e) {
       this.page = 0;
@@ -496,7 +507,6 @@ export default {
     },
     page_building(e) {
       this.buildings_get(e, this.limit_building, this.search_building);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search_building(e) {
       this.page_building = 0;
@@ -527,7 +537,7 @@ export default {
     accept_request(e, data) {
       document.getElementById(`accept_request_disabled`).disabled = true;
       this.$store.dispatch("setLoading", { isLoading: true });
-      proche_s_put(e.proche_sorov_id, e.status, e.taminotchi_id, data)
+      proche_s_put(e.status, e.taminotchi_id, Array(data))
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById(`accpet_request_close`).click();
@@ -542,12 +552,14 @@ export default {
               this.search
             );
           });
+          document.getElementById("request_text").innerHTML = "таминотчилар";
           e.taminotchi_id = null;
         })
         .catch((err) => {
           catchError(err);
           this.$store.dispatch("setLoading", { isLoading: false });
           e.taminotchi_id = null;
+          document.getElementById("request_text").innerHTML = "таминотчилар";
         });
     },
     buildings_get(page_building, limit_building, search_building) {
@@ -570,9 +582,10 @@ export default {
       document.getElementById("select_bank_building").click();
     },
     remove(e) {
+      this.body.id = e;
       document.getElementById(e).disabled = true;
       this.$store.dispatch("setLoading", { isLoading: true });
-      proche_s_put(e, "false", 0, this.body)
+      proche_s_put("false", 0, Array(this.body))
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById(e).disabled = false;

@@ -286,7 +286,6 @@ export default {
         this.from_time,
         this.to_time
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     to(e) {
       this.page = 0;
@@ -306,7 +305,6 @@ export default {
     },
     page_expense(e) {
       this.expense_get(e, this.limit_expense, this.search_expense);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search_expense(e) {
       this.page_expense = 0;

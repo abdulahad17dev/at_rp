@@ -131,16 +131,10 @@ export default {
     },
     page(e) {
       this.get_buildings(e, this.limit, this.search, this.status);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search(e) {
       this.page = 0;
-      if (e.length > 0) {
-        this.get_buildings(this.page, this.limit, this.search, this.status);
-      } else if (e.length == 0) {
-        this.get_buildings(this.page, this.limit, this.search, this.status);
-        this.page = 0;
-      }
+      this.get_buildings(this.page, this.limit, e, this.status);
     },
     status(e) {
       this.page = 0;
@@ -152,7 +146,10 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       building_get(page, limit, search, status)
         .then((res) => {
-          if (this.role == "pto" && res.data.data.length) {
+          if (
+            (this.role == "pto" && res.data.data.length) ||
+            (this.role == "admin" && res.data.data.length)
+          ) {
             this.get_item_works(res.data, 0);
           } else {
             this.buildings = res.data.data;

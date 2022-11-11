@@ -661,7 +661,6 @@ export default {
         e,
         this.a_limit
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     a_search(e) {
       this.page = 0;
@@ -739,7 +738,6 @@ export default {
         e,
         this.sh_limit
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     sh_search(e) {
       this.page = 0;
@@ -786,7 +784,6 @@ export default {
     },
     page_building(e) {
       this.buildings_get(e, this.limit_building, this.search_building);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search_building(e) {
       this.page_building = 0;

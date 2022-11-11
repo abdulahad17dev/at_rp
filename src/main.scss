@@ -1,6 +1,7 @@
 .zoom {
   max-height: 100vh;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   scroll-behavior: smooth;
 }
 
@@ -128,4 +129,8 @@ table tbody tr {
 
 .td_grafik button:focus {
   box-shadow: none !important;
+}
+
+img {
+  user-select: none;
 }

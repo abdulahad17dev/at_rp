@@ -433,7 +433,6 @@ export default {
         e,
         this.valid_limit
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     valid_search(e) {
       this.valid_page = 0;

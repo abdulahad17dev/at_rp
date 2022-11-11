@@ -151,7 +151,6 @@ export default {
         this.building_id,
         this.order_by
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     search(e) {
       this.page = 0;

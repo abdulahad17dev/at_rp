@@ -669,6 +669,34 @@ export default {
     };
   },
   watch: {
+    page(e) {
+      this.page = 0;
+      this.get_supply(
+        this.market_id,
+        this.status,
+        this.paid_status,
+        this.building_id,
+        this.type,
+        this.from_time,
+        this.to_time,
+        e,
+        this.limit
+      );
+    },
+    limit(e) {
+      this.page = 0;
+      this.get_supply(
+        this.market_id,
+        this.status,
+        this.paid_status,
+        this.building_id,
+        this.type,
+        this.from_time,
+        this.to_time,
+        this.page,
+        e
+      );
+    },
     type(e) {
       this.page = 0;
       this.get_supply(
@@ -717,7 +745,6 @@ export default {
     },
     page_market(e) {
       this.get_markets(e, this.limit_market, this.search_market);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search_market(e) {
       this.page_market = 0;
@@ -743,7 +770,6 @@ export default {
     },
     d_page() {
       this.get_dates(this.id);
-      document.getElementById("scroll").scrollTop = 0;
     },
 
     quantity_limit() {
@@ -752,7 +778,6 @@ export default {
     },
     quantity_page() {
       this.get_quantity(this.related_id, this.id);
-      document.getElementById("scroll").scrollTop = 0;
     },
     m_limit() {
       this.m_page = 0;
@@ -764,7 +789,6 @@ export default {
     },
     m_page() {
       this.get_paid_moneys(this.id);
-      document.getElementById("scroll").scrollTop = 0;
     },
   },
   methods: {

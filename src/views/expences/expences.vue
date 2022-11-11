@@ -30,7 +30,86 @@
     </div>
   </div>
 
-  <form @submit.prevent="time">
+  <div v-if="role == 'admin'">
+    <div class="row m-1">
+      <div class="col mt-1 d-flex align-items-center">
+        <span>Лимит</span>
+        <select
+          class="form-control form-control-sm mx-2 form-select"
+          v-model="limit"
+        >
+          <option value="25" selected>25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+      <div class="col mt-2 d-flex align-items-center justify-content-end">
+        <span>Қидириш: </span>
+        <div class="input-group input-group-sm mx-2">
+          <input
+            type="search"
+            v-model="search"
+            class="form-control form-control-sm"
+          />
+        </div>
+      </div>
+    </div>
+
+    <FixedExpenses :data="fixed_expenses" @get_item="get_item" />
+
+    <nav
+      aria-label="Page navigation example"
+      class="mt-1"
+      v-if="fixed_expenses != ''"
+    >
+      <ul class="pagination pagination-sm justify-content-end">
+        <li class="page-item">
+          <button
+            type="button"
+            class="page-link"
+            @click="get_fixed_expenses(page, limit, search)"
+          >
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </li>
+        <li class="page-item">
+          <button class="page-link" @click="page = 0" :disabled="page == 0">
+            <i class="fa-solid fa-angles-left text-dark"></i>
+          </button>
+        </li>
+        <li class="page-item">
+          <button class="page-link" @click="page--" :disabled="page == 0">
+            <i class="fa-solid fa-angle-left text-dark"></i>
+          </button>
+        </li>
+        <li class="page-item">
+          <button class="page-link text-dark" disabled>
+            {{ page + 1 }}
+          </button>
+        </li>
+        <li class="page-item">
+          <button
+            class="page-link"
+            @click="page++"
+            :disabled="page == pages - 1"
+          >
+            <i class="fa-solid fa-angle-right text-dark"></i>
+          </button>
+        </li>
+        <li class="page-item">
+          <button
+            class="page-link"
+            @click="page = pages - 1"
+            :disabled="page == pages - 1"
+          >
+            <i class="fa-solid fa-angles-right text-dark"></i>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <form @submit.prevent="time" v-if="role != 'admin'">
     <div class="row">
       <div class="col">
         <input
@@ -69,6 +148,7 @@
   </form>
 
   <Fixed
+    v-if="role != 'admin'"
     :fixed_history="fixed_history"
     @from="sort_from"
     @to="sort_to"
@@ -662,7 +742,6 @@ export default {
     },
     page(e) {
       this.get_fixed_expenses(e, this.limit, this.search);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search(e) {
       this.page = 0;
@@ -695,7 +774,6 @@ export default {
         this.h_from_time,
         this.h_to_time
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     v_limit(e) {
       this.v_page = 0;
@@ -703,7 +781,6 @@ export default {
     },
     v_page(e) {
       this.variable_history_get(e, this.v_limit, this.v_from, this.v_user_id);
-      document.getElementById("scroll").scrollTop = 0;
     },
   },
   methods: {
@@ -986,15 +1063,19 @@ export default {
     },
   },
   created() {
-    this.fixed_history_get(
-      this.h_page,
-      this.h_limit,
-      this.h_from,
-      this.h_to,
-      this.h_user_id,
-      this.h_from_time,
-      this.h_to_time
-    );
+    if (this.role != "admin") {
+      this.fixed_history_get(
+        this.h_page,
+        this.h_limit,
+        this.h_from,
+        this.h_to,
+        this.h_user_id,
+        this.h_from_time,
+        this.h_to_time
+      );
+    } else {
+      this.get_fixed_expenses(this.page, this.limit, this.search);
+    }
   },
 };
 </script>
@@ -1006,5 +1087,17 @@ export default {
 }
 .col .input-group {
   width: 200px;
+}
+
+@media (max-width: 509px) {
+  .row {
+    display: block;
+  }
+  .row .col .input-group {
+    width: 100%;
+  }
+  .row .col select {
+    width: 100%;
+  }
 }
 </style>

@@ -69,6 +69,13 @@
           <td>{{ item.Transfers.comment }}</td>
         </tr>
       </tbody>
+      <tfoot v-if="total_price > 0">
+        <tr>
+          <td colspan="4" class="text-center">
+            <b> Жами сумма: <Format_numbers :number="total_price" /> сўм </b>
+          </td>
+        </tr>
+      </tfoot>
     </table>
     <Data_notfound v-if="hisob_raqamiga_qabul_qilingan_pullar == ''" />
   </div>
@@ -134,9 +141,10 @@
 import { transfer_history_get } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 export default {
   name: "AcceptMoney",
-  components: { Data_notfound },
+  components: { Data_notfound, Format_numbers },
   data() {
     return {
       limit: 25,
@@ -149,6 +157,7 @@ export default {
       id: this.$route.query.id,
       from_time: "",
       to_time: "",
+      total_price: null,
     };
   },
   watch: {
@@ -174,7 +183,6 @@ export default {
         this.from_time,
         this.to_time
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
   },
   methods: {
@@ -183,6 +191,10 @@ export default {
 
       transfer_history_get(page, limit, from, to, type, from_time, to_time)
         .then((res) => {
+          this.total_price = null;
+          res.data.data.forEach((element) => {
+            this.total_price += element.Transfers.money;
+          });
           this.hisob_raqamiga_qabul_qilingan_pullar = res.data.data;
           this.pages = res.data.pages;
           this.$store.dispatch("setLoading", { isLoading: false });
@@ -236,13 +248,11 @@ export default {
 <style lang="scss" scoped>
 .table-responsive {
   max-height: 400px;
-  min-height: 400px;
 }
 
 @media (max-width: 480px) {
   .table-responsive {
     max-height: 500px;
-    min-height: 500px;
   }
 }
 

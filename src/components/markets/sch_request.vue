@@ -676,7 +676,6 @@ export default {
         e,
         this.limit
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     type(e) {
       this.page = 0;
@@ -698,7 +697,6 @@ export default {
     },
     quantity_page() {
       this.get_quantity(this.related_id, this.id);
-      document.getElementById("scroll").scrollTop = 0;
     },
     m_limit() {
       this.m_page = 0;
@@ -710,7 +708,6 @@ export default {
     },
     m_page() {
       this.get_paid_moneys(this.id);
-      document.getElementById("scroll").scrollTop = 0;
     },
   },
   methods: {

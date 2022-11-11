@@ -694,7 +694,6 @@ export default {
         e,
         this.sh_limit
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     sh_search(e) {
       this.page = 0;
@@ -772,7 +771,6 @@ export default {
         e,
         this.a_limit
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     a_search(e) {
       this.page = 0;
@@ -819,7 +817,6 @@ export default {
     },
     page_warehouse(e) {
       this.warehouses_get(e, this.limit_warehouse, this.search_warehouse);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search_warehouse(e) {
       this.page_warehouse = 0;

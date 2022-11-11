@@ -207,7 +207,6 @@ export default {
         this.from_time,
         this.to_time
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     to(e) {
       this.page = 0;

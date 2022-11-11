@@ -153,7 +153,6 @@ export default {
     },
     page(e) {
       this.get_prorap(e, this.limit, this.search, this.role);
-      document.getElementById("scroll").scrollTop = 0;
     },
   },
   methods: {

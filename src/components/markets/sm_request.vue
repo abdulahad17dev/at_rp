@@ -177,7 +177,6 @@
                 "
               >
               </span>
-              {{ date_sort(item.grafik.start_date) }}
               <button
                 class="btn btn-sm"
                 @click="get_grafik(item, item.Smeta.id)"
@@ -1176,6 +1175,7 @@ export default {
   },
   watch: {
     limit(e) {
+      this.checked = [];
       this.page = 0;
       this.get_smeta(
         this.page,
@@ -1187,6 +1187,7 @@ export default {
       );
     },
     page(e) {
+      this.checked = [];
       this.get_smeta(
         e,
         this.limit,
@@ -1195,9 +1196,9 @@ export default {
         this.building_id,
         this.user_id
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     search(e) {
+      this.checked = [];
       this.page = 0;
       if (e.length > 0) {
         this.get_smeta(
@@ -1222,6 +1223,7 @@ export default {
       }
     },
     search2(e) {
+      this.checked = [];
       this.page = 0;
       if (e.length > 0) {
         this.get_smeta(
@@ -1246,6 +1248,7 @@ export default {
       }
     },
     status(e) {
+      this.checked = [];
       this.page = 0;
       this.get_smeta(
         this.page,
@@ -1255,9 +1258,9 @@ export default {
         this.building_id,
         this.user_id
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     building_id(e) {
+      this.checked = [];
       this.page = 0;
       this.get_smeta(
         this.page,
@@ -1267,7 +1270,6 @@ export default {
         e,
         this.user_id
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     limit_building(e) {
       this.page_building = 0;
@@ -1275,7 +1277,6 @@ export default {
     },
     page_building(e) {
       this.buildings_get(e, this.limit_building, this.search_building);
-      document.getElementById("scroll").scrollTop = 0;
     },
     search_building(e) {
       this.page_building = 0;
@@ -1288,7 +1289,6 @@ export default {
     },
     quantity_page() {
       this.get_quantity(this.id);
-      document.getElementById("scroll").scrollTop = 0;
     },
     sh_quantity_limit() {
       this.sh_quantity_page = 0;
@@ -1296,7 +1296,6 @@ export default {
     },
     sh_quantity_page() {
       this.get_sh_quantity(this.id);
-      document.getElementById("scroll").scrollTop = 0;
     },
     sh_quantity_type() {
       this.sh_quantity_page = 0;

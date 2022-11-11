@@ -112,7 +112,6 @@ export default {
     },
     page(e) {
       this.variable_history_get(e, this.limit, this.from, this.user_id);
-      document.getElementById("scroll").scrollTop = 0;
     },
     from(e) {
       this.page = 0;

@@ -788,16 +788,15 @@ export default {
         this.smeta_building_id,
         this.smeta_order_by
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     smeta_search(e) {
       this.smeta_page = 0;
       this.get_smeta_work(
         this.smeta_page,
         this.smeta_limit,
-        this.smeta_search,
-        this.smeta_type,
         e,
+        this.smeta_type,
+        this.smeta_status,
         this.smeta_building_id,
         this.smeta_order_by
       );

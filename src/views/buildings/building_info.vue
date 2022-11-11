@@ -57,7 +57,7 @@
           <td>{{ inc + 1 }}</td>
           <td>{{ item.worker }}</td>
           <td>
-            <Format_numbers :number="item.Spent_items_to_work.sum_quantity" />
+            <Format_numbers :number="item.sum_quantity" />
           </td>
           <td>{{ this.$route.query.olchov }}</td>
           <td>
@@ -209,7 +209,6 @@ export default {
         e,
         this.limit
       );
-      document.getElementById("scroll").scrollTop = 0;
     },
     type(e) {
       this.page = 0;
