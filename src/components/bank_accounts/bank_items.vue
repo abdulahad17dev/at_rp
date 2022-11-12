@@ -21,6 +21,7 @@
           </td>
           <td>
             <button
+              v-if="role != 'admin'"
               class="btn btn-primary btn-sm mx-1"
               @click="select_id(item.Bank_accounts.id, item.Bank_accounts.name)"
               data-bs-toggle="modal"
@@ -29,6 +30,7 @@
               <i class="fa-solid fa-money-bill"></i>
             </button>
             <button
+              v-if="role != 'admin'"
               class="btn btn-primary btn-sm mx-1"
               @click="select_id(item.Bank_accounts.id, item.Bank_accounts.name)"
               data-bs-toggle="modal"
@@ -49,6 +51,7 @@
               <i class="fa-solid fa-clock-rotate-left"></i>
             </router-link>
             <button
+              v-if="role != 'admin'"
               class="btn btn-warning btn-sm mx-1"
               data-bs-toggle="modal"
               data-bs-target="#bank_account_put"
@@ -91,6 +94,7 @@ export default {
       item: {},
       id: null,
       name: "",
+      role: localStorage.getItem("role"),
     };
   },
   methods: {
@@ -198,7 +202,7 @@ export default {
 
 <style lang="scss" scoped>
 table {
-  min-width: 700px;
+  table-layout: fixed;
   width: 100%;
 }
 

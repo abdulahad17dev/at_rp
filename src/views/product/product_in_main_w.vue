@@ -21,6 +21,7 @@
           class="form-control form-control-sm"
         />
         <router-link
+          v-if="role != 'admin'"
           :to="{
             name: 'transfered_products_main_w',
             query: { id: this.$route.query.id },
@@ -68,6 +69,7 @@
           </td>
           <td>
             <button
+              v-if="role != 'admin'"
               class="btn btn-sm btn-success mx-1"
               data-bs-toggle="modal"
               data-bs-target="#share_m_warehouse"
@@ -334,6 +336,7 @@ export default {
       search_building: "",
       buildings: [],
       text_building: "объектлар",
+      role: localStorage.getItem("role"),
     };
   },
   watch: {

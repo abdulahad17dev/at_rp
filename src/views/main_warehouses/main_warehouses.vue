@@ -22,6 +22,7 @@
           class="form-control form-control-sm"
         />
         <button
+          v-if="role != 'admin'"
           class="btn btn-outline-secondary"
           type="button"
           data-bs-toggle="modal"
@@ -124,6 +125,7 @@ export default {
       lat: "",
       long: "",
       item: {},
+      role: localStorage.getItem("role"),
     };
   },
   watch: {

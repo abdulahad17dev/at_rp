@@ -25,6 +25,7 @@
           <td>{{ item.address }}</td>
           <td>
             <button
+              v-if="role != 'admin'"
               class="btn btn-sm btn-warning"
               @click="$emit('item', item)"
               data-bs-toggle="modal"
@@ -53,6 +54,11 @@ export default {
   name: "MainWarehouseItem",
   props: ["data"],
   emits: ["get", "item"],
+  data() {
+    return {
+      role: localStorage.getItem("role"),
+    };
+  },
   methods: {
     format_phone(number) {
       return String(
@@ -72,7 +78,7 @@ export default {
 
 <style lang="scss" scoped>
 table {
-  min-width: 700px;
+  table-layout: fixed;
   width: 100%;
 }
 

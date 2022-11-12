@@ -37,11 +37,11 @@
               </button>
             </div>
           </th>
-          <th v-if="filter">Таминотчи</th>
           <th v-if="filter">Прорап</th>
-          <th v-if="filter">Закупшик</th>
-          <th v-if="filter">Админ</th>
           <th v-if="filter">Оператор</th>
+          <th v-if="filter">Админ</th>
+          <th v-if="filter">Закупшик</th>
+          <th v-if="filter">Таминотчи</th>
         </tr>
       </thead>
       <tbody>
@@ -177,11 +177,11 @@
               <i class="fa-solid fa-circle-check text-white"></i>
             </button>
           </td>
-          <td v-if="filter">{{ item.taminotchi }}</td>
           <td v-if="filter">{{ item.porap }}</td>
-          <td v-if="filter">{{ item.zakupshik }}</td>
-          <td v-if="filter">{{ item.admin }}</td>
           <td v-if="filter">{{ item.operator }}</td>
+          <td v-if="filter">{{ item.admin }}</td>
+          <td v-if="filter">{{ item.zakupshik }}</td>
+          <td v-if="filter">{{ item.taminotchi }}</td>
         </tr>
       </tbody>
     </table>

@@ -56,7 +56,7 @@ export default {
           to: "/bank_accounts",
           icon: "fa-solid fa-wallet fa-2x",
           title: "Банк ҳисоблари",
-          role: ["bugalter"],
+          role: ["bugalter", "admin"],
         },
         {
           to: "/expenses",
@@ -68,7 +68,7 @@ export default {
           to: "/main_warehouses",
           icon: "fa-solid fa-warehouse fa-2x",
           title: "Базалар",
-          role: ["bazachi"],
+          role: ["bazachi", "admin"],
         },
         {
           to: "/money_launderers",

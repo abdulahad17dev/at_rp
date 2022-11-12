@@ -22,6 +22,7 @@
           class="form-control form-control-sm"
         />
         <button
+          v-if="role != 'admin'"
           class="btn btn-outline-secondary"
           type="button"
           data-bs-toggle="modal"
@@ -113,6 +114,7 @@ export default {
       bank_accounts: [],
       search: "",
       item: {},
+      role: localStorage.getItem("role"),
     };
   },
   watch: {

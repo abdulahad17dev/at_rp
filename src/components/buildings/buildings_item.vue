@@ -77,7 +77,6 @@
               data-bs-toggle="modal"
               data-bs-target="#foremans_warehousemans"
               @click="select_id(item.id, item.name, 1)"
-              v-if="role == 'admin'"
             >
               <i class="fa-solid fa-users"></i>
             </button>
@@ -90,7 +89,6 @@
             </a>
 
             <router-link
-              v-if="role == 'admin'"
               :to="{
                 name: 'building',
                 query: { id: item.id, name: item.name },
@@ -98,6 +96,15 @@
               class="btn btn-sm btn-primary mx-1"
             >
               <i class="fa-solid fa-right-long"></i>
+            </router-link>
+            <router-link
+              :to="{
+                name: 'warehouse_product',
+                query: { id: item.id, name: item.name },
+              }"
+              class="btn btn-sm btn-primary mx-1"
+            >
+              <i class="fa-solid fa-box"></i>
             </router-link>
           </div>
         </div>

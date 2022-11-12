@@ -29,6 +29,7 @@ import transfered_products_main_w from "../views/transfer_history/transfered_pro
 import building_products from "../views/product/building_product.vue";
 import main_warehouse_product from "../views/product/product_in_main_w.vue";
 import building_works from "../views/buildings/building_works.vue";
+import warehouse_product from "../views/product/warehouse_product_admin.vue";
 import work_info from "../views/buildings/building_info.vue";
 import menu from "./../utils/main/menu.vue";
 import notfound from "./../utils/notfound/notfound.vue";
@@ -108,6 +109,17 @@ let routes = [
     },
     component: building_inner,
   },
+  {
+    path: "/warehouse_product",
+    name: "warehouse_product",
+    meta: {
+      requiresAuth: true,
+      title: "Обйект материаллари",
+      icon: "fa-solid fa-box",
+      role: ["admin"],
+    },
+    component: warehouse_product,
+  },
   // smeta
   {
     path: "/buildings/smeta",
@@ -176,7 +188,7 @@ let routes = [
       requiresAuth: true,
       title: "Банк ҳисоблари",
       icon: "fa-solid fa-wallet",
-      role: ["bugalter"],
+      role: ["bugalter", "admin"],
     },
     component: bank_acoounts,
   },
@@ -188,7 +200,7 @@ let routes = [
       requiresAuth: true,
       title: "Ўтказмалар тарихи",
       icon: "fa-solid fa-clock-rotate-left",
-      role: ["bugalter"],
+      role: ["bugalter", "admin"],
     },
     component: transfers_history,
   },
@@ -236,7 +248,7 @@ let routes = [
       requiresAuth: true,
       title: "Базалар",
       icon: "fa-solid fa-warehouse",
-      role: ["bazachi"],
+      role: ["bazachi", "admin"],
     },
     component: main_warehouses,
   },
@@ -418,7 +430,7 @@ let routes = [
       requiresAuth: true,
       title: "База материаллари",
       icon: "fa-solid fa-box",
-      role: ["bazachi"],
+      role: ["bazachi", "admin"],
     },
     component: main_warehouse_product,
   },
