@@ -23,7 +23,6 @@
                 class="form-control form-control-sm form-select"
                 v-model="status"
               >
-                <option value="" selected>барчаси</option>
                 <option value="adminda_proche">админда</option>
                 <option value="zakupshikda_proche">закупшикда</option>
                 <option value="taminotchida_proche">таминотчида</option>
@@ -155,7 +154,9 @@
                 (item.Proche_sorovlar.status == 'zakupshikda_proche' &&
                   !checked.length)
               "
-              @click="remove(item.Proche_sorovlar.id, false)"
+              @click="
+                remove(item.Proche_sorovlar.id, false, item.Proche_sorovlar)
+              "
             >
               <i class="fa-solid fa-circle-xmark text-white"></i>
             </button>
@@ -194,6 +195,18 @@
         class="btn btn-sm btn-outline-success w-100"
         @click="accept()"
         id="accept_proche"
+        :disabled="
+          checked.find((e) => {
+            return (
+              !e.Proche_sorovlar.name ||
+              !e.Proche_sorovlar.quantity ||
+              !e.Proche_sorovlar.comment ||
+              !e.Proche_sorovlar.olchov_birligi
+            );
+          })
+            ? true
+            : false
+        "
       >
         <i class="fa-solid fa-circle-check"></i> қабул қилиш
       </button>
@@ -390,8 +403,15 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
-    remove(id, status) {
-      this.body.id = id;
+    remove(id, status, item) {
+      this.body = {
+        id: id,
+        name: item.name,
+        quantity: item.quantity,
+        olchov_birligi: item.olchov_birligi,
+        comment: item.comment,
+        building_id: 0,
+      };
       document.getElementById(`remove_proche${id}`).disabled = true;
       this.$store.dispatch("setLoading", { isLoading: true });
       proche_s_put(status, 0, Array(this.body))

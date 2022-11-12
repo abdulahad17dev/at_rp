@@ -1,5 +1,5 @@
 <template>
-  <div class="table-responsive mt-3" v-if="data != ''">
+  <div class="table-responsive mt-3" v-if="role != 'admin'">
     <table class="table table-sm table-hover">
       <thead>
         <tr>
@@ -63,6 +63,48 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="row cards mt-2" v-else>
+    <div
+      class="col-md-4 col-lg-3 col-sm-6 mt-1"
+      v-for="item in data"
+      :key="item"
+    >
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <h5>
+                <b>
+                  {{ item.Bank_accounts.name }}
+                </b>
+              </h5>
+              <h6 class="text-primary">
+                <b>
+                  Баланс:
+                  <Format_numbers :number="item.Bank_accounts.balance" /> сўм
+                </b>
+              </h6>
+            </div>
+            <div class="col-3">
+              <router-link
+                :to="{
+                  name: 'transfers_history',
+                  query: {
+                    id: item.Bank_accounts.id,
+                    name: item.Bank_accounts.name,
+                  },
+                }"
+                class="btn btn-secondary btn-sm mx-1"
+              >
+                <i class="fa-solid fa-clock-rotate-left"></i>
+              </router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <Bank_item_put :item="item" @put="put" />
@@ -206,7 +248,8 @@ table {
   width: 100%;
 }
 
-.table-responsive {
+.table-responsive,
+.row.cards {
   max-height: 70vh;
 }
 
@@ -214,5 +257,22 @@ table {
   .table-responsive {
     max-height: 95vh;
   }
+}
+
+.col-3 {
+  align-items: center;
+  display: flex;
+}
+
+.card {
+  transition: all 0.1s ease-out;
+}
+
+.row .card {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.11), 0 2px 6px rgb(79, 102, 127, 0.48);
+}
+
+.card:hover {
+  transform: translateY(-4px) scale(1.005) translateZ(0);
 }
 </style>

@@ -360,7 +360,7 @@
                       <th style="width: 15%">Ҳажм</th>
                       <th style="width: 20%">Ўлчов бирлиги</th>
                       <th style="width: 15%">Сана</th>
-                      <th style="width: 20%">Корхона</th>
+                      <th style="width: 20%">Маҳсулот сотувчи корхона</th>
                       <th>
                         <select
                           class="form-select form-select-sm"
@@ -648,7 +648,7 @@ export default {
       to_time: "",
       page: 0,
       limit: 25,
-      text_market: "таминотчилар",
+      text_market: "маҳсулот сотувчи",
       page_market: 0,
       pages_market: null,
       limit_market: 25,

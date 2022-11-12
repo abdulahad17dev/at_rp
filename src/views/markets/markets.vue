@@ -16,7 +16,7 @@
         aria-controls="pills-home"
         aria-selected="true"
       >
-        Таминотчилар
+        Маҳсулот сотувчи
       </button>
     </li>
     <li class="nav-item mx-1" role="presentation">

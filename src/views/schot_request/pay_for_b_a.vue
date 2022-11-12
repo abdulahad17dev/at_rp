@@ -292,7 +292,7 @@
             <th style="width: 10%">Ўлчов бирлиги</th>
             <th style="width: 5%">Сана</th>
             <th style="width: 10%">Объект</th>
-            <th style="width: 10%">Корхона</th>
+            <th style="width: 10%">Маҳсулот сотувчи корхона</th>
             <th style="width: 10%">Таминотчи</th>
             <th style="width: 10%">Сумма</th>
             <th style="width: 15%">Қолган сумма</th>
@@ -898,7 +898,7 @@ export default {
       search_building: "",
       buildings: [],
       text_building: "объектлар",
-      text_market: "таминотчилар",
+      text_market: "маҳсулот сотувчи",
       page_market: 0,
       pages_market: null,
       limit_market: 25,

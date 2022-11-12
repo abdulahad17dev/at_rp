@@ -235,3 +235,7 @@
     height: 100vh;
     position: absolute;
 }
+
+.dark .page-loader2 {
+    background: var(--dark);
+}

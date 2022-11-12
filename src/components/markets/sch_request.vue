@@ -325,7 +325,7 @@
                       <th style="width: 15%">Ҳажм</th>
                       <th style="width: 20%">Ўлчов бирлиги</th>
                       <th style="width: 15%">Сана</th>
-                      <th style="width: 20%">Корхона</th>
+                      <th style="width: 20%">Маҳсулот сотувчи корхона</th>
                       <th>
                         <select
                           class="form-select form-select-sm"

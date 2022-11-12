@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row mt-2">
       <div
-        class="col-md-4 col-lg-3 col-sm-6"
+        class="col-md-4 col-lg-3 col-sm-6 mt-1"
         v-for="item in worker_types"
         :key="item"
       >

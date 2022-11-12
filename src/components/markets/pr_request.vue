@@ -472,7 +472,7 @@
                       <th style="width: 15%">Ўлчов бирлиги</th>
                       <th style="width: 15%">Нарх</th>
                       <th style="width: 20%">Сана</th>
-                      <th style="width: 25%">Корхона</th>
+                      <th style="width: 25%">Маҳсулот сотувчи корхона</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -589,7 +589,7 @@
                       <th style="width: 25%">Ҳажм</th>
                       <th style="width: 20%">Ўлчов бирлиги</th>
                       <th style="width: 20%">Сана</th>
-                      <th style="width: 25%">Корхона</th>
+                      <th style="width: 25%">Маҳсулот сотувчи корхона</th>
                     </tr>
                   </thead>
                   <tbody>

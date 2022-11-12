@@ -7,31 +7,55 @@
     >
       <div
         class="card"
-        :class="item.status_work ? item.status_work : 'success'"
+        :class="
+          item.smeta_work_end_date != null
+            ? date < item.smeta_work_end_date &&
+              date_sort(item.smeta_work_end_date) > 5
+              ? 'success'
+              : date < item.smeta_work_end_date &&
+                date_sort(item.smeta_work_end_date) <= 5 &&
+                date_sort(item.smeta_work_end_date) >= 3
+              ? 'warning'
+              : 'danger'
+            : 'dark'
+        "
       >
         <div class="card-body text-center">
           <span class="float-start badge bg-primary">{{ inc + 1 }}</span>
           <h5 class="card-title text-center mb-0">
-            <span class="descinline"> {{ shorttext(item.name) }} </span>
-            <span class="descempty"> {{ item.name }} </span>
+            <span class="descinline">
+              {{ shorttext(item.Buildings.name) }}
+            </span>
+            <span class="descempty"> {{ item.Buildings.name }} </span>
             <span
               class="text-primary"
               style="cursor: pointer"
               @click="toggler($event)"
-              v-if="item.name.length > 15"
+              v-if="item.Buildings.name.length > 15"
             >
               яна</span
             >
           </h5>
           <hr
             class="mt-2 mb-2"
-            :class="item.status_work ? item.status_work : 'success'"
+            :class="
+              item.smeta_work_end_date != null
+                ? date < item.smeta_work_end_date &&
+                  date_sort(item.smeta_work_end_date) > 5
+                  ? 'success'
+                  : date < item.smeta_work_end_date &&
+                    date_sort(item.smeta_work_end_date) <= 5 &&
+                    date_sort(item.smeta_work_end_date) >= 3
+                  ? 'warning'
+                  : 'danger'
+                : 'dark'
+            "
           />
-          <h6><b>Манзил: </b> {{ item.address }}</h6>
+          <h6><b>Манзил: </b> {{ item.Buildings.address }}</h6>
           <h6>
             <b>Бошлаш санаси: </b>
             {{
-              new Date(item.start_date)
+              new Date(item.Buildings.start_date)
                 .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
@@ -43,7 +67,7 @@
           <h6>
             <b>Тугаш санаси: </b>
             {{
-              new Date(item.end_date)
+              new Date(item.Buildings.end_date)
                 .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
@@ -54,35 +78,46 @@
           </h6>
           <span
             class="badge rounded-pill bg-warning"
-            v-if="item.status == 'wait'"
+            v-if="item.Buildings.status == 'wait'"
             >кутилмоқда</span
           >
           <span
             class="badge rounded-pill bg-primary"
-            v-else-if="item.status == 'start'"
+            v-else-if="item.Buildings.status == 'start'"
             >қурилмоқда</span
           >
           <span
             class="badge rounded-pill bg-success"
-            v-else-if="item.status == 'end'"
+            v-else-if="item.Buildings.status == 'end'"
             >якунланди</span
           >
           <hr
             class="mt-2 mb-2"
-            :class="item.status_work ? item.status_work : 'success'"
+            :class="
+              item.smeta_work_end_date != null
+                ? date < item.smeta_work_end_date &&
+                  date_sort(item.smeta_work_end_date) > 5
+                  ? 'success'
+                  : date < item.smeta_work_end_date &&
+                    date_sort(item.smeta_work_end_date) <= 5 &&
+                    date_sort(item.smeta_work_end_date) >= 3
+                  ? 'warning'
+                  : 'danger'
+                : 'dark'
+            "
           />
           <div class="d-flex justify-content-center zoom">
             <button
               class="btn btn-sm btn-primary mx-1"
               data-bs-toggle="modal"
               data-bs-target="#foremans_warehousemans"
-              @click="select_id(item.id, item.name, 1)"
+              @click="select_id(item.Buildings.id, item.Buildings.name, 1)"
             >
               <i class="fa-solid fa-users"></i>
             </button>
             <a
               target="_blank"
-              :href="`https://www.google.com/maps/@${item.map_lat},${item.map_long},8z`"
+              :href="`https://www.google.com/maps/@${item.Buildings.map_lat},${item.Buildings.map_long},8z`"
               class="btn btn-sm btn-primary mx-1"
             >
               <i class="fa-solid fa-location-dot"></i>
@@ -91,7 +126,7 @@
             <router-link
               :to="{
                 name: 'building',
-                query: { id: item.id, name: item.name },
+                query: { id: item.Buildings.id, name: item.Buildings.name },
               }"
               class="btn btn-sm btn-primary mx-1"
             >
@@ -100,7 +135,7 @@
             <router-link
               :to="{
                 name: 'warehouse_product',
-                query: { id: item.id, name: item.name },
+                query: { id: item.Buildings.id, name: item.Buildings.name },
               }"
               class="btn btn-sm btn-primary mx-1"
             >
@@ -120,31 +155,55 @@
     >
       <div
         class="card"
-        :class="item.status_work ? item.status_work : 'success'"
+        :class="
+          item.smeta_work_end_date != null
+            ? date < item.smeta_work_end_date &&
+              date_sort(item.smeta_work_end_date) > 5
+              ? 'success'
+              : date < item.smeta_work_end_date &&
+                date_sort(item.smeta_work_end_date) <= 5 &&
+                date_sort(item.smeta_work_end_date) >= 3
+              ? 'warning'
+              : 'danger'
+            : 'dark'
+        "
       >
         <div class="card-body text-center">
           <span class="float-start badge bg-primary">{{ inc + 1 }}</span>
           <h5 class="card-title text-center mb-0">
-            <span class="descinline"> {{ shorttext(item.name) }} </span>
-            <span class="descempty"> {{ item.name }} </span>
+            <span class="descinline">
+              {{ shorttext(item.Buildings.name) }}
+            </span>
+            <span class="descempty"> {{ item.Buildings.name }} </span>
             <span
               class="text-primary"
               style="cursor: pointer"
               @click="toggler($event)"
-              v-if="item.name.length > 15"
+              v-if="item.Buildings.name.length > 15"
             >
               яна</span
             >
           </h5>
           <hr
             class="mt-2 mb-2"
-            :class="item.status_work ? item.status_work : 'success'"
+            :class="
+              item.smeta_work_end_date != null
+                ? date < item.smeta_work_end_date &&
+                  date_sort(item.smeta_work_end_date) > 5
+                  ? 'success'
+                  : date < item.smeta_work_end_date &&
+                    date_sort(item.smeta_work_end_date) <= 5 &&
+                    date_sort(item.smeta_work_end_date) >= 3
+                  ? 'warning'
+                  : 'danger'
+                : 'dark'
+            "
           />
-          <h6><b>Манзил: </b> {{ item.address }}</h6>
+          <h6><b>Манзил: </b> {{ item.Buildings.address }}</h6>
           <h6>
             <b>Бошлаш санаси: </b>
             {{
-              new Date(item.start_date)
+              new Date(item.Buildings.start_date)
                 .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
@@ -156,7 +215,7 @@
           <h6>
             <b>Тугаш санаси: </b>
             {{
-              new Date(item.end_date)
+              new Date(item.Buildings.end_date)
                 .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
@@ -167,29 +226,40 @@
           </h6>
           <span
             class="badge rounded-pill bg-warning"
-            v-if="item.status == 'wait'"
+            v-if="item.Buildings.status == 'wait'"
             >кутилмоқда</span
           >
           <span
             class="badge rounded-pill bg-primary"
-            v-else-if="item.status == 'start'"
+            v-else-if="item.Buildings.status == 'start'"
             >қурилмоқда</span
           >
           <span
             class="badge rounded-pill bg-success"
-            v-else-if="item.status == 'end'"
+            v-else-if="item.Buildings.status == 'end'"
             >якунланди</span
           >
           <hr
             class="mt-2 mb-2"
-            :class="item.status_work ? item.status_work : 'success'"
+            :class="
+              item.smeta_work_end_date != null
+                ? date < item.smeta_work_end_date &&
+                  date_sort(item.smeta_work_end_date) > 5
+                  ? 'success'
+                  : date < item.smeta_work_end_date &&
+                    date_sort(item.smeta_work_end_date) <= 5 &&
+                    date_sort(item.smeta_work_end_date) >= 3
+                  ? 'warning'
+                  : 'danger'
+                : 'dark'
+            "
           />
           <div class="d-flex justify-content-center zoom">
             <div class="coll mx-1">
               <router-link
                 :to="{
                   name: 'smeta',
-                  query: { id: item.id, name: item.name },
+                  query: { id: item.Buildings.id, name: item.Buildings.name },
                 }"
                 class="btn btn-sm btn-primary"
               >
@@ -200,7 +270,7 @@
               <router-link
                 :to="{
                   name: 'building_works',
-                  query: { id: item.id, name: item.name },
+                  query: { id: item.Buildings.id, name: item.Buildings.name },
                 }"
                 class="btn btn-sm btn-primary"
               >
@@ -212,7 +282,7 @@
                 class="btn btn-sm btn-primary"
                 data-bs-toggle="modal"
                 data-bs-target="#foremans_warehousemans"
-                @click="select_id(item.id, item.name, 1)"
+                @click="select_id(item.Buildings.id, item.Buildings.name, 1)"
               >
                 <i class="fa-solid fa-users"></i>
               </button>
@@ -221,7 +291,7 @@
               <router-link
                 :to="{
                   name: 'building_products',
-                  query: { id: item.id, name: item.name },
+                  query: { id: item.Buildings.id, name: item.Buildings.name },
                 }"
                 class="btn btn-sm btn-primary"
               >
@@ -233,7 +303,7 @@
                 class="btn btn-sm btn-primary"
                 data-bs-toggle="modal"
                 data-bs-target="#building_document"
-                @click="select_id(item.id, item.name, 2)"
+                @click="select_id(item.Buildings.id, item.Buildings.name, 2)"
               >
                 <i class="fa-solid fa-file-arrow-up"></i>
               </button>
@@ -241,30 +311,30 @@
             <div class="coll mx-1">
               <a
                 target="_blank"
-                :href="`https://www.google.com/maps/@${item.map_lat},${item.map_long},8z`"
+                :href="`https://www.google.com/maps/@${item.Buildings.map_lat},${item.Buildings.map_long},8z`"
                 class="btn btn-sm btn-primary"
               >
                 <i class="fa-solid fa-location-dot"></i>
               </a>
             </div>
 
-            <div class="coll mx-1" v-if="item.status == 'start'">
+            <div class="coll mx-1" v-if="item.Buildings.status == 'start'">
               <button class="btn btn-sm btn-success" @click="finish(item)">
                 <i class="fa-solid fa-flag-checkered"></i>
               </button>
             </div>
-            <div class="coll mx-1" v-else-if="item.status == 'end'">
+            <div class="coll mx-1" v-else-if="item.Buildings.status == 'end'">
               <button class="btn btn-sm btn-primary" @click="start(item)">
                 <i class="fa-solid fa-play"></i>
               </button>
             </div>
 
-            <div class="coll mx-1" v-if="item.status == 'wait'">
+            <div class="coll mx-1" v-if="item.Buildings.status == 'wait'">
               <button class="btn btn-sm btn-primary" @click="start(item)">
                 <i class="fa-solid fa-play"></i>
               </button>
             </div>
-            <div class="coll mx-1" v-if="item.status == 'wait'">
+            <div class="coll mx-1" v-if="item.Buildings.status == 'wait'">
               <button
                 class="btn btn-sm btn-warning"
                 data-bs-toggle="modal"
@@ -298,13 +368,13 @@
           <td>{{ inc + 1 }}</td>
           <td>
             <p style="min-width: 250px; width: 250px">
-              {{ item.name }}
+              {{ item.Buildings.name }}
             </p>
           </td>
-          <td>{{ item.address }}</td>
+          <td>{{ item.Buildings.address }}</td>
           <td>
             {{
-              new Date(item.start_date)
+              new Date(item.Buildings.start_date)
                 .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
@@ -315,7 +385,7 @@
           </td>
           <td>
             {{
-              new Date(item.end_date)
+              new Date(item.Buildings.end_date)
                 .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
@@ -327,17 +397,17 @@
           <td>
             <span
               class="badge rounded-pill bg-warning"
-              v-if="item.status == 'wait'"
+              v-if="item.Buildings.status == 'wait'"
               >кутилмоқда</span
             >
             <span
               class="badge rounded-pill bg-primary"
-              v-else-if="item.status == 'start'"
+              v-else-if="item.Buildings.status == 'start'"
               >қурилмоқда</span
             >
             <span
               class="badge rounded-pill bg-success"
-              v-else-if="item.status == 'end'"
+              v-else-if="item.Buildings.status == 'end'"
               >якунланди</span
             >
           </td>
@@ -346,16 +416,16 @@
               class="btn btn-sm btn-warning mx-1"
               data-bs-toggle="modal"
               data-bs-target="#building_put"
-              @click="items(item.building)"
-              v-if="item.status == 'wait' && role == 'pto'"
+              @click="items(item.Buildings.building)"
+              v-if="item.Buildings.status == 'wait' && role == 'pto'"
             >
               <i class="fa fa-edit text-white"></i>
             </button>
 
             <button
               class="btn btn-sm btn-success mx-1"
-              v-else-if="item.status == 'start' && role == 'pto'"
-              @click="finish(item.building)"
+              v-else-if="item.Buildings.status == 'start' && role == 'pto'"
+              @click="finish(item.Buildings.building)"
             >
               <i class="fa-solid fa-flag-checkered"></i>
             </button>
@@ -363,14 +433,14 @@
               class="btn btn-sm btn-primary mx-1"
               data-bs-toggle="modal"
               data-bs-target="#foremans_warehousemans"
-              @click="select_id(item.id)"
+              @click="select_id(item.Buildings.id)"
               v-if="role == 'admin' || role == 'pto'"
             >
               <i class="fa-solid fa-users"></i>
             </button>
             <a
               target="_blank"
-              :href="`https://www.google.com/maps/@${item.map_lat},${item.map_long},8z`"
+              :href="`https://www.google.com/maps/@${item.Buildings.map_lat},${item.Buildings.map_long},8z`"
               class="btn btn-sm btn-primary mx-1"
             >
               <i class="fa-solid fa-location-dot"></i>
@@ -378,17 +448,17 @@
             <router-link
               :to="{
                 name: 'smeta',
-                query: { id: item.id, name: item.id },
+                query: { id: item.Buildings.id, name: item.Buildings.id },
               }"
               class="btn btn-sm btn-primary mx-1"
             >
               <i class="fa-solid fa-right-long"></i>
             </router-link>
             <!-- <router-link
-              v-if="item.status == 'start'"
+              v-if="item.Buildings.status == 'start'"
               :to="{
                 name: 'proche_sorovlar',
-                query: { id: item.id },
+                query: { id: item.Buildings.id },
               }"
               class="btn btn-sm btn-primary mx-1"
             >
@@ -396,13 +466,13 @@
             </router-link> -->
             <button
               class="btn btn-sm btn-primary mx-1 d-block mt-1"
-              v-if="item.status == 'wait' && role == 'pto'"
-              @click="start(item.building)"
+              v-if="item.Buildings.status == 'wait' && role == 'pto'"
+              @click="start(item.Buildings.building)"
             >
               бошлаш
             </button>
             <router-link
-              :to="{ name: 'workers', query: { id: item.id } }"
+              :to="{ name: 'workers', query: { id: item.Buildings.id } }"
               class="btn btn-sm btn-primary mx-1"
               v-if="role == 'prorap'"
             >
@@ -415,12 +485,14 @@
         <tr v-for="(item, inc) in data" :key="item">
           <td>{{ inc + 1 }}</td>
           <td>
-            <p style="min-width: 250px; width: 250px">{{ item.name }}</p>
+            <p style="min-width: 250px; width: 250px">
+              {{ item.Buildings.name }}
+            </p>
           </td>
-          <td>{{ item.address }}</td>
+          <td>{{ item.Buildings.address }}</td>
           <td>
             {{
-              new Date(item.start_date)
+              new Date(item.Buildings.start_date)
                 .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
@@ -431,7 +503,7 @@
           </td>
           <td>
             {{
-              new Date(item.end_date)
+              new Date(item.Buildings.end_date)
                 .toLocaleDateString({
                   year: "numeric",
                   month: "numeric",
@@ -443,34 +515,34 @@
           <td>
             <span
               class="badge rounded-pill bg-warning"
-              v-if="item.status == 'wait'"
+              v-if="item.Buildings.status == 'wait'"
               >кутилмоқда</span
             >
             <span
               class="badge rounded-pill bg-primary"
-              v-else-if="item.status == 'start'"
+              v-else-if="item.Buildings.status == 'start'"
               >қурилмоқда</span
             >
             <span
               class="badge rounded-pill bg-success"
-              v-else-if="item.status == 'end'"
+              v-else-if="item.Buildings.status == 'end'"
               >якунланди</span
             >
           </td>
           <td>
             <a
               target="_blank"
-              :href="`https://www.google.com/maps/@${item.map_lat},${item.map_long},8z`"
+              :href="`https://www.google.com/maps/@${item.Buildings.map_lat},${item.Buildings.map_long},8z`"
               class="btn btn-sm btn-primary mx-1"
             >
               <i class="fa-solid fa-location-dot"></i>
             </a>
 
             <router-link
-              v-if="item.status == 'start'"
+              v-if="item.Buildings.status == 'start'"
               :to="{
                 path: '/buildings/product_request',
-                query: { id: item.id },
+                query: { id: item.Buildings.id },
               }"
               class="btn btn-sm btn-primary mx-1"
             >
@@ -563,6 +635,7 @@ export default {
       building_name: "",
       role: localStorage.getItem("role"),
       documents: [],
+      date: new Date().toISOString().slice(0, 10),
     };
   },
   methods: {
@@ -792,6 +865,15 @@ export default {
         e.target.parentElement.children[1].className = "descempty";
       }
     },
+    date_sort(e) {
+      let date1 = new Date(e);
+      let date2 = new Date(this.date);
+
+      const diffTime = Math.abs(date1 - date2);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      return Number(diffDays);
+    },
   },
   computed: {
     shorttext() {
@@ -856,6 +938,11 @@ hr.success {
   animation: success 0.8s infinite alternate linear;
 }
 
+hr.dark {
+  background: black;
+  animation: darker 0.8s infinite alternate linear;
+}
+
 hr.danger {
   background: red;
   animation: danger 0.8s infinite alternate linear;
@@ -869,6 +956,11 @@ hr.warning {
 .card.success {
   border: 1px solid green;
   animation: success 0.8s infinite alternate linear;
+}
+
+.card.dark {
+  border: 1px solid black;
+  animation: darker 0.8s infinite alternate linear;
 }
 
 .card.danger {
@@ -894,6 +986,12 @@ hr.warning {
 @keyframes warning {
   0% {
     box-shadow: 0 0 0 1.8px rgb(255, 193, 7, 0.4);
+  }
+}
+
+@keyframes darker {
+  0% {
+    box-shadow: 0 0 0 1.8px rgb(0, 0, 0, 0.4);
   }
 }
 

@@ -25,8 +25,7 @@
                     id="floatingInput"
                     placeholder="Логин"
                     v-model="username"
-                    autocomplete="off"
-                    required
+                    autocomplete="on"
                   />
                   <label for="floatingInput">Логин</label>
                 </div>
@@ -37,8 +36,7 @@
                     id="floatingPassword"
                     placeholder="Парол"
                     v-model="password"
-                    autocomplete="off"
-                    required
+                    autocomplete="on"
                   />
                   <label for="floatingPassword">Парол</label>
                 </div>
@@ -75,28 +73,46 @@ export default {
   },
   methods: {
     SignIn() {
-      this.$store.dispatch("setLoading", { isLoading: true });
-      document.getElementById("login_button").disabled = true;
-      let params = new URLSearchParams();
-      params.append("username", this.username);
-      params.append("password", this.password);
-      login(params)
-        .then((res) => {
-          localStorage.setItem("access_token", res.data.access_token);
-          localStorage.setItem("role", res.data.role);
-          localStorage.setItem("user_id", res.data.id);
-          this.username = "";
-          this.password = "";
-          window.location.href = "/menu";
-        })
-        .finally(() => {
-          this.$store.dispatch("setLoading", { isLoading: false });
-          document.getElementById("login_button").disabled = false;
-        })
-        .catch((err) => {
-          catchError(err);
-          document.getElementById("login_button").disabled = false;
-        });
+      if (!this.username && this.password) {
+        document
+          .getElementById("floatingPassword")
+          .classList.remove("is-invalid");
+        document.getElementById("floatingInput").classList.add("is-invalid");
+      } else if (this.username && !this.password) {
+        document.getElementById("floatingInput").classList.remove("is-invalid");
+        document.getElementById("floatingPassword").classList.add("is-invalid");
+        document.getElementById("floatingInput").classList.add("invalid");
+      } else if (!this.username && !this.password) {
+        document.getElementById("floatingInput").classList.add("is-invalid");
+        document.getElementById("floatingPassword").classList.add("is-invalid");
+      } else {
+        document
+          .getElementById("floatingPassword")
+          .classList.remove("is-invalid");
+        document.getElementById("floatingInput").classList.remove("is-invalid");
+        this.$store.dispatch("setLoading", { isLoading: true });
+        document.getElementById("login_button").disabled = true;
+        let params = new URLSearchParams();
+        params.append("username", this.username);
+        params.append("password", this.password);
+        login(params)
+          .then((res) => {
+            localStorage.setItem("access_token", res.data.access_token);
+            localStorage.setItem("role", res.data.role);
+            localStorage.setItem("user_id", res.data.id);
+            this.username = "";
+            this.password = "";
+            window.location.href = "/menu";
+          })
+          .finally(() => {
+            this.$store.dispatch("setLoading", { isLoading: false });
+            document.getElementById("login_button").disabled = false;
+          })
+          .catch((err) => {
+            catchError(err);
+            document.getElementById("login_button").disabled = false;
+          });
+      }
     },
   },
   mounted() {

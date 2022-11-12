@@ -584,7 +584,7 @@ export default {
       to_time: "",
       page: 0,
       limit: 25,
-      text_market: "таминотчилар",
+      text_market: "маҳсулот сотувчи",
       page_market: 0,
       pages_market: null,
       limit_market: 25,

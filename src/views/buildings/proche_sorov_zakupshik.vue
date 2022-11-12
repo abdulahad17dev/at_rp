@@ -199,6 +199,7 @@
                   <option value="taminotchida_proche_qabul_qilindi">
                     қабул қилинди
                   </option>
+                  <option value="rejected_proche">руҳсат этилмаган</option>
                 </select>
               </th>
             </tr>
@@ -261,7 +262,7 @@
 
                 <button
                   class="btn btn-sm btn-danger"
-                  @click="remove(item.Proche_sorovlar.id)"
+                  @click="remove(item.Proche_sorovlar.id, item.Proche_sorovlar)"
                   v-if="item.Proche_sorovlar.status == 'taminotchida_proche'"
                   :id="item.Proche_sorovlar.id"
                 >
@@ -581,8 +582,15 @@ export default {
       this.text_building = name;
       document.getElementById("select_bank_building").click();
     },
-    remove(e) {
-      this.body.id = e;
+    remove(e, item) {
+      this.body = {
+        id: item.id,
+        name: item.name,
+        quantity: item.quantity,
+        olchov_birligi: item.olchov_birligi,
+        comment: item.comment,
+        building_id: 0,
+      };
       document.getElementById(e).disabled = true;
       this.$store.dispatch("setLoading", { isLoading: true });
       proche_s_put("false", 0, Array(this.body))

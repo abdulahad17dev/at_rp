@@ -3,20 +3,18 @@
     <table class="table table-sm table-hover table_products">
       <thead class="">
         <tr>
-          <th>№</th>
-          <th>Номи</th>
-          <th>Ўлчов бирлиги</th>
-          <th>Код</th>
-          <th>Таркиб қўшиш</th>
+          <th style="width: 10%">№</th>
+          <th style="width: 40%">Номи</th>
+          <th style="width: 40%">Ўлчов бирлиги</th>
+          <th style="width: 10%">Таркиб қўшиш</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(item, idx) in data" :key="item">
-          <td style="width: 5%">{{ idx + 1 }}</td>
-          <td style="width: 40%">{{ item.name }}</td>
-          <td style="width: 15%">{{ item.olchov_birligi }}</td>
-          <td style="width: 15%">{{ item.code }}</td>
-          <td style="width: 10%">
+          <td>{{ idx + 1 }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.olchov_birligi }}</td>
+          <td>
             <button
               class="btn btn-primary btn-sm"
               data-bs-toggle="modal"
@@ -219,8 +217,8 @@ export default {
 
 <style lang="scss" scoped>
 table.table_products {
-  min-width: 1300px;
   width: 100%;
+  table-layout: fixed;
 }
 table.product_c {
   min-width: 760px;

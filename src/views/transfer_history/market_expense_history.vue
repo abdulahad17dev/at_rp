@@ -7,7 +7,7 @@
           <th style="width: 10%">Сумма</th>
           <th style="width: 10%">Сана</th>
           <th style="width: 20%">Ходим</th>
-          <th style="width: 20%">Корхона</th>
+          <th style="width: 20%">Маҳсулот сотувчи корхона</th>
           <th style="width: 20%">Материал</th>
           <th>
             <select class="form-select form-select-sm" v-model="type">
