@@ -56,7 +56,7 @@
           </td>
           <td>{{ item.Warehouse_products.olchov_birligi }}</td>
           <td>
-            <Format_numbers :number="item.Warehouse_products.quantity" />
+            <Format_numbers :number="item.sum_quantity" />
           </td>
           <td></td>
         </tr>

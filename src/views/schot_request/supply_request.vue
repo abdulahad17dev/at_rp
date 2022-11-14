@@ -137,9 +137,14 @@
                       <li
                         v-for="item in buildings"
                         :key="item"
-                        @click="select_building(item.id, item.name)"
+                        @click="
+                          select_building(
+                            item.Buildings.id,
+                            item.Buildings.name
+                          )
+                        "
                       >
-                        <a class="dropdown-item">{{ item.name }}</a>
+                        <a class="dropdown-item">{{ item.Buildings.name }}</a>
                       </li>
                     </ul>
                   </li>

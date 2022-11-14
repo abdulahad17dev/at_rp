@@ -46,7 +46,8 @@
                 @click="
                   get_quantity(
                     item.Supplies_by_bank_account.related_id,
-                    item.Supplies_by_bank_account.id
+                    item.Supplies_by_bank_account.id,
+                    item.Supplies_by_bank_account.type
                   );
                   name = item.product;
                 "
@@ -227,7 +228,6 @@
                     placeholder="Ҳажм"
                     step="any"
                     min="0"
-                    :max="quantity"
                     required
                   />
                   <span class="input-group-text bg-white">{{ olchov }}</span>
@@ -398,7 +398,7 @@
                     <button
                       type="button"
                       class="page-link"
-                      @click="get_quantity(related_id, id)"
+                      @click="get_quantity(related_id, id, quantity_type)"
                     >
                       <i class="fa-solid fa-rotate"></i>
                     </button>
@@ -637,15 +637,16 @@ export default {
       quantity_pages: null,
       quantity_page: 0,
       quantity_limit: 25,
+      quantity_type: "",
       quantities: [],
       name: "",
       m_pages: null,
       m_page: 0,
       m_limit: 25,
       m_status: "",
+      m_type: "market_expense_shot",
       paid_moneys: [],
       olchov: "",
-
       date: new Date().toISOString().slice(0, 10),
     };
   },
@@ -693,10 +694,10 @@ export default {
     },
     quantity_limit() {
       this.quantity_page = 0;
-      this.get_quantity(this.related_id, this.id);
+      this.get_quantity(this.related_id, this.id, this.quantity_type);
     },
     quantity_page() {
-      this.get_quantity(this.related_id, this.id);
+      this.get_quantity(this.related_id, this.id, this.quantity_type);
     },
     m_limit() {
       this.m_page = 0;
@@ -704,7 +705,7 @@ export default {
     },
     m_status() {
       this.m_page = 0;
-      this.get_quantity(this.related_id, this.id);
+      this.get_quantity(this.related_id, this.id, this.quantity_type);
     },
     m_page() {
       this.get_paid_moneys(this.id);
@@ -844,16 +845,17 @@ export default {
           document.getElementById("remove_supply_smetaa").disabled = false;
         });
     },
-    get_quantity(related_id, id) {
+    get_quantity(related_id, id, type) {
       this.related_id = related_id;
       this.id = id;
+      this.quantity_type = type;
       this.$store.dispatch("setLoading", { isLoading: true });
       get_supplies(
         0,
         this.m_status,
         "",
         0,
-        "shot",
+        "shot_" + type,
         "",
         "",
         this.quantity_page,
@@ -874,7 +876,7 @@ export default {
     },
     get_paid_moneys(e) {
       this.$store.dispatch("setLoading", { isLoading: true });
-      get_market_expenses(0, 0, e, 0, "", this.m_page, this.m_limit)
+      get_market_expenses(0, 0, e, 0, this.m_type, this.m_page, this.m_limit)
         .then((res) => {
           this.m_pages = res.data.pages;
           this.paid_moneys = res.data.data;
@@ -893,7 +895,7 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_suppliesss").disabled = false;
           success(res).then(() => {
-            this.get_quantity(this.related_id, this.id);
+            this.get_quantity(this.related_id, this.id, this.quantity_type);
             this.get_shot_r(
               this.market_id,
               this.status,

@@ -147,7 +147,115 @@
             <option value="false">тўланмади</option>
           </select>
         </div>
-        <div class="col"></div>
+        <div class="col">
+          <div class="dropdown">
+            <button
+              class="btn btn-light btn-sm dropdown-toggle"
+              type="button"
+              id="select_bank_building_shot"
+              data-bs-toggle="dropdown"
+              data-bs-auto-close="outside"
+              aria-expanded="false"
+              @click="
+                buildings.length
+                  ? ''
+                  : buildings_get(
+                      page_building,
+                      limit_building,
+                      search_building
+                    )
+              "
+            >
+              {{ text_building }}
+            </button>
+            <ul
+              class="dropdown-menu border-top-0"
+              aria-labelledby="bank_building"
+            >
+              <li>
+                <input
+                  type="search"
+                  class="form-control form-control-sm"
+                  placeholder="қидириш ..."
+                  v-model="search_building"
+                />
+              </li>
+              <li>
+                <ul class="dropdown-items">
+                  <li @click="select_building(0, 'барчаси')">
+                    <a class="dropdown-item">барчаси</a>
+                  </li>
+                  <li
+                    v-for="item in buildings"
+                    :key="item"
+                    @click="
+                      select_building(item.Buildings.id, item.Buildings.name)
+                    "
+                  >
+                    <a class="dropdown-item">{{ item.Buildings.name }}</a>
+                  </li>
+                </ul>
+              </li>
+              <li v-if="buildings != ''">
+                <hr class="dropdown-divider m-0" />
+              </li>
+              <li>
+                <nav
+                  aria-label="Page navigation example"
+                  class="mt-2"
+                  v-if="buildings != ''"
+                >
+                  <ul class="pagination pagination-sm justify-content-end">
+                    <li class="page-item">
+                      <button
+                        type="button"
+                        class="page-link"
+                        @click="
+                          buildings_get(
+                            page_building,
+                            limit_building,
+                            search_building
+                          )
+                        "
+                      >
+                        <i class="fa-solid fa-rotate"></i>
+                      </button>
+                    </li>
+                    <li class="page-item">
+                      <button
+                        type="button"
+                        class="page-link"
+                        @click="page_building--"
+                        :disabled="page_building == 0"
+                      >
+                        <i class="fa-solid fa-angle-left text-dark"></i>
+                      </button>
+                    </li>
+                    <li class="page-item">
+                      <button
+                        type="button"
+                        class="page-link text-dark"
+                        disabled
+                      >
+                        {{ page_building + 1 }}
+                      </button>
+                    </li>
+                    <li class="page-item">
+                      <button
+                        type="button"
+                        class="page-link"
+                        @click="page_building++"
+                        :disabled="page_building == pages_building - 1"
+                      >
+                        <i class="fa-solid fa-angle-right text-dark"></i>
+                      </button>
+                    </li>
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </form>
     <div class="table-responsive mt-3">
@@ -157,9 +265,11 @@
             <th style="width: 10%">№</th>
             <th style="width: 20%">Махсулот</th>
             <th style="width: 15%">Ҳажм</th>
-            <th style="width: 15%">Ўлчов бирлиги</th>
-            <th style="width: 15%">Сана</th>
-            <th style="width: 20%">Сумма</th>
+            <th style="width: 10%">Ўлчов бирлиги</th>
+            <th style="width: 10%">Сана</th>
+            <th style="width: 10%">Сумма</th>
+            <th style="width: 10%">Объект</th>
+            <th>Сотувчи корхона</th>
           </tr>
         </thead>
         <tbody>
@@ -171,7 +281,8 @@
                 @click="
                   get_quantity(
                     item.Supplies_by_bank_account.related_id,
-                    item.Supplies_by_bank_account.id
+                    item.Supplies_by_bank_account.id,
+                    item.Supplies_by_bank_account.type
                   );
                   name = item.product;
                 "
@@ -204,13 +315,22 @@
                   .slice(0, 10)
               }}
             </td>
-            <td colspan="2">
+            <td>
               <span class="d-flex">
                 <Format_numbers
                   :number="item.Supplies_by_bank_account.total_price"
                 />
                 <span class="mx-1"> сўм </span>
               </span>
+            </td>
+            <td>{{ item.building }}</td>
+            <td>
+              {{ item.market }}(<a
+                class="text-decoration-none text-dark"
+                :href="`tel:+998${item.market_phone}`"
+              >
+                +998 {{ item.market_phone }} </a
+              >)
             </td>
           </tr>
         </tbody>
@@ -433,7 +553,7 @@
                     <button
                       type="button"
                       class="page-link"
-                      @click="get_quantity(related_id, id)"
+                      @click="get_quantity(related_id, id, quantity_type)"
                     >
                       <i class="fa-solid fa-rotate"></i>
                     </button>
@@ -625,6 +745,7 @@
 <script>
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import {
+  building_get,
   get_market_expenses,
   get_supplies,
   markets_get,
@@ -659,13 +780,21 @@ export default {
       related_id: null,
       quantity_pages: null,
       quantity_page: 0,
+      quantity_type: "",
       quantity_limit: 25,
       quantities: [],
       m_pages: null,
       m_page: 0,
       m_limit: 25,
       m_status: "",
+      m_type: "market_expense_shot",
       paid_moneys: [],
+      page_building: 0,
+      pages_building: null,
+      limit_building: 25,
+      search_building: "",
+      buildings: [],
+      text_building: "объектлар",
     };
   },
   watch: {
@@ -750,6 +879,20 @@ export default {
       this.page_market = 0;
       this.get_markets(this.page_market, this.limit_market, e);
     },
+    building_id(e) {
+      this.page = 0;
+      this.get_supply(
+        this.market_id,
+        this.status,
+        this.paid_status,
+        e,
+        this.type,
+        this.from_time,
+        this.to_time,
+        this.page,
+        this.limit
+      );
+    },
     market_id(e) {
       this.page = 0;
       this.get_supply(
@@ -774,10 +917,10 @@ export default {
 
     quantity_limit() {
       this.quantity_page = 0;
-      this.get_quantity(this.related_id, this.id);
+      this.get_quantity(this.related_id, this.id, this.quantity_type);
     },
     quantity_page() {
-      this.get_quantity(this.related_id, this.id);
+      this.get_quantity(this.related_id, this.id, this.quantity_type);
     },
     m_limit() {
       this.m_page = 0;
@@ -785,10 +928,21 @@ export default {
     },
     m_status() {
       this.m_page = 0;
-      this.get_quantity(this.related_id, this.id);
+      this.get_quantity(this.related_id, this.id, this.quantity_type);
     },
     m_page() {
       this.get_paid_moneys(this.id);
+    },
+    limit_building(e) {
+      this.page_building = 0;
+      this.buildings_get(this.page_building, e, this.search_building);
+    },
+    page_building(e) {
+      this.buildings_get(e, this.limit_building, this.search_building);
+    },
+    search_building(e) {
+      this.page_building = 0;
+      this.buildings_get(this.page_building, this.limit_building, e);
     },
   },
   methods: {
@@ -875,7 +1029,7 @@ export default {
       this.text_market = name;
       document.getElementById("select_bank_market3").click();
     },
-    get_quantity(related_id, id) {
+    get_quantity(related_id, id, type) {
       this.related_id = related_id;
       this.id = id;
       this.$store.dispatch("setLoading", { isLoading: true });
@@ -884,7 +1038,7 @@ export default {
         this.m_status,
         "",
         0,
-        "shot",
+        "shot_" + type,
         "",
         "",
         this.quantity_page,
@@ -905,7 +1059,7 @@ export default {
     },
     get_paid_moneys(e) {
       this.$store.dispatch("setLoading", { isLoading: true });
-      get_market_expenses(0, 0, e, 0, "", this.m_page, this.m_limit)
+      get_market_expenses(0, 0, e, 0, this.m_type, this.m_page, this.m_limit)
         .then((res) => {
           this.m_pages = res.data.pages;
           this.paid_moneys = res.data.data;
@@ -924,7 +1078,7 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_suppliess").disabled = false;
           success(res).then(() => {
-            this.get_quantity(this.related_id, this.id);
+            this.get_quantity(this.related_id, this.id, this.quantity_type);
             this.get_supply(
               this.market_id,
               this.status,
@@ -943,6 +1097,25 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_suppliess").disabled = false;
         });
+    },
+    buildings_get(page_building, limit_building, search_building) {
+      this.$store.dispatch("setLoading", { isLoading: true });
+
+      building_get(page_building, limit_building, search_building)
+        .then((res) => {
+          this.buildings = res.data.data;
+          this.pages_building = res.data.pages;
+          this.$store.dispatch("setLoading", { isLoading: false });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        });
+    },
+    select_building(id, name) {
+      this.building_id = id;
+      this.text_building = name;
+      document.getElementById("select_bank_building_shot").click();
     },
   },
   created() {
@@ -995,5 +1168,9 @@ export default {
   min-width: 900px;
   width: 100%;
   zoom: 75%;
+}
+
+.dropdown-menu {
+  transform: translate3d(0px, 32.8px, 0px) !important;
 }
 </style>

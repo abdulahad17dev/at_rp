@@ -128,9 +128,15 @@
                         <li
                           v-for="item in buildings"
                           :key="item"
-                          @click="select_building(item.id, item.name, true)"
+                          @click="
+                            select_building(
+                              item.Buildings.id,
+                              item.Buildings.name,
+                              true
+                            )
+                          "
                         >
-                          <a class="dropdown-item">{{ item.name }}</a>
+                          <a class="dropdown-item">{{ item.Buildings.name }}</a>
                         </li>
                       </ul>
                     </li>
@@ -394,9 +400,15 @@
                         <li
                           v-for="item in buildings"
                           :key="item"
-                          @click="select_building(item.id, item.name, false)"
+                          @click="
+                            select_building(
+                              item.Buildings.id,
+                              item.Buildings.name,
+                              false
+                            )
+                          "
                         >
-                          <a class="dropdown-item">{{ item.name }}</a>
+                          <a class="dropdown-item">{{ item.Buildings.name }}</a>
                         </li>
                       </ul>
                     </li>

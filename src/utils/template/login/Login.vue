@@ -25,7 +25,8 @@
                     id="floatingInput"
                     placeholder="Логин"
                     v-model="username"
-                    autocomplete="on"
+                    autocomplete="off"
+                    @focusout="focusout_username($event.target.value)"
                   />
                   <label for="floatingInput">Логин</label>
                 </div>
@@ -36,7 +37,8 @@
                     id="floatingPassword"
                     placeholder="Парол"
                     v-model="password"
-                    autocomplete="on"
+                    autocomplete="off"
+                    @focusout="focusout_password($event.target.value)"
                   />
                   <label for="floatingPassword">Парол</label>
                 </div>
@@ -78,6 +80,7 @@ export default {
           .getElementById("floatingPassword")
           .classList.remove("is-invalid");
         document.getElementById("floatingInput").classList.add("is-invalid");
+        document.getElementById("floatingPassword").classList.add("invalid");
       } else if (this.username && !this.password) {
         document.getElementById("floatingInput").classList.remove("is-invalid");
         document.getElementById("floatingPassword").classList.add("is-invalid");
@@ -90,6 +93,9 @@ export default {
           .getElementById("floatingPassword")
           .classList.remove("is-invalid");
         document.getElementById("floatingInput").classList.remove("is-invalid");
+        document.getElementById("floatingPassword").classList.add("invalid");
+        document.getElementById("floatingInput").classList.add("invalid");
+
         this.$store.dispatch("setLoading", { isLoading: true });
         document.getElementById("login_button").disabled = true;
         let params = new URLSearchParams();
@@ -100,8 +106,6 @@ export default {
             localStorage.setItem("access_token", res.data.access_token);
             localStorage.setItem("role", res.data.role);
             localStorage.setItem("user_id", res.data.id);
-            this.username = "";
-            this.password = "";
             window.location.href = "/menu";
           })
           .finally(() => {
@@ -109,9 +113,45 @@ export default {
             document.getElementById("login_button").disabled = false;
           })
           .catch((err) => {
+            this.username = "";
+            this.password = "";
+            document
+              .getElementById("floatingPassword")
+              .classList.remove("invalid");
+            document
+              .getElementById("floatingInput")
+              .classList.remove("invalid");
+
+            document
+              .getElementById("floatingPassword")
+              .classList.remove("is-invalid");
+            document
+              .getElementById("floatingInput")
+              .classList.remove("is-invalid");
+
             catchError(err);
             document.getElementById("login_button").disabled = false;
           });
+      }
+    },
+    focusout_username(e) {
+      if (e.length > 0) {
+        document.getElementById("floatingInput").classList.remove("is-invalid");
+        document.getElementById("floatingInput").classList.add("invalid");
+      } else {
+        document.getElementById("floatingInput").classList.remove("invalid");
+        document.getElementById("floatingInput").classList.add("is-invalid");
+      }
+    },
+    focusout_password(e) {
+      if (e.length > 0) {
+        document
+          .getElementById("floatingPassword")
+          .classList.remove("is-invalid");
+        document.getElementById("floatingPassword").classList.add("invalid");
+      } else {
+        document.getElementById("floatingPassword").classList.remove("invalid");
+        document.getElementById("floatingPassword").classList.add("is-invalid");
       }
     },
   },
@@ -119,6 +159,17 @@ export default {
     console.clear();
     localStorage.removeItem("role");
     localStorage.removeItem("access_token");
+    document.getElementById("floatingInput").focus();
+    document
+      .getElementById("floatingInput")
+      .addEventListener("focusout", () => {
+        document.getElementById("floatingInput").classList.add("is-invalid");
+      });
+    document
+      .getElementById("floatingPassword")
+      .addEventListener("focusout", () => {
+        document.getElementById("floatingPassword").classList.add("is-invalid");
+      });
   },
 };
 </script>
@@ -155,5 +206,19 @@ export default {
 
 .dark_image {
   display: none;
+}
+
+.invalid {
+  background-repeat: no-repeat;
+  background-position: right calc(0.375em + 0.1875rem) center;
+  background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+  border-color: green !important;
+  padding-right: calc(1.5em + 0.75rem);
+  background-image: url(https://constructionproject.crud.uz/uploaded_files/frontend_check_icon.svg) !important;
+}
+
+.invalid:active,
+.invalid:focus {
+  box-shadow: 0 0 0 4px rgba(0, 128, 0, 0.3) !important;
 }
 </style>

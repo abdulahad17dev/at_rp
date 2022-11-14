@@ -88,9 +88,8 @@
                   name: 'main_warehouse_product',
                   query: { id: item.id, name: item.name },
                 }"
-                class="btn btn-sm btn-primary mx-1"
-              >
-                <i class="fa-solid fa-right-long"></i>
+                class="btn btn-sm dark_btn mx-1"
+                ><i class="fa-solid fa-circle-right"></i>
               </router-link>
             </div>
           </div>

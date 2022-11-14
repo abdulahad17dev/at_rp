@@ -65,7 +65,7 @@
           </td>
           <td>{{ item.Warehouse_products.olchov_birligi }}</td>
           <td>
-            <Format_numbers :number="item.Warehouse_products.quantity" />
+            <Format_numbers :number="item.sum_quantity" />
           </td>
           <td>
             <button
@@ -206,9 +206,14 @@
                         <li
                           v-for="item in buildings"
                           :key="item"
-                          @click="select_building(item.id, item.name)"
+                          @click="
+                            select_building(
+                              item.Buildings.id,
+                              item.Buildings.name
+                            )
+                          "
                         >
-                          <a class="dropdown-item">{{ item.name }}</a>
+                          <a class="dropdown-item">{{ item.Buildings.name }}</a>
                         </li>
                       </ul>
                     </li>

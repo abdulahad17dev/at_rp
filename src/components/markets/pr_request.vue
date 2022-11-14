@@ -76,9 +76,9 @@
                       <li
                         v-for="item in buildings"
                         :key="item"
-                        @click="select(item.id, item.name)"
+                        @click="select(item.Buildings.id, item.Buildings.name)"
                       >
-                        <a class="dropdown-item">{{ item.name }}</a>
+                        <a class="dropdown-item">{{ item.Buildings.name }}</a>
                       </li>
                     </ul>
                   </li>
@@ -438,7 +438,7 @@
                 aria-controls="pills-home-quantity"
                 aria-selected="true"
               >
-                Нахт тўлов орқали
+                Нахт ва қарз тўлов орқали
               </button>
             </li>
             <li class="nav-item mx-1" role="presentation">
@@ -471,8 +471,17 @@
                       <th style="width: 15%">Ҳажм</th>
                       <th style="width: 15%">Ўлчов бирлиги</th>
                       <th style="width: 15%">Нарх</th>
-                      <th style="width: 20%">Сана</th>
+                      <th style="width: 10%">Сана</th>
                       <th style="width: 25%">Маҳсулот сотувчи корхона</th>
+                      <th style="width: 10%">
+                        <select
+                          class="form-select form-select-sm"
+                          v-model="quantity_type"
+                        >
+                          <option value="naxt_proche">нахт</option>
+                          <option value="qarz_proche">қарз</option>
+                        </select>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -492,7 +501,7 @@
                             .slice(0, 10)
                         }}
                       </td>
-                      <td>
+                      <td colspan="2">
                         {{ item.market }}(<a
                           class="text-decoration-none text-dark"
                           :href="`tel:+998${item.market_phone}`"
@@ -755,6 +764,7 @@ export default {
       quantity_pages: null,
       quantity_page: 0,
       quantity_limit: 25,
+      quantity_type: "naxt_proche",
       quantities: [],
       sh_quantity_pages: null,
       sh_quantity_page: 0,
@@ -819,6 +829,10 @@ export default {
       this.buildings_get(this.page_building, this.limit_building, e);
     },
     quantity_limit() {
+      this.quantity_page = 0;
+      this.get_quantity(this.id);
+    },
+    quantity_type() {
       this.quantity_page = 0;
       this.get_quantity(this.id);
     },
@@ -1009,7 +1023,7 @@ export default {
         "",
         "",
         0,
-        "proche",
+        this.quantity_type,
         "",
         "",
         this.quantity_page,

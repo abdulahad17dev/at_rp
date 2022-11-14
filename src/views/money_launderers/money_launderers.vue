@@ -219,7 +219,7 @@ export default {
             this.get_money_launderers(this.page, this.limit, this.search);
             e.money = null;
             e.from_ = this.l_id;
-            e.to_ = null;
+            e.to_ = 0;
             e.comment = "";
           });
         })

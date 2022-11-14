@@ -83,9 +83,9 @@
                       <li
                         v-for="item in buildings"
                         :key="item"
-                        @click="select(item.id, item.name)"
+                        @click="select(item.Buildings.id, item.Buildings.name)"
                       >
-                        <a class="dropdown-item">{{ item.name }}</a>
+                        <a class="dropdown-item">{{ item.Buildings.name }}</a>
                       </li>
                     </ul>
                   </li>
@@ -539,40 +539,21 @@
                       <thead>
                         <tr>
                           <th style="width: 10%">Т/р</th>
-                          <th
-                            style="width: 15%"
-                            v-if="quantity_type == 'tarkib'"
-                          >
-                            Номи
-                          </th>
-                          <th style="width: 15%">Ҳажм</th>
-                          <th style="width: 15%">Ўлчов бирлиги</th>
-                          <th
-                            :style="
-                              quantity_type == 'tarkib'
-                                ? 'width: 10%'
-                                : 'width: 15%'
-                            "
-                          >
-                            Нарх
-                          </th>
-                          <th
-                            :style="
-                              quantity_type == 'tarkib'
-                                ? 'width: 10%'
-                                : 'width: 15%'
-                            "
-                          >
-                            Сана
-                          </th>
-                          <th style="width: 20%">Маҳсулот сотувчи корхона</th>
+                          <th style="width: 15%">Номи</th>
+                          <th style="width: 10%">Ҳажм</th>
+                          <th style="width: 10%">Ўлчов бирлиги</th>
+                          <th style="width: 15%">Нарх</th>
+                          <th style="width: 10%">Сана</th>
+                          <th style="width: 15%">Маҳсулот сотувчи корхона</th>
                           <th>
                             <select
                               class="form-select form-select-sm"
                               v-model="quantity_type"
                             >
-                              <option value="smeta">смета</option>
-                              <option value="tarkib">таркиб</option>
+                              <option value="naxt_smeta">нахт смета</option>
+                              <option value="qarz_smeta">қарз смета</option>
+                              <option value="naxt_tarkib">нахт таркиб</option>
+                              <option value="qarz_tarkib">қарз таркиб</option>
                             </select>
                           </th>
                         </tr>
@@ -580,7 +561,7 @@
                       <tbody>
                         <tr v-for="(item, inc) in filtering" :key="item">
                           <td>{{ inc + 1 }}</td>
-                          <td v-if="quantity_type == 'tarkib'">
+                          <td>
                             {{ item.Supplies.product_composition }}
                           </td>
                           <td>{{ item.Supplies.quantity }}</td>
@@ -1163,7 +1144,7 @@ export default {
       quantity_pages: null,
       quantity_page: 0,
       quantity_limit: 25,
-      quantity_type: "smeta",
+      quantity_type: "naxt_smeta",
       quantities: [],
       sh_quantity_pages: null,
       sh_quantity_page: 0,

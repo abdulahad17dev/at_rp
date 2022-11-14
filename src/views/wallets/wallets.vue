@@ -219,7 +219,7 @@ export default {
             this.get_wallets(this.page, this.limit, this.search);
             e.money = null;
             e.from_ = this.w_id;
-            e.to_ = null;
+            e.to_ = 0;
             e.comment = "";
           });
         })
@@ -241,7 +241,7 @@ export default {
             this.get_wallets(this.page, this.limit, this.search);
             e.money = null;
             e.to_ = this.w_id;
-            e.from_ = null;
+            e.from_ = 0;
             e.comment = "";
           });
         })

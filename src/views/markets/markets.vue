@@ -16,7 +16,7 @@
         aria-controls="pills-home"
         aria-selected="true"
       >
-        Маҳсулот сотувчи
+        Сотувчи корхоналар
       </button>
     </li>
     <li class="nav-item mx-1" role="presentation">

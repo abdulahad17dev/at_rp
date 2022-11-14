@@ -861,15 +861,17 @@ export function remove_supply_by_b_a(id) {
 }
 
 export function take_supply_b_a(data) {
-  if (data.type == "smeta") {
+  if (data.type == "smeta" || data.type == "shot_smeta") {
     data.type = "shot_smeta";
     return instance.post(`take_supply_smeta`, Array(data));
-  } else if (data.type == "proche") {
+  } else if (data.type == "proche" || data.type == "shot_proche") {
     data.type = "shot_proche";
     return instance.post(`take_supply_proche`, data);
-  } else if (data.type == "tarkib") {
+  } else if (data.type == "tarkib" || data.type == "shot_tarkib") {
     data.type = "shot_tarkib";
     return instance.post(`take_supply_product_composition`, data);
+  } else {
+    console.log("do'nt wokr");
   }
 }
 

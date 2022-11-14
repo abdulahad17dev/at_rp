@@ -269,7 +269,7 @@
                 {{ item.product }}
               </td>
               <td>
-                <Format_numbers :number="item.Invalid_products.quantity" />
+                <Format_numbers :number="item.Invalid_products.sum_quantity" />
               </td>
               <td>
                 {{

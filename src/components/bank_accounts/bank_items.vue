@@ -96,7 +96,7 @@
                     name: item.Bank_accounts.name,
                   },
                 }"
-                class="btn btn-secondary btn-sm mx-1"
+                class="btn btn-sm mx-1 dark_btn"
               >
                 <i class="fa-solid fa-clock-rotate-left"></i>
               </router-link>
