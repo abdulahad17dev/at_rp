@@ -198,7 +198,7 @@
                 .slice(0, 10)
             }}
           </td>
-          <td></td>
+          <td>{{ item.building }}</td>
           <td>
             <button
               class="btn btn-sm btn-success"

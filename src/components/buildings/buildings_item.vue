@@ -115,13 +115,10 @@
             >
               <i class="fa-solid fa-users"></i>
             </button>
-            <a
-              target="_blank"
-              :href="`https://www.google.com/maps/@${item.Buildings.map_lat},${item.Buildings.map_long},8z`"
-              class="btn btn-sm btn-primary mx-1"
-            >
-              <i class="fa-solid fa-location-dot"></i>
-            </a>
+            <Route_map
+              :lat="item.Buildings.map_lat"
+              :long="item.Buildings.map_long"
+            />
 
             <router-link
               :to="{
@@ -309,28 +306,34 @@
               </button>
             </div>
             <div class="coll mx-1">
-              <a
-                target="_blank"
-                :href="`https://www.google.com/maps/@${item.Buildings.map_lat},${item.Buildings.map_long},8z`"
-                class="btn btn-sm btn-primary"
-              >
-                <i class="fa-solid fa-location-dot"></i>
-              </a>
+              <Route_map
+                :lat="item.Buildings.map_lat"
+                :long="item.Buildings.map_long"
+              />
             </div>
 
             <div class="coll mx-1" v-if="item.Buildings.status == 'start'">
-              <button class="btn btn-sm btn-success" @click="finish(item)">
+              <button
+                class="btn btn-sm btn-success"
+                @click="finish(item.Buildings)"
+              >
                 <i class="fa-solid fa-flag-checkered"></i>
               </button>
             </div>
             <div class="coll mx-1" v-else-if="item.Buildings.status == 'end'">
-              <button class="btn btn-sm btn-primary" @click="start(item)">
+              <button
+                class="btn btn-sm btn-primary"
+                @click="start(item.Buildings)"
+              >
                 <i class="fa-solid fa-play"></i>
               </button>
             </div>
 
             <div class="coll mx-1" v-if="item.Buildings.status == 'wait'">
-              <button class="btn btn-sm btn-primary" @click="start(item)">
+              <button
+                class="btn btn-sm btn-primary"
+                @click="start(item.Buildings)"
+              >
                 <i class="fa-solid fa-play"></i>
               </button>
             </div>
@@ -339,7 +342,7 @@
                 class="btn btn-sm btn-warning"
                 data-bs-toggle="modal"
                 data-bs-target="#building_put"
-                @click="items(item)"
+                @click="items(item.Buildings)"
               >
                 <i class="fa fa-edit text-white"></i>
               </button>
@@ -438,13 +441,10 @@
             >
               <i class="fa-solid fa-users"></i>
             </button>
-            <a
-              target="_blank"
-              :href="`https://www.google.com/maps/@${item.Buildings.map_lat},${item.Buildings.map_long},8z`"
-              class="btn btn-sm btn-primary mx-1"
-            >
-              <i class="fa-solid fa-location-dot"></i>
-            </a>
+            <Route_map
+              :lat="item.Buildings.map_lat"
+              :long="item.Buildings.map_long"
+            />
             <router-link
               :to="{
                 name: 'smeta',
@@ -530,13 +530,10 @@
             >
           </td>
           <td>
-            <a
-              target="_blank"
-              :href="`https://www.google.com/maps/@${item.Buildings.map_lat},${item.Buildings.map_long},8z`"
-              class="btn btn-sm btn-primary mx-1"
-            >
-              <i class="fa-solid fa-location-dot"></i>
-            </a>
+            <Route_map
+              :lat="item.Buildings.map_lat"
+              :long="item.Buildings.map_long"
+            />
 
             <router-link
               v-if="item.Buildings.status == 'start'"
@@ -622,6 +619,7 @@ import Swal from "sweetalert2";
 import Foreman from "../foremans_warehousemans/foreman.vue";
 import Warehouseman from "../foremans_warehousemans/warehouseman.vue";
 import Building_documents from "./building_documents.vue";
+import Route_map from "@/utils/map/route_map.vue";
 export default {
   name: "BuildingItem",
   props: { data: Array },
@@ -882,7 +880,13 @@ export default {
       };
     },
   },
-  components: { Building_put, Foreman, Warehouseman, Building_documents },
+  components: {
+    Building_put,
+    Foreman,
+    Warehouseman,
+    Building_documents,
+    Route_map,
+  },
 };
 </script>
 

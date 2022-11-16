@@ -39,7 +39,7 @@
                 name: 'wallet_transfer_history',
                 query: { id: item.id, name: item.name },
               }"
-              class="btn btn-sm btn-secondary mx-1"
+              class="btn btn-sm btn-secondary"
             >
               <i class="fa-solid fa-clock-rotate-left"></i>
             </router-link>

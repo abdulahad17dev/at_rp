@@ -19,7 +19,13 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
-                <label for="summa"> Сумма: </label>
+                <label for="summa">
+                  Сумма:
+                  <span class="text-primary"
+                    >{{ new Intl.NumberFormat().format(body.money) }}
+                    сўм
+                  </span></label
+                >
                 <div class="input-group input-group-sm">
                   <input
                     id="summa"

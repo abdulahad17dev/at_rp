@@ -62,13 +62,10 @@
             >
               <i class="fa-solid fa-edit text-white"></i>
             </button>
-            <a
-              target="_blank"
-              :href="`https://www.google.com/maps/@${item.Markets.map_lat},${item.Markets.map_long},8z`"
-              class="btn btn-sm btn-primary mx-1"
-            >
-              <i class="fa-solid fa-location-dot"></i>
-            </a>
+            <Route_map
+              :lat="item.Markets.map_lat"
+              :long="item.Markets.map_long"
+            />
             <router-link
               :to="{ name: 'supply_history', query: { id: item.Markets.id } }"
               class="btn btn-sm btn-secondary"
@@ -129,6 +126,7 @@
 </template>
 
 <script>
+import Route_map from "@/utils/map/route_map.vue";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import { markets_get, market_put } from "@/utils/request/request";
@@ -230,7 +228,7 @@ export default {
   created() {
     this.get_markets(this.page, this.limit, this.search);
   },
-  components: { Data_notfound, Supplier_put },
+  components: { Data_notfound, Supplier_put, Route_map },
 };
 </script>
 

@@ -273,7 +273,7 @@ export default {
         "",
         0,
         this.item,
-        this.building_id ? this.building_id : this.buildings[0]?.id,
+        this.building_id,
         this.page,
         this.limit
       )
@@ -295,9 +295,10 @@ export default {
         .then((res) => {
           this.buildings = res.data.data;
           this.pages_building = res.data.pages;
-          this.text_building = this.buildings[0]?.name;
-          this.get_spent_products();
+          this.building_id = this.buildings[0]?.Buildings.id;
+          this.text_building = this.buildings[0]?.Buildings.name;
           this.$store.dispatch("setLoading", { isLoading: false });
+          this.get_spent_products();
         })
         .catch((err) => {
           catchError(err);

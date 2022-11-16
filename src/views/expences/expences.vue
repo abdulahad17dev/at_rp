@@ -610,8 +610,8 @@
                     required
                   />
                   <label class="form-check-label" for="inlineRadio1"
-                    >Лимит</label
-                  >
+                    >Лимит:
+                  </label>
                 </div>
                 <div class="form-check form-check-inline">
                   <input
@@ -629,6 +629,11 @@
                     >Безлимит</label
                   >
                 </div>
+
+                <span class="text-primary d-block" v-if="limit_of_expense"
+                  >{{ new Intl.NumberFormat().format(body.limit_of_expense) }}
+                  сўм
+                </span>
                 <div
                   class="input-group input-group-sm mt-1"
                   v-if="limit_of_expense"

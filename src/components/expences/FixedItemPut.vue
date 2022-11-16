@@ -81,6 +81,11 @@
                     >Безлимит</label
                   >
                 </div>
+
+                <span class="text-primary d-block" v-if="limit_of_expense"
+                  >{{ new Intl.NumberFormat().format(body.limit_of_expense) }}
+                  сўм
+                </span>
                 <div
                   class="input-group input-group-sm mt-1"
                   v-if="limit_of_expense"
