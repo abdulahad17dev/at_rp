@@ -202,9 +202,8 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("supplier_put_c").click();
           document.getElementById("supplier_disabled").disabled = false;
-          success(res).then(() => {
-            this.get_markets(this.page, this.limit, this.search);
-          });
+          success(res);
+          this.get_markets(this.page, this.limit, this.search);
         })
         .catch((err) => {
           catchError(err);

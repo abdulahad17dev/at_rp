@@ -160,16 +160,15 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("worker_close").click();
           document.getElementById("worker_disabled").disabled = false;
-          success(res).then(() => {
-            this.get_workers(
-              this.page,
-              this.limit,
-              this.search,
-              this.building_id
-            );
-            e.name = "";
-            e.phone = null;
-          });
+          success(res);
+          this.get_workers(
+            this.page,
+            this.limit,
+            this.search,
+            this.building_id
+          );
+          e.name = "";
+          e.phone = null;
         })
         .catch((err) => {
           catchError(err);
@@ -193,14 +192,13 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("worker_put_close").click();
           document.getElementById("worker_disabled2").disabled = false;
-          success(res).then(() => {
-            this.get_workers(
-              this.page,
-              this.limit,
-              this.search,
-              this.building_id
-            );
-          });
+          success(res);
+          this.get_workers(
+            this.page,
+            this.limit,
+            this.search,
+            this.building_id
+          );
         })
         .catch((err) => {
           catchError(err);
@@ -216,15 +214,14 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("worker_s_close").click();
           document.getElementById("worker_s_disabled").disabled = false;
-          success(res).then(() => {
-            this.get_workers(
-              this.page,
-              this.limit,
-              this.search,
-              this.building_id
-            );
-            e.specialty = "";
-          });
+          success(res);
+          this.get_workers(
+            this.page,
+            this.limit,
+            this.search,
+            this.building_id
+          );
+          e.specialty = "";
         })
         .catch((err) => {
           catchError(err);
@@ -237,14 +234,13 @@ export default {
       worker_speciality_remove(e)
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
-          success(res).then(() => {
-            this.get_workers(
-              this.page,
-              this.limit,
-              this.search,
-              this.building_id
-            );
-          });
+          success(res);
+          this.get_workers(
+            this.page,
+            this.limit,
+            this.search,
+            this.building_id
+          );
         })
         .catch((err) => {
           catchError(err);

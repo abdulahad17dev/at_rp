@@ -213,8 +213,11 @@
     </div>
   </div>
 
-  <nav aria-label="Page navigation example" class="mt-2">
-    <!-- v-if="product_requests != ''" -->
+  <nav
+    aria-label="Page navigation example"
+    class="mt-2"
+    v-if="product_requests != ''"
+  >
     <ul class="pagination pagination-sm justify-content-end">
       <li class="page-item">
         <select
@@ -380,23 +383,22 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           this.checked = [];
-          success(res).then(() => {
-            this.get_proche_s(
-              this.page,
-              this.limit,
-              this.building_id,
-              this.status,
-              this.user_id,
-              this.search
-            );
-            this.body = {
-              name: "",
-              quantity: 0,
-              olchov_birligi: "",
-              comment: "",
-              building_id: 0,
-            };
-          });
+          success(res);
+          this.get_proche_s(
+            this.page,
+            this.limit,
+            this.building_id,
+            this.status,
+            this.user_id,
+            this.search
+          );
+          this.body = {
+            name: "",
+            quantity: 0,
+            olchov_birligi: "",
+            comment: "",
+            building_id: 0,
+          };
         })
         .catch((err) => {
           catchError(err);
@@ -418,16 +420,15 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById(`remove_proche${id}`).disabled = false;
-          success(res).then(() => {
-            this.get_proche_s(
-              this.page,
-              this.limit,
-              this.building_id,
-              this.status,
-              this.user_id,
-              this.search
-            );
-          });
+          success(res);
+          this.get_proche_s(
+            this.page,
+            this.limit,
+            this.building_id,
+            this.status,
+            this.user_id,
+            this.search
+          );
         })
         .catch((err) => {
           catchError(err);

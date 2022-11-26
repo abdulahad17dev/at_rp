@@ -124,7 +124,7 @@ export function success(res) {
     toast: true,
     position: "top-end",
     showConfirmButton: false,
-    timer: 800,
+    timer: 2000,
     timerProgressBar: true,
   }).fire({
     icon: "success",

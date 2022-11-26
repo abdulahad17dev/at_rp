@@ -119,11 +119,11 @@ export default {
   watch: {
     long(e) {
       this.body.map_long = "";
-      this.body.map_long = e;
+      this.body.map_long = String(e);
     },
     lat(e) {
       this.body.map_lat = "";
-      this.body.map_lat = e;
+      this.body.map_lat = String(e);
     },
   },
   methods: {

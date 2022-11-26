@@ -166,15 +166,14 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("user_add").click();
           document.getElementById("user_disabled").disabled = false;
-          success(res).then(() => {
-            this.get_users(this.page, this.limit, this.search, this.role);
-            e.name = "";
-            e.username = "";
-            e.password = "";
-            e.role = "";
-            e.phone = null;
-            e.status = "true";
-          });
+          success(res);
+          this.get_users(this.page, this.limit, this.search, this.role);
+          e.name = "";
+          e.username = "";
+          e.password = "";
+          e.role = "";
+          e.phone = null;
+          e.status = "true";
         })
         .catch((err) => {
           catchError(err);

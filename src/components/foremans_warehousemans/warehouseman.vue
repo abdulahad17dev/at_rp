@@ -187,11 +187,10 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("send_btn2").disabled = true;
-          success(res).then(() => {
-            this.$emit("get", this.building_id, "", 1);
-            this.body.user_id = null;
-            this.text = "омборчи танлаш";
-          });
+          success(res);
+          this.$emit("get", this.building_id, "", 1);
+          this.body.user_id = null;
+          this.text = "омборчи танлаш";
         })
         .catch((err) => {
           catchError(err);
@@ -208,9 +207,8 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_warehouseman").disabled = false;
-          success(res).then(() => {
-            this.$emit("get", this.building_id, "", 1);
-          });
+          success(res);
+          this.$emit("get", this.building_id, "", 1);
         })
         .catch((err) => {
           catchError(err);

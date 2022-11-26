@@ -36,7 +36,11 @@
     id="table-responsive"
     style="overflow: auto"
   >
-    <table class="table table-sm table-hover smeta" v-if="smeta != ''">
+    <table
+      class="table table-sm table-hover smeta"
+      id="select_smeta_data"
+      v-if="smeta != ''"
+    >
       <tbody v-for="item in smeta" :key="item">
         <tr v-if="!item.Smeta.grafik_id" class="bg-dark text-white text-center">
           <td colspan="11">{{ item.Smeta.name }}</td>
@@ -182,6 +186,9 @@
   <nav aria-label="Page navigation example" class="mt-2" v-if="smeta != ''">
     <ul class="pagination pagination-sm justify-content-end">
       <li class="page-item">
+        <Select_data :id="'select_smeta_data'" />
+      </li>
+      <li class="page-item">
         <button
           type="button"
           class="page-link"
@@ -230,6 +237,7 @@ import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import { smeta_get } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
 import Format_numbers from "@/utils/format/format_numbers.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   data() {
     return {
@@ -326,7 +334,7 @@ export default {
       this.order_by
     );
   },
-  components: { Data_notfound, Format_numbers },
+  components: { Data_notfound, Format_numbers, Select_data },
 };
 </script>
 

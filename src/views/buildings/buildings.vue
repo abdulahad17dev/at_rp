@@ -158,8 +158,9 @@ export default {
       this.lat = "";
       this.long = "";
       const success = (position) => {
-        this.lat = position.coords.latitude;
-        this.long = position.coords.longitude;
+        this.lat = String(position.coords.latitude);
+        this.long = String(position.coords.longitude);
+        console.log(position);
       };
 
       const error = (err) => {
@@ -176,17 +177,16 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("buildings_add").click();
           document.getElementById("building_disabled").disabled = false;
-          success(res).then(() => {
-            this.get_buildings(this.page, this.limit, this.search, this.status);
-            e.name = "";
-            e.address = "";
-            e.budget = null;
-            e.start_date = "";
-            e.end_date = "";
-            e.map_long = "";
-            e.map_lat = "";
-            e.status = "wait";
-          });
+          success(res);
+          this.get_buildings(this.page, this.limit, this.search, this.status);
+          e.name = "";
+          e.address = "";
+          e.budget = null;
+          e.start_date = "";
+          e.end_date = "";
+          e.map_long = "";
+          e.map_lat = "";
+          e.status = "wait";
         })
         .catch((err) => {
           catchError(err);

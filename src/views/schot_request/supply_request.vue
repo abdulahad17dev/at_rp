@@ -1182,29 +1182,28 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("pay_bank_close").click();
           document.getElementById("pay_bank_account_d").disabled = false;
-          success(res).then(() => {
-            this.get_supply(
-              this.market_id,
-              this.status,
-              this.paid_status,
-              this.building_id,
-              this.type,
-              this.from_time,
-              this.to_time,
-              this.page,
-              this.limit
-            );
+          success(res);
+          this.get_supply(
+            this.market_id,
+            this.status,
+            this.paid_status,
+            this.building_id,
+            this.type,
+            this.from_time,
+            this.to_time,
+            this.page,
+            this.limit
+          );
 
-            this.body = {
-              money: null,
-              from_: null,
-              to_: null,
-              for_: null,
-              comment: "",
-            };
-            this.checked = [];
-            this.text_account = "ҳисоб рақамлар";
-          });
+          this.body = {
+            money: null,
+            from_: null,
+            to_: null,
+            for_: null,
+            comment: "",
+          };
+          this.checked = [];
+          this.text_account = "ҳисоб рақамлар";
         })
         .catch((err) => {
           catchError(err);
@@ -1329,21 +1328,20 @@ export default {
       take_back_money_from_supply_by_b_a_expense(e)
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
-          success(res).then(() => {
-            this.get_paid_moneys(this.id);
-            this.get_supply(
-              this.market_id,
-              this.status,
-              this.paid_status,
-              this.building_id,
-              this.type,
-              this.from_time,
-              this.to_time,
-              this.page,
-              this.limit
-            );
-            document.getElementById("remove_paid_money").disabled = false;
-          });
+          success(res);
+          this.get_paid_moneys(this.id);
+          this.get_supply(
+            this.market_id,
+            this.status,
+            this.paid_status,
+            this.building_id,
+            this.type,
+            this.from_time,
+            this.to_time,
+            this.page,
+            this.limit
+          );
+          document.getElementById("remove_paid_money").disabled = false;
         })
         .catch((err) => {
           catchError(err);

@@ -230,20 +230,19 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading2", { isLoading2: false });
           document.getElementById("smeta_disabled").disabled = false;
-          success(res).then(() => {
-            this.get_smeta(
-              this.page,
-              this.limit,
-              this.search,
-              this.type,
-              this.status,
-              this.building_id,
-              this.order_by
-            );
-            e.file = "";
-            document.getElementById("file-6").value = null;
-            document.getElementById("file_name").innerHTML = "";
-          });
+          success(res);
+          this.get_smeta(
+            this.page,
+            this.limit,
+            this.search,
+            this.type,
+            this.status,
+            this.building_id,
+            this.order_by
+          );
+          e.file = "";
+          document.getElementById("file-6").value = null;
+          document.getElementById("file_name").innerHTML = "";
         })
         .catch((err) => {
           catchError(err).then(() => {
@@ -294,17 +293,16 @@ export default {
             .then((res) => {
               this.$store.dispatch("setLoading", { isLoading: false });
 
-              success(res).then(() => {
-                this.get_smeta(
-                  this.page,
-                  this.limit,
-                  this.search,
-                  this.type,
-                  this.status,
-                  this.building_id,
-                  this.order_by
-                );
-              });
+              success(res);
+              this.get_smeta(
+                this.page,
+                this.limit,
+                this.search,
+                this.type,
+                this.status,
+                this.building_id,
+                this.order_by
+              );
               document.getElementById("remove_smeta").disabled = false;
             })
             .catch((err) => {
@@ -346,17 +344,16 @@ export default {
           smeta_remove(this.building_id, "building_id")
             .then((res) => {
               this.$store.dispatch("setLoading", { isLoading: false });
-              success(res).then(() => {
-                this.get_smeta(
-                  this.page,
-                  this.limit,
-                  this.search,
-                  this.type,
-                  this.status,
-                  this.building_id,
-                  this.order_by
-                );
-              });
+              success(res);
+              this.get_smeta(
+                this.page,
+                this.limit,
+                this.search,
+                this.type,
+                this.status,
+                this.building_id,
+                this.order_by
+              );
             })
             .catch((err) => {
               catchError(err);

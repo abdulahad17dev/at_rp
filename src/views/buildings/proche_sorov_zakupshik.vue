@@ -545,16 +545,15 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById(`accpet_request_close`).click();
           document.getElementById(`accept_request_disabled`).disabled = false;
-          success(res).then(() => {
-            this.get_proche_s(
-              this.page,
-              this.limit,
-              this.building_id,
-              this.status,
-              this.user_id,
-              this.search
-            );
-          });
+          success(res);
+          this.get_proche_s(
+            this.page,
+            this.limit,
+            this.building_id,
+            this.status,
+            this.user_id,
+            this.search
+          );
           document.getElementById("request_text").innerHTML = "таминотчилар";
           e.taminotchi_id = null;
         })
@@ -599,16 +598,15 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById(e).disabled = false;
-          success(res).then(() => {
-            this.get_proche_s(
-              this.page,
-              this.limit,
-              this.building_id,
-              this.status,
-              this.user_id,
-              this.search
-            );
-          });
+          success(res);
+          this.get_proche_s(
+            this.page,
+            this.limit,
+            this.building_id,
+            this.status,
+            this.user_id,
+            this.search
+          );
         })
         .catch((err) => {
           catchError(err);

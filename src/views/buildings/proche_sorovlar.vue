@@ -161,21 +161,20 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("proche_sorov_disabled").disabled = false;
-          success(res).then(() => {
-            this.get_proche_s(
-              this.page,
-              this.limit,
-              this.building_id,
-              this.status,
-              this.user_id,
-              this.search
-            );
-            e.name = "";
-            e.quantity = null;
-            e.olchov_birligi = "";
-            e.comment = "";
-            e.building_id = this.$route.query.id;
-          });
+          success(res);
+          this.get_proche_s(
+            this.page,
+            this.limit,
+            this.building_id,
+            this.status,
+            this.user_id,
+            this.search
+          );
+          e.name = "";
+          e.quantity = null;
+          e.olchov_birligi = "";
+          e.comment = "";
+          e.building_id = this.$route.query.id;
         })
         .catch((err) => {
           catchError(err);
@@ -191,16 +190,15 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_proche").disabled = false;
-          success(res).then(() => {
-            this.get_proche_s(
-              this.page,
-              this.limit,
-              this.building_id,
-              this.status,
-              this.user_id,
-              this.search
-            );
-          });
+          success(res);
+          this.get_proche_s(
+            this.page,
+            this.limit,
+            this.building_id,
+            this.status,
+            this.user_id,
+            this.search
+          );
         })
         .catch((err) => {
           catchError(err);

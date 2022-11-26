@@ -612,22 +612,21 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("disabled_accept_btn").disabled = false;
-          success(res).then(() => {
-            this.get_supply(
-              this.market_id,
-              this.status,
-              this.paid_status,
-              this.building_id,
-              this.type,
-              this.from_time,
-              this.to_time,
-              this.page,
-              this.limit
-            );
+          success(res);
+          this.get_supply(
+            this.market_id,
+            this.status,
+            this.paid_status,
+            this.building_id,
+            this.type,
+            this.from_time,
+            this.to_time,
+            this.page,
+            this.limit
+          );
 
-            this.body.file = "";
-            this.text = "";
-          });
+          this.body.file = "";
+          this.text = "";
         })
         .catch((err) => {
           catchError(err);
@@ -642,19 +641,18 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("disabled_remove_btn").disabled = false;
-          success(res).then(() => {
-            this.get_supply(
-              this.market_id,
-              this.status,
-              this.paid_status,
-              this.building_id,
-              this.type,
-              this.from_time,
-              this.to_time,
-              this.page,
-              this.limit
-            );
-          });
+          success(res);
+          this.get_supply(
+            this.market_id,
+            this.status,
+            this.paid_status,
+            this.building_id,
+            this.type,
+            this.from_time,
+            this.to_time,
+            this.page,
+            this.limit
+          );
         })
         .catch((err) => {
           catchError(err);

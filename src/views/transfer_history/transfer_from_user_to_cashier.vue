@@ -471,23 +471,22 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("pay_cashier_c").click();
           document.getElementById("cashier_disabled").disabled = false;
-          success(res).then(() => {
-            this.transfer_to_users(
-              this.t_page,
-              this.t_limit,
-              this.t_from,
-              this.t_to,
-              this.t_status,
-              this.t_from_time,
-              this.t_to_time
-            );
-            this.body.money = null;
-            this.body.from_ = 0;
-            this.body.to_ = null;
-            this.body.comment = "";
-            this.text = "кассирлар";
-            this.get_balance();
-          });
+          success(res);
+          this.transfer_to_users(
+            this.t_page,
+            this.t_limit,
+            this.t_from,
+            this.t_to,
+            this.t_status,
+            this.t_from_time,
+            this.t_to_time
+          );
+          this.body.money = null;
+          this.body.from_ = 0;
+          this.body.to_ = null;
+          this.body.comment = "";
+          this.text = "кассирлар";
+          this.get_balance();
         })
         .catch((err) => {
           catchError(err);
@@ -600,18 +599,17 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById(e).disabled = false;
-          success(res).then(() => {
-            this.transfer_to_users(
-              this.t_page,
-              this.t_limit,
-              this.t_from,
-              this.t_to,
-              this.t_status,
-              this.t_from_time,
-              this.t_to_time
-            );
-            this.get_balance();
-          });
+          success(res);
+          this.transfer_to_users(
+            this.t_page,
+            this.t_limit,
+            this.t_from,
+            this.t_to,
+            this.t_status,
+            this.t_from_time,
+            this.t_to_time
+          );
+          this.get_balance();
         })
         .catch((err) => {
           catchError(err);

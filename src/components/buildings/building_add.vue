@@ -146,11 +146,11 @@ export default {
   watch: {
     long(e) {
       this.data.map_long = "";
-      this.data.map_long = e;
+      this.data.map_long = String(e);
     },
     lat(e) {
       this.data.map_lat = "";
-      this.data.map_lat = e;
+      this.data.map_lat = String(e);
     },
   },
 };

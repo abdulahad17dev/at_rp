@@ -180,12 +180,11 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("composition_disabled").disabled = false;
-          success(res).then(() => {
-            this.select_id(this.product_id, this.product_item);
-            this.body.name = "";
-            this.body.quantity = null;
-            this.body.olchov_birligi = "";
-          });
+          success(res);
+          this.select_id(this.product_id, this.product_item);
+          this.body.name = "";
+          this.body.quantity = null;
+          this.body.olchov_birligi = "";
         })
         .catch((err) => {
           catchError(err);
@@ -200,9 +199,8 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove").disabled = false;
-          success(res).then(() => {
-            this.select_id(this.product_id, this.product_item);
-          });
+          success(res);
+          this.select_id(this.product_id, this.product_item);
         })
         .catch((err) => {
           catchError(err);

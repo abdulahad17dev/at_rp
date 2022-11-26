@@ -53,6 +53,18 @@
           />
           <h6><b>Манзил: </b> {{ item.Buildings.address }}</h6>
           <h6>
+            <b>Бюджет: </b>
+            {{
+              Intl.NumberFormat("en-US", {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+                maximumSignificantDigits: item.Buildings.budget.lengthlength,
+                minimumSignificantDigits: 1,
+              }).format(item.Buildings.budget)
+            }}
+            сўм
+          </h6>
+          <h6>
             <b>Бошлаш санаси: </b>
             {{
               new Date(item.Buildings.start_date)
@@ -134,7 +146,7 @@
                 name: 'warehouse_product',
                 query: { id: item.Buildings.id, name: item.Buildings.name },
               }"
-              class="btn btn-sm btn-primary mx-1"
+              class="btn btn-sm btn-primary"
             >
               <i class="fa-solid fa-box"></i>
             </router-link>
@@ -197,6 +209,18 @@
             "
           />
           <h6><b>Манзил: </b> {{ item.Buildings.address }}</h6>
+          <h6>
+            <b>Бюджет: </b>
+            {{
+              Intl.NumberFormat("en-US", {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+                maximumSignificantDigits: item.Buildings.budget.lengthlength,
+                minimumSignificantDigits: 1,
+              }).format(item.Buildings.budget)
+            }}
+            сўм
+          </h6>
           <h6>
             <b>Бошлаш санаси: </b>
             {{
@@ -658,9 +682,8 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("buildings_put").click();
           document.getElementById("building_disabled_put").disabled = false;
-          success(res).then(() => {
-            this.$emit("get_buildings");
-          });
+          success(res);
+          this.$emit("get_buildings");
         })
         .catch((err) => {
           catchError(err);
@@ -675,9 +698,8 @@ export default {
         building_put(e)
           .then((res) => {
             this.$store.dispatch("setLoading", { isLoading: false });
-            success(res).then(() => {
-              this.$emit("get_buildings");
-            });
+            success(res);
+            this.$emit("get_buildings");
           })
           .catch((err) => {
             catchError(err);
@@ -714,9 +736,8 @@ export default {
             building_put(e)
               .then((res) => {
                 this.$store.dispatch("setLoading", { isLoading: false });
-                success(res).then(() => {
-                  this.$emit("get_buildings");
-                });
+                success(res);
+                this.$emit("get_buildings");
               })
               .catch((err) => {
                 catchError(err);
@@ -758,9 +779,8 @@ export default {
           building_put(e)
             .then((res) => {
               this.$store.dispatch("setLoading", { isLoading: false });
-              success(res).then(() => {
-                this.$emit("get_buildings");
-              });
+              success(res);
+              this.$emit("get_buildings");
             })
             .catch((err) => {
               catchError(err);
@@ -818,12 +838,11 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("document_button").disabled = false;
-          success(res).then(() => {
-            this.select_id(this.building_id, this.building_name, 2);
-            e.file = "";
-            e.comment = "";
-            document.getElementById("txt").innerHTML = "файл юклаш";
-          });
+          success(res);
+          this.select_id(this.building_id, this.building_name, 2);
+          e.file = "";
+          e.comment = "";
+          document.getElementById("txt").innerHTML = "файл юклаш";
         })
         .catch((err) => {
           catchError(err);
@@ -840,9 +859,8 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_document").disabled = false;
-          success(res).then(() => {
-            this.select_id(this.building_id, this.building_name, 2);
-          });
+          success(res);
+          this.select_id(this.building_id, this.building_name, 2);
         })
         .catch((err) => {
           catchError(err);

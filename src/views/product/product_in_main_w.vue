@@ -441,20 +441,19 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("share_product").click();
           document.getElementById("share_disabled").disabled = false;
-          success(res).then(() => {
-            this.get_products(
-              this.type,
-              this.building_id,
-              this.search,
-              this.status,
-              this.page,
-              this.limit
-            );
-            this.text_warehouse = "базалар";
-            this.body.related_id = null;
-            this.body.quantity = null;
-            this.body.to_ = null;
-          });
+          success(res);
+          this.get_products(
+            this.type,
+            this.building_id,
+            this.search,
+            this.status,
+            this.page,
+            this.limit
+          );
+          this.text_warehouse = "базалар";
+          this.body.related_id = null;
+          this.body.quantity = null;
+          this.body.to_ = null;
         })
         .catch((err) => {
           catchError(err);

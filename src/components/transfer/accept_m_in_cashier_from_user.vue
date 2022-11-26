@@ -408,18 +408,17 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById(e).disabled = false;
-          success(res).then(() => {
-            this.transfer_to_users(
-              this.page,
-              this.limit,
-              this.from,
-              this.to,
-              this.status,
-              this.from_time,
-              this.to_time
-            );
-            this.$emit("get_balance");
-          });
+          success(res);
+          this.transfer_to_users(
+            this.page,
+            this.limit,
+            this.from,
+            this.to,
+            this.status,
+            this.from_time,
+            this.to_time
+          );
+          this.$emit("get_balance");
         })
         .catch((err) => {
           catchError(err);

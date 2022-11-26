@@ -896,14 +896,14 @@ export default {
         building_id: null,
       };
       const success = (position) => {
-        this.body.map_lat = position.coords.latitude;
-        this.body.map_long = position.coords.longitude;
+        this.body.map_lat = String(position.coords.latitude);
+        this.body.map_long = String(position.coords.longitude);
       };
 
       const error = (err) => {
         position_err(err);
-        this.body.map_lat = 0;
-        this.body.map_long = 0;
+        this.body.map_lat = "0";
+        this.body.map_long = "0";
       };
 
       navigator.geolocation.getCurrentPosition(success, error);
@@ -985,29 +985,28 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("supply_add").click();
           document.getElementById("supply_disabled").disabled = false;
-          success(res).then(() => {
-            this.get_proche_s(
-              this.page,
-              this.limit,
-              this.building_id,
-              this.status,
-              this.user_id,
-              this.search
-            );
-            this.body = {
-              related_id: null,
-              product_composition: "",
-              sup_by_b_a_id: 0,
-              quantity: null,
-              price: null,
-              market_phone: null,
-              type: "",
-              didox_link: "",
-              map_long: "",
-              map_lat: "",
-              building_id: null,
-            };
-          });
+          success(res);
+          this.get_proche_s(
+            this.page,
+            this.limit,
+            this.building_id,
+            this.status,
+            this.user_id,
+            this.search
+          );
+          this.body = {
+            related_id: null,
+            product_composition: "",
+            sup_by_b_a_id: 0,
+            quantity: null,
+            price: null,
+            market_phone: null,
+            type: "",
+            didox_link: "",
+            map_long: "",
+            map_lat: "",
+            building_id: null,
+          };
         })
         .catch((err) => {
           catchError(err);

@@ -72,7 +72,6 @@ export default {
   methods: {
     get() {
       this.$store.dispatch("setLoading", { isLoading: true });
-
       current_user()
         .then((res) => {
           this.user = {
@@ -99,9 +98,8 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("current_user").disabled = false;
-          success(res).then(() => {
-            this.get();
-          });
+          success(res);
+          this.get();
         })
         .catch((err) => {
           catchError(err);

@@ -434,28 +434,27 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("pay_supply_d").disabled = false;
-          success(res).then(() => {
-            this.get_supply(
-              this.market_id,
-              this.status,
-              this.paid_status,
-              this.building_id,
-              this.type,
-              this.from_time,
-              this.to_time,
-              this.page,
-              this.limit
-            );
+          success(res);
+          this.get_supply(
+            this.market_id,
+            this.status,
+            this.paid_status,
+            this.building_id,
+            this.type,
+            this.from_time,
+            this.to_time,
+            this.page,
+            this.limit
+          );
 
-            this.body = {
-              money: null,
-              from_: 0,
-              to_: Number(this.$route.query.id),
-              for_: null,
-              comment: "",
-            };
-            this.checked = [];
-          });
+          this.body = {
+            money: null,
+            from_: 0,
+            to_: Number(this.$route.query.id),
+            for_: null,
+            comment: "",
+          };
+          this.checked = [];
         })
         .catch((err) => {
           catchError(err);
@@ -497,19 +496,18 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_supply").disabled = false;
-          success(res).then(() => {
-            this.get_supply(
-              this.market_id,
-              this.status,
-              this.paid_status,
-              this.building_id,
-              this.type,
-              this.from_time,
-              this.to_time,
-              this.page,
-              this.limit
-            );
-          });
+          success(res);
+          this.get_supply(
+            this.market_id,
+            this.status,
+            this.paid_status,
+            this.building_id,
+            this.type,
+            this.from_time,
+            this.to_time,
+            this.page,
+            this.limit
+          );
         })
         .catch((err) => {
           catchError(err);

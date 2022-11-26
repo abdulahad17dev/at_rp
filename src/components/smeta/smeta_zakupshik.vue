@@ -561,16 +561,15 @@ export default {
           document.getElementById(
             `accept_request_smeta_disabled`
           ).disabled = false;
-          success(res).then(() => {
-            this.get_smeta(
-              this.page,
-              this.limit,
-              this.search,
-              this.status,
-              this.building_id,
-              this.user_id
-            );
-          });
+          success(res);
+          this.get_smeta(
+            this.page,
+            this.limit,
+            this.search,
+            this.status,
+            this.building_id,
+            this.user_id
+          );
           e.taminotchi_id = null;
         })
         .catch((err) => {
@@ -587,17 +586,16 @@ export default {
       remove_smeta_request(e)
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
-          success(res).then(() => {
-            this.get_smeta(
-              this.page,
-              this.limit,
-              this.search,
-              this.status,
-              this.building_id,
-              this.user_id
-            );
-            document.getElementById(e).disabled = false;
-          });
+          success(res);
+          this.get_smeta(
+            this.page,
+            this.limit,
+            this.search,
+            this.status,
+            this.building_id,
+            this.user_id
+          );
+          document.getElementById(e).disabled = false;
         })
         .catch((err) => {
           catchError(err);

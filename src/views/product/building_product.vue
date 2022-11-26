@@ -519,16 +519,15 @@ export default {
       add_to_invalid_products(this.body)
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
-          success(res).then(() => {
-            this.get_valid_product(
-              this.valid_type,
-              this.valid_building_id,
-              this.valid_search,
-              this.valid_status,
-              this.valid_page,
-              this.valid_limit
-            );
-          });
+          success(res);
+          this.get_valid_product(
+            this.valid_type,
+            this.valid_building_id,
+            this.valid_search,
+            this.valid_status,
+            this.valid_page,
+            this.valid_limit
+          );
         })
         .catch((err) => {
           catchError(err);
@@ -571,18 +570,17 @@ export default {
       remove_added_invalid_product(e)
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
-          success(res).then(() => {
-            this.get_invalid_product(
-              this.invalid_status,
-              this.invalid_type,
-              this.invalid_search,
-              this.invalid_from_time,
-              this.invalid_to_time,
-              this.invalid_building_id,
-              this.invalid_page,
-              this.invalid_limit
-            );
-          });
+          success(res);
+          this.get_invalid_product(
+            this.invalid_status,
+            this.invalid_type,
+            this.invalid_search,
+            this.invalid_from_time,
+            this.invalid_to_time,
+            this.invalid_building_id,
+            this.invalid_page,
+            this.invalid_limit
+          );
         })
         .catch((err) => {
           catchError(err);

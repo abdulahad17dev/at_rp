@@ -797,13 +797,12 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("expense_close").click();
           document.getElementById("fixed_expense_disabled").disabled = false;
-          success(res).then(() => {
-            this.get_fixed_expenses(this.page, this.limit, this.search);
-            this.body.name = "";
-            this.body.allowed_user_role = "";
-            this.body.limit_of_expense = null;
-            this.limit_of_expense = false;
-          });
+          success(res);
+          this.get_fixed_expenses(this.page, this.limit, this.search);
+          this.body.name = "";
+          this.body.allowed_user_role = "";
+          this.body.limit_of_expense = null;
+          this.limit_of_expense = false;
         })
         .catch((err) => {
           catchError(err);
@@ -832,9 +831,8 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("disabled" + e.id).disabled = false;
-          success(res).then(() => {
-            this.get_fixed_expenses(this.page, this.limit, this.search);
-          });
+          success(res);
+          this.get_fixed_expenses(this.page, this.limit, this.search);
         })
         .catch((err) => {
           catchError(err);
@@ -858,9 +856,8 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("expense_p_close").click();
           document.getElementById("fixed_e_disabled").disabled = false;
-          success(res).then(() => {
-            this.get_fixed_expenses(this.page, this.limit, this.search);
-          });
+          success(res);
+          this.get_fixed_expenses(this.page, this.limit, this.search);
         })
         .catch((err) => {
           catchError(err);
@@ -876,22 +873,21 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("pay_f").click();
           document.getElementById("pay_f_e_disabled").disabled = false;
-          success(res).then(() => {
-            this.fixed_history_get(
-              this.h_page,
-              this.h_limit,
-              this.h_from,
-              this.h_to,
-              this.h_user_id,
-              this.h_from_time,
-              this.h_to_time
-            );
-            e.money = null;
-            e.from_ = null;
-            e.to_ = null;
-            e.for_ = 0;
-            e.comment = "";
-          });
+          success(res);
+          this.fixed_history_get(
+            this.h_page,
+            this.h_limit,
+            this.h_from,
+            this.h_to,
+            this.h_user_id,
+            this.h_from_time,
+            this.h_to_time
+          );
+          e.money = null;
+          e.from_ = null;
+          e.to_ = null;
+          e.for_ = 0;
+          e.comment = "";
           let bank_a = document.getElementById("bank_account_text");
           if (bank_a) {
             document.getElementById("bank_account_text").innerHTML =
@@ -972,19 +968,18 @@ export default {
           document.getElementById("pay_v").click();
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("pay_v_e_disabled").disabled = false;
-          success(res).then(() => {
-            this.variable_history_get(
-              this.v_page,
-              this.v_limit,
-              this.v_from,
-              this.v_user_id
-            );
-            e.money = null;
-            e.from_ = null;
-            e.comment = "";
-            document.getElementById("bank_account_text2").innerHTML =
-              "ҳисоб рақамлар";
-          });
+          success(res);
+          this.variable_history_get(
+            this.v_page,
+            this.v_limit,
+            this.v_from,
+            this.v_user_id
+          );
+          e.money = null;
+          e.from_ = null;
+          e.comment = "";
+          document.getElementById("bank_account_text2").innerHTML =
+            "ҳисоб рақамлар";
         })
         .catch((err) => {
           catchError(err);
@@ -1048,17 +1043,16 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_expense").disabled = false;
-          success(res).then(() => {
-            this.fixed_history_get(
-              this.h_page,
-              this.h_limit,
-              this.h_from,
-              this.h_to,
-              this.h_user_id,
-              this.h_from_time,
-              this.h_to_time
-            );
-          });
+          success(res);
+          this.fixed_history_get(
+            this.h_page,
+            this.h_limit,
+            this.h_from,
+            this.h_to,
+            this.h_user_id,
+            this.h_from_time,
+            this.h_to_time
+          );
         })
         .catch((err) => {
           catchError(err);

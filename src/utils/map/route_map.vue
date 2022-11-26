@@ -12,8 +12,7 @@ export default {
   methods: {
     get_position() {
       const success = (position) => {
-        console.log(position.coords.latitude);
-        console.log(position.coords.longitude);
+        console.log(position);
         window.open(
           `https://www.google.com/maps/dir/${position.coords.latitude},${position.coords.longitude}/${this.lat},${this.long}/@${position.coords.latitude},${position.coords.longitude},12.5z`,
           `_blank`

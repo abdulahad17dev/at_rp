@@ -150,9 +150,8 @@ export default {
       worker_type_remove(e)
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
-          success(res).then(() => {
-            this.get_worker_types(this.page, this.limit, this.search);
-          });
+          success(res);
+          this.get_worker_types(this.page, this.limit, this.search);
         })
         .catch((err) => {
           catchError(err);
@@ -167,10 +166,9 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("worker_t_add").click();
           document.getElementById("worker_t_disabled").disabled = false;
-          success(res).then(() => {
-            this.get_worker_types(this.page, this.limit, this.search);
-            e.specialty = "";
-          });
+          success(res);
+          this.get_worker_types(this.page, this.limit, this.search);
+          e.specialty = "";
         })
         .catch((err) => {
           catchError(err);

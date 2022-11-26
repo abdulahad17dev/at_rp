@@ -447,17 +447,16 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById(`remove_money${e}`).disabled = false;
-          success(res).then(() => {
-            this.transfer_to_cashier(
-              this.page,
-              this.limit,
-              this.from,
-              this.to,
-              this.status,
-              this.from_time,
-              this.to_time
-            );
-          });
+          success(res);
+          this.transfer_to_cashier(
+            this.page,
+            this.limit,
+            this.from,
+            this.to,
+            this.status,
+            this.from_time,
+            this.to_time
+          );
         })
         .catch((err) => {
           catchError(err);

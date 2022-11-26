@@ -865,18 +865,17 @@ export default {
       take_back_transfered_product(e)
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
-          success(res).then(() => {
-            this.get_transfered_product(
-              this.sh_status2,
-              this.sh_type,
-              this.sh_from,
-              this.sh_to,
-              this.sh_status,
-              this.sh_search,
-              this.sh_page,
-              this.sh_limit
-            );
-          });
+          success(res);
+          this.get_transfered_product(
+            this.sh_status2,
+            this.sh_type,
+            this.sh_from,
+            this.sh_to,
+            this.sh_status,
+            this.sh_search,
+            this.sh_page,
+            this.sh_limit
+          );
         })
         .catch((err) => {
           catchError(err);
@@ -911,18 +910,17 @@ export default {
       acceptance_transfered_product(e)
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
-          success(res).then(() => {
-            this.get_transfered_product_a(
-              this.a_status2,
-              this.a_type,
-              this.a_from,
-              this.a_to,
-              this.a_status,
-              this.a_search,
-              this.a_page,
-              this.a_limit
-            );
-          });
+          success(res);
+          this.get_transfered_product_a(
+            this.a_status2,
+            this.a_type,
+            this.a_from,
+            this.a_to,
+            this.a_status,
+            this.a_search,
+            this.a_page,
+            this.a_limit
+          );
         })
         .catch((err) => {
           catchError(err);

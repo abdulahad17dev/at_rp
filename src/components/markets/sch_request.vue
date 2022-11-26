@@ -763,14 +763,14 @@ export default {
       };
 
       const success = (position) => {
-        this.body.map_lat = position.coords.latitude;
-        this.body.map_long = position.coords.longitude;
+        this.body.map_lat = String(position.coords.latitude);
+        this.body.map_long = String(position.coords.longitude);
       };
 
       const error = (err) => {
         position_err(err);
-        this.body.map_lat = 0;
-        this.body.map_long = 0;
+        this.body.map_lat = "0";
+        this.body.map_long = "0";
       };
 
       navigator.geolocation.getCurrentPosition(success, error);
@@ -784,33 +784,32 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("supply__take_shot").click();
           document.getElementById("supply_disabled_shot").disabled = false;
-          success(res).then(() => {
-            this.get_shot_r(
-              this.market_id,
-              this.status,
-              this.paid_status,
-              this.building_id,
-              this.type,
-              this.from_time,
-              this.to_time,
-              this.page,
-              this.limit
-            );
+          success(res);
+          this.get_shot_r(
+            this.market_id,
+            this.status,
+            this.paid_status,
+            this.building_id,
+            this.type,
+            this.from_time,
+            this.to_time,
+            this.page,
+            this.limit
+          );
 
-            this.body = {
-              related_id: null,
-              product_composition: "",
-              sup_by_b_a_id: 0,
-              quantity: null,
-              price: null,
-              market_phone: null,
-              type: "",
-              didox_link: "",
-              map_long: "",
-              map_lat: "",
-              building_id: null,
-            };
-          });
+          this.body = {
+            related_id: null,
+            product_composition: "",
+            sup_by_b_a_id: 0,
+            quantity: null,
+            price: null,
+            market_phone: null,
+            type: "",
+            didox_link: "",
+            map_long: "",
+            map_lat: "",
+            building_id: null,
+          };
         })
         .catch((err) => {
           catchError(err);
@@ -825,19 +824,18 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_supply_smetaa").disabled = false;
-          success(res).then(() => {
-            this.get_shot_r(
-              this.market_id,
-              this.status,
-              this.paid_status,
-              this.building_id,
-              this.type,
-              this.from_time,
-              this.to_time,
-              this.page,
-              this.limit
-            );
-          });
+          success(res);
+          this.get_shot_r(
+            this.market_id,
+            this.status,
+            this.paid_status,
+            this.building_id,
+            this.type,
+            this.from_time,
+            this.to_time,
+            this.page,
+            this.limit
+          );
         })
         .catch((err) => {
           catchError(err);
@@ -894,20 +892,19 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_suppliesss").disabled = false;
-          success(res).then(() => {
-            this.get_quantity(this.related_id, this.id, this.quantity_type);
-            this.get_shot_r(
-              this.market_id,
-              this.status,
-              this.paid_status,
-              this.building_id,
-              this.type,
-              this.from_time,
-              this.to_time,
-              this.page,
-              this.limit
-            );
-          });
+          success(res);
+          this.get_quantity(this.related_id, this.id, this.quantity_type);
+          this.get_shot_r(
+            this.market_id,
+            this.status,
+            this.paid_status,
+            this.building_id,
+            this.type,
+            this.from_time,
+            this.to_time,
+            this.page,
+            this.limit
+          );
         })
         .catch((err) => {
           catchError(err);

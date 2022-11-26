@@ -168,10 +168,9 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("wallet_add").click();
           document.getElementById("wallet_disabled").disabled = false;
-          success(res).then(() => {
-            this.get_wallets(this.page, this.limit, this.search);
-            e.name = "";
-          });
+          success(res);
+          this.get_wallets(this.page, this.limit, this.search);
+          e.name = "";
         })
         .catch((err) => {
           catchError(err);
@@ -193,9 +192,8 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("wallet_put").click();
           document.getElementById("wallet_disabled2").disabled = false;
-          success(res).then(() => {
-            this.get_wallets(this.page, this.limit, this.search);
-          });
+          success(res);
+          this.get_wallets(this.page, this.limit, this.search);
         })
         .catch((err) => {
           catchError(err);
@@ -215,13 +213,12 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("take_money_close").click();
           document.getElementById("take_m_disabled").disabled = false;
-          success(res).then(() => {
-            this.get_wallets(this.page, this.limit, this.search);
-            e.money = null;
-            e.from_ = this.w_id;
-            e.to_ = 0;
-            e.comment = "";
-          });
+          success(res);
+          this.get_wallets(this.page, this.limit, this.search);
+          e.money = null;
+          e.from_ = this.w_id;
+          e.to_ = 0;
+          e.comment = "";
         })
         .catch((err) => {
           catchError(err);
@@ -237,13 +234,12 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("take_money_close").click();
           document.getElementById("take_m_disabled2").disabled = false;
-          success(res).then(() => {
-            this.get_wallets(this.page, this.limit, this.search);
-            e.money = null;
-            e.to_ = this.w_id;
-            e.from_ = 0;
-            e.comment = "";
-          });
+          success(res);
+          this.get_wallets(this.page, this.limit, this.search);
+          e.money = null;
+          e.to_ = this.w_id;
+          e.from_ = 0;
+          e.comment = "";
         })
         .catch((err) => {
           catchError(err);

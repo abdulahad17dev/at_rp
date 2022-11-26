@@ -1077,20 +1077,19 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_suppliess").disabled = false;
-          success(res).then(() => {
-            this.get_quantity(this.related_id, this.id, this.quantity_type);
-            this.get_supply(
-              this.market_id,
-              this.status,
-              this.paid_status,
-              this.building_id,
-              this.type,
-              this.from_time,
-              this.to_time,
-              this.page,
-              this.limit
-            );
-          });
+          success(res);
+          this.get_quantity(this.related_id, this.id, this.quantity_type);
+          this.get_supply(
+            this.market_id,
+            this.status,
+            this.paid_status,
+            this.building_id,
+            this.type,
+            this.from_time,
+            this.to_time,
+            this.page,
+            this.limit
+          );
         })
         .catch((err) => {
           catchError(err);

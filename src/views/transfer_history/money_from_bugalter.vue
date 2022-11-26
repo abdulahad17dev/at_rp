@@ -286,21 +286,20 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("accept_money").click();
           document.getElementById("accept_m_disabled").disabled = false;
-          success(res).then(() => {
-            this.transfer_to_cashier(
-              this.page,
-              this.limit,
-              this.from,
-              this.to,
-              this.status,
-              this.from_time,
-              this.to_time
-            );
-            this.transfer_id = null;
-            e.money_laundered_id = null;
-            e.percent = null;
-            e.comment = "";
-          });
+          success(res);
+          this.transfer_to_cashier(
+            this.page,
+            this.limit,
+            this.from,
+            this.to,
+            this.status,
+            this.from_time,
+            this.to_time
+          );
+          this.transfer_id = null;
+          e.money_laundered_id = null;
+          e.percent = null;
+          e.comment = "";
         })
         .catch((err) => {
           catchError(err);

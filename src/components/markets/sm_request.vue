@@ -179,7 +179,15 @@
               </span>
               <button
                 class="btn btn-sm"
-                @click="get_grafik(item, item.Smeta.id)"
+                @click="
+                  get_grafik(
+                    item,
+                    item.Smeta.id,
+                    item.Smeta.quantity,
+                    item.sum_supply_by_b_a_quantity + item.sum_supply_quantity,
+                    item.compositions
+                  )
+                "
                 data-bs-toggle="modal"
                 data-bs-target="#smeta_grafik"
                 v-if="!search2"
@@ -466,7 +474,12 @@
                       <td>{{ inc + 1 }}</td>
                       <td>{{ item.name }}</td>
                       <td>
-                        <Format_numbers :number="item.quantity" />
+                        <Format_numbers
+                          :number="
+                            (all_quantity - taked_quantity) * item.quantity -
+                            item.taked_quantity
+                          "
+                        />
                       </td>
                       <td>{{ item.olchov_birligi }}</td>
                       <td>
@@ -1152,6 +1165,8 @@ export default {
       sh_quantity_type: "smeta",
       sh_quantities: [],
       date: new Date().toISOString().slice(0, 10),
+      all_quantity: null,
+      taked_quantity: null,
     };
   },
   watch: {
@@ -1301,17 +1316,19 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
-    get_grafik(item, id) {
+    get_grafik(item, id, all_quantity, taked_quantity, compositions) {
+      this.all_quantity = all_quantity;
+      this.taked_quantity = taked_quantity;
       this.id = id;
       const success = (position) => {
-        this.body2.map_lat = position.coords.latitude;
-        this.body2.map_long = position.coords.longitude;
+        this.body2.map_lat = String(position.coords.latitude);
+        this.body2.map_long = String(position.coords.longitude);
       };
 
       const error = (err) => {
         position_err(err);
-        this.body2.map_lat = 0;
-        this.body2.map_long = 0;
+        this.body2.map_lat = "0";
+        this.body2.map_long = "0";
       };
 
       navigator.geolocation.getCurrentPosition(success, error);
@@ -1322,6 +1339,11 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       product_composition_get(item.Smeta.product_id)
         .then((res) => {
+          res.data.forEach((element) => {
+            element["taked_quantity"] = compositions.find(
+              (e) => e.composition == element.name
+            ).taked_quantity;
+          });
           this.product_composition = res.data;
           this.$store.dispatch("setLoading", { isLoading: false });
           this.get_quantity(this.id);
@@ -1365,14 +1387,14 @@ export default {
         building_id: null,
       };
       const success = (position) => {
-        this.body.map_lat = position.coords.latitude;
-        this.body.map_long = position.coords.longitude;
+        this.body.map_lat = String(position.coords.latitude);
+        this.body.map_long = String(position.coords.longitude);
       };
 
       const error = (err) => {
         position_err(err);
-        this.body.map_lat = 0;
-        this.body.map_long = 0;
+        this.body.map_lat = "0";
+        this.body.map_long = "0";
       };
 
       navigator.geolocation.getCurrentPosition(success, error);
@@ -1483,30 +1505,29 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("supply_take").click();
           document.getElementById("supply_s_disabled").disabled = false;
-          success(res).then(() => {
-            this.get_smeta(
-              this.page,
-              this.limit,
-              this.search,
-              this.status,
-              this.building_id,
-              this.user_id
-            );
-            this.search2 = "";
-            this.body = {
-              related_id: null,
-              product_composition: "",
-              sup_by_b_a_id: 0,
-              quantity: null,
-              price: null,
-              market_phone: null,
-              type: "",
-              didox_link: "",
-              map_long: "",
-              map_lat: "",
-              building_id: null,
-            };
-          });
+          success(res);
+          this.get_smeta(
+            this.page,
+            this.limit,
+            this.search,
+            this.status,
+            this.building_id,
+            this.user_id
+          );
+          this.search2 = "";
+          this.body = {
+            related_id: null,
+            product_composition: "",
+            sup_by_b_a_id: 0,
+            quantity: null,
+            price: null,
+            market_phone: null,
+            type: "",
+            didox_link: "",
+            map_long: "",
+            map_lat: "",
+            building_id: null,
+          };
         })
         .catch((err) => {
           catchError(err);
@@ -1605,23 +1626,22 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("supply_take_product").click();
           document.getElementById("supply_p_disabled").disabled = false;
-          success(res).then(() => {
-            this.get_smeta(
-              this.page,
-              this.limit,
-              this.search,
-              this.status,
-              this.building_id,
-              this.user_id
-            );
-            this.body2.product_composition = "";
-            this.body2.sup_by_b_a_id = 0;
-            this.body2.quantity = null;
-            this.body2.price = null;
-            this.body2.market_phone = null;
-            this.body2.type = "";
-            this.body2.didox_link = "";
-          });
+          success(res);
+          this.get_smeta(
+            this.page,
+            this.limit,
+            this.search,
+            this.status,
+            this.building_id,
+            this.user_id
+          );
+          this.body2.product_composition = "";
+          this.body2.sup_by_b_a_id = 0;
+          this.body2.quantity = null;
+          this.body2.price = null;
+          this.body2.market_phone = null;
+          this.body2.type = "";
+          this.body2.didox_link = "";
         })
         .catch((err) => {
           catchError(err);

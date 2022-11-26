@@ -184,11 +184,10 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("send_btn").disabled = true;
-          success(res).then(() => {
-            this.$emit("get", this.building_id, "", 1);
-            this.body.user_id = null;
-            this.text = "прорап танлаш";
-          });
+          success(res);
+          this.$emit("get", this.building_id, "", 1);
+          this.body.user_id = null;
+          this.text = "прорап танлаш";
         })
         .catch((err) => {
           catchError(err);
@@ -205,9 +204,8 @@ export default {
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("remove_foreman").disabled = false;
-          success(res).then(() => {
-            this.$emit("get", this.building_id, "", 1);
-          });
+          success(res);
+          this.$emit("get", this.building_id, "", 1);
         })
         .catch((err) => {
           catchError(err);

@@ -892,28 +892,27 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("close").click();
           document.getElementById("confirm_d").disabled = false;
-          success(res).then(() => {
-            if (this.confirm_body.type == "smeta_work") {
-              this.get_smeta_work(
-                this.smeta_page,
-                this.smeta_limit,
-                this.smeta_search,
-                this.smeta_type,
-                this.smeta_status,
-                this.smeta_building_id,
-                this.smeta_order_by
-              );
-            } else {
-              this.get_other_work(
-                this.other_search,
-                this.other_building_id,
-                this.other_status,
-                this.other_user_id,
-                this.other_page,
-                this.other_limit
-              );
-            }
-          });
+          success(res);
+          if (this.confirm_body.type == "smeta_work") {
+            this.get_smeta_work(
+              this.smeta_page,
+              this.smeta_limit,
+              this.smeta_search,
+              this.smeta_type,
+              this.smeta_status,
+              this.smeta_building_id,
+              this.smeta_order_by
+            );
+          } else {
+            this.get_other_work(
+              this.other_search,
+              this.other_building_id,
+              this.other_status,
+              this.other_user_id,
+              this.other_page,
+              this.other_limit
+            );
+          }
           this.confirm_body.comment = "";
           this.confirm_body.file = "";
           document.getElementById("file").value = null;
@@ -945,28 +944,27 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("close2").click();
           document.getElementById("recheck_d").disabled = false;
-          success(res).then(() => {
-            if (this.confirm_body.type == "smeta_work") {
-              this.get_smeta_work(
-                this.smeta_page,
-                this.smeta_limit,
-                this.smeta_search,
-                this.smeta_type,
-                this.smeta_status,
-                this.smeta_building_id,
-                this.smeta_order_by
-              );
-            } else {
-              this.get_other_work(
-                this.other_search,
-                this.other_building_id,
-                this.other_status,
-                this.other_user_id,
-                this.other_page,
-                this.other_limit
-              );
-            }
-          });
+          success(res);
+          if (this.confirm_body.type == "smeta_work") {
+            this.get_smeta_work(
+              this.smeta_page,
+              this.smeta_limit,
+              this.smeta_search,
+              this.smeta_type,
+              this.smeta_status,
+              this.smeta_building_id,
+              this.smeta_order_by
+            );
+          } else {
+            this.get_other_work(
+              this.other_search,
+              this.other_building_id,
+              this.other_status,
+              this.other_user_id,
+              this.other_page,
+              this.other_limit
+            );
+          }
           this.recheck_body.comment = "";
           this.recheck_body.file = "";
           document.getElementById("file2").value = null;
@@ -989,28 +987,27 @@ export default {
       work_confirmation(e, data)
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
-          success(res).then(() => {
-            if (type == "smeta_work_remove_confirmed") {
-              this.get_smeta_work(
-                this.smeta_page,
-                this.smeta_limit,
-                this.smeta_search,
-                this.smeta_type,
-                this.smeta_status,
-                this.smeta_building_id,
-                this.smeta_order_by
-              );
-            } else {
-              this.get_other_work(
-                this.other_search,
-                this.other_building_id,
-                this.other_status,
-                this.other_user_id,
-                this.other_page,
-                this.other_limit
-              );
-            }
-          });
+          success(res);
+          if (type == "smeta_work_remove_confirmed") {
+            this.get_smeta_work(
+              this.smeta_page,
+              this.smeta_limit,
+              this.smeta_search,
+              this.smeta_type,
+              this.smeta_status,
+              this.smeta_building_id,
+              this.smeta_order_by
+            );
+          } else {
+            this.get_other_work(
+              this.other_search,
+              this.other_building_id,
+              this.other_status,
+              this.other_user_id,
+              this.other_page,
+              this.other_limit
+            );
+          }
         })
         .catch((err) => {
           catchError(err);

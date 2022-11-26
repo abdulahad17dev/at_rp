@@ -1,5 +1,9 @@
 <template>
-  <div class="table-responsive mt-3" v-if="role != 'admin'">
+  <div
+    class="table-responsive mt-3"
+    v-if="role != 'admin'"
+    id="bank_account_data"
+  >
     <table class="table table-sm table-hover">
       <thead>
         <tr>
@@ -154,9 +158,8 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("bank_put").click();
           document.getElementById("bank_put_disabled").disabled = false;
-          success(res).then(() => {
-            this.$emit("get");
-          });
+          success(res);
+          this.$emit("get");
         })
         .catch((err) => {
           catchError(err);
@@ -176,13 +179,12 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("transfer_add").click();
           document.getElementById("transfer_disabled").disabled = false;
-          success(res).then(() => {
-            this.$emit("get");
-            e.money = null;
-            e.from_ = 0;
-            e.to_ = this.id;
-            e.comment = "";
-          });
+          success(res);
+          this.$emit("get");
+          e.money = null;
+          e.from_ = 0;
+          e.to_ = this.id;
+          e.comment = "";
         })
         .catch((err) => {
           catchError(err);
@@ -198,15 +200,14 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("transfer_to").click();
           document.getElementById("transfer_to_disabled").disabled = false;
-          success(res).then(() => {
-            this.$emit("get");
-            e.money = null;
-            e.from_ = this.id;
-            e.to_ = null;
-            e.comment = "";
-            document.getElementById("bank_account_text").innerHTML =
-              "ҳисоб рақамлар";
-          });
+          success(res);
+          this.$emit("get");
+          e.money = null;
+          e.from_ = this.id;
+          e.to_ = null;
+          e.comment = "";
+          document.getElementById("bank_account_text").innerHTML =
+            "ҳисоб рақамлар";
         })
         .catch((err) => {
           catchError(err);
@@ -222,14 +223,13 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("transfer_to").click();
           document.getElementById("transfer_to_cashier").disabled = false;
-          success(res).then(() => {
-            this.$emit("get");
-            e.money = null;
-            e.from_ = this.id;
-            e.to_ = null;
-            e.comment = "";
-            document.getElementById("cashier_text").innerHTML = "кассирлар";
-          });
+          success(res);
+          this.$emit("get");
+          e.money = null;
+          e.from_ = this.id;
+          e.to_ = null;
+          e.comment = "";
+          document.getElementById("cashier_text").innerHTML = "кассирлар";
         })
         .catch((err) => {
           catchError(err);

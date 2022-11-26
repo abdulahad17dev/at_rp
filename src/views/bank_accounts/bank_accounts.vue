@@ -158,10 +158,9 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("bank_add").click();
           document.getElementById("bank_disabled").disabled = false;
-          success(res).then(() => {
-            this.bank_accounts_get(this.page, this.limit, this.search);
-            e.name = "";
-          });
+          success(res);
+          this.bank_accounts_get(this.page, this.limit, this.search);
+          e.name = "";
         })
         .catch((err) => {
           catchError(err);

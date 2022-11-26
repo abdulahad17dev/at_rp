@@ -165,8 +165,8 @@ export default {
       this.lat = "";
       this.long = "";
       const success = (position) => {
-        this.lat = position.coords.latitude;
-        this.long = position.coords.longitude;
+        this.lat = String(position.coords.latitude);
+        this.long = String(position.coords.longitude);
       };
 
       const error = (err) => {
@@ -183,14 +183,13 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("main_w_add").click();
           document.getElementById("main_w_disabled").disabled = false;
-          success(res).then(() => {
-            this.get_main_warehouses(this.page, this.limit, this.search);
-            e.name = "";
-            e.phone = null;
-            e.address = "";
-            e.map_long = "";
-            e.map_lat = "";
-          });
+          success(res);
+          this.get_main_warehouses(this.page, this.limit, this.search);
+          e.name = "";
+          e.phone = null;
+          e.address = "";
+          e.map_long = "";
+          e.map_lat = "";
         })
         .catch((err) => {
           catchError(err);
@@ -216,9 +215,8 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById("main_w_put").click();
           document.getElementById("main_w_disabled2").disabled = false;
-          success(res).then(() => {
-            this.get_main_warehouses(this.page, this.limit, this.search);
-          });
+          success(res);
+          this.get_main_warehouses(this.page, this.limit, this.search);
         })
         .catch((err) => {
           catchError(err);
