@@ -77,7 +77,17 @@
         <table class="table table-sm table-hover">
           <thead class="">
             <tr>
-              <th style="width: 7%">№</th>
+              <th style="width: 7%">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  v-model="checkAll"
+                  v-if="
+                    product_requests.length && status == 'zakupshikda_proche'
+                  "
+                />
+                №
+              </th>
               <th style="width: 15%">Номи</th>
               <th style="width: 15%">Ҳажм</th>
               <th style="width: 15%">Ўлчов бирлиги</th>
@@ -209,6 +219,20 @@
           <tbody>
             <tr v-for="(item, inc) in product_requests" :key="item">
               <td class="td_grafik">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  :value="{
+                    id: item.Proche_sorovlar.id,
+                    name: item.Proche_sorovlar.name,
+                    quantity: item.Proche_sorovlar.quantity,
+                    olchov_birligi: item.Proche_sorovlar.olchov_birligi,
+                    comment: item.Proche_sorovlar.comment,
+                    building_id: item.Proche_sorovlar.building_id,
+                  }"
+                  v-model="checked"
+                  v-if="status == 'zakupshikda_proche'"
+                />
                 {{ inc + 1 }}
                 <button
                   class="btn btn-sm"
@@ -249,13 +273,11 @@
               <td>
                 <button
                   class="btn btn-sm btn-success"
-                  @click="
-                    select_item(
-                      item.Proche_sorovlar.id,
-                      item.Proche_sorovlar.name
-                    )
+                  @click="select_item(item.Proche_sorovlar)"
+                  v-if="
+                    item.Proche_sorovlar.status == 'zakupshikda_proche' &&
+                    !checked.length
                   "
-                  v-if="item.Proche_sorovlar.status == 'zakupshikda_proche'"
                   data-bs-toggle="modal"
                   data-bs-target="#accept_request"
                 >
@@ -275,6 +297,20 @@
           </tbody>
         </table>
         <Data_notfound v-if="product_requests == ''" />
+      </div>
+
+      <div class="row mt-2" v-if="checked.length">
+        <div class="col-12">
+          <button
+            class="btn btn-sm btn-outline-success w-100"
+            style="padding: 2px !important"
+            id="accept_proche"
+            data-bs-toggle="modal"
+            data-bs-target="#accept_request"
+          >
+            <i class="fa-solid fa-circle-check"></i> қабул қилиш
+          </button>
+        </div>
       </div>
 
       <nav
@@ -364,7 +400,7 @@
         <div class="modal-body">
           <div class="table-responsive">
             <table class="table table-sm table-hover">
-              <tbody style="font-size: 12px">
+              <tbody>
                 <tr>
                   <td scope="col">Прорап :</td>
                   <td>{{ users.prorap }}</td>
@@ -447,10 +483,20 @@ export default {
         building_id: 0,
       },
       users: {},
+      data: {
+        id: null,
+        name: "",
+        quantity: 0,
+        olchov_birligi: "",
+        comment: "",
+        building_id: 0,
+      },
+      checked: [],
     };
   },
   watch: {
     limit(e) {
+      this.checked = [];
       this.page = 0;
       this.get_proche_s(
         this.page,
@@ -462,6 +508,7 @@ export default {
       );
     },
     search(e) {
+      this.checked = [];
       this.page = 0;
       this.get_proche_s(
         this.page,
@@ -473,6 +520,7 @@ export default {
       );
     },
     status(e) {
+      this.checked = [];
       this.page = 0;
       this.get_proche_s(
         this.page,
@@ -484,6 +532,7 @@ export default {
       );
     },
     page(e) {
+      this.checked = [];
       this.get_proche_s(
         e,
         this.limit,
@@ -494,6 +543,7 @@ export default {
       );
     },
     building_id(e) {
+      this.checked = [];
       this.page = 0;
       this.get_proche_s(
         this.page,
@@ -531,16 +581,28 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
         });
     },
-    select_item(id, name) {
+    select_item(e) {
       this.item = {
-        id: id,
-        name: name,
+        id: e.id,
+        name: e.name,
+      };
+      this.data = {
+        id: e.id,
+        name: e.name,
+        quantity: e.quantity,
+        olchov_birligi: e.olchov_birligi,
+        comment: e.comment,
+        building_id: e.building_id,
       };
     },
-    accept_request(e, data) {
+    accept_request(e) {
       document.getElementById(`accept_request_disabled`).disabled = true;
       this.$store.dispatch("setLoading", { isLoading: true });
-      proche_s_put(e.status, e.taminotchi_id, Array(data))
+      proche_s_put(
+        true,
+        e,
+        this.checked.length ? this.checked : Array(this.data)
+      )
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById(`accpet_request_close`).click();
@@ -555,13 +617,13 @@ export default {
             this.search
           );
           document.getElementById("request_text").innerHTML = "таминотчилар";
-          e.taminotchi_id = null;
+          e = null;
+          this.checked = [];
         })
         .catch((err) => {
           catchError(err);
           this.$store.dispatch("setLoading", { isLoading: false });
           e.taminotchi_id = null;
-          document.getElementById("request_text").innerHTML = "таминотчилар";
         });
     },
     buildings_get(page_building, limit_building, search_building) {
@@ -596,9 +658,6 @@ export default {
       this.$store.dispatch("setLoading", { isLoading: true });
       proche_s_put("false", 0, Array(this.body))
         .then((res) => {
-          this.$store.dispatch("setLoading", { isLoading: false });
-          document.getElementById(e).disabled = false;
-          success(res);
           this.get_proche_s(
             this.page,
             this.limit,
@@ -607,6 +666,9 @@ export default {
             this.user_id,
             this.search
           );
+          this.$store.dispatch("setLoading", { isLoading: false });
+          document.getElementById(e).disabled = false;
+          success(res);
         })
         .catch((err) => {
           catchError(err);
@@ -622,19 +684,44 @@ export default {
     Smeta_zakupshik,
     Format_numbers,
   },
+  computed: {
+    checkAll: {
+      get: function () {
+        return this.product_requests
+          ? this.checked.length == this.product_requests.length
+          : false;
+      },
+      set: function (value) {
+        var checked = [];
+        if (value) {
+          this.product_requests.forEach(function (requests) {
+            checked.push({
+              id: requests.Proche_sorovlar.id,
+              name: requests.Proche_sorovlar.name,
+              quantity: requests.Proche_sorovlar.quantity,
+              olchov_birligi: requests.Proche_sorovlar.olchov_birligi,
+              comment: requests.Proche_sorovlar.comment,
+              building_id: requests.Proche_sorovlar.building_id,
+            });
+          });
+        }
+        this.checked = checked;
+      },
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 #pills-home .table-responsive {
-  max-height: 64vh;
-  min-height: 64vh;
+  max-height: 62vh;
+  min-height: 62vh;
 }
 
 @media (max-width: 500px) {
   #pills-home .table-responsive {
-    max-height: 94vh;
-    min-height: 94vh;
+    max-height: 92vh;
+    min-height: 92vh;
   }
 }
 #pills-home table {

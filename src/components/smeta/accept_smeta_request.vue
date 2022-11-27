@@ -20,7 +20,7 @@
             id="accpet_request_smeta_close"
           ></button>
         </div>
-        <form @submit.prevent="$emit('accept_request', body)">
+        <form @submit.prevent="$emit('accept_request', taminotchi_id)">
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
@@ -37,7 +37,7 @@
                       users.length ? '' : get_users(page, limit, search, role)
                     "
                   >
-                    {{ text }}
+                    таминотчилар
                   </button>
                   <ul
                     class="dropdown-menu border-top-0"
@@ -125,7 +125,7 @@
               type="submit"
               class="btn btn-outline-primary btn-sm"
               id="accept_request_smeta_disabled"
-              :disabled="!body.taminotchi_id"
+              :disabled="!taminotchi_id"
             >
               <i class="fa-solid fa-circle-check"></i>
             </button>
@@ -157,17 +157,10 @@ export default {
       search: "",
       role: "taminotchi",
       users: [],
-      text: "таминотчилар",
-      body: {
-        taminotchi_id: null,
-        smeta_id: null,
-      },
+      taminotchi_id: null,
     };
   },
   watch: {
-    smeta_item(e) {
-      this.body.smeta_id = e.smeta_id;
-    },
     limit(e) {
       this.page = 0;
       this.get_users(this.page, e, this.search, this.role);
@@ -201,8 +194,8 @@ export default {
         });
     },
     select(id, name) {
-      this.body.taminotchi_id = id;
-      this.text = name;
+      this.taminotchi_id = id;
+      document.getElementById("request_text_smeta").innerHTML = name;
       document.getElementById("request_text_smeta").click();
     },
   },

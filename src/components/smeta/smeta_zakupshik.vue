@@ -26,7 +26,15 @@
     <table class="table table-sm table-hover">
       <thead>
         <tr>
-          <td style="width: 10%">№</td>
+          <td style="width: 10%">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              v-model="checkAll"
+              v-if="smeta.length && status == ' '"
+            />
+            №
+          </td>
           <td style="width: 20%">Номи</td>
           <td style="width: 20%">Ўлчов бирлиги</td>
           <td style="width: 20%">Ҳажм</td>
@@ -149,6 +157,13 @@
       <tbody>
         <tr v-for="(item, inc) in smeta" :key="item" class="product">
           <td class="td_grafik">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              :value="{ id: item.Smeta.id }"
+              v-model="checked"
+              v-if="status == ' '"
+            />
             {{ inc + 1 }}
             <span
               class="fa-solid fa-circle product rounded-circle"
@@ -205,7 +220,7 @@
               @click="select_item(item.Smeta.id, item.product_name)"
               data-bs-toggle="modal"
               data-bs-target="#accept_request_smeta"
-              v-if="status == ' '"
+              v-if="status == ' ' && !checked.length"
             >
               <i class="fa-solid fa-circle-check text-white"></i>
             </button>
@@ -225,6 +240,20 @@
       </tbody>
     </table>
     <Data_notfound v-if="smeta == ''" />
+  </div>
+
+  <div class="row mt-2" v-if="checked.length">
+    <div class="col-12">
+      <button
+        class="btn btn-sm btn-outline-success w-100"
+        style="padding: 2px !important"
+        id="accept_proche"
+        data-bs-toggle="modal"
+        data-bs-target="#accept_request_smeta"
+      >
+        <i class="fa-solid fa-circle-check"></i> қабул қилиш
+      </button>
+    </div>
   </div>
 
   <nav aria-label="Page navigation example" class="mt-2" v-if="smeta != ''">
@@ -445,10 +474,15 @@ export default {
       sum_supply_quantity: null,
       product_olchov_birligi: "",
       date: new Date().toISOString().slice(0, 10),
+      body: {
+        id: null,
+      },
+      checked: [],
     };
   },
   watch: {
     limit(e) {
+      this.checked = [];
       this.page = 0;
       this.get_smeta(
         this.page,
@@ -460,6 +494,7 @@ export default {
       );
     },
     page(e) {
+      this.checked = [];
       this.get_smeta(
         e,
         this.limit,
@@ -470,6 +505,7 @@ export default {
       );
     },
     search(e) {
+      this.checked = [];
       this.page = 0;
       this.get_smeta(
         this.page,
@@ -481,6 +517,7 @@ export default {
       );
     },
     status(e) {
+      this.checked = [];
       this.page = 0;
       this.get_smeta(
         this.page,
@@ -492,6 +529,7 @@ export default {
       );
     },
     building_id(e) {
+      this.checked = [];
       this.page = 0;
       this.get_smeta(
         this.page,
@@ -550,11 +588,15 @@ export default {
         smeta_id: id,
         smeta_name: name,
       };
+      this.body.id = id;
     },
     accept_request(e) {
       document.getElementById(`accept_request_smeta_disabled`).disabled = true;
       this.$store.dispatch("setLoading", { isLoading: true });
-      accept_smeta_request(e)
+      accept_smeta_request(
+        e,
+        this.checked.length ? this.checked : Array(this.body)
+      )
         .then((res) => {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById(`accpet_request_smeta_close`).click();
@@ -570,7 +612,10 @@ export default {
             this.building_id,
             this.user_id
           );
-          e.taminotchi_id = null;
+          e = null;
+          this.checked = [];
+          document.getElementById("request_text_smeta").innerHTML =
+            "таминотчилар";
         })
         .catch((err) => {
           catchError(err);
@@ -643,6 +688,22 @@ export default {
     );
   },
   components: { Data_notfound, Accept_smeta_request, Format_numbers },
+  computed: {
+    checkAll: {
+      get: function () {
+        return this.smeta ? this.checked.length == this.smeta.length : false;
+      },
+      set: function (value) {
+        var checked = [];
+        if (value) {
+          this.smeta.forEach(function (requests) {
+            checked.push({ id: requests.Smeta.id });
+          });
+        }
+        this.checked = checked;
+      },
+    },
+  },
 };
 </script>
 
@@ -654,14 +715,14 @@ export default {
 }
 
 .smeta {
-  max-height: 64vh;
-  min-height: 64vh;
+  max-height: 62vh;
+  min-height: 62vh;
 }
 
 @media (max-width: 500px) {
   .smeta {
-    max-height: 94vh;
-    min-height: 94vh;
+    max-height: 92vh;
+    min-height: 92vh;
   }
 }
 

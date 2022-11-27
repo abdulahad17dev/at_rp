@@ -165,8 +165,8 @@ export function smeta_request_get(page, limit, search, status, id, user_id) {
   }
 }
 
-export function accept_smeta_request(data) {
-  return instance.put(`attach_to_user/${data.smeta_id}/${data.taminotchi_id}`);
+export function accept_smeta_request(user_id, data) {
+  return instance.put(`attach_to_user/${user_id}`, data);
 }
 
 export function remove_smeta_request(id) {
