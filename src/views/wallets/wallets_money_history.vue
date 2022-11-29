@@ -6,16 +6,16 @@
   </h4>
 
   <ul
-    class="nav nav-pills nav-fill nav-justified mb-3"
+    class="nav nav-tabs nav-fill nav-justified mb-3"
     id="pills-tab"
     role="tablist"
   >
     <li class="nav-item mx-1" role="presentation">
-      <button
-        class="btn btn-light btn-sm shadow-sm w-100"
+      <a
+        class="nav-link"
         id="pills-home-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-home"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-home"
         type="button"
         role="tab"
         aria-controls="pills-home"
@@ -23,14 +23,14 @@
         @click="transfer_from_w_history = true"
       >
         олинган пуллар
-      </button>
+      </a>
     </li>
     <li class="nav-item mx-1" role="presentation">
-      <button
-        class="btn btn-light btn-sm shadow-sm w-100"
+      <a
+        class="nav-link"
         id="pills-profile-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-profile"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-profile"
         type="button"
         role="tab"
         aria-controls="pills-profile"
@@ -38,7 +38,7 @@
         @click="transfer_to_w_history = true"
       >
         берилган пуллар
-      </button>
+      </a>
     </li>
   </ul>
   <div class="tab-content" id="pills-tabContent">

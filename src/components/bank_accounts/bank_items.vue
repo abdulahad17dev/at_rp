@@ -9,8 +9,8 @@
         <tr>
           <th style="width: 10%">№</th>
           <th style="width: 30%">Номи</th>
-          <th style="width: 20%">Баланс</th>
-          <th style="width: 20%"></th>
+          <th style="width: 30%">Баланс</th>
+          <th style="width: 30%"></th>
         </tr>
       </thead>
       <tbody>
@@ -28,8 +28,8 @@
               v-if="role != 'admin'"
               class="btn btn-primary btn-sm mx-1"
               @click="select_id(item.Bank_accounts.id, item.Bank_accounts.name)"
-              data-bs-toggle="modal"
-              data-bs-target="#transfer_me_add"
+              data-mdb-toggle="modal"
+              data-mdb-target="#transfer_me_add"
             >
               <i class="fa-solid fa-money-bill"></i>
             </button>
@@ -37,8 +37,8 @@
               v-if="role != 'admin'"
               class="btn btn-primary btn-sm mx-1"
               @click="select_id(item.Bank_accounts.id, item.Bank_accounts.name)"
-              data-bs-toggle="modal"
-              data-bs-target="#transfer_to_add"
+              data-mdb-toggle="modal"
+              data-mdb-target="#transfer_to_add"
             >
               <i class="fa-solid fa-money-bill-transfer"></i>
             </button>
@@ -57,8 +57,8 @@
             <button
               v-if="role != 'admin'"
               class="btn btn-warning btn-sm mx-1"
-              data-bs-toggle="modal"
-              data-bs-target="#bank_account_put"
+              data-mdb-toggle="modal"
+              data-mdb-target="#bank_account_put"
               @click="send_data(item.Bank_accounts)"
             >
               <i class="fa-solid fa-edit text-white"></i>
@@ -246,6 +246,7 @@ export default {
 table {
   table-layout: fixed;
   width: 100%;
+  min-width: 900px;
 }
 
 .table-responsive,

@@ -1,119 +1,108 @@
 <template>
-  <div class="container-fluid mb-2">
-    <div class="row">
-      <div class="col mx-1" style="padding: 0 0"></div>
-      <div class="col mx-1" style="padding: 2px 0">
-        <ul
-          class="nav nav-pills nav-fill nav-justified justify-content-end"
-          id="pills-tab2"
-          role="tablist"
-        >
-          <li class="nav-item d-flex" role="presentation">
-            <button
-              class="btn btn-sm btn-light w-100 shadow-sm rounded-start active"
-              id="pills-home-ps-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#pills-home-ps"
-              type="button"
-              role="tab"
-              aria-controls="pills-home-ps"
-              aria-selected="true"
-              @click="
-                proche = true;
-                proche_history = false;
-              "
-            >
-              Проче сўров
-            </button>
-            <button
-              class="btn btn-sm btn-light rounded-end"
-              id="pills-home-ps-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#pills-home-ps"
-              type="button"
-              role="tab"
-              aria-controls="pills-home-ps"
-              aria-selected="true"
-              @click="
-                proche_history = true;
-                proche = false;
-              "
-            >
-              <i class="fa-solid fa-clock-rotate-left"></i>
-            </button>
-          </li>
-          <li class="nav-item d-flex" role="presentation">
-            <button
-              class="btn btn-sm btn-light w-100 shadow-sm rounded-start"
-              id="pills-profile-smeta-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#pills-profile-smeta"
-              type="button"
-              role="tab"
-              aria-controls="pills-profile-smeta"
-              aria-selected="false"
-              @click="
-                smeta = true;
-                smeta_history = false;
-              "
-            >
-              Смета
-            </button>
-            <button
-              class="btn btn-sm btn-light rounded-end"
-              id="pills-profile-smeta-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#pills-profile-smeta"
-              type="button"
-              role="tab"
-              aria-controls="pills-profile-smeta"
-              aria-selected="false"
-              @click="
-                smeta_history = true;
-                smeta = false;
-              "
-            >
-              <i class="fa-solid fa-clock-rotate-left"></i>
-            </button>
-          </li>
-          <li class="nav-item d-flex" role="presentation">
-            <button
-              class="btn btn-sm btn-light w-100 shadow-sm rounded-start"
-              id="pills-contact-shot-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#pills-contact-shot"
-              type="button"
-              role="tab"
-              aria-controls="pills-contact-shot"
-              aria-selected="false"
-              @click="
-                contact = true;
-                contact_history = false;
-              "
-            >
-              Счёт
-            </button>
-            <button
-              class="btn btn-sm btn-light rounded-end"
-              id="pills-contact-shot-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#pills-contact-shot"
-              type="button"
-              role="tab"
-              aria-controls="pills-contact-shot"
-              aria-selected="false"
-              @click="
-                contact_history = true;
-                contact = false;
-              "
-            >
-              <i class="fa-solid fa-clock-rotate-left"></i>
-            </button>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+  <ul class="nav nav-tabs nav-fill mt-2 mb-3" id="pills-tab2" role="tablist">
+    <li class="nav-item d-flex" role="presentation">
+      <a
+        class="nav-link w-100 shadow-sm active"
+        id="pills-home-ps-tab"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-home-ps"
+        type="button"
+        role="tab"
+        aria-controls="pills-home-ps"
+        aria-selected="true"
+        @click="
+          proche = true;
+          proche_history = false;
+        "
+      >
+        Проче сўров
+      </a>
+      <a
+        class="nav-link"
+        id="pills-home-ps-tab"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-home-ps"
+        type="button"
+        role="tab"
+        aria-controls="pills-home-ps"
+        aria-selected="true"
+        @click="
+          proche_history = true;
+          proche = false;
+        "
+      >
+        <i class="fa-solid fa-clock-rotate-left"></i>
+      </a>
+    </li>
+    <li class="nav-item d-flex" role="presentation">
+      <a
+        class="nav-link w-100 shadow-sm"
+        id="pills-profile-smeta-tab"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-profile-smeta"
+        type="button"
+        role="tab"
+        aria-controls="pills-profile-smeta"
+        aria-selected="false"
+        @click="
+          smeta = true;
+          smeta_history = false;
+        "
+      >
+        Смета
+      </a>
+      <a
+        class="nav-link"
+        id="pills-profile-smeta-tab"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-profile-smeta"
+        type="button"
+        role="tab"
+        aria-controls="pills-profile-smeta"
+        aria-selected="false"
+        @click="
+          smeta_history = true;
+          smeta = false;
+        "
+      >
+        <i class="fa-solid fa-clock-rotate-left"></i>
+      </a>
+    </li>
+    <li class="nav-item d-flex" role="presentation">
+      <a
+        class="nav-link w-100 shadow-sm"
+        id="pills-contact-shot-tab"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-contact-shot"
+        type="button"
+        role="tab"
+        aria-controls="pills-contact-shot"
+        aria-selected="false"
+        @click="
+          contact = true;
+          contact_history = false;
+        "
+      >
+        Счёт
+      </a>
+      <a
+        class="nav-link"
+        id="pills-contact-shot-tab"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-contact-shot"
+        type="button"
+        role="tab"
+        aria-controls="pills-contact-shot"
+        aria-selected="false"
+        @click="
+          contact_history = true;
+          contact = false;
+        "
+      >
+        <i class="fa-solid fa-clock-rotate-left"></i>
+      </a>
+    </li>
+  </ul>
   <div class="tab-content" id="pills-tab2Content">
     <div
       class="tab-pane fade show active"

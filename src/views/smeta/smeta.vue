@@ -43,8 +43,8 @@
             v-else
             class="btn btn-outline-secondary btn-sm"
             type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#smeta_add"
+            data-mdb-toggle="modal"
+            data-mdb-target="#smeta_add"
           >
             <i class="fa-solid fa-circle-plus"></i>
           </button>

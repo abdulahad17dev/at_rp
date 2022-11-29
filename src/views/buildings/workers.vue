@@ -24,8 +24,8 @@
         <button
           class="btn btn-outline-secondary"
           type="button"
-          data-bs-toggle="modal"
-          data-bs-target="#worker_add"
+          data-mdb-toggle="modal"
+          data-mdb-target="#worker_add"
         >
           <i class="fa-solid fa-user-plus"></i>
         </button>

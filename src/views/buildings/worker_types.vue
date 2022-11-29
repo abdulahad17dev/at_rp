@@ -24,8 +24,8 @@
         <button
           class="btn btn-outline-secondary"
           type="button"
-          data-bs-toggle="modal"
-          data-bs-target="#worker_type_add"
+          data-mdb-toggle="modal"
+          data-mdb-target="#worker_type_add"
         >
           <i class="fa-solid fa-circle-plus"></i>
         </button>

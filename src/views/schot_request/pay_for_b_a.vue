@@ -58,7 +58,7 @@
               class="btn btn-light btn-sm dropdown-toggle"
               type="button"
               id="select_bank_building2"
-              data-bs-toggle="dropdown"
+              data-mdb-toggle="dropdown"
               data-bs-auto-close="outside"
               aria-expanded="false"
               @click="
@@ -169,7 +169,7 @@
               class="btn btn-light btn-sm dropdown-toggle"
               type="button"
               id="select_bank_market2"
-              data-bs-toggle="dropdown"
+              data-mdb-toggle="dropdown"
               data-bs-auto-close="outside"
               aria-expanded="false"
               @click="
@@ -314,8 +314,8 @@
               {{ inc + 1 }}
               <button
                 class="btn btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target="#get_paid_moneys2"
+                data-mdb-toggle="modal"
+                data-mdb-target="#get_paid_moneys2"
                 @click="get_paid_moneys2(item.Supplies.id)"
               >
                 <i
@@ -389,8 +389,8 @@
                 @click="get_item(item)"
                 id="pay_supply_dd"
                 :luboyy="'button' + item.Supplies.id"
-                data-bs-toggle="modal"
-                data-bs-target="#pay_supply"
+                data-mdb-toggle="modal"
+                data-mdb-target="#pay_supply"
               >
                 <i class="fa-solid fa-money-bill-transfer"></i>
               </button>
@@ -408,8 +408,8 @@
           @click="get_item(item)"
           id="pay_supply_dd"
           :disabled="disabled"
-          data-bs-toggle="modal"
-          data-bs-target="#pay_supply"
+          data-mdb-toggle="modal"
+          data-mdb-target="#pay_supply"
         >
           <i class="fa-solid fa-circle-check"></i> тўлаш
         </button>
@@ -513,7 +513,7 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
             id="pay_bank_close2"
           ></button>
@@ -528,7 +528,7 @@
                     class="btn btn-light btn-sm dropdown-toggle"
                     type="button"
                     id="bank_account_text2"
-                    data-bs-toggle="dropdown"
+                    data-mdb-toggle="dropdown"
                     data-bs-auto-close="outside"
                     aria-expanded="false"
                     @click="
@@ -657,7 +657,7 @@
             <button
               type="button"
               class="btn btn-outline-danger btn-sm"
-              data-bs-dismiss="modal"
+              data-mdb-dismiss="modal"
             >
               <i class="fa-solid fa-circle-xmark"></i>
             </button>
@@ -682,7 +682,7 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
           ></button>
         </div>

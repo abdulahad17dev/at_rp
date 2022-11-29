@@ -1,30 +1,30 @@
 <template>
   <Header_item />
   <ul
-    class="nav nav-pills nav-justified nav-fill mb-3"
+    class="nav nav-tabs nav-justified nav-fill mb-3"
     id="pills-tab"
     role="tablist"
   >
     <li class="nav-item mx-1" role="presentation">
-      <button
-        class="btn btn-sm btn-light w-100 active"
+      <a
+        class="nav-link active"
         id="pills-home-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-home"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-home"
         type="button"
         role="tab"
         aria-controls="pills-home"
         aria-selected="true"
       >
         Омборга жўнатилган материаллар
-      </button>
+      </a>
     </li>
     <li class="nav-item mx-1" role="presentation">
-      <button
-        class="btn btn-sm btn-light w-100"
+      <a
+        class="nav-link"
         id="pills-profile-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-profile"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-profile"
         type="button"
         role="tab"
         aria-controls="pills-profile"
@@ -45,7 +45,7 @@
         "
       >
         Омбордан қабул қилинган материаллар
-      </button>
+      </a>
     </li>
   </ul>
   <div class="tab-content" id="pills-tabContent">
@@ -93,7 +93,7 @@
                     class="btn btn-light btn-sm dropdown-toggle"
                     type="button"
                     id="select_bank_building"
-                    data-bs-toggle="dropdown"
+                    data-mdb-toggle="dropdown"
                     data-bs-auto-close="outside"
                     aria-expanded="false"
                     @click="
@@ -365,7 +365,7 @@
                     class="btn btn-light btn-sm dropdown-toggle"
                     type="button"
                     id="select_bank_building"
-                    data-bs-toggle="dropdown"
+                    data-mdb-toggle="dropdown"
                     data-bs-auto-close="outside"
                     aria-expanded="false"
                     @click="

@@ -34,8 +34,8 @@
           v-if="role == 'pto'"
           class="btn btn-outline-secondary"
           type="button"
-          data-bs-toggle="modal"
-          data-bs-target="#building_add"
+          data-mdb-toggle="modal"
+          data-mdb-target="#building_add"
           @click="get_position"
         >
           <i class="fa-solid fa-circle-plus"></i>

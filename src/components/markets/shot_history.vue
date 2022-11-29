@@ -43,7 +43,7 @@
               class="btn btn-light btn-sm dropdown-toggle"
               type="button"
               id="select_bank_market3"
-              data-bs-toggle="dropdown"
+              data-mdb-toggle="dropdown"
               data-bs-auto-close="outside"
               aria-expanded="false"
               @click="
@@ -153,7 +153,7 @@
               class="btn btn-light btn-sm dropdown-toggle"
               type="button"
               id="select_bank_building_shot"
-              data-bs-toggle="dropdown"
+              data-mdb-toggle="dropdown"
               data-bs-auto-close="outside"
               aria-expanded="false"
               @click="
@@ -286,8 +286,8 @@
                   );
                   name = item.product;
                 "
-                data-bs-toggle="modal"
-                data-bs-target="#shot_modal"
+                data-mdb-toggle="modal"
+                data-mdb-target="#shot_modal"
               >
                 <i
                   class="fa-solid fa-circle-question product"
@@ -426,43 +426,43 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
           ></button>
         </div>
         <div class="modal-body">
           <ul
-            class="nav nav-pills nav-fill nav-justified mb-3"
+            class="nav nav-tabs nav-fill nav-justified mb-3"
             id="pills-tab"
             role="tablist"
           >
             <li class="nav-item mx-1" role="presentation">
-              <button
-                class="btn btn-sm btn-light w-100 active"
+              <a
+                class="nav-link active"
                 id="pills-home-quantity2-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-home-quantity2"
+                data-mdb-toggle="pill"
+                data-mdb-target="#pills-home-quantity2"
                 type="button"
                 role="tab"
                 aria-controls="pills-home-quantity2"
                 aria-selected="true"
               >
                 Таъминотлар тарихи
-              </button>
+              </a>
             </li>
             <li class="nav-item mx-1" role="presentation">
-              <button
-                class="btn btn-sm btn-light w-100"
+              <a
+                class="nav-link"
                 id="pills-profile-sh-quantity2-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-profile-sh-quantity2"
+                data-mdb-toggle="pill"
+                data-mdb-target="#pills-profile-sh-quantity2"
                 type="button"
                 role="tab"
                 aria-controls="pills-profile-sh-quantity2"
                 aria-selected="false"
               >
                 Тўловлар тарихи
-              </button>
+              </a>
             </li>
           </ul>
           <div class="tab-content" id="pills-tabContent">

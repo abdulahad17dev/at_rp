@@ -45,7 +45,7 @@
                 class="btn btn-light btn-sm dropdown-toggle"
                 type="button"
                 id="select_bank_building"
-                data-bs-toggle="dropdown"
+                data-mdb-toggle="dropdown"
                 data-bs-auto-close="outside"
                 aria-expanded="false"
                 @click="
@@ -182,8 +182,8 @@
             </span>
             <button
               class="btn btn-sm"
-              data-bs-toggle="modal"
-              data-bs-target="#smeta_grafik"
+              data-mdb-toggle="modal"
+              data-mdb-target="#smeta_grafik"
               @click="
                 get_grafik(item);
                 sum_supply_by_b_a_quantity = item.sum_supply_by_b_a_quantity;
@@ -218,8 +218,8 @@
             <button
               class="btn btn-sm btn-success"
               @click="select_item(item.Smeta.id, item.product_name)"
-              data-bs-toggle="modal"
-              data-bs-target="#accept_request_smeta"
+              data-mdb-toggle="modal"
+              data-mdb-target="#accept_request_smeta"
               v-if="status == ' ' && !checked.length"
             >
               <i class="fa-solid fa-circle-check text-white"></i>
@@ -248,10 +248,10 @@
         class="btn btn-sm btn-outline-success w-100"
         style="padding: 2px !important"
         id="accept_proche"
-        data-bs-toggle="modal"
-        data-bs-target="#accept_request_smeta"
+        data-mdb-toggle="modal"
+        data-mdb-target="#accept_request_smeta"
       >
-        <i class="fa-solid fa-circle-check"></i> қабул қилиш
+        <i class="fa-solid fa-circle-check"></i> бириктириш
       </button>
     </div>
   </div>
@@ -316,47 +316,47 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
           ></button>
         </div>
         <div class="modal-body">
           <ul
-            class="nav nav-pills nav-justified nav-fill mb-3"
+            class="nav nav-tabs nav-justified nav-fill mb-3"
             id="pills-tab"
             role="tablist"
           >
             <li class="nav-item mx-1" role="presentation">
-              <button
-                class="btn btn-sm btn-light w-100 active"
+              <a
+                class="nav-link active"
                 id="pills-homme-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-homme"
+                data-mdb-toggle="pill"
+                data-mdb-target="#pills-homme"
                 type="button"
                 role="tab"
                 aria-controls="pills-homme"
                 aria-selected="true"
               >
                 График
-              </button>
+              </a>
             </li>
             <li
               class="nav-item mx-1"
               role="presentation"
               v-if="sum_supply_by_b_a_quantity + sum_supply_quantity != 0"
             >
-              <button
-                class="btn btn-sm btn-light w-100"
+              <a
+                class="nav-link"
                 id="pills-profille-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-profille"
+                data-mdb-toggle="pill"
+                data-mdb-target="#pills-profille"
                 type="button"
                 role="tab"
                 aria-controls="pills-profille"
                 aria-selected="false"
               >
                 Олинган ҳажм
-              </button>
+              </a>
             </li>
           </ul>
           <div class="tab-content" id="pills-tabContent">

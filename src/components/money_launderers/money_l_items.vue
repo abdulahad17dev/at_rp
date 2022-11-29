@@ -32,16 +32,16 @@
             <button
               class="btn btn-sm btn-warning"
               @click="$emit('item', item)"
-              data-bs-toggle="modal"
-              data-bs-target="#money_launderer_put"
+              data-mdb-toggle="modal"
+              data-mdb-target="#money_launderer_put"
             >
               <i class="fa fa-edit text-white"></i>
             </button>
             <button
               class="btn btn-sm btn-primary mx-1"
               @click="$emit('get_l_id', item.id, item.name)"
-              data-bs-toggle="modal"
-              data-bs-target="#take_money"
+              data-mdb-toggle="modal"
+              data-mdb-target="#take_money"
             >
               <i class="fa-solid fa-money-bill-transfer text-white"></i>
             </button>

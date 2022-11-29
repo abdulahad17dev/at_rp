@@ -10,7 +10,7 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
             id="transfer_add"
           ></button>
@@ -60,7 +60,7 @@
             <button
               type="button"
               class="btn btn-outline-danger btn-sm"
-              data-bs-dismiss="modal"
+              data-mdb-dismiss="modal"
             >
               <i class="fa-solid fa-circle-xmark"></i>
             </button>
@@ -80,39 +80,39 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
             id="transfer_to"
           ></button>
         </div>
-        <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
+        <ul class="nav nav-tabs nav-justified" id="pills-tab" role="tablist">
           <li class="nav-item" role="presentation">
-            <button
-              class="btn btn-sm w-100 active"
+            <a
+              class="nav-link active"
               id="pills-home-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#pills-home"
+              data-mdb-toggle="pill"
+              data-mdb-target="#pills-home"
               type="button"
               role="tab"
               aria-controls="pills-home"
               aria-selected="true"
             >
               ҳисоб рақамига пул ўтказиш
-            </button>
+            </a>
           </li>
           <li class="nav-item" role="presentation">
-            <button
-              class="btn btn-sm w-100"
+            <a
+              class="nav-link"
               id="pills-profile-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#pills-profile"
+              data-mdb-toggle="pill"
+              data-mdb-target="#pills-profile"
               type="button"
               role="tab"
               aria-controls="pills-profile"
               aria-selected="false"
             >
               кассирга пул ўтказиш
-            </button>
+            </a>
           </li>
         </ul>
         <div class="tab-content" id="pills-tabContent">

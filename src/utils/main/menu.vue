@@ -130,12 +130,12 @@ export default {
           title: "Омбордаги материаллар",
           role: ["omborchi"],
         },
-        {
-          to: "/settings",
-          icon: "fa-solid fa-screwdriver-wrench fa-2x",
-          title: "Созламалар",
-          role: [`${localStorage.getItem("role")}`],
-        },
+        // {
+        //   to: "/settings",
+        //   icon: "fa-solid fa-screwdriver-wrench fa-2x",
+        //   title: "Созламалар",
+        //   role: [`${localStorage.getItem("role")}`],
+        // },
       ],
     };
   },

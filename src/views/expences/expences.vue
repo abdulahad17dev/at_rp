@@ -5,24 +5,24 @@
     <div class="col mt-2 d-flex align-items-center justify-content-center">
       <button
         class="btn btn-sm btn-secondary mx-1"
-        data-bs-toggle="modal"
-        data-bs-target="#fixed_expense"
+        data-mdb-toggle="modal"
+        data-mdb-target="#fixed_expense"
         v-if="role == 'admin'"
       >
         <i class="fa-solid fa-list"></i> Доимий чиқим турини қўшиш
       </button>
       <button
         class="btn btn-sm btn-secondary"
-        data-bs-toggle="modal"
-        data-bs-target="#pay_for_fixed_expense"
+        data-mdb-toggle="modal"
+        data-mdb-target="#pay_for_fixed_expense"
         v-if="role != 'admin'"
       >
         Доимий <i class="fa-solid fa-circle-plus"></i>
       </button>
       <!-- <button
         class="btn btn-sm btn-secondary mx-1"
-        data-bs-toggle="modal"
-        data-bs-target="#pay_for_variable_expense"
+         data-mdb-toggle="modal"
+        data-mdb-target="#pay_for_variable_expense"
         v-if="role != 'admin'"
       >
         Бир марталик <i class="fa-solid fa-circle-plus"></i>
@@ -228,7 +228,7 @@
 
   <ul
     v-if="variable_history.length"
-    class="nav nav-pills nav-fill nav-justified mb-3 row"
+    class="nav nav-tabs nav-fill nav-justified mb-3 row"
     id="pills-tab"
     role="tablist"
   >
@@ -237,11 +237,11 @@
       role="presentation"
       v-if="role == 'admin'"
     >
-      <button
-        class="btn btn-sm w-100 btn-light shadow-sm"
+      <a
+        class="nav-link"
         id="pills-home-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-home"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-home"
         type="button"
         role="tab"
         aria-controls="pills-home"
@@ -251,17 +251,17 @@
         "
       >
         Чиқимлар
-      </button>
+      </a>
     </li>
     <li
       class="nav-item col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4"
       role="presentation"
     >
-      <button
-        class="btn btn-sm w-100 btn-light shadow-sm"
+      <a
+        class="nav-link"
         id="pills-profile-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-profile"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-profile"
         type="button"
         role="tab"
         aria-controls="pills-profile"
@@ -281,17 +281,17 @@
         "
       >
         Доимий чиқимлар
-      </button>
+      </a>
     </li>
     <li
       class="nav-item col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4"
       role="presentation"
     >
-      <button
-        class="btn btn-sm w-100 btn-light shadow-sm"
+      <a
+        class="nav-link"
         id="pills-contact-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-contact"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-contact"
         type="button"
         role="tab"
         aria-controls="pills-contact"
@@ -303,7 +303,7 @@
         "
       >
         Бир марталик чиқимлар
-      </button>
+      </a>
     </li>
   </ul>
   <div class="tab-content" id="pills-tabContent">
@@ -564,7 +564,7 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
             id="expense_close"
           ></button>
@@ -663,7 +663,7 @@
             <button
               type="button"
               class="btn btn-outline-danger btn-sm"
-              data-bs-dismiss="modal"
+              data-mdb-dismiss="modal"
             >
               <i class="fa-solid fa-circle-xmark"></i>
             </button>

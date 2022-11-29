@@ -18,29 +18,19 @@
           <th>Ўлчов бирлиги</th>
           <th>Изох</th>
           <th>
-            <div class="input-group">
-              <select
-                class="form-control form-control-sm form-select"
-                v-model="status"
-              >
-                <option value="adminda_proche">админда</option>
-                <option value="zakupshikda_proche">закупшикда</option>
-                <option value="taminotchida_proche">таминотчида</option>
-                <option value="taminotchida_proche_qabul_qilindi">
-                  қабул қилинди
-                </option>
-                <option value="rejected_proche">руҳсат этилмаган</option>
-              </select>
-              <button class="btn btn-sm" @click="open_filter">
-                <i class="fa-solid fa-arrow-right"></i>
-              </button>
-            </div>
+            <select
+              class="form-control form-control-sm form-select"
+              v-model="status"
+            >
+              <option value="adminda_proche">админда</option>
+              <option value="zakupshikda_proche">закупшикда</option>
+              <option value="taminotchida_proche">таминотчида</option>
+              <option value="taminotchida_proche_qabul_qilindi">
+                қабул қилинди
+              </option>
+              <option value="rejected_proche">руҳсат этилмаган</option>
+            </select>
           </th>
-          <th v-if="filter">Прорап</th>
-          <th v-if="filter">Оператор</th>
-          <th v-if="filter">Админ</th>
-          <th v-if="filter">Закупшик</th>
-          <th v-if="filter">Таминотчи</th>
         </tr>
       </thead>
       <tbody>
@@ -178,11 +168,6 @@
               <i class="fa-solid fa-circle-check text-white"></i>
             </button>
           </td>
-          <td v-if="filter">{{ item.porap }}</td>
-          <td v-if="filter">{{ item.operator }}</td>
-          <td v-if="filter">{{ item.admin }}</td>
-          <td v-if="filter">{{ item.zakupshik }}</td>
-          <td v-if="filter">{{ item.taminotchi }}</td>
         </tr>
       </tbody>
     </table>
@@ -444,15 +429,6 @@ export default {
         .querySelector(`[${attr}="${id}"]`)
         .setAttribute("readonly", true);
     },
-    open_filter() {
-      if (this.filter == true) {
-        this.filter = false;
-        document.getElementById("table-responsive").style.minWidth = "auto";
-      } else {
-        this.filter = true;
-        document.getElementById("table-responsive").style.minWidth = "2000px";
-      }
-    },
   },
   created() {
     this.get_proche_s(
@@ -487,13 +463,14 @@ export default {
 
 <style lang="scss" scoped>
 .table-responsive {
-  max-height: 74vh;
-  min-height: 74vh;
+  max-height: 72vh;
+  min-height: 72vh;
 }
 
 @media (max-width: 500px) {
   .table-responsive {
     max-height: 100vh;
+    min-height: 100vh;
   }
   table {
     zoom: 65%;

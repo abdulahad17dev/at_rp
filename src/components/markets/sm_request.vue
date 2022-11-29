@@ -42,13 +42,13 @@
             <td style="width: 15%">Ўлчов бирлиги</td>
             <td style="width: 15%">Сана</td>
             <td style="width: 15%">Ҳажм</td>
-            <td style="width: 10%">
+            <td>
               <div class="dropdown">
                 <button
                   class="btn btn-light btn-sm dropdown-toggle"
                   type="button"
                   id="select_bank_building"
-                  data-bs-toggle="dropdown"
+                  data-mdb-toggle="dropdown"
                   data-bs-auto-close="outside"
                   aria-expanded="false"
                   @click="
@@ -188,8 +188,8 @@
                     item.compositions
                   )
                 "
-                data-bs-toggle="modal"
-                data-bs-target="#smeta_grafik"
+                data-mdb-toggle="modal"
+                data-mdb-target="#smeta_grafik"
                 v-if="!search2"
               >
                 <i
@@ -237,8 +237,8 @@
                 v-if="search2 != item.product_name"
                 class="btn btn-sm btn-success"
                 @click="get_item(item)"
-                data-bs-toggle="modal"
-                data-bs-target="#accept_smeta"
+                data-mdb-toggle="modal"
+                data-mdb-target="#accept_smeta"
               >
                 <i class="fa-solid fa-circle-check text-white"></i>
               </button>
@@ -260,8 +260,8 @@
       <div class="col-6">
         <button
           class="btn btn-sm btn-outline-success w-100"
-          data-bs-toggle="modal"
-          data-bs-target="#accept_smeta"
+          data-mdb-toggle="modal"
+          data-mdb-target="#accept_smeta"
           :disabled="!checked.length"
           @click="get_item(item)"
         >
@@ -345,57 +345,57 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
           ></button>
         </div>
         <div class="modal-body">
           <ul
-            class="nav nav-pills nav-fill nav-justified mb-2"
+            class="nav nav-tabs nav-fill nav-justified mb-2"
             id="pills-tabs"
             role="tablist"
           >
             <li class="nav-item mx-1" role="presentation">
-              <button
-                class="btn btn-light btn-sm w-100 active"
+              <a
+                class="nav-link active"
                 id="grafik-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#grafik"
+                data-mdb-toggle="pill"
+                data-mdb-target="#grafik"
                 type="button"
                 role="tab"
                 aria-controls="grafik"
                 aria-selected="true"
               >
                 Графиги
-              </button>
+              </a>
             </li>
             <li class="nav-item mx-1" role="presentation">
-              <button
-                class="btn btn-light btn-sm w-100"
+              <a
+                class="nav-link"
                 id="composition-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#composition"
+                data-mdb-toggle="pill"
+                data-mdb-target="#composition"
                 type="button"
                 role="tab"
                 aria-controls="composition"
                 aria-selected="false"
               >
                 Таркиби
-              </button>
+              </a>
             </li>
             <li class="nav-item mx-1" role="presentation">
-              <button
-                class="btn btn-light btn-sm w-100"
+              <a
+                class="nav-link"
                 id="get-quantity-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#get-quantity"
+                data-mdb-toggle="pill"
+                data-mdb-target="#get-quantity"
                 type="button"
                 role="tab"
                 aria-controls="get-quantity"
                 aria-selected="false"
               >
                 Олинган ҳажм
-              </button>
+              </a>
             </li>
           </ul>
           <div class="tab-content" id="pills-tabsContent">
@@ -485,9 +485,9 @@
                       <td>
                         <button
                           class="btn btn-sm btn-success"
-                          data-bs-target="#productaccept"
-                          data-bs-toggle="modal"
-                          data-bs-dismiss="modal"
+                          data-mdb-target="#productaccept"
+                          data-mdb-toggle="modal"
+                          data-mdb-dismiss="modal"
                           @click="get_product_item(item)"
                         >
                           <i class="fa-solid fa-circle-check"></i>
@@ -505,39 +505,37 @@
               aria-labelledby="get-quantity-tab"
             >
               <ul
-                class="nav nav-pills nav-fill nav-justified mb-2"
+                class="nav nav-tabs nav-fill nav-justified mb-2"
                 id="pills-tab2"
                 role="tablist"
               >
                 <li class="nav-item mx-1" role="presentation">
-                  <button
-                    style="padding: 1px 1px"
-                    class="btn btn-sm btn-light w-100 active"
+                  <a
+                    class="nav-link active"
                     id="naxt-tab"
-                    data-bs-toggle="pill"
-                    data-bs-target="#naxt"
+                    data-mdb-toggle="pill"
+                    data-mdb-target="#naxt"
                     type="button"
                     role="tab"
                     aria-controls="naxt"
                     aria-selected="true"
                   >
                     Нахт тўлов орқали
-                  </button>
+                  </a>
                 </li>
                 <li class="nav-item mx-1" role="presentation">
-                  <button
-                    style="padding: 1px 1px"
-                    class="btn btn-sm btn-light w-100"
+                  <a
+                    class="nav-link"
                     id="shot-tab"
-                    data-bs-toggle="pill"
-                    data-bs-target="#shot"
+                    data-mdb-toggle="pill"
+                    data-mdb-target="#shot"
                     type="button"
                     role="tab"
                     aria-controls="shot"
                     aria-selected="false"
                   >
                     Ҳисоб рақам орқали
-                  </button>
+                  </a>
                 </li>
               </ul>
               <div class="tab-content" id="pills-tab2Content">
@@ -839,7 +837,7 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
             id="supply_take"
           ></button>
@@ -943,7 +941,7 @@
             <button
               type="button"
               class="btn btn-outline-danger btn-sm"
-              data-bs-dismiss="modal"
+              data-mdb-dismiss="modal"
             >
               <i class="fa-solid fa-circle-xmark"></i>
             </button>
@@ -971,9 +969,9 @@
             type="button"
             class="btn-close"
             id="supply_take_product"
-            data-bs-target="#smeta_grafik"
-            data-bs-toggle="modal"
-            data-bs-dismiss="modal"
+            data-mdb-target="#smeta_grafik"
+            data-mdb-toggle="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
           ></button>
         </div>
@@ -1068,9 +1066,9 @@
             <button
               type="button"
               class="btn btn-outline-danger btn-sm"
-              data-bs-target="#smeta_grafik"
-              data-bs-toggle="modal"
-              data-bs-dismiss="modal"
+              data-mdb-target="#smeta_grafik"
+              data-mdb-toggle="modal"
+              data-mdb-dismiss="modal"
             >
               <i class="fa-solid fa-circle-xmark"></i>
             </button>

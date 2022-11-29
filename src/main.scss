@@ -139,3 +139,20 @@ img {
   background: #2c3e50 !important;
   color: white !important;
 }
+
+.nav-pills {
+  margin-left: 0rem !important;
+}
+
+.nav-link {
+  padding: 8px 16px 8px !important;
+  border-bottom: 2px solid rgb(39, 41, 61, 0.3) !important;
+}
+
+.nav-link.active {
+  border-bottom: 2px solid #3b71ca !important;
+}
+
+.page-item button {
+  border: 1px solid #eee;
+}

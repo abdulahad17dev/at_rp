@@ -50,7 +50,7 @@
                 class="btn btn-light btn-sm dropdown-toggle"
                 type="button"
                 id="expenses_select"
-                data-bs-toggle="dropdown"
+                data-mdb-toggle="dropdown"
                 data-bs-auto-close="outside"
                 aria-expanded="false"
                 @click="

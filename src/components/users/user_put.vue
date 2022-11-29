@@ -8,7 +8,7 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
             id="user_put"
           ></button>
@@ -113,7 +113,7 @@
             <button
               type="button"
               class="btn btn-outline-danger btn-sm"
-              data-bs-dismiss="modal"
+              data-mdb-dismiss="modal"
             >
               <i class="fa-solid fa-circle-xmark"></i>
             </button>

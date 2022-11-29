@@ -43,7 +43,7 @@
               class="btn btn-light btn-sm dropdown-toggle"
               type="button"
               id="select_bank_market2"
-              data-bs-toggle="dropdown"
+              data-mdb-toggle="dropdown"
               data-bs-auto-close="outside"
               aria-expanded="false"
               @click="
@@ -161,7 +161,7 @@
               class="btn btn-light btn-sm dropdown-toggle"
               type="button"
               id="select_bank_building_smeta"
-              data-bs-toggle="dropdown"
+              data-mdb-toggle="dropdown"
               data-bs-auto-close="outside"
               aria-expanded="false"
               @click="
@@ -293,7 +293,7 @@
                   class="btn btn-light btn-sm dropdown-toggle"
                   type="button"
                   id="dropdownMenuClickableInside"
-                  data-bs-toggle="dropdown"
+                  data-mdb-toggle="dropdown"
                   data-bs-auto-close="outside"
                   aria-expanded="false"
                 >
@@ -320,8 +320,8 @@
                       <i
                         v-if="item.children"
                         class="fa-solid fa-angle-down text-right btn btn-sm"
-                        data-bs-toggle="collapse"
-                        :data-bs-target="`#collapse${item.type}`"
+                        data-mdb-toggle="collapse"
+                        :data-mdb-target="`#collapse${item.type}`"
                         aria-expanded="false"
                         :aria-controls="`collapse${item.type}`"
                       ></i>
@@ -367,8 +367,8 @@
               {{ inc + 1 }}
               <button
                 class="btn btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target="#get_paid_moneys2"
+                data-mdb-toggle="modal"
+                data-mdb-target="#get_paid_moneys2"
                 @click="
                   (supply_type = item.Supplies.type),
                     get_paid_moneys(item.Supplies.id)
@@ -598,7 +598,7 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
           ></button>
         </div>

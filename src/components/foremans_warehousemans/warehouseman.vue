@@ -9,7 +9,7 @@
             class="btn btn-light btn-sm dropdown-toggle"
             type="button"
             id="dropdownMenu2"
-            data-bs-toggle="dropdown"
+            data-mdb-toggle="dropdown"
             data-bs-auto-close="outside"
             aria-expanded="false"
             @click="

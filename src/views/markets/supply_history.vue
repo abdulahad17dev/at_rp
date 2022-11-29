@@ -2,30 +2,30 @@
   <Header_item />
 
   <ul
-    class="nav nav-pills nav-fill nav-justified mb-1"
+    class="nav nav-tabs nav-fill nav-justified mb-1"
     id="pills-tab"
     role="tablist"
   >
     <li class="nav-item mx-1" role="presentation">
-      <button
-        class="btn btn-sm btn-light w-100 active"
+      <a
+        class="nav-link active"
         id="pills-home-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-home"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-home"
         type="button"
         role="tab"
         aria-controls="pills-home"
         aria-selected="true"
       >
         Таъминот тарихи
-      </button>
+      </a>
     </li>
     <li class="nav-item mx-1" role="presentation">
-      <button
-        class="btn btn-sm btn-light w-100"
+      <a
+        class="nav-link"
         id="pills-profile-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-profile"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-profile"
         type="button"
         role="tab"
         aria-controls="pills-profile"
@@ -33,7 +33,7 @@
         @click="paid_moneys.length ? '' : get_paid_moneys()"
       >
         Тўловлар тарихи
-      </button>
+      </a>
     </li>
   </ul>
   <div class="tab-content" id="pills-tabContent">
@@ -46,32 +46,30 @@
       <div class="row p-0 m-0">
         <div class="col p-0 m-0">
           <ul
-            class="nav nav-pills nav-fill nav-justified mb-3"
+            class="nav nav-tabs nav-fill nav-justified mb-3"
             id="pills-tab"
             role="tablist"
           >
             <li class="nav-item mx-1" role="presentation">
-              <button
-                style="padding: 1px 1px !important"
-                class="btn btn-sm btn-light w-100 active"
+              <a
+                class="nav-link active"
                 id="pills-naxt-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-naxt"
+                data-mdb-toggle="pill"
+                data-mdb-target="#pills-naxt"
                 type="button"
                 role="tab"
                 aria-controls="pills-naxt"
                 aria-selected="true"
               >
                 Нахт тўлов орқали
-              </button>
+              </a>
             </li>
             <li class="nav-item mx-1" role="presentation">
-              <button
-                style="padding: 1px 1px !important"
-                class="btn btn-sm btn-light w-100"
+              <a
+                class="nav-link"
                 id="pills-shot-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-shot"
+                data-mdb-toggle="pill"
+                data-mdb-target="#pills-shot"
                 type="button"
                 role="tab"
                 aria-controls="pills-shot"
@@ -93,7 +91,7 @@
                 "
               >
                 Ҳисоб рақам орқали
-              </button>
+              </a>
             </li>
           </ul>
         </div>
@@ -150,7 +148,7 @@
                       class="btn btn-light btn-sm dropdown-toggle"
                       type="button"
                       id="dropdownMenuClickableInside"
-                      data-bs-toggle="dropdown"
+                      data-mdb-toggle="dropdown"
                       data-bs-auto-close="outside"
                       aria-expanded="false"
                     >
@@ -179,8 +177,8 @@
                           <i
                             v-if="item.children"
                             class="fa-solid fa-angle-down text-right btn btn-sm"
-                            data-bs-toggle="collapse"
-                            :data-bs-target="`#collapse${item.type}`"
+                            data-mdb-toggle="collapse"
+                            :data-mdb-target="`#collapse${item.type}`"
                             aria-expanded="false"
                             :aria-controls="`collapse${item.type}`"
                           ></i>
@@ -605,8 +603,8 @@
                   {{ inc + 1 }}
                   <button
                     class="btn btn-sm"
-                    data-bs-toggle="modal"
-                    data-bs-target="#product_name"
+                    data-mdb-toggle="modal"
+                    data-mdb-target="#product_name"
                     @click="product = item.product"
                   >
                     <i
@@ -732,7 +730,7 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
           ></button>
         </div>

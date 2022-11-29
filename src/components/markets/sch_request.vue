@@ -41,8 +41,8 @@
               </span>
               <button
                 class="btn btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target="#get_quantity_shot"
+                data-mdb-toggle="modal"
+                data-mdb-target="#get_quantity_shot"
                 @click="
                   get_quantity(
                     item.Supplies_by_bank_account.related_id,
@@ -100,8 +100,8 @@
               <button
                 class="btn btn-sm btn-success"
                 @click="get_item(item.Supplies_by_bank_account)"
-                data-bs-toggle="modal"
-                data-bs-target="#accept_shot_request"
+                data-mdb-toggle="modal"
+                data-mdb-target="#accept_shot_request"
               >
                 <i class="fa-solid fa-circle-check text-white"></i>
               </button>
@@ -209,7 +209,7 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
             id="supply__take_shot"
           ></button>
@@ -246,7 +246,7 @@
             <button
               type="button"
               class="btn btn-outline-danger btn-sm"
-              data-bs-dismiss="modal"
+              data-mdb-dismiss="modal"
             >
               <i class="fa-solid fa-circle-xmark"></i>
             </button>
@@ -271,43 +271,43 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
           ></button>
         </div>
         <div class="modal-body">
           <ul
-            class="nav nav-pills nav-fill nav-justified mb-3"
+            class="nav nav-tabs nav-fill nav-justified mb-3"
             id="pills-tab"
             role="tablist"
           >
             <li class="nav-item mx-1" role="presentation">
-              <button
-                class="btn btn-sm btn-light w-100 active"
+              <a
+                class="nav-link active"
                 id="pills-home-quantity2-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-home-quantity2"
+                data-mdb-toggle="pill"
+                data-mdb-target="#pills-home-quantity2"
                 type="button"
                 role="tab"
                 aria-controls="pills-home-quantity2"
                 aria-selected="true"
               >
                 Таъминотлар тарихи
-              </button>
+              </a>
             </li>
             <li class="nav-item mx-1" role="presentation">
-              <button
-                class="btn btn-sm btn-light w-100"
+              <a
+                class="nav-link"
                 id="pills-profile-sh-quantity2-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-profile-sh-quantity2"
+                data-mdb-toggle="pill"
+                data-mdb-target="#pills-profile-sh-quantity2"
                 type="button"
                 role="tab"
                 aria-controls="pills-profile-sh-quantity2"
                 aria-selected="false"
               >
                 Тўловлар тарихи
-              </button>
+              </a>
             </li>
           </ul>
           <div class="tab-content" id="pills-tabContent">

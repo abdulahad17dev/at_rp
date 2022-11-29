@@ -35,8 +35,8 @@
           <td>
             <button
               class="btn btn-sm btn-warning"
-              data-bs-toggle="modal"
-              data-bs-target="#user_put"
+              data-mdb-toggle="modal"
+              data-mdb-target="#user_put"
               @click="items(item)"
             >
               <i class="fa fa-edit text-white"></i>

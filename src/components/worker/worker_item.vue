@@ -50,16 +50,16 @@
             <button
               class="btn btn-sm btn-warning"
               @click="$emit('item', item)"
-              data-bs-toggle="modal"
-              data-bs-target="#worker_put"
+              data-mdb-toggle="modal"
+              data-mdb-target="#worker_put"
             >
               <i class="fa fa-edit text-white"></i>
             </button>
             <button
               class="btn btn-sm btn-primary mx-1"
               @click="$emit('item', item)"
-              data-bs-toggle="modal"
-              data-bs-target="#worker_speciality_add"
+              data-mdb-toggle="modal"
+              data-mdb-target="#worker_speciality_add"
             >
               <i class="fa-solid fa-circle-plus text-white"></i>
             </button>

@@ -3,13 +3,13 @@
     <h5 class="text-center">
       <b class="text-secondary"> {{ name }}</b>
     </h5>
-    <ul class="nav nav-pills nav-fill mb-3" id="pills-tab" role="tablist">
+    <ul class="nav nav-tabs nav-fill mb-3" id="pills-tab" role="tablist">
       <li class="nav-item mx-1" role="presentation">
-        <button
-          class="btn btn-sm w-100 btn-light"
+        <a
+          class="nav-link"
           id="pills-home-tab"
-          data-bs-toggle="pill"
-          data-bs-target="#pills-home"
+          data-mdb-toggle="pill"
+          data-mdb-target="#pills-home"
           type="button"
           role="tab"
           aria-controls="pills-home"
@@ -17,14 +17,14 @@
           @click="smeta = true"
         >
           Смета
-        </button>
+        </a>
       </li>
       <li class="nav-item mx-1" role="presentation">
-        <button
-          class="btn btn-sm w-100 btn-light"
+        <a
+          class="nav-link"
           id="pills-profile-tab"
-          data-bs-toggle="pill"
-          data-bs-target="#pills-profile"
+          data-mdb-toggle="pill"
+          data-mdb-target="#pills-profile"
           type="button"
           role="tab"
           aria-controls="pills-profile"
@@ -32,7 +32,7 @@
           @click="proche_sorov = true"
         >
           Проче сўров
-        </button>
+        </a>
       </li>
     </ul>
     <div class="tab-content" id="pills-tabContent">

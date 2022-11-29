@@ -43,7 +43,7 @@
                 class="btn btn-light btn-sm dropdown-toggle"
                 type="button"
                 id="select_building"
-                data-bs-toggle="dropdown"
+                data-mdb-toggle="dropdown"
                 data-bs-auto-close="outside"
                 aria-expanded="false"
                 @click="
@@ -173,8 +173,8 @@
           <td>
             <button
               class="btn btn-sm btn-success mx-1"
-              data-bs-toggle="modal"
-              data-bs-target="#share_m_warehouse"
+              data-mdb-toggle="modal"
+              data-mdb-target="#share_m_warehouse"
               @click="
                 product = item.Warehouse_products;
                 body.related_id = item.Warehouse_products.id;
@@ -241,7 +241,7 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
             id="share_product"
           ></button>
@@ -277,7 +277,7 @@
                       class="btn btn-light btn-sm dropdown-toggle"
                       type="button"
                       id="warehouse_text"
-                      data-bs-toggle="dropdown"
+                      data-mdb-toggle="dropdown"
                       data-bs-auto-close="outside"
                       aria-expanded="false"
                       @click="
@@ -396,7 +396,7 @@
             <button
               type="button"
               class="btn btn-outline-danger btn-sm"
-              data-bs-dismiss="modal"
+              data-mdb-dismiss="modal"
             >
               <i class="fa-solid fa-circle-xmark"></i>
             </button>

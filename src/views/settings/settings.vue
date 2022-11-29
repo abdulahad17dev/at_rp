@@ -15,16 +15,16 @@
   </div>
   <hr class="" />
 
-  <Dark_mode />
+  <!-- <Dark_mode /> -->
 
   <currentuser class="my-2" />
 </template>
 
 <script>
 import currentuser from "./currentuser.vue";
-import Dark_mode from "./dark_mode.vue";
+// import Dark_mode from "./dark_mode.vue";
 export default {
-  components: { currentuser, Dark_mode },
+  components: { currentuser },
   name: "SettingsItem",
   data() {
     return {

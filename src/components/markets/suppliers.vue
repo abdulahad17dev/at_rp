@@ -57,8 +57,8 @@
             <button
               class="btn btn-sm btn-warning"
               @click="get_item(item.Markets)"
-              data-bs-toggle="modal"
-              data-bs-target="#supplier_put"
+              data-mdb-toggle="modal"
+              data-mdb-target="#supplier_put"
             >
               <i class="fa-solid fa-edit text-white"></i>
             </button>

@@ -76,8 +76,8 @@
             <button
               v-if="item.Transfers.status == false"
               class="btn btn-sm btn-success"
-              data-bs-toggle="modal"
-              data-bs-target="#accept_moneys"
+              data-mdb-toggle="modal"
+              data-mdb-target="#accept_moneys"
               @click="transfer_id = item.Transfers.id"
             >
               <i class="fa-solid fa-circle-check"></i>

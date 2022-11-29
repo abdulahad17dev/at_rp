@@ -1,58 +1,92 @@
 <template>
-  <div class="login">
-    <div class="dark_img"></div>
-    <div class="container login_container">
+  <div class="content">
+    <div class="container">
       <div class="row">
-        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-          <div class="card login_card border-0 bg-lite shadow rounded-3 my-5">
-            <div class="card-body p-4 p-sm-5">
-              <div class="brand-logo d-flex justify-content-center">
-                <img
-                  class="img-responsive"
-                  src="https://constructionproject.crud.uz/uploaded_files/frontend_background.jpg"
-                  width="150"
-                  alt=""
-                />
+        <div class="col-md-6 d-flex justify-content-center">
+          <img
+            src="https://constructionproject.crud.uz/uploaded_files/frontend_login_bg.gif"
+            alt="Image"
+            class="img-fluid"
+            style="display: block; margin: auto"
+          />
+        </div>
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <div class="mb-4 text-center">
+                <h3>Хуш келибсиз !</h3>
+                <p class="mb-4">Кириш учун ушбу формани тўлдиринг.</p>
               </div>
-              <h4 class="card-title text-center mb-3 mt-2 fw-light fs-5">
-                Хуш келибсиз !
-              </h4>
-              <form @submit.prevent="SignIn">
-                <div class="form-floating mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="floatingInput"
-                    placeholder="Логин"
-                    v-model="username"
-                    autocomplete="off"
-                    @focusout="focusout_username($event.target.value)"
-                  />
-                  <label for="floatingInput">Логин</label>
+              <form @submit.prevent="login">
+                <div class="form-group first field--not-empty">
+                  <label for="username">Логин</label>
+                  <div class="input-group flex-nowrap">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="username"
+                      placeholder="Логин"
+                      v-model="username"
+                      autocomplete="on"
+                      required
+                    />
+                    <div class="input-group-text" style="width: 45px">
+                      <i class="fa-solid fa-at"></i>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-floating mb-3">
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="floatingPassword"
-                    placeholder="Парол"
-                    v-model="password"
-                    autocomplete="off"
-                    @focusout="focusout_password($event.target.value)"
-                  />
-                  <label for="floatingPassword">Парол</label>
+                <div class="form-group last mb-4 field--not-empty">
+                  <label for="password">Парол</label>
+                  <div class="input-group flex-nowrap">
+                    <input
+                      :type="type"
+                      class="form-control"
+                      id="password"
+                      placeholder="Парол"
+                      v-model="password"
+                      autocomplete="on"
+                      required
+                    />
+                    <div
+                      class="input-group-text"
+                      style="cursor: pointer; width: 45px; text-align: center"
+                      @click="toggle"
+                    >
+                      <span v-if="type == 'password'">
+                        <i class="fa-regular fa-eye"></i>
+                      </span>
+                      <span v-else>
+                        <i class="fa-regular fa-eye-slash"></i>
+                      </span>
+                    </div>
+                  </div>
                 </div>
-
-                <div class="d-grid">
-                  <button
-                    class="btn btn-dark btn-login text-uppercase fw-bold"
-                    type="submit"
-                    id="login_button"
+                <!-- <div class="d-flex mb-5 align-items-center">
+                  <label class="control control--checkbox mb-0"
+                    ><span class="caption">Remember me</span>
+                    <input type="checkbox" checked="checked" />
+                    <div class="control__indicator"></div>
+                  </label>
+                  <span class="ml-auto"
+                    ><a href="#" class="forgot-pass">Forgot Password</a></span
                   >
-                    Кириш
-                  </button>
-                </div>
-                <hr class="my-4" />
+                </div> -->
+                <button
+                  type="submit"
+                  id="login_button"
+                  class="btn btn-block btn-primary"
+                  :disabled="!username || !password"
+                >
+                  <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                  Кириш
+                  <div
+                    class="spinner-border spinner-border-sm mx-1"
+                    role="status"
+                    v-if="loading"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </button>
               </form>
             </div>
           </div>
@@ -71,154 +105,67 @@ export default {
     return {
       username: "",
       password: "",
+      loading: false,
+      type: "password",
+      icon: "fa-regular fa-eye",
     };
   },
   methods: {
-    SignIn() {
-      if (!this.username && this.password) {
-        document
-          .getElementById("floatingPassword")
-          .classList.remove("is-invalid");
-        document.getElementById("floatingInput").classList.add("is-invalid");
-        document.getElementById("floatingPassword").classList.add("invalid");
-      } else if (this.username && !this.password) {
-        document.getElementById("floatingInput").classList.remove("is-invalid");
-        document.getElementById("floatingPassword").classList.add("is-invalid");
-        document.getElementById("floatingInput").classList.add("invalid");
-      } else if (!this.username && !this.password) {
-        document.getElementById("floatingInput").classList.add("is-invalid");
-        document.getElementById("floatingPassword").classList.add("is-invalid");
-      } else {
-        document
-          .getElementById("floatingPassword")
-          .classList.remove("is-invalid");
-        document.getElementById("floatingInput").classList.remove("is-invalid");
-        document.getElementById("floatingPassword").classList.add("invalid");
-        document.getElementById("floatingInput").classList.add("invalid");
-
-        this.$store.dispatch("setLoading", { isLoading: true });
-        document.getElementById("login_button").disabled = true;
-        let params = new URLSearchParams();
-        params.append("username", this.username);
-        params.append("password", this.password);
-        login(params)
-          .then((res) => {
-            localStorage.setItem("access_token", res.data.access_token);
-            localStorage.setItem("role", res.data.role);
-            localStorage.setItem("user_id", res.data.id);
-            window.location.href = "/menu";
-          })
-          .finally(() => {
-            this.$store.dispatch("setLoading", { isLoading: false });
-            document.getElementById("login_button").disabled = false;
-          })
-          .catch((err) => {
-            this.username = "";
-            this.password = "";
-            document
-              .getElementById("floatingPassword")
-              .classList.remove("invalid");
-            document
-              .getElementById("floatingInput")
-              .classList.remove("invalid");
-
-            document
-              .getElementById("floatingPassword")
-              .classList.remove("is-invalid");
-            document
-              .getElementById("floatingInput")
-              .classList.remove("is-invalid");
-
-            catchError(err);
-            document.getElementById("login_button").disabled = false;
-          });
-      }
+    login() {
+      this.loading = true;
+      document.getElementById("login_button").disabled = true;
+      let params = new URLSearchParams();
+      params.append("username", this.username);
+      params.append("password", this.password);
+      login(params)
+        .then((res) => {
+          localStorage.setItem("access_token", res.data.access_token);
+          localStorage.setItem("role", res.data.role);
+          localStorage.setItem("user_id", res.data.id);
+          window.location.href = "/menu";
+        })
+        .finally(() => {
+          this.loading = false;
+          document.getElementById("login_button").disabled = false;
+        })
+        .catch((err) => {
+          catchError(err);
+          document.getElementById("login_button").disabled = false;
+        });
     },
-    focusout_username(e) {
-      if (e.length > 0) {
-        document.getElementById("floatingInput").classList.remove("is-invalid");
-        document.getElementById("floatingInput").classList.add("invalid");
-      } else {
-        document.getElementById("floatingInput").classList.remove("invalid");
-        document.getElementById("floatingInput").classList.add("is-invalid");
-      }
-    },
-    focusout_password(e) {
-      if (e.length > 0) {
-        document
-          .getElementById("floatingPassword")
-          .classList.remove("is-invalid");
-        document.getElementById("floatingPassword").classList.add("invalid");
-      } else {
-        document.getElementById("floatingPassword").classList.remove("invalid");
-        document.getElementById("floatingPassword").classList.add("is-invalid");
-      }
+    toggle() {
+      this.type = this.type === "password" ? "text" : "password";
     },
   },
   mounted() {
     console.clear();
     localStorage.removeItem("role");
     localStorage.removeItem("access_token");
-    document.getElementById("floatingInput").focus();
-    document
-      .getElementById("floatingInput")
-      .addEventListener("focusout", () => {
-        document.getElementById("floatingInput").classList.add("is-invalid");
-      });
-    document
-      .getElementById("floatingPassword")
-      .addEventListener("focusout", () => {
-        document.getElementById("floatingPassword").classList.add("is-invalid");
-      });
+    document.getElementById("username").focus();
   },
 };
 </script>
 
 <style lang="scss">
-.login {
-  background: url(https://constructionproject.crud.uz/uploaded_files/frontend_background.jpg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+.content {
+  overflow-y: auto;
   height: 100vh;
-  position: relative;
 }
 
-.btn-login {
-  font-size: 0.9rem;
-  letter-spacing: 0.05rem;
-}
-.login_container {
+.container {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-.login_card {
-  opacity: 0.9;
-  background-color: #f8f9fa !important;
+.contents .row {
+  margin: 4rem 0;
 }
 
-.img-responsive {
-  border-radius: 10px;
-}
-
-.dark_image {
-  display: none;
-}
-
-.invalid {
-  background-repeat: no-repeat;
-  background-position: right calc(0.375em + 0.1875rem) center;
-  background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
-  border-color: green !important;
-  padding-right: calc(1.5em + 0.75rem);
-  background-image: url(https://constructionproject.crud.uz/uploaded_files/frontend_check_icon.svg) !important;
-}
-
-.invalid:active,
-.invalid:focus {
-  box-shadow: 0 0 0 4px rgba(0, 128, 0, 0.3) !important;
+@media (max-width: 768px) {
+  .contents .row {
+    margin: 0 0;
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <button class="btn btn-dark back btn-lg rounded-circle" @click="back()">
+  <button class="btn btn-dark btn-lg back btn-floating" @click="back()">
     <i class="fa-solid fa-arrow-left"></i>
   </button>
 

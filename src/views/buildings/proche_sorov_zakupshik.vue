@@ -2,16 +2,16 @@
   <Header_item />
 
   <ul
-    class="nav nav-pills nav-fill nav-jusitified mb-3"
+    class="nav nav-tabs nav-fill nav-jusitified mb-3"
     id="pills-tab"
     role="tablist"
   >
     <li class="nav-item d-flex mx-1" role="presentation">
-      <button
-        class="btn btn-sm btn-light shadow-sm w-100"
+      <a
+        class="nav-link w-100"
         id="pills-home-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-home"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-home"
         type="button"
         role="tab"
         aria-controls="pills-home"
@@ -23,14 +23,14 @@
         "
       >
         Проче сўровлар
-      </button>
+      </a>
     </li>
     <li class="nav-item d-flex mx-1" role="presentation">
-      <button
-        class="btn btn-sm btn-light shadow-sm w-100"
+      <a
+        class="nav-link w-100"
         id="pills-profile-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-profile"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-profile"
         type="button"
         role="tab"
         aria-controls="pills-profile"
@@ -38,7 +38,7 @@
         @click="smeta = true"
       >
         Сметадаги материаллар
-      </button>
+      </a>
     </li>
   </ul>
   <div class="tab-content" id="pills-tabContent">
@@ -99,7 +99,7 @@
                     class="btn btn-light btn-sm dropdown-toggle"
                     type="button"
                     id="select_bank_building"
-                    data-bs-toggle="dropdown"
+                    data-mdb-toggle="dropdown"
                     data-bs-auto-close="outside"
                     aria-expanded="false"
                     @click="
@@ -236,8 +236,8 @@
                 {{ inc + 1 }}
                 <button
                   class="btn btn-sm"
-                  data-bs-toggle="modal"
-                  data-bs-target="#users"
+                  data-mdb-toggle="modal"
+                  data-mdb-target="#users"
                   @click="users = item"
                 >
                   <i
@@ -278,8 +278,8 @@
                     item.Proche_sorovlar.status == 'zakupshikda_proche' &&
                     !checked.length
                   "
-                  data-bs-toggle="modal"
-                  data-bs-target="#accept_request"
+                  data-mdb-toggle="modal"
+                  data-mdb-target="#accept_request"
                 >
                   <i class="fa-solid fa-circle-check text-white"></i>
                 </button>
@@ -305,10 +305,10 @@
             class="btn btn-sm btn-outline-success w-100"
             style="padding: 2px !important"
             id="accept_proche"
-            data-bs-toggle="modal"
-            data-bs-target="#accept_request"
+            data-mdb-toggle="modal"
+            data-mdb-target="#accept_request"
           >
-            <i class="fa-solid fa-circle-check"></i> қабул қилиш
+            <i class="fa-solid fa-circle-check"></i> бириктириш
           </button>
         </div>
       </div>
@@ -393,7 +393,7 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
           ></button>
         </div>

@@ -17,8 +17,8 @@
           <td>
             <button
               class="btn btn-primary btn-sm"
-              data-bs-toggle="modal"
-              data-bs-target="#product_composition"
+              data-mdb-toggle="modal"
+              data-mdb-target="#product_composition"
               @click="select_id(item.id, item)"
             >
               <i class="fa-solid fa-circle-plus"></i>
@@ -46,7 +46,7 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
           ></button>
         </div>

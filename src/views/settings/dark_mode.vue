@@ -1,27 +1,11 @@
 <template>
-  <details>
-    <summary><strong>Тизим</strong></summary>
-    <div class="row gap-2 mode" @click="nightMode = !nightMode">
-      <div class="col-5 mx-auto">
-        <h5 class="my-3">тунги режим</h5>
-      </div>
-      <div class="col-5 mx-auto">
-        <div class="toggle-wrapper float-end">
-          <label class="toggle">
-            <input
-              type="checkbox"
-              @change="nightMode = !nightMode"
-              id="checked"
-            />
-            <span class="toggler round">
-              <span id="sun">☀️</span>
-              <span id="moon">🌙</span>
-            </span>
-          </label>
-        </div>
-      </div>
-    </div>
-  </details>
+  <button
+    type="button"
+    class="btn btn-dark btn-floating"
+    @click="nightMode = !nightMode"
+  >
+    <i class="fa-solid fa-moon" id="icon"></i>
+  </button>
 </template>
 
 <script>
@@ -37,11 +21,17 @@ export default {
       if (this.nightMode == true) {
         localStorage.setItem("nightMode", JSON.stringify(this.nightMode));
         document.querySelector("#app").classList.remove("dark");
-        document.querySelector("#checked").checked = false;
+        document.querySelector("#icon").classList.remove("fa-sun");
+        document.querySelector("#icon").classList.add("fa-moon");
+        document.querySelector("#icon").classList.remove("text-warning");
+        document.querySelector("#icon").classList.add("text-white");
       } else if (this.nightMode == false) {
         localStorage.setItem("nightMode", JSON.stringify(this.nightMode));
         document.querySelector("#app").classList.add("dark");
-        document.querySelector("#checked").checked = true;
+        document.querySelector("#icon").classList.remove("fa-moon");
+        document.querySelector("#icon").classList.add("fa-sun");
+        document.querySelector("#icon").classList.remove("text-white");
+        document.querySelector("#icon").classList.add("text-warning");
       }
     },
   },

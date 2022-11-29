@@ -2,16 +2,16 @@
   <Header_item :balance="balance" />
 
   <ul
-    class="nav nav-pills navv-fill nav-justified mb-3"
+    class="nav nav-tabs navv-fill nav-justified mb-3"
     id="pills-tab"
     role="tablist"
   >
     <li class="nav-item mx-1" role="presentation">
-      <button
-        class="btn btn-sm w-100 btn-light shadow-sm"
+      <a
+        class="nav-link"
         id="pills-profile-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-profile"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-profile"
         type="button"
         role="tab"
         aria-controls="pills-profile"
@@ -19,14 +19,14 @@
         @click="accept = true"
       >
         кассирлардан пул қабул қилиш
-      </button>
+      </a>
     </li>
     <li class="nav-item mx-1" role="presentation">
-      <button
-        class="btn btn-sm w-100 btn-light shadow-sm"
+      <a
+        class="nav-link"
         id="pills-home-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-home"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-home"
         type="button"
         role="tab"
         aria-controls="pills-home"
@@ -46,7 +46,7 @@
         "
       >
         кассирларга пул ўтказиш
-      </button>
+      </a>
     </li>
   </ul>
   <div class="tab-content" id="pills-tabContent">
@@ -103,8 +103,8 @@
               <button
                 class="btn btn-sm btn-outline-secondary"
                 type="button"
-                data-bs-toggle="modal"
-                data-bs-target="#pay_cashier"
+                data-mdb-toggle="modal"
+                data-mdb-target="#pay_cashier"
               >
                 <i class="fa-solid fa-money-bill-transfer"></i>
               </button>
@@ -205,7 +205,7 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
             id="pay_cashier_c"
           ></button>
@@ -240,7 +240,7 @@
                     class="btn btn-light btn-sm dropdown-toggle"
                     type="button"
                     id="cashier_text"
-                    data-bs-toggle="dropdown"
+                    data-mdb-toggle="dropdown"
                     data-bs-auto-close="outside"
                     aria-expanded="false"
                     @click="
@@ -352,7 +352,7 @@
             <button
               type="button"
               class="btn btn-outline-danger btn-sm"
-              data-bs-dismiss="modal"
+              data-mdb-dismiss="modal"
             >
               <i class="fa-solid fa-circle-xmark"></i>
             </button>

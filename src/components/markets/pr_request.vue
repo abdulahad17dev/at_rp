@@ -41,7 +41,7 @@
                   class="btn btn-light btn-sm dropdown-toggle"
                   type="button"
                   id="select_bank_building"
-                  data-bs-toggle="dropdown"
+                  data-mdb-toggle="dropdown"
                   data-bs-auto-close="outside"
                   aria-expanded="false"
                   @click="
@@ -166,8 +166,8 @@
               </span>
               <button
                 class="btn btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target="#get_quantity"
+                data-mdb-toggle="modal"
+                data-mdb-target="#get_quantity"
                 @click="get_quantity(item.Proche_sorovlar.id)"
               >
                 <i
@@ -207,8 +207,8 @@
             <td>
               <button
                 class="btn btn-sm btn-success"
-                data-bs-toggle="modal"
-                data-bs-target="#accept_proche_sorov"
+                data-mdb-toggle="modal"
+                data-mdb-target="#accept_proche_sorov"
                 @click="get_item(item.Proche_sorovlar)"
               >
                 <i class="fa-solid fa-circle-check text-white"></i>
@@ -291,7 +291,7 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
             id="supply_add"
           ></button>
@@ -392,7 +392,7 @@
             <button
               type="button"
               class="btn btn-outline-danger btn-sm"
-              data-bs-dismiss="modal"
+              data-mdb-dismiss="modal"
             >
               <i class="fa-solid fa-circle-xmark"></i>
             </button>
@@ -417,43 +417,43 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
           ></button>
         </div>
         <div class="modal-body">
           <ul
-            class="nav nav-pills nav-fill nav-justified mb-3"
+            class="nav nav-tabs nav-fill nav-justified mb-3"
             id="pills-tab"
             role="tablist"
           >
             <li class="nav-item mx-1" role="presentation">
-              <button
-                class="btn btn-sm btn-light w-100 active"
+              <a
+                class="nav-link active"
                 id="pills-home-quantity-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-home-quantity"
+                data-mdb-toggle="pill"
+                data-mdb-target="#pills-home-quantity"
                 type="button"
                 role="tab"
                 aria-controls="pills-home-quantity"
                 aria-selected="true"
               >
                 Нахт ва қарз тўлов орқали
-              </button>
+              </a>
             </li>
             <li class="nav-item mx-1" role="presentation">
-              <button
-                class="btn btn-sm btn-light w-100"
+              <a
+                class="nav-link"
                 id="pills-profile-sh-quantity-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-profile-sh-quantity"
+                data-mdb-toggle="pill"
+                data-mdb-target="#pills-profile-sh-quantity"
                 type="button"
                 role="tab"
                 aria-controls="pills-profile-sh-quantity"
                 aria-selected="false"
               >
                 Ҳисоб рақам орқали
-              </button>
+              </a>
             </li>
           </ul>
           <div class="tab-content" id="pills-tabContent">

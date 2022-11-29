@@ -121,8 +121,8 @@
           <div class="d-flex justify-content-center zoom">
             <button
               class="btn btn-sm btn-primary mx-1"
-              data-bs-toggle="modal"
-              data-bs-target="#foremans_warehousemans"
+              data-mdb-toggle="modal"
+              data-mdb-target="#foremans_warehousemans"
               @click="select_id(item.Buildings.id, item.Buildings.name, 1)"
             >
               <i class="fa-solid fa-users"></i>
@@ -301,8 +301,8 @@
             <div class="coll mx-1">
               <button
                 class="btn btn-sm btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#foremans_warehousemans"
+                data-mdb-toggle="modal"
+                data-mdb-target="#foremans_warehousemans"
                 @click="select_id(item.Buildings.id, item.Buildings.name, 1)"
               >
                 <i class="fa-solid fa-users"></i>
@@ -322,8 +322,8 @@
             <div class="coll mx-1">
               <button
                 class="btn btn-sm btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#building_document"
+                data-mdb-toggle="modal"
+                data-mdb-target="#building_document"
                 @click="select_id(item.Buildings.id, item.Buildings.name, 2)"
               >
                 <i class="fa-solid fa-file-arrow-up"></i>
@@ -364,8 +364,8 @@
             <div class="coll mx-1" v-if="item.Buildings.status == 'wait'">
               <button
                 class="btn btn-sm btn-warning"
-                data-bs-toggle="modal"
-                data-bs-target="#building_put"
+                data-mdb-toggle="modal"
+                data-mdb-target="#building_put"
                 @click="items(item.Buildings)"
               >
                 <i class="fa fa-edit text-white"></i>
@@ -441,8 +441,8 @@
           <td>
             <button
               class="btn btn-sm btn-warning mx-1"
-              data-bs-toggle="modal"
-              data-bs-target="#building_put"
+              data-mdb-toggle="modal"
+              data-mdb-target="#building_put"
               @click="items(item.Buildings.building)"
               v-if="item.Buildings.status == 'wait' && role == 'pto'"
             >
@@ -458,8 +458,8 @@
             </button>
             <button
               class="btn btn-sm btn-primary mx-1"
-              data-bs-toggle="modal"
-              data-bs-target="#foremans_warehousemans"
+              data-mdb-toggle="modal"
+              data-mdb-target="#foremans_warehousemans"
               @click="select_id(item.Buildings.id)"
               v-if="role == 'admin' || role == 'pto'"
             >
@@ -601,7 +601,7 @@
           <button
             type="button"
             class="btn-close float-end"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
           ></button>
         </div>

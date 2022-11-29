@@ -22,8 +22,8 @@
             <button
               class="btn btn-warning btn-sm"
               @click="$emit('get_item', item)"
-              data-bs-toggle="modal"
-              data-bs-target="#fixed_expense_put"
+              data-mdb-toggle="modal"
+              data-mdb-target="#fixed_expense_put"
             >
               <i class="fa-solid fa-edit text-white"></i>
             </button>

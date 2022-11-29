@@ -6,16 +6,16 @@
   </h4>
 
   <ul
-    class="nav nav-pills nav-fill nav-justified mb-3 row"
+    class="nav nav-tabs nav-fill nav-justified mb-3 row"
     id="pills-tab"
     role="tablist"
   >
     <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
-      <button
-        class="btn btn-sm btn-light shadow-sm w-100"
+      <a
+        class="nav-link"
         id="pills-home-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-home"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-home"
         type="button"
         role="tab"
         aria-controls="pills-home"
@@ -23,14 +23,14 @@
         @click="accept_money = true"
       >
         ҳисоб рақамига қабул қилинган пуллар
-      </button>
+      </a>
     </li>
     <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
-      <button
-        class="btn btn-sm btn-light shadow-sm w-100"
+      <a
+        class="nav-link"
         id="pills-profile-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-profile"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-profile"
         type="button"
         role="tab"
         aria-controls="pills-profile"
@@ -38,14 +38,14 @@
         @click="transfer_money_from = true"
       >
         ҳисоб рақамидан ўтказилган пуллар
-      </button>
+      </a>
     </li>
     <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
-      <button
-        class="btn btn-sm btn-light shadow-sm w-100"
+      <a
+        class="nav-link"
         id="pills-contact-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-contact"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-contact"
         type="button"
         role="tab"
         aria-controls="pills-contact"
@@ -53,14 +53,14 @@
         @click="transfer_money_to = true"
       >
         ҳисоб рақамига ўтказилган пуллар
-      </button>
+      </a>
     </li>
     <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
-      <button
-        class="btn btn-sm btn-light shadow-sm w-100"
+      <a
+        class="nav-link"
         id="pills-home-tab2"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-home2"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-home2"
         type="button"
         role="tab"
         aria-controls="pills-home2"
@@ -68,14 +68,14 @@
         @click="transfer_to_cashier = true"
       >
         кассирга ўтказилган пуллар
-      </button>
+      </a>
     </li>
     <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
-      <!-- <button
-        class="btn btn-sm btn-light shadow-sm w-100"
+      <!-- <a
+        class="nav-link"
         id="pills-profile-tab2"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-profile2"
+         data-mdb-toggle="pill"
+        data-mdb-target="#pills-profile2"
         type="button"
         role="tab"
         aria-controls="pills-profile2"
@@ -83,12 +83,12 @@
         @click="transfer_f_expense = true"
       >
         доимий чиқим тарихи
-      </button> -->
-      <button
-        class="btn btn-sm btn-light shadow-sm w-100"
+      </a> -->
+      <a
+        class="nav-link"
         id="pills-profile-tab2"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-profile2"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-profile2"
         type="button"
         role="tab"
         aria-controls="pills-profile2"
@@ -96,14 +96,14 @@
         @click="paid_moneys = true"
       >
         таъминот учун тўловлар
-      </button>
+      </a>
     </li>
     <li class="col-lg-4 col-md-6 col-sm-12 my-1 col-xxl-4" role="presentation">
-      <!-- <button
-        class="btn btn-sm btn-light shadow-sm w-100"
+      <!-- <a
+        class="nav-link"
         id="pills-contact-tab2"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-contact2"
+         data-mdb-toggle="pill"
+        data-mdb-target="#pills-contact2"
         type="button"
         role="tab"
         aria-controls="pills-contact2"
@@ -111,7 +111,7 @@
         @click="transfer_v_expense = true"
       >
         бир марталик чиқим тарихи
-      </button> -->
+      </a> -->
     </li>
   </ul>
   <div class="tab-content" id="pills-tabContent">

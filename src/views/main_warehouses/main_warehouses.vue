@@ -25,8 +25,8 @@
           v-if="role != 'admin'"
           class="btn btn-outline-secondary"
           type="button"
-          data-bs-toggle="modal"
-          data-bs-target="#main_warehouse_add"
+          data-mdb-toggle="modal"
+          data-mdb-target="#main_warehouse_add"
           @click="get_position"
         >
           <i class="fa-solid fa-circle-plus"></i>

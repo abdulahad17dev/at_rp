@@ -28,8 +28,8 @@
               v-if="role != 'admin'"
               class="btn btn-sm btn-warning"
               @click="$emit('item', item)"
-              data-bs-toggle="modal"
-              data-bs-target="#main_warehouse_put"
+              data-mdb-toggle="modal"
+              data-mdb-target="#main_warehouse_put"
             >
               <i class="fa fa-edit text-white"></i>
             </button>

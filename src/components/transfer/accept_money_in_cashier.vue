@@ -8,7 +8,7 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
             id="accept_money"
           ></button>
@@ -23,7 +23,7 @@
                     class="btn btn-light btn-sm dropdown-toggle"
                     type="button"
                     id="accept_money_text"
-                    data-bs-toggle="dropdown"
+                    data-mdb-toggle="dropdown"
                     data-bs-auto-close="outside"
                     aria-expanded="false"
                     @click="
@@ -153,7 +153,7 @@
             <button
               type="button"
               class="btn btn-outline-danger btn-sm"
-              data-bs-dismiss="modal"
+              data-mdb-dismiss="modal"
             >
               <i class="fa-solid fa-circle-xmark"></i>
             </button>

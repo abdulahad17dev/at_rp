@@ -1,16 +1,16 @@
 <template>
   <Header_item :name="this.$route.query.name" />
   <ul
-    class="nav nav-pills nav-justified nav-fill mb-3"
+    class="nav nav-tabs nav-justified nav-fill mb-3"
     id="pills-tab"
     role="tablist"
   >
     <li class="nav-item mx-1" role="presentation">
-      <button
-        class="btn btn-sm btn-light w-100 active"
+      <a
+        class="nav-link active"
         id="pills-home-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-home"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-home"
         type="button"
         role="tab"
         aria-controls="pills-home"
@@ -20,14 +20,14 @@
         "
       >
         сметадаги ишлар
-      </button>
+      </a>
     </li>
     <li class="nav-item mx-1" role="presentation">
-      <button
-        class="btn btn-sm btn-light w-100"
+      <a
+        class="nav-link"
         id="pills-profile-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#pills-profile"
+        data-mdb-toggle="pill"
+        data-mdb-target="#pills-profile"
         type="button"
         role="tab"
         aria-controls="pills-profile"
@@ -48,7 +48,7 @@
         "
       >
         сметадан ташқари ишлар
-      </button>
+      </a>
     </li>
   </ul>
   <div class="tab-content" id="pills-tabContent">
@@ -187,8 +187,8 @@
                     item.Smeta.status == 're-check'
                   "
                   @click="work_id = item.Smeta.id"
-                  data-bs-toggle="modal"
-                  data-bs-target="#confirm_modal"
+                  data-mdb-toggle="modal"
+                  data-mdb-target="#confirm_modal"
                 >
                   <i class="fa-solid fa-circle-check"></i>
                 </button>
@@ -196,8 +196,8 @@
                   class="btn btn-sm btn-primary mx-1"
                   v-if="item.Smeta.status == 'wait'"
                   @click="work_id = item.Smeta.id"
-                  data-bs-toggle="modal"
-                  data-bs-target="#recheck_modal"
+                  data-mdb-toggle="modal"
+                  data-mdb-target="#recheck_modal"
                 >
                   <i class="fa-solid fa-rotate"></i>
                 </button>
@@ -426,8 +426,8 @@
                     item.Other_works.status == 're-check'
                   "
                   @click="work_id = item.Other_works.id"
-                  data-bs-toggle="modal"
-                  data-bs-target="#confirm_modal"
+                  data-mdb-toggle="modal"
+                  data-mdb-target="#confirm_modal"
                 >
                   <i class="fa-solid fa-circle-check"></i>
                 </button>
@@ -435,8 +435,8 @@
                   class="btn btn-sm btn-primary mx-1"
                   v-if="item.Other_works.status == 'wait'"
                   @click="work_id = item.Other_works.id"
-                  data-bs-toggle="modal"
-                  data-bs-target="#recheck_modal"
+                  data-mdb-toggle="modal"
+                  data-mdb-target="#recheck_modal"
                 >
                   <i class="fa-solid fa-rotate"></i>
                 </button>
@@ -564,7 +564,7 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
             id="close"
           ></button>
@@ -625,7 +625,7 @@
             <button
               type="button"
               class="btn btn-outline-danger btn-sm"
-              data-bs-dismiss="modal"
+              data-mdb-dismiss="modal"
             >
               <i class="fa-solid fa-circle-xmark"></i>
             </button>
@@ -648,7 +648,7 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            data-mdb-dismiss="modal"
             aria-label="Close"
             id="close2"
           ></button>
@@ -701,7 +701,7 @@
             <button
               type="button"
               class="btn btn-outline-danger btn-sm"
-              data-bs-dismiss="modal"
+              data-mdb-dismiss="modal"
             >
               <i class="fa-solid fa-circle-xmark"></i>
             </button>
