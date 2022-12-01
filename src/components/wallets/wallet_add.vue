@@ -17,10 +17,10 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
-                <label for="name"> Номи: </label>
+                <label for="name8"> Номи: </label>
                 <input
                   type="text"
-                  id="name"
+                  id="name8"
                   class="form-control form-control-sm"
                   v-model="body.name"
                   required

@@ -919,7 +919,7 @@ table {
 }
 
 div.row_building {
-  max-height: 70vh;
+  max-height: 68vh;
   overflow: auto;
 }
 

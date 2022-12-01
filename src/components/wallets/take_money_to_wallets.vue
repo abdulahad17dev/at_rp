@@ -60,7 +60,7 @@
               <div class="modal-body">
                 <div class="row gap-2">
                   <div class="col-10 mx-auto">
-                    <label for="summa">
+                    <label for="summa4">
                       Сумма:
                       <span class="text-primary"
                         >{{ new Intl.NumberFormat().format(body.money) }}
@@ -69,7 +69,7 @@
                     >
                     <div class="input-group input-group-sm">
                       <input
-                        id="summa"
+                        id="summa4"
                         type="number"
                         step="any"
                         class="form-control form-control-sm"
@@ -81,9 +81,9 @@
                     </div>
                   </div>
                   <div class="col-10 mx-auto">
-                    <label for="comment"> Изох: </label>
+                    <label for="comment8"> Изох: </label>
                     <textarea
-                      id="comment"
+                      id="comment8"
                       class="form-control form-control-sm"
                       placeholder="Изох"
                       v-model="body.comment"
@@ -120,7 +120,7 @@
               <div class="modal-body">
                 <div class="row gap-2">
                   <div class="col-10 mx-auto">
-                    <label for="summa2">
+                    <label for="summa5">
                       Сумма:
                       <span class="text-primary"
                         >{{ new Intl.NumberFormat().format(give_money.money) }}
@@ -129,7 +129,7 @@
                     </label>
                     <div class="input-group input-group-sm">
                       <input
-                        id="summa2"
+                        id="summa5"
                         type="number"
                         step="any"
                         class="form-control form-control-sm"
@@ -141,9 +141,9 @@
                     </div>
                   </div>
                   <div class="col-10 mx-auto">
-                    <label for="comment2"> Изох: </label>
+                    <label for="comment9"> Изох: </label>
                     <textarea
-                      id="comment2"
+                      id="comment9"
                       class="form-control form-control-sm"
                       placeholder="Изох"
                       v-model="give_money.comment"

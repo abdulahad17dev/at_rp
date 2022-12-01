@@ -228,7 +228,7 @@ div.table_product_composition {
 }
 
 div.product {
-  max-height: 70vh;
+  max-height: 66vh;
 }
 
 @media (max-width: 500px) {

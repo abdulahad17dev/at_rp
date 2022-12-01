@@ -119,7 +119,7 @@ export default {
       search: "",
       lat: "",
       long: "",
-      status: "wait",
+      status: "start",
       role: localStorage.getItem("role"),
     };
   },

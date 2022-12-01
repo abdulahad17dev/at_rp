@@ -4,7 +4,7 @@
       <thead class="">
         <tr>
           <th style="width: 10%">№</th>
-          <th style="width: 30%">Исм</th>
+          <th style="width: 30%">Номи</th>
           <th style="width: 30%">Баланс</th>
           <th style="width: 30%"></th>
         </tr>
@@ -19,6 +19,7 @@
           </td>
           <td>
             <button
+              v-if="role != 'admin'"
               class="btn btn-sm btn-warning"
               @click="$emit('item', item)"
               data-mdb-toggle="modal"
@@ -27,6 +28,7 @@
               <i class="fa fa-edit text-white"></i>
             </button>
             <button
+              v-if="role != 'admin'"
               class="btn btn-sm btn-primary mx-1"
               @click="$emit('get_w_id', item.id, item.name)"
               data-mdb-toggle="modal"
@@ -58,6 +60,11 @@ export default {
   props: ["data"],
   emits: ["item", "get_w_id"],
   components: { Format_numbers },
+  data() {
+    return {
+      role: localStorage.getItem("role"),
+    };
+  },
 };
 </script>
 

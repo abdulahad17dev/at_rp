@@ -17,10 +17,10 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
-                <label for="name"> Номи: </label>
+                <label for="name1"> Номи: </label>
                 <input
                   type="text"
-                  id="name"
+                  id="name1"
                   class="form-control form-control-sm"
                   v-model="data.name"
                   required
@@ -28,7 +28,7 @@
                 />
               </div>
               <div class="col-10 mx-auto">
-                <label for="budget">
+                <label for="budget1">
                   Бюджет:
                   <span class="text-primary"
                     >{{ new Intl.NumberFormat().format(data.budget) }} сўм</span
@@ -37,7 +37,7 @@
                 <div class="input-group input-group-sm">
                   <input
                     type="number"
-                    id="budget"
+                    id="budget1"
                     class="form-control form-control-sm"
                     v-model="data.budget"
                     required
@@ -49,10 +49,10 @@
                 </div>
               </div>
               <div class="col-10 mx-auto">
-                <label for="address"> Манзил: </label>
+                <label for="address1"> Манзил: </label>
                 <input
                   type="text"
-                  id="address"
+                  id="address1"
                   class="form-control form-control-sm"
                   v-model="data.address"
                   required
@@ -60,20 +60,20 @@
                 />
               </div>
               <div class="col-10 mx-auto">
-                <label for="start_date"> Бошлаш санаси: </label>
+                <label for="start_date1"> Бошлаш санаси: </label>
                 <input
                   type="date"
-                  id="start_date"
+                  id="start_date1"
                   class="form-control form-control-sm"
                   v-model="data.start_date"
                   required
                 />
               </div>
               <div class="col-10 mx-auto">
-                <label for="end_date"> Тугаш санаси: </label>
+                <label for="end_date1"> Тугаш санаси: </label>
                 <input
                   type="date"
-                  id="end_date"
+                  id="end_date1"
                   class="form-control form-control-sm"
                   v-model="data.end_date"
                   required

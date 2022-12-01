@@ -22,9 +22,9 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
-                <label for="expense_name">Чиқим номи: </label>
+                <label for="expense_name1">Чиқим номи: </label>
                 <input
-                  id="expense_name"
+                  id="expense_name1"
                   type="text"
                   class="form-control form-control-sm"
                   placeholder="Доимий чиқим номи"
@@ -33,9 +33,9 @@
                 />
               </div>
               <div class="col-10 mx-auto">
-                <label for="expense_role">Рухсат этилган ихтисослик</label>
+                <label for="expense_role1">Рухсат этилган ихтисослик</label>
                 <select
-                  id="expense_role"
+                  id="expense_role1"
                   class="form-control form-control-sm"
                   v-model="body.allowed_user_role"
                   required

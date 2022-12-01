@@ -30,7 +30,7 @@
         <div class="modal-body">
           <form @submit.prevent="put()" id="user_profile_submit">
             <div class="row m-2">
-              <div class="col-12 mx-auto">
+              <div class="col-12">
                 <label>Исм: </label>
                 <input
                   type="text"
@@ -39,7 +39,7 @@
                   required
                 />
               </div>
-              <div class="col-12 mx-auto">
+              <div class="col-12">
                 <label>Телефон рақам: </label>
                 <div class="input-group">
                   <span class="input-group-text bg-white">+998</span>
@@ -54,7 +54,7 @@
                   />
                 </div>
               </div>
-              <div class="col-12 mx-auto">
+              <div class="col-12">
                 <label>Логин: </label>
                 <input
                   type="text"
@@ -63,7 +63,7 @@
                   required
                 />
               </div>
-              <div class="col-12 mx-auto">
+              <div class="col-12">
                 <label>Парол: </label>
                 <div class="input-group flex-nowrap">
                   <input

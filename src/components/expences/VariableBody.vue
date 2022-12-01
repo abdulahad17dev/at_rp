@@ -21,7 +21,7 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto" v-if="role == 'bugalter'">
-                <label for="from">Банк ҳисоб: </label>
+                <label for="from3">Банк ҳисоб: </label>
                 <div class="dropdown">
                   <button
                     class="btn btn-light btn-sm dropdown-toggle"
@@ -135,7 +135,7 @@
                 </div>
               </div>
               <div class="col-10 mx-auto">
-                <label for="summa"
+                <label for="summa2"
                   >Сумма:
                   <span class="text-primary"
                     >{{
@@ -148,7 +148,7 @@
                   <input
                     type="number"
                     class="form-control"
-                    id="summa"
+                    id="summa2"
                     v-model="pay_body.money"
                     required
                     step="any"
@@ -158,9 +158,9 @@
                 </div>
               </div>
               <div class="col-10 mx-auto">
-                <label for="comment">Изох: </label>
+                <label for="comment3">Изох: </label>
                 <textarea
-                  id="comment"
+                  id="comment3"
                   class="form-control form-control-sm"
                   v-model="pay_body.comment"
                 ></textarea>

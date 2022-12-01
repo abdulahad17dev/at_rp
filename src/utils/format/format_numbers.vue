@@ -57,7 +57,7 @@ export default {
             "копия олинди";
           this.format_num = false;
           this.all_num = true;
-          const textArea = document.createElement("textarea");
+          const textArea = document.createElement("input");
           textArea.value = String(this.number);
           document.body.appendChild(textArea);
           textArea.focus();
@@ -96,9 +96,5 @@ span {
 span.badge {
   padding: 8px;
   font-size: 0.8em;
-}
-
-* {
-  transition: all 3s ease-in-out;
 }
 </style>

@@ -7,23 +7,17 @@
     background: #1e1e2e;
 }
 
-.dark button.btn-light.active {
+.dark .btn-secondary,
+.dark .btn-secondary:active,
+.dark .btn-secondary:focus,
+.dark .btn-secondary:hover,
+.dark .btn-light,
+.dark .btn-light:active,
+.dark .btn-light:focus,
+.dark .btn-light:hover {
     color: white;
-}
-
-.dark button.btn-secondary {
-    color: white;
-    background: #419ef9;
+    background: rgb(128, 128, 128, 0.3);
     border: none;
-}
-
-.dark button.btn-light {
-    background: none;
-    color: white !important;
-}
-
-.dark button.btn-light:hover {
-    color: white !important;
 }
 
 .dark .container-fluid .card {
@@ -60,28 +54,24 @@
 .dark textarea:focus,
 .dark select:focus {
     background: var(--dark);
-    border: 1px solid lightgray !important;
 }
 
 .dark input,
 .dark textarea,
 .dark select {
-    border: 1px solid gray;
     background: var(--dark);
-    color: lightgray !important;
+    color: white !important;
 }
 
 .dark input[disabled] {
     background: var(--item-hover);
-    border: 1px solid gray;
     background: var(--dark);
-    color: lightgray !important;
+    color: white !important;
 }
 
 .dark .input-group-text {
     background: var(--dark) !important;
-    color: lightgray;
-    border: 1px solid gray;
+    color: white !important;
 }
 
 .dark .input-group-prepend .input-group-text {
@@ -105,14 +95,6 @@
 .dark .list-group-item:active {
     background: var(--dark);
     color: white;
-}
-
-.dark .nav-link {
-    color: white;
-}
-
-.dark .nav-link:hover {
-    color: lightgray;
 }
 
 .dark .modal-content {
@@ -164,7 +146,12 @@
 .dark .dropdown button,
 .dark .dropdown button:focus,
 .dark .dropdown button:active,
-.dark .dropdown button:hover,
+.dark .dropdown button:hover {
+    background: rgb(128, 128, 128, 0.3);
+    color: white !important;
+    box-shadow: none;
+}
+
 .dark .dropdown .dropdown-menu {
     background: var(--dark);
     color: white !important;
@@ -188,20 +175,6 @@
     -webkit-box-shadow: 0px 5px 10px 2px rgba(225, 225, 225, 0.08);
     -moz-box-shadow: 0px 5px 10px 2px rgba(225, 225, 225, 0.08);
     box-shadow: 0px 3px 8px 1px rgba(225, 225, 225, 0.08) !important;
-}
-
-.dark .back,
-.dark .back_home,
-.dark .log_out {
-    background: #1e1e2e;
-    border: 1px solid #fff;
-}
-
-.dark .back:hover,
-.dark .back_home:hover,
-.dark .log_out:hover {
-    background: #1e1e2e;
-    border: 1px solid #fff;
 }
 
 .dark .card.wallet:hover .overlay,
@@ -242,4 +215,15 @@
 
 .dark .fa-phone {
     color: #fff !important;
+}
+
+.dark .nav-link {
+    border-bottom: 2px solid gray !important;
+}
+
+.dark .nav-link:hover,
+.dark .nav-link:active,
+.dark .nav-link:focus,
+.dark .nav-link.active {
+    background: rgb(128, 128, 128, 0.3) !important;
 }

@@ -11,10 +11,13 @@
     </div>
     <div class="col">
       <h5 class="card-title text-center mb-0">
-        <span :class="this.$route.meta.icon"></span>
-        {{ this.$route.meta.title }}
+        <span
+          :class="this.$route.meta.icon"
+          v-if="this.$route.name != 'building'"
+        ></span>
+        {{ this.$route.name != "building" ? this.$route.meta.title : "" }}
 
-        <br />
+        <br v-if="this.$route.name != 'building'" />
         <span class="text-primary">{{ name }}</span>
         <h6
           class="text-center text-danger"

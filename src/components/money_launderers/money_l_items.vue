@@ -30,6 +30,7 @@
           </td>
           <td>
             <button
+              v-if="role != 'admin'"
               class="btn btn-sm btn-warning"
               @click="$emit('item', item)"
               data-mdb-toggle="modal"
@@ -38,6 +39,7 @@
               <i class="fa fa-edit text-white"></i>
             </button>
             <button
+              v-if="role != 'admin'"
               class="btn btn-sm btn-primary mx-1"
               @click="$emit('get_l_id', item.id, item.name)"
               data-mdb-toggle="modal"
@@ -69,6 +71,11 @@ export default {
   name: "MoneyLaundererItems",
   props: ["data"],
   emits: ["item", "get_l_id"],
+  data() {
+    return {
+      role: localStorage.getItem("role"),
+    };
+  },
   methods: {
     format_phone(number) {
       return String(

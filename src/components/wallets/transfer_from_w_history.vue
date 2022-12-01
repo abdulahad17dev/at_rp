@@ -219,8 +219,8 @@ export default {
 
 <style lang="scss" scoped>
 .table-responsive {
-  max-height: 62vh;
-  min-height: 62vh;
+  max-height: 58vh;
+  min-height: 58vh;
 }
 
 @media (max-width: 500px) {

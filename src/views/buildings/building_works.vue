@@ -604,8 +604,9 @@
               </div>
               <div class="col-10 mx-auto">
                 <div class="form-group">
-                  <label for="comment">Изох: </label>
+                  <label for="comment10">Изох: </label>
                   <textarea
+                    id="comment10"
                     placeholder="Изох"
                     v-model="confirm_body.comment"
                     class="form-control form-control-sm"
@@ -680,8 +681,9 @@
               </div>
               <div class="col-10 mx-auto">
                 <div class="form-group">
-                  <label for="comment">Изох: </label>
+                  <label for="comment11">Изох: </label>
                   <textarea
+                    id="comment11"
                     required
                     v-model="recheck_body.comment"
                     class="form-control form-control-sm"

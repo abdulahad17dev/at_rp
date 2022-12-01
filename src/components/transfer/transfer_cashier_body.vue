@@ -3,7 +3,7 @@
     <div class="modal-body">
       <div class="row gap-2">
         <div class="col-10 mx-auto">
-          <label for="balance">
+          <label for="balance3">
             Сумма:
             <span class="text-primary"
               >{{ new Intl.NumberFormat().format(cashier.money) }} сўм</span
@@ -11,7 +11,7 @@
           >
           <div class="input-group input-group-sm">
             <input
-              id="balance"
+              id="balance3"
               type="number"
               step="any"
               class="form-control"
@@ -23,7 +23,7 @@
           </div>
         </div>
         <div class="col-10 mx-auto">
-          <label for="to"> Кассирлар: </label>
+          <label for="to2"> Кассирлар: </label>
           <div class="dropdown">
             <button
               class="btn btn-light btn-sm dropdown-toggle"
@@ -116,9 +116,9 @@
           </div>
         </div>
         <div class="col-10 mx-auto">
-          <label for="comment"> Изох: </label>
+          <label for="comment7"> Изох: </label>
           <textarea
-            id="comment"
+            id="comment7"
             class="form-control"
             v-model="cashier.comment"
             required

@@ -31,9 +31,9 @@ import main_warehouse_product from "../views/product/product_in_main_w.vue";
 import building_works from "../views/buildings/building_works.vue";
 import warehouse_product from "../views/product/warehouse_product_admin.vue";
 import work_info from "../views/buildings/building_info.vue";
+import fixed_expense_history from "../views/expences/history_admin.vue";
 import menu from "./../utils/main/menu.vue";
 import notfound from "./../utils/notfound/notfound.vue";
-import settings from "../views/settings/settings.vue";
 
 const role = localStorage.getItem("role");
 
@@ -74,17 +74,6 @@ let routes = [
       icon: "fa-solid fa-home",
     },
     component: menu,
-  },
-  // settings
-  {
-    path: "/settings",
-    name: "settings",
-    meta: {
-      requiresAuth: true,
-      title: "Созламалар",
-      icon: "fa-solid fa-screwdriver-wrench",
-    },
-    component: settings,
   },
   // buildings
   {
@@ -255,12 +244,12 @@ let routes = [
   // money launderers
   {
     path: "/money_launderers",
-    name: "main_warehouses",
+    name: "money_launderers",
     meta: {
       requiresAuth: true,
       title: "Пул ювувчилар",
       icon: "fa-solid fa-hand-holding-dollar",
-      role: ["kassir"],
+      role: ["kassir", "admin"],
     },
     component: money_launderers,
   },
@@ -272,7 +261,7 @@ let routes = [
       requiresAuth: true,
       title: "Ҳамён",
       icon: "fa-solid fa-wallet",
-      role: ["kassir"],
+      role: ["kassir", "admin"],
     },
     component: wallets,
   },
@@ -308,7 +297,7 @@ let routes = [
       requiresAuth: true,
       title: "Ўтказмалар тарихи",
       icon: "fa-solid fa-clock-rotate-left",
-      role: ["kassir"],
+      role: ["kassir", "admin"],
     },
     component: money_laundered_history,
   },
@@ -320,7 +309,7 @@ let routes = [
       requiresAuth: true,
       title: "Ўтказмалар тарихи",
       icon: "fa-solid fa-clock-rotate-left",
-      role: ["kassir"],
+      role: ["kassir", "admin"],
     },
     component: wallets_history,
   },
@@ -433,6 +422,17 @@ let routes = [
       role: ["bazachi", "admin"],
     },
     component: main_warehouse_product,
+  },
+  {
+    path: "/fixed_expense_history",
+    name: "fixed_expense_history",
+    meta: {
+      requiresAuth: true,
+      title: "Чиқим тарихи",
+      icon: "fa-solid fa-clock-rotate-left",
+      role: ["admin"],
+    },
+    component: fixed_expense_history,
   },
 ];
 

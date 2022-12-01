@@ -128,9 +128,9 @@
                 </div>
               </div>
               <div class="col-10 mx-auto">
-                <label for="comment">Изох: </label>
+                <label for="comment5">Изох: </label>
                 <textarea
-                  id="comment"
+                  id="comment5"
                   class="form-control form-control-sm"
                   v-model="body.comment"
                   placeholder="Изох"

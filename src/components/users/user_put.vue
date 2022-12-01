@@ -63,7 +63,7 @@
                   class="form-control form-control-sm"
                   v-model="data.password"
                   placeholder="Парол"
-                  autocomplete="on"
+                  autocomplete="off"
                 />
               </div>
               <div class="col-10 mx-auto" v-if="user_id != data.id">

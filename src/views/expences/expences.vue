@@ -573,9 +573,9 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
-                <label for="expense_name">Чиқим номи: </label>
+                <label for="expense_name2">Чиқим номи: </label>
                 <input
-                  id="expense_name"
+                  id="expense_name2"
                   type="text"
                   class="form-control form-control-sm"
                   placeholder="Доимий чиқим номи"
@@ -584,9 +584,9 @@
                 />
               </div>
               <div class="col-10 mx-auto">
-                <label for="expense_role">Рухсат этилган ихтисослик</label>
+                <label for="expense_role2">Рухсат этилган ихтисослик</label>
                 <select
-                  id="expense_role"
+                  id="expense_role2"
                   class="form-control form-control-sm"
                   v-model="body.allowed_user_role"
                   required
@@ -602,14 +602,14 @@
                     class="form-check-input"
                     type="radio"
                     name="inlineRadioOptions"
-                    id="inlineRadio1"
+                    id="inlineRadio3"
                     value="option1"
                     @click="
                       (limit_of_expense = true), (body.limit_of_expense = null)
                     "
                     required
                   />
-                  <label class="form-check-label" for="inlineRadio1"
+                  <label class="form-check-label" for="inlineRadio3"
                     >Лимит:
                   </label>
                 </div>
@@ -618,14 +618,14 @@
                     class="form-check-input"
                     type="radio"
                     name="inlineRadioOptions"
-                    id="inlineRadio2"
+                    id="inlineRadio4"
                     value="option2"
                     @click="
                       (body.limit_of_expense = 0), (limit_of_expense = false)
                     "
                     required
                   />
-                  <label class="form-check-label" for="inlineRadio2"
+                  <label class="form-check-label" for="inlineRadio4"
                     >Безлимит</label
                   >
                 </div>

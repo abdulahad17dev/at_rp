@@ -214,7 +214,7 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
-                <label for="balance">
+                <label for="balance5">
                   Сумма:
                   <span class="text-primary"
                     >{{ new Intl.NumberFormat().format(body.money) }} сўм
@@ -222,7 +222,7 @@
                 >
                 <div class="input-group input-group-sm">
                   <input
-                    id="balance"
+                    id="balance5"
                     type="number"
                     step="any"
                     class="form-control"
@@ -331,9 +331,9 @@
                 </div>
               </div>
               <div class="col-10 mx-auto">
-                <label for="comment">Изох: </label>
+                <label for="comment15">Изох: </label>
                 <textarea
-                  id="comment"
+                  id="comment15"
                   class="form-control form-control-sm"
                   v-model="body.comment"
                 ></textarea>

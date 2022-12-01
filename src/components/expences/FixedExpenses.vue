@@ -4,10 +4,10 @@
       <thead>
         <tr>
           <th style="width: 10%">№</th>
-          <th style="width: 25%">Номи</th>
-          <th style="width: 25%">Лимит сумма</th>
-          <th style="width: 25%">Ихтисослик</th>
-          <th style="width: 4%"></th>
+          <th style="width: 30%">Номи</th>
+          <th style="width: 20%">Лимит сумма</th>
+          <th style="width: 20%">Ихтисослик</th>
+          <th style="width: 20%"></th>
         </tr>
       </thead>
       <tbody>
@@ -27,6 +27,12 @@
             >
               <i class="fa-solid fa-edit text-white"></i>
             </button>
+            <router-link
+              :to="{ name: 'fixed_expense_history', query: { id: item.id } }"
+              class="btn btn-secondary btn-sm mx-1"
+            >
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </router-link>
           </td>
         </tr>
       </tbody>
@@ -46,8 +52,8 @@ export default {
 
 <style lang="scss" scoped>
 .table-responsive {
-  max-height: 65vh;
-  min-height: 65vh;
+  max-height: 63vh;
+  min-height: 63vh;
 }
 
 @media (max-width: 634px) {

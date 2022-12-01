@@ -17,10 +17,10 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
-                <label for="name"> Исм: </label>
+                <label for="name6"> Исм: </label>
                 <input
                   type="text"
-                  id="name"
+                  id="name6"
                   class="form-control form-control-sm"
                   v-model="body.name"
                   required
@@ -28,12 +28,12 @@
                 />
               </div>
               <div class="col-10 mx-auto">
-                <label for="phone"> Телефон рақам: </label>
+                <label for="phone4"> Телефон рақам: </label>
                 <div class="input-group input-group-sm">
                   <span class="input-group-text bg-white">+998</span>
                   <input
                     type="tel"
-                    id="phone"
+                    id="phone4"
                     class="form-control form-control-sm"
                     v-model="body.phone"
                     required

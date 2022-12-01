@@ -599,7 +599,7 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
-                <label for="from">Банк ҳисоб: </label>
+                <label for="from6">Банк ҳисоб: </label>
                 <div class="dropdown">
                   <button
                     class="btn btn-light btn-sm dropdown-toggle"
@@ -713,9 +713,9 @@
                 </div>
               </div>
               <div class="col-10 mx-auto">
-                <label for="comment">Изох: </label>
+                <label for="comment13">Изох: </label>
                 <textarea
-                  id="comment"
+                  id="comment13"
                   class="form-control form-control-sm"
                   v-model="body.comment"
                 ></textarea>

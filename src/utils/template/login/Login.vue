@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content login">
     <div class="container">
       <div class="row">
         <div class="col-md-6 d-flex justify-content-center">
@@ -27,10 +27,17 @@
                       id="username"
                       placeholder="Логин"
                       v-model="username"
-                      autocomplete="on"
+                      autocomplete="off"
                       required
                     />
-                    <div class="input-group-text" style="width: 45px">
+                    <div
+                      class="input-group-text"
+                      style="
+                        width: 45px;
+                        color: #2c3e50 !important;
+                        background: white !important;
+                      "
+                    >
                       <i class="fa-solid fa-at"></i>
                     </div>
                   </div>
@@ -44,12 +51,18 @@
                       id="password"
                       placeholder="Парол"
                       v-model="password"
-                      autocomplete="on"
+                      autocomplete="off"
                       required
                     />
                     <div
                       class="input-group-text"
-                      style="cursor: pointer; width: 45px; text-align: center"
+                      style="
+                        cursor: pointer;
+                        width: 45px;
+                        text-align: center;
+                        color: #2c3e50 !important;
+                        background: white !important;
+                      "
                       @click="toggle"
                     >
                       <span v-if="type == 'password'">
@@ -167,5 +180,11 @@ export default {
   .contents .row {
     margin: 0 0;
   }
+}
+
+input#username,
+input#password {
+  color: #2c3e50 !important;
+  background-color: #fff !important;
 }
 </style>

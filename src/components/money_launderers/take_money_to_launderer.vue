@@ -19,7 +19,7 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
-                <label for="summa">
+                <label for="summa3">
                   Сумма:
                   <span class="text-primary"
                     >{{ new Intl.NumberFormat().format(body.money) }}
@@ -28,7 +28,7 @@
                 >
                 <div class="input-group input-group-sm">
                   <input
-                    id="summa"
+                    id="summa3"
                     type="number"
                     step="any"
                     class="form-control form-control-sm"
@@ -40,9 +40,9 @@
                 </div>
               </div>
               <div class="col-10 mx-auto">
-                <label for="comment"> Изох: </label>
+                <label for="comment4"> Изох: </label>
                 <textarea
-                  id="comment"
+                  id="comment4"
                   class="form-control form-control-sm"
                   placeholder="Изох"
                   v-model="body.comment"

@@ -22,7 +22,7 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto" v-if="role == 'bugalter'">
-                <label for="from">Банк ҳисоб: </label>
+                <label for="from1">Банк ҳисоб: </label>
                 <div class="dropdown">
                   <button
                     class="btn btn-light btn-sm dropdown-toggle"
@@ -136,7 +136,7 @@
                 </div>
               </div>
               <div class="col-10 mx-auto" v-else-if="role == 'taminotchi'">
-                <label for="from">Объектлар: </label>
+                <label for="from2">Объектлар: </label>
                 <div class="dropdown">
                   <button
                     class="btn btn-light btn-sm dropdown-toggle"
@@ -248,7 +248,7 @@
                 </div>
               </div>
               <div class="col-10 mx-auto">
-                <label for="to">Чиқим тури: </label>
+                <label for="to1">Чиқим тури: </label>
                 <div class="dropdown">
                   <button
                     class="btn btn-light btn-sm dropdown-toggle"
@@ -355,7 +355,7 @@
                 </div>
               </div>
               <div class="col-10 mx-auto">
-                <label for="summa"
+                <label for="summa1"
                   >Сумма:
                   <span class="text-primary"
                     >{{
@@ -368,7 +368,7 @@
                   <input
                     type="number"
                     class="form-control"
-                    id="summa"
+                    id="summa1"
                     step="any"
                     v-model="pay_body.money"
                     required
@@ -378,9 +378,9 @@
                 </div>
               </div>
               <div class="col-10 mx-auto">
-                <label for="comment">Изох: </label>
+                <label for="comment2">Изох: </label>
                 <textarea
-                  id="comment"
+                  id="comment2"
                   class="form-control form-control-sm"
                   v-model="pay_body.comment"
                 ></textarea>

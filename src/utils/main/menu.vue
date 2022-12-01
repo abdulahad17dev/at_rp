@@ -74,13 +74,13 @@ export default {
           to: "/money_launderers",
           icon: "fa-solid fa-hand-holding-dollar fa-2x",
           title: "Пул ювувчилар",
-          role: ["kassir"],
+          role: ["kassir", "admin"],
         },
         {
           to: "/wallets",
           icon: "fa-solid fa-wallet fa-2x",
           title: "Ҳамён",
-          role: ["kassir"],
+          role: ["kassir", "admin"],
         },
         {
           to: "/markets",
@@ -130,12 +130,6 @@ export default {
           title: "Омбордаги материаллар",
           role: ["omborchi"],
         },
-        // {
-        //   to: "/settings",
-        //   icon: "fa-solid fa-screwdriver-wrench fa-2x",
-        //   title: "Созламалар",
-        //   role: [`${localStorage.getItem("role")}`],
-        // },
       ],
     };
   },

@@ -1,8 +1,6 @@
 <template>
+  <Header_item :name="name" />
   <div>
-    <h5 class="text-center">
-      <b class="text-secondary"> {{ name }}</b>
-    </h5>
     <ul class="nav nav-tabs nav-fill mb-3" id="pills-tab" role="tablist">
       <li class="nav-item mx-1" role="presentation">
         <a
@@ -59,6 +57,7 @@
 <script>
 import Smeta_admin from "@/components/smeta/smeta_admin.vue";
 import Proche_sorov_admin from "@/components/buildings/proche_sorov_admin.vue";
+import Header_item from "@/components/header/header_item.vue";
 export default {
   name: "BuldingInner",
   data() {
@@ -68,7 +67,7 @@ export default {
       proche_sorov: "",
     };
   },
-  components: { Smeta_admin, Proche_sorov_admin },
+  components: { Smeta_admin, Proche_sorov_admin, Header_item },
 };
 </script>
 
