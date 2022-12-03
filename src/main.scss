@@ -146,13 +146,24 @@ img {
 
 .nav-link {
   padding: 8px 16px 8px !important;
-  border-bottom: 2px solid rgb(39, 41, 61, 0.3) !important;
+  border: 2px solid rgb(39, 41, 61, 0.3) !important;
+  border-radius: 8px !important;
 }
 
 .nav-link.active {
-  border-bottom: 2px solid #3b71ca !important;
+  border: 2px solid #3b71ca !important;
+  background: rgb(59, 113, 202, 0.05) !important;
 }
 
 .page-item button {
   border: 1px solid #eee;
+}
+
+button.info,
+button.info:hover,
+button.info:focus,
+button.info:active {
+  box-shadow: none !important;
+  margin: 0 0 !important;
+  vertical-align: middle;
 }

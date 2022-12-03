@@ -63,6 +63,7 @@
               <i class="fa-solid fa-edit text-white"></i>
             </button>
             <Route_map
+              class="mx-1"
               :lat="item.Markets.map_lat"
               :long="item.Markets.map_long"
             />

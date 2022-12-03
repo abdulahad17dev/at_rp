@@ -165,7 +165,7 @@
               >
               </span>
               <button
-                class="btn btn-sm"
+                class="btn btn-sm info"
                 data-mdb-toggle="modal"
                 data-mdb-target="#get_quantity"
                 @click="get_quantity(item.Proche_sorovlar.id)"
@@ -1098,8 +1098,8 @@ export default {
 
 <style lang="scss" scoped>
 .mt-3.table-responsive {
-  max-height: 87vh;
-  min-height: 87vh;
+  max-height: 82vh;
+  min-height: 82vh;
 }
 
 .request {
@@ -1112,8 +1112,8 @@ export default {
 
 @media (max-width: 500px) {
   .mt-3.table-responsive {
-    max-height: 115vh;
-    min-height: 115vh;
+    max-height: 110vh;
+    min-height: 110vh;
   }
   .modal-body .table-responsive {
     max-height: 79vh;

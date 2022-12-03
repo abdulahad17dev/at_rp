@@ -31,7 +31,7 @@ import main_warehouse_product from "../views/product/product_in_main_w.vue";
 import building_works from "../views/buildings/building_works.vue";
 import warehouse_product from "../views/product/warehouse_product_admin.vue";
 import work_info from "../views/buildings/building_info.vue";
-import fixed_expense_history from "../views/expences/history_admin.vue";
+import building_history from "../views/expences/history_admin.vue";
 import menu from "./../utils/main/menu.vue";
 import notfound from "./../utils/notfound/notfound.vue";
 
@@ -247,7 +247,7 @@ let routes = [
     name: "money_launderers",
     meta: {
       requiresAuth: true,
-      title: "Пул ювувчилар",
+      title: "Конвертация",
       icon: "fa-solid fa-hand-holding-dollar",
       role: ["kassir", "admin"],
     },
@@ -424,15 +424,15 @@ let routes = [
     component: main_warehouse_product,
   },
   {
-    path: "/fixed_expense_history",
-    name: "fixed_expense_history",
+    path: "/building_history",
+    name: "building_history",
     meta: {
       requiresAuth: true,
-      title: "Чиқим тарихи",
+      title: "Тарихлар",
       icon: "fa-solid fa-clock-rotate-left",
       role: ["admin"],
     },
-    component: fixed_expense_history,
+    component: building_history,
   },
 ];
 

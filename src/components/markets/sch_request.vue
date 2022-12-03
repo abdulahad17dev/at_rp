@@ -40,7 +40,7 @@
               >
               </span>
               <button
-                class="btn btn-sm"
+                class="btn btn-sm info"
                 data-mdb-toggle="modal"
                 data-mdb-target="#get_quantity_shot"
                 @click="
@@ -944,13 +944,13 @@ export default {
   zoom: 75%;
 }
 .mt-3.table-responsive {
-  max-height: 92vh;
-  min-height: 92vh;
+  max-height: 88vh;
+  min-height: 88vh;
 }
 @media (max-width: 500px) {
   .mt-3.table-responsive {
-    max-height: 123vh;
-    min-height: 123vh;
+    max-height: 119vh;
+    min-height: 119vh;
   }
   .modal-body .table-responsive {
     max-height: 79vh;

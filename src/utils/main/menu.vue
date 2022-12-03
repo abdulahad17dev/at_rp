@@ -73,7 +73,7 @@ export default {
         {
           to: "/money_launderers",
           icon: "fa-solid fa-hand-holding-dollar fa-2x",
-          title: "Пул ювувчилар",
+          title: "Конвертация",
           role: ["kassir", "admin"],
         },
         {

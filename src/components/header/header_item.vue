@@ -4,7 +4,7 @@
       <button
         v-if="this.$route.name != 'menu'"
         class="btn btn-dark btn-floating"
-        @click="$router.push('menu')"
+        @click="$router.push({ name: 'menu' })"
       >
         <i class="fa-solid fa-home"></i>
       </button>

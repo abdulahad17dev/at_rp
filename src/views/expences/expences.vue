@@ -888,14 +888,16 @@ export default {
           e.to_ = null;
           e.for_ = 0;
           e.comment = "";
-          let bank_a = document.getElementById("bank_account_text");
-          if (bank_a) {
-            document.getElementById("bank_account_text").innerHTML =
-              "ҳисоб рақамлар";
-          } else {
-            document.getElementById("select_bank_building").innerHTML =
+
+          if (document.getElementById("select_bank_building2")) {
+            document.getElementById("select_bank_building2").innerHTML =
               "объектлар";
           }
+          if (document.getElementById("bank_account_text")) {
+            document.getElementById("bank_account_text").innerHTML =
+              "ҳисоб рақамлар";
+          }
+
           document.getElementById("expenses_text").innerHTML = "чиқимлар";
         })
         .catch((err) => {

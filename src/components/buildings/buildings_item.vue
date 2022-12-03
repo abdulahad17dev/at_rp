@@ -119,37 +119,55 @@
             "
           />
           <div class="d-flex justify-content-center zoom">
-            <button
-              class="btn btn-sm btn-primary mx-1"
-              data-mdb-toggle="modal"
-              data-mdb-target="#foremans_warehousemans"
-              @click="select_id(item.Buildings.id, item.Buildings.name, 1)"
-            >
-              <i class="fa-solid fa-users"></i>
-            </button>
-            <Route_map
-              :lat="item.Buildings.map_lat"
-              :long="item.Buildings.map_long"
-            />
-
-            <router-link
-              :to="{
-                name: 'building',
-                query: { id: item.Buildings.id, name: item.Buildings.name },
-              }"
-              class="btn btn-sm btn-primary mx-1"
-            >
-              <i class="fa-solid fa-right-long"></i>
-            </router-link>
-            <router-link
-              :to="{
-                name: 'warehouse_product',
-                query: { id: item.Buildings.id, name: item.Buildings.name },
-              }"
-              class="btn btn-sm btn-primary"
-            >
-              <i class="fa-solid fa-box"></i>
-            </router-link>
+            <div class="coll mx-1">
+              <button
+                class="btn btn-sm btn-primary"
+                data-mdb-toggle="modal"
+                data-mdb-target="#foremans_warehousemans"
+                @click="select_id(item.Buildings.id, item.Buildings.name, 1)"
+              >
+                <i class="fa-solid fa-users"></i>
+              </button>
+            </div>
+            <div class="coll mx-1">
+              <Route_map
+                :lat="item.Buildings.map_lat"
+                :long="item.Buildings.map_long"
+              />
+            </div>
+            <div class="coll mx-1">
+              <router-link
+                :to="{
+                  name: 'building',
+                  query: { id: item.Buildings.id, name: item.Buildings.name },
+                }"
+                class="btn btn-sm btn-primary"
+              >
+                <i class="fa-solid fa-right-long"></i>
+              </router-link>
+            </div>
+            <div class="coll mx-1">
+              <router-link
+                :to="{
+                  name: 'warehouse_product',
+                  query: { id: item.Buildings.id, name: item.Buildings.name },
+                }"
+                class="btn btn-sm btn-primary"
+              >
+                <i class="fa-solid fa-box"></i>
+              </router-link>
+            </div>
+            <div class="coll mx-1">
+              <router-link
+                :to="{
+                  name: 'building_history',
+                  query: { id: item.Buildings.id },
+                }"
+                class="btn btn-primary btn-sm"
+              >
+                <i class="fa-solid fa-clock-rotate-left"></i>
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -945,10 +963,6 @@ div.row_building {
   display: none;
 }
 
-.d-flex.justify-content-center.zoom {
-  zoom: 93%;
-}
-
 hr {
   border: none;
   opacity: 1;
@@ -1018,11 +1032,16 @@ hr.warning {
 }
 
 .zoom .coll:hover {
-  transform: scale(1.2);
+  transform: scale(1.1) translateY(-2px);
 }
 
 .zoom .coll {
   margin: 5px 0px;
   transition: all 0.1s linear;
+}
+
+.d-flex.justify-content-center.zoom {
+  zoom: 92%;
+  flex-wrap: wrap;
 }
 </style>

@@ -602,7 +602,7 @@
                 <td class="td_grafik">
                   {{ inc + 1 }}
                   <button
-                    class="btn btn-sm"
+                    class="btn btn-sm info"
                     data-mdb-toggle="modal"
                     data-mdb-target="#product_name"
                     @click="product = item.product"

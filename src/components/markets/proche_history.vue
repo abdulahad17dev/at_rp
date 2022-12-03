@@ -322,7 +322,7 @@
               />
               {{ inc + 1 }}
               <button
-                class="btn btn-sm"
+                class="btn btn-sm info"
                 data-mdb-toggle="modal"
                 data-mdb-target="#get_paid_moneys"
                 @click="
@@ -1262,8 +1262,8 @@ export default {
   zoom: 75%;
 }
 .mt-3.table-responsive {
-  max-height: 80vh;
-  min-height: 80vh;
+  max-height: 78vh;
+  min-height: 78vh;
 }
 .modal-body .table-responsive {
   max-height: 67vh;
@@ -1271,8 +1271,8 @@ export default {
 }
 @media (max-width: 500px) {
   .mt-3.table-responsive {
-    max-height: 102vh;
-    min-height: 102vh;
+    max-height: 100vh;
+    min-height: 100vh;
   }
   .modal-body .table-responsive {
     max-height: 79vh;

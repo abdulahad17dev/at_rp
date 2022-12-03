@@ -27,12 +27,6 @@
             >
               <i class="fa-solid fa-edit text-white"></i>
             </button>
-            <router-link
-              :to="{ name: 'fixed_expense_history', query: { id: item.id } }"
-              class="btn btn-secondary btn-sm mx-1"
-            >
-              <i class="fa-solid fa-clock-rotate-left"></i>
-            </router-link>
           </td>
         </tr>
       </tbody>

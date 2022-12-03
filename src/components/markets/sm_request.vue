@@ -178,7 +178,7 @@
               >
               </span>
               <button
-                class="btn btn-sm"
+                class="btn btn-sm info"
                 @click="
                   get_grafik(
                     item,
@@ -1755,8 +1755,8 @@ export default {
 }
 
 .table-responsive.smeta {
-  max-height: 86vh;
-  min-height: 86vh;
+  max-height: 84vh;
+  min-height: 84vh;
 }
 .quantity .table-responsive {
   max-height: 62vh;
@@ -1794,8 +1794,8 @@ td.td_grafik {
 
 @media (max-width: 500px) {
   .table-responsive.smeta {
-    max-height: 113vh;
-    min-height: 113vh;
+    max-height: 111vh;
+    min-height: 111vh;
   }
   .quantity .table-responsive {
     max-height: 74vh;

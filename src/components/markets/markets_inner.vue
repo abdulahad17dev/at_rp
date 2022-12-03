@@ -1,5 +1,9 @@
 <template>
-  <ul class="nav nav-tabs nav-fill mt-2 mb-3" id="pills-tab2" role="tablist">
+  <ul
+    class="nav nav-tabs nav-fill mt-2 mb-2 m-1"
+    id="pills-tab2"
+    role="tablist"
+  >
     <li class="nav-item d-flex" role="presentation">
       <a
         class="nav-link w-100 shadow-sm active"
@@ -165,11 +169,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media (max-width: 500px) {
-  .nav {
-    display: block;
-  }
-}
+// @media (max-width: 500px) {
+//   .nav {
+//     display: block;
+//   }
+// }
 
 ul {
   zoom: 70%;

@@ -362,6 +362,7 @@
               <i class="fa-solid fa-circle-xmark"></i>
             </button>
           </td>
+          <td v-if="role == 'taminotchi'"></td>
         </tr>
       </tbody>
     </table>

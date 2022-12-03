@@ -141,7 +141,7 @@
                   <button
                     class="btn btn-light btn-sm dropdown-toggle"
                     type="button"
-                    id="select_bank_building"
+                    id="select_bank_building2"
                     data-mdb-toggle="dropdown"
                     data-bs-auto-close="outside"
                     aria-expanded="false"
@@ -586,7 +586,7 @@ export default {
     select_building(id, name) {
       this.pay_body.from_ = id;
       this.text_building = name;
-      document.getElementById("select_bank_building").click();
+      document.getElementById("select_bank_building2").click();
     },
   },
 };

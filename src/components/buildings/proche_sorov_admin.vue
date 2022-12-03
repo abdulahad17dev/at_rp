@@ -1,7 +1,7 @@
 <template>
   <div class="table-responsive">
-    <table class="table table-sm" id="table-responsive">
-      <thead class="">
+    <table class="table table-sm proche table-hover">
+      <thead>
         <tr>
           <th>
             <input
@@ -44,6 +44,25 @@
               v-if="status == 'adminda_proche'"
             />
             {{ inc + 1 }}
+            <button
+              class="btn btn-sm info"
+              data-mdb-toggle="modal"
+              data-mdb-target="#view_users"
+              @click="
+                users = {
+                  prorap: item.prorap,
+                  operator: item.operator,
+                  admin: item.admin,
+                  zakupshik: item.zakupshik,
+                  taminotchi: item.taminotchi,
+                }
+              "
+            >
+              <i
+                class="fa-solid fa-circle-question product"
+                style="font-size: 17px"
+              ></i>
+            </button>
           </td>
           <td>
             {{
@@ -256,6 +275,54 @@
       </li>
     </ul>
   </nav>
+
+  <div
+    class="modal fade"
+    id="view_users"
+    tabindex="-1"
+    aria-labelledby="view_usersLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="view_usersLabel">Ҳодимлар</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-mdb-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-sm table-hover">
+            <tbody>
+              <tr>
+                <td scope="col">Прорап:</td>
+                <td>{{ users.prorap }}</td>
+              </tr>
+              <tr>
+                <td scope="col">Оператор:</td>
+                <td>{{ users.operator }}</td>
+              </tr>
+              <tr>
+                <td scope="col">Админ:</td>
+                <td>{{ users.admin }}</td>
+              </tr>
+              <tr>
+                <td scope="col">Закупшик:</td>
+                <td>{{ users.zakupshik }}</td>
+              </tr>
+              <tr>
+                <td scope="col">Таминотчи:</td>
+                <td>{{ users.taminotchi }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -288,6 +355,7 @@ export default {
       checked: [],
       total_price: null,
       filter: false,
+      users: {},
     };
   },
   watch: {
@@ -462,15 +530,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table-responsive {
-  max-height: 72vh;
-  min-height: 72vh;
+.proche.table-responsive {
+  max-height: 67vh;
+  min-height: 67vh;
 }
 
 @media (max-width: 500px) {
-  .table-responsive {
-    max-height: 100vh;
-    min-height: 100vh;
+  .proche.table-responsive {
+    max-height: 95vh;
+    min-height: 95vh;
   }
   table {
     zoom: 65%;
@@ -478,22 +546,18 @@ export default {
 }
 
 @media (max-width: 400px) {
-  .table-responsive {
+  .proche.table-responsive {
     max-height: 100vh;
   }
-  table {
+  table.proche {
     min-width: 900px;
   }
 }
 
-table {
+table.proche {
   table-layout: fixed;
   width: 100%;
   min-width: 1000px;
-}
-
-table thead {
-  transition: all 0.5s ease-in;
 }
 
 .input-group button:focus {

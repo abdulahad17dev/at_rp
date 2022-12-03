@@ -17,7 +17,7 @@
           <div class="modal-body">
             <div class="row gap-2">
               <div class="col-10 mx-auto">
-                <label>Пул ювувчилар: </label>
+                <label>Конвертация: </label>
                 <div class="dropdown">
                   <button
                     class="btn btn-light btn-sm dropdown-toggle"

@@ -181,7 +181,7 @@
             >
             </span>
             <button
-              class="btn btn-sm"
+              class="btn btn-sm info"
               data-mdb-toggle="modal"
               data-mdb-target="#smeta_grafik"
               @click="

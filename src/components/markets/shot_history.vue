@@ -277,7 +277,7 @@
             <td class="td_grafik">
               {{ inc + 1 }}
               <button
-                class="btn btn-sm"
+                class="btn btn-sm info"
                 @click="
                   get_quantity(
                     item.Supplies_by_bank_account.related_id,
@@ -1139,14 +1139,14 @@ export default {
   zoom: 75%;
 }
 .mt-3.table-responsive {
-  max-height: 83vh;
-  min-height: 83vh;
+  max-height: 81vh;
+  min-height: 81vh;
 }
 
 @media (max-width: 500px) {
   .mt-3.table-responsive {
-    max-height: 110vh;
-    min-height: 110vh;
+    max-height: 108vh;
+    min-height: 108vh;
   }
   .modal-body .table-responsive {
     max-height: 79vh;
