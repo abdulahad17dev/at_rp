@@ -63,6 +63,9 @@
       v-if="fixed_expenses != ''"
     >
       <ul class="pagination pagination-sm justify-content-end">
+        <li>
+          <Select_data :id="'select_fixed_types_data'" />
+        </li>
         <li class="page-item">
           <button
             type="button"
@@ -161,6 +164,9 @@
     v-if="fixed_history != ''"
   >
     <ul class="pagination pagination-sm justify-content-end">
+      <li>
+        <Select_data :id="'select_fixed_expense_data'" />
+      </li>
       <li class="page-item">
         <select
           class="form-control form-control-sm form-select mx-1"
@@ -342,7 +348,7 @@
       <nav
         aria-label="Page navigation example"
         class="mt-1"
-        v-if="fixed_expenses != ''"
+        v-if="fixed_expenses == ''"
       >
         <ul class="pagination pagination-sm justify-content-end">
           <li class="page-item">
@@ -696,6 +702,7 @@ import FixedExpenses from "../../components/expences/FixedExpenses.vue";
 import FixedItemPut from "@/components/expences/FixedItemPut.vue";
 import FixedBody from "@/components/expences/FixedBody.vue";
 import VariableBody from "../../components/expences/VariableBody.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   components: {
     Header_item,
@@ -705,6 +712,7 @@ export default {
     FixedItemPut,
     FixedBody,
     VariableBody,
+    Select_data,
   },
   name: "ExpencesItem",
   data() {

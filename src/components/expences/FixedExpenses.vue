@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive m-1 mt-2">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="select_fixed_types_data">
       <thead>
         <tr>
           <th style="width: 10%">№</th>
@@ -18,7 +18,7 @@
             {{ new Intl.NumberFormat().format(item.limit_of_expense) }} сўм
           </td>
           <td>{{ item.allowed_user_role }}</td>
-          <td>
+          <td data-exclude="true">
             <button
               class="btn btn-warning btn-sm"
               @click="$emit('get_item', item)"

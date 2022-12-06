@@ -45,6 +45,9 @@
     v-if="main_warehouses != ''"
   >
     <ul class="pagination pagination-sm justify-content-end">
+      <li>
+        <Select_data :id="'select_main_w_data'" />
+      </li>
       <li class="page-item">
         <button
           type="button"
@@ -106,6 +109,7 @@ import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Main_w_item from "@/components/main_warehouses/main_w_item.vue";
 import Main_w_add from "@/components/main_warehouses/main_w_add.vue";
 import Main_w_put from "@/components/main_warehouses/main_w_put.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "MainWarehouses",
   components: {
@@ -114,6 +118,7 @@ export default {
     Main_w_item,
     Main_w_add,
     Main_w_put,
+    Select_data,
   },
   data() {
     return {

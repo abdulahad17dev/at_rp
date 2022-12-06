@@ -47,6 +47,9 @@
     v-if="bank_accounts != ''"
   >
     <ul class="pagination pagination-sm justify-content-end">
+      <li>
+        <Select_data :id="'select_bank_account_data'" />
+      </li>
       <li class="page-item">
         <button
           type="button"
@@ -98,12 +101,14 @@ import { bank_account_add, bank_account_get } from "@/utils/request/request";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Bank_add from "@/components/bank_accounts/bank_add.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   components: {
     Header_item,
     Bank_items,
     Data_notfound,
     Bank_add,
+    Select_data,
   },
   name: "BankAccounts",
   data() {

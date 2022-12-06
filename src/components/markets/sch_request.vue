@@ -1,16 +1,16 @@
 <template>
   <div class="request">
     <div class="table-responsive mt-3">
-      <table class="table table-sm table-hover">
+      <table class="table table-sm table-hover" id="select_smeta_request_data">
         <thead class="">
           <tr>
-            <th style="width: 7%">№</th>
+            <th style="width: 7%" data-exclude="true">№</th>
             <th style="width: 15%">Махсулот</th>
             <th style="width: 15%">Ҳажм</th>
             <th style="width: 15%">Ўлчов бирлиги</th>
             <th style="width: 15%">Сана</th>
             <th style="width: 15%">Жами сумма</th>
-            <th style="width: 8%">
+            <th style="width: 8%" data-exclude="true">
               <select class="form-select form-select-sm" v-model="type">
                 <option value="">барчаси</option>
                 <option value="proche">проче</option>
@@ -22,7 +22,7 @@
         </thead>
         <tbody>
           <tr v-for="(item, inc) in shot_requests || []" :key="item">
-            <td class="td_grafik">
+            <td class="td_grafik" data-exclude="true">
               {{ inc + 1 }}
               <span
                 class="fa-solid fa-circle product rounded-circle"
@@ -96,7 +96,7 @@
                 <span class="mx-1"> сўм </span>
               </span>
             </td>
-            <td>
+            <td data-exclude="true">
               <button
                 class="btn btn-sm btn-success"
                 @click="get_item(item.Supplies_by_bank_account)"
@@ -126,6 +126,9 @@
       v-if="shot_requests != ''"
     >
       <ul class="pagination pagination-sm justify-content-end">
+        <li>
+          <Select_data :id="'select_smeta_request_data'" />
+        </li>
         <li class="page-item">
           <select
             class="form-control form-control-sm form-select mx-1"
@@ -318,7 +321,10 @@
               aria-labelledby="pills-home-quantity2-tab"
             >
               <div class="table-responsive">
-                <table class="table table-sm table-hover">
+                <table
+                  class="table table-sm table-hover"
+                  id="select_sch_pay_data"
+                >
                   <thead>
                     <tr>
                       <th style="width: 10%">Т/р</th>
@@ -326,7 +332,7 @@
                       <th style="width: 20%">Ўлчов бирлиги</th>
                       <th style="width: 15%">Сана</th>
                       <th style="width: 20%">Маҳсулот сотувчи корхона</th>
-                      <th>
+                      <th data-exclude="true">
                         <select
                           class="form-select form-select-sm"
                           v-model="m_status"
@@ -362,7 +368,7 @@
                           +998 {{ item.market_phone }} </a
                         >)
                       </td>
-                      <td>
+                      <td data-exclude="true">
                         <button
                           class="btn btn-sm btn-danger mx-1"
                           v-if="item.Supplies.status == false"
@@ -384,6 +390,9 @@
                 v-if="quantities.length"
               >
                 <ul class="pagination pagination-sm justify-content-end">
+                  <li>
+                    <Select_data :id="'select_sch_pay_data'" />
+                  </li>
                   <li class="page-item">
                     <select
                       class="form-control form-control-sm form-select mx-1"
@@ -454,7 +463,10 @@
               aria-labelledby="pills-profile-sh-quantity2-tab"
             >
               <div class="table-responsive">
-                <table class="table table-sm table-hover">
+                <table
+                  class="table table-sm table-hover"
+                  id="select_sch_pay2_data"
+                >
                   <thead>
                     <tr>
                       <th style="width: 10%">Т/р</th>
@@ -494,6 +506,7 @@
                       </td>
                       <td>
                         <button
+                          data-exclude="true"
                           class="btn btn-sm btn-danger"
                           v-if="
                             item.Expenses.type == 'market_expense_naxt' &&
@@ -517,6 +530,9 @@
                 v-if="paid_moneys.length"
               >
                 <ul class="pagination pagination-sm justify-content-end">
+                  <li>
+                    <Select_data :id="'select_sch_pay2_data'" />
+                  </li>
                   <li class="page-item">
                     <select
                       class="form-control form-control-sm form-select mx-1"
@@ -603,6 +619,7 @@ import {
 } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Format_numbers from "@/utils/format/format_numbers.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "ShotRequest",
   data() {
@@ -935,7 +952,7 @@ export default {
       this.limit
     );
   },
-  components: { Data_notfound, Format_numbers },
+  components: { Data_notfound, Format_numbers, Select_data },
 };
 </script>
 

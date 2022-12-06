@@ -26,10 +26,10 @@
       </div>
     </div>
     <div class="table-responsive smeta mt-3">
-      <table class="table table-sm table-hover">
+      <table class="table table-sm table-hover" id="select_sm_request_data">
         <thead class="">
           <tr>
-            <td style="width: 10%">
+            <td style="width: 10%" data-exclude="true">
               <input
                 class="form-check-input"
                 type="checkbox"
@@ -42,7 +42,7 @@
             <td style="width: 15%">Ўлчов бирлиги</td>
             <td style="width: 15%">Сана</td>
             <td style="width: 15%">Ҳажм</td>
-            <td>
+            <td data-exclude="true">
               <div class="dropdown">
                 <button
                   class="btn btn-light btn-sm dropdown-toggle"
@@ -153,7 +153,7 @@
         </thead>
         <tbody>
           <tr v-for="(item, inc) in smeta" :key="item" class="product">
-            <td class="td_grafik">
+            <td class="td_grafik" data-exclude="true">
               <input
                 class="form-check-input"
                 type="checkbox"
@@ -232,7 +232,7 @@
                 />
               </span>
             </td>
-            <td>
+            <td data-exclude="true">
               <button
                 v-if="search2 != item.product_name"
                 class="btn btn-sm btn-success"
@@ -280,6 +280,9 @@
 
     <nav aria-label="Page navigation example" class="mt-2" v-if="smeta != ''">
       <ul class="pagination pagination-sm justify-content-end mb-0">
+        <li>
+          <Select_data :id="'select_sm_request_data'" />
+        </li>
         <li class="page-item">
           <button
             type="button"
@@ -459,14 +462,22 @@
               aria-labelledby="composition-tab"
             >
               <div class="table-responsive composition">
-                <table class="table table-sm table-hover product_table">
+                <table
+                  class="table table-sm table-hover product_table"
+                  id="select_pr_composition_data"
+                >
                   <thead>
                     <tr>
                       <th style="width: 8%">№</th>
                       <th style="width: 30%">Номи</th>
                       <th style="width: 22%">Ҳажм</th>
                       <th style="width: 30%">Ўлчов бирлиги</th>
-                      <th style="width: 10%"></th>
+                      <th style="width: 10%" data-exclude="true">
+                        <Select_data
+                          v-if="product_composition.length"
+                          :id="'select_pr_composition_data'"
+                        />
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -482,7 +493,7 @@
                         />
                       </td>
                       <td>{{ item.olchov_birligi }}</td>
-                      <td>
+                      <td data-exclude="true">
                         <button
                           class="btn btn-sm btn-success"
                           data-mdb-target="#productaccept"
@@ -546,7 +557,10 @@
                   aria-labelledby="naxt-tab"
                 >
                   <div class="table-responsive">
-                    <table class="table table-sm table-hover">
+                    <table
+                      class="table table-sm table-hover"
+                      id="select_pay_naxt_data"
+                    >
                       <thead>
                         <tr>
                           <th style="width: 10%">Т/р</th>
@@ -556,7 +570,7 @@
                           <th style="width: 15%">Нарх</th>
                           <th style="width: 10%">Сана</th>
                           <th style="width: 15%">Маҳсулот сотувчи корхона</th>
-                          <th>
+                          <th data-exclude="true">
                             <select
                               class="form-select form-select-sm"
                               v-model="quantity_type"
@@ -610,6 +624,9 @@
                     v-if="filtering.length"
                   >
                     <ul class="pagination pagination-sm justify-content-end">
+                      <li>
+                        <Select_data :id="'select_pay_naxt_data'" />
+                      </li>
                       <li class="page-item">
                         <select
                           class="form-control form-control-sm form-select mx-1"
@@ -680,7 +697,10 @@
                   aria-labelledby="shot-tab"
                 >
                   <div class="table-responsive">
-                    <table class="table table-sm table-hover">
+                    <table
+                      class="table table-sm table-hover"
+                      id="select_pay_hisob_data"
+                    >
                       <thead>
                         <tr>
                           <th style="width: 10%">Т/р</th>
@@ -694,7 +714,7 @@
                           <th style="width: 20%">Ўлчов бирлиги</th>
                           <th style="width: 15%">Сана</th>
                           <th style="width: 20%">Маҳсулот сотувчи корхона</th>
-                          <th>
+                          <th data-exclude="true">
                             <select
                               class="form-select form-select-sm"
                               v-model="sh_quantity_type"
@@ -749,6 +769,9 @@
                     v-if="sh_quantities.length"
                   >
                     <ul class="pagination pagination-sm justify-content-end">
+                      <li>
+                        <Select_data :id="'select_pay_hisob_data'" />
+                      </li>
                       <li class="page-item">
                         <select
                           class="form-control form-control-sm form-select mx-1"
@@ -1098,6 +1121,7 @@ import {
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Format_numbers from "@/utils/format/format_numbers.vue";
 import Swal from "sweetalert2";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "Sm_request",
   data() {
@@ -1744,7 +1768,7 @@ export default {
       });
     },
   },
-  components: { Data_notfound, Format_numbers },
+  components: { Data_notfound, Format_numbers, Select_data },
 };
 </script>
 

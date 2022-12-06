@@ -37,7 +37,7 @@
     style="overflow: auto"
   >
     <table
-      class="table table-sm table-hover smeta"
+      class="table table-sm smeta"
       id="select_smeta_data"
       v-if="smeta != ''"
     >
@@ -185,7 +185,7 @@
 
   <nav aria-label="Page navigation example" class="mt-2" v-if="smeta != ''">
     <ul class="pagination pagination-sm justify-content-end">
-      <li class="page-item">
+      <li>
         <Select_data :id="'select_smeta_data'" />
       </li>
       <li class="page-item">
@@ -371,7 +371,7 @@ table.smeta {
 }
 
 .table-responsive {
-  max-height: 67vh;
+  max-height: 60vh;
 }
 @media (max-width: 500px) {
   .table-responsive {

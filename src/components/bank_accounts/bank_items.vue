@@ -4,7 +4,7 @@
     v-if="role != 'admin'"
     id="bank_account_data"
   >
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="select_bank_account_data">
       <thead>
         <tr>
           <th style="width: 10%">№</th>
@@ -23,7 +23,7 @@
               <span class="mx-1"> сўм </span>
             </span>
           </td>
-          <td>
+          <td data-exclude="true">
             <button
               v-if="role != 'admin'"
               class="btn btn-primary btn-sm mx-1"

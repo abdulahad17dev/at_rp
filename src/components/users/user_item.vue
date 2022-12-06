@@ -13,7 +13,7 @@
       </thead>
       <tbody>
         <tr v-for="(item, inc) in data || []" :key="item">
-          <td>{{ inc + 1 }}</td>
+          <td>{{ inc }}</td>
           <td>{{ item.name }}</td>
           <td>
             <a

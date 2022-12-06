@@ -26,16 +26,16 @@
       </div>
     </div>
     <div class="table-responsive mt-3">
-      <table class="table table-sm table-hover">
+      <table class="table table-sm table-hover" id="select_proche_request_data">
         <thead class="">
           <tr>
-            <th style="width: 7%">№</th>
+            <th style="width: 10%" data-exclude="true">№</th>
             <th style="width: 15%">Номи</th>
             <th style="width: 15%">Ҳажм</th>
             <th style="width: 15%">Ўлчов бирлиги</th>
-            <th style="width: 15%">Сана</th>
+            <th style="width: 12%">Сана</th>
             <th style="width: 15%">Изох</th>
-            <th style="width: 8%">
+            <th style="width: 8%" data-exclude="true">
               <div class="dropdown">
                 <button
                   class="btn btn-light btn-sm dropdown-toggle"
@@ -147,7 +147,7 @@
         </thead>
         <tbody>
           <tr v-for="(item, inc) in product_requests || []" :key="item">
-            <td class="td_grafik">
+            <td class="td_grafik" data-exclude="true">
               {{ inc + 1 }}
               <span
                 class="fa-solid fa-circle product rounded-circle"
@@ -204,7 +204,7 @@
             </td>
             <td>{{ item.Proche_sorovlar.comment }}</td>
             <td>{{ item.building }}</td>
-            <td>
+            <td data-exclude="true">
               <button
                 class="btn btn-sm btn-success"
                 data-mdb-toggle="modal"
@@ -226,6 +226,9 @@
       v-if="product_requests != ''"
     >
       <ul class="pagination pagination-sm justify-content-end">
+        <li>
+          <Select_data :id="'select_proche_request_data'" />
+        </li>
         <li class="page-item">
           <button
             type="button"
@@ -464,7 +467,10 @@
               aria-labelledby="pills-home-quantity-tab"
             >
               <div class="table-responsive">
-                <table class="table table-sm table-hover">
+                <table
+                  class="table table-sm table-hover"
+                  id="select_pay_h_data"
+                >
                   <thead>
                     <tr>
                       <th style="width: 10%">Т/р</th>
@@ -477,6 +483,7 @@
                         <select
                           class="form-select form-select-sm"
                           v-model="quantity_type"
+                          data-exclude="true"
                         >
                           <option value="naxt_proche">нахт</option>
                           <option value="qarz_proche">қарз</option>
@@ -521,6 +528,9 @@
                 v-if="filtering.length"
               >
                 <ul class="pagination pagination-sm justify-content-end">
+                  <li>
+                    <Select_data :id="'select_pay_h_data'" />
+                  </li>
                   <li class="page-item">
                     <select
                       class="form-control form-control-sm form-select mx-1"
@@ -591,7 +601,10 @@
               aria-labelledby="pills-profile-sh-quantity-tab"
             >
               <div class="table-responsive">
-                <table class="table table-sm table-hover">
+                <table
+                  class="table table-sm table-hover"
+                  id="select_pay_bank_data"
+                >
                   <thead>
                     <tr>
                       <th style="width: 10%">Т/р</th>
@@ -639,6 +652,9 @@
                 v-if="sh_quantities.length"
               >
                 <ul class="pagination pagination-sm justify-content-end">
+                  <li>
+                    <Select_data :id="'select_pay_bank_data'" />
+                  </li>
                   <li class="page-item">
                     <select
                       class="form-control form-control-sm form-select mx-1"
@@ -726,6 +742,7 @@ import {
 } from "@/utils/request/handle_api_err";
 import Swal from "sweetalert2";
 import Format_numbers from "@/utils/format/format_numbers.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "Pr_request",
   data() {
@@ -1092,7 +1109,7 @@ export default {
       });
     },
   },
-  components: { Data_notfound, Format_numbers },
+  components: { Data_notfound, Format_numbers, Select_data },
 };
 </script>
 

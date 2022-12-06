@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive mt-3" v-if="role != 'admin'">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="select_main_w_data">
       <thead class="">
         <tr>
           <th>№</th>
@@ -23,7 +23,7 @@
             >
           </td>
           <td>{{ item.address }}</td>
-          <td>
+          <td data-exclude="true">
             <button
               v-if="role != 'admin'"
               class="btn btn-sm btn-warning"

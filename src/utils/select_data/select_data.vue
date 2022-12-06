@@ -7,29 +7,15 @@
     <button
       type="button"
       class="btn btn-outline-success"
+      data-mdb-ripple-color="dark"
       @click="download_excel(data_id)"
     >
       <i class="fa-regular fa-file-excel"></i>
-    </button>
-    <!-- <button
-      type="button"
-      class="btn btn-outline-primary"
-      @click="download_word(data_id)"
-    >
-      <i class="fa-regular fa-file-word"></i>
-    </button> -->
-    <button
-      type="button"
-      class="btn btn-outline-danger"
-      @click="download_pdf(data_id)"
-    >
-      <i class="fa-regular fa-file-pdf"></i>
     </button>
   </div>
 </template>
 
 <script>
-import html2pdf from "html2pdf.js";
 import TableToExcel from "@linways/table-to-excel";
 export default {
   name: "SelectData",
@@ -43,14 +29,6 @@ export default {
         },
       });
     },
-    // download_word(e) {
-    //   console.log(e);
-    // },
-    download_pdf(e) {
-      html2pdf(document.getElementById(e), {
-        filename: "document.pdf",
-      });
-    },
   },
   computed: {
     data_id() {
@@ -60,5 +38,8 @@ export default {
 };
 </script>
 
-<!-- <style lang="scss" scoped>
-</style> -->
+<style lang="scss" scoped>
+.btn-group button {
+  padding: 5px 10px;
+}
+</style>

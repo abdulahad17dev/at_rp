@@ -212,7 +212,7 @@
             <div class="row m-1 mb-2">
               <div class="col-10 mx-auto my-1">
                 <label for="balance4">
-                  Сумма:
+                  Суммаs:
                   <span class="text-primary"
                     >{{ new Intl.NumberFormat().format(body.money) }} сўм
                   </span></label

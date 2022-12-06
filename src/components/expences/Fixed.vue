@@ -1,13 +1,13 @@
 <template>
   <div class="table-responsive m-1">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="select_fixed_expense_data">
       <thead>
         <tr>
           <th style="width: 5%">№</th>
           <th style="width: 20%">Сумма</th>
           <th style="width: 20%">Сана</th>
           <th style="width: 20%">Изох</th>
-          <th v-if="role == 'bugalter'">
+          <th v-if="role == 'bugalter'" data-exclude="true">
             <div class="dropdown">
               <button
                 class="btn btn-light btn-sm dropdown-toggle"
@@ -116,7 +116,7 @@
               </ul>
             </div>
           </th>
-          <th v-else-if="role == 'taminotchi'">
+          <th v-else-if="role == 'taminotchi'" data-exclude="true">
             <div class="dropdown">
               <button
                 class="btn btn-light btn-sm dropdown-toggle"
@@ -225,7 +225,7 @@
               </ul>
             </div>
           </th>
-          <th>
+          <th data-exclude="true">
             <div class="dropdown">
               <button
                 class="btn btn-light btn-sm dropdown-toggle"
@@ -353,7 +353,7 @@
           <td>
             <b class="text-primary"> {{ item.fixed_expense }}</b>
           </td>
-          <td>
+          <td data-exclude="true">
             <button
               class="btn btn-sm btn-danger"
               @click="$emit('remove', item.Expenses.id)"
@@ -511,8 +511,8 @@ th select {
 }
 
 .table-responsive {
-  max-height: 65vh;
-  min-height: 65vh;
+  max-height: 63vh;
+  min-height: 63vh;
 }
 
 @media (max-width: 634px) {

@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive mt-3" style="overflow: auto" v-if="data != ''">
-    <table class="table table-sm table-hover smeta">
+    <table class="table table-sm smeta">
       <tbody v-for="item in data" :key="item">
         <tr v-if="!item.Smeta.grafik_id" class="bg-dark text-white text-center">
           <td colspan="11">{{ item.Smeta.name }}</td>

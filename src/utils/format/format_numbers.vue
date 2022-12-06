@@ -37,7 +37,7 @@ export default {
       all_num: false,
       format_num: true,
       copied: false,
-      id: Math.floor(Math.random() * 100000000) + 1,
+      id: Date.now(),
     };
   },
   watch: {
