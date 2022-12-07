@@ -33,7 +33,7 @@
         />
         <div class="" v-if="role == 'pto'">
           <button
-            class="btn btn-danger btn-sm"
+            class="btn btn-danger"
             @click="remove_all_smeta"
             v-if="smeta != ''"
           >
@@ -41,7 +41,7 @@
           </button>
           <button
             v-else
-            class="btn btn-outline-secondary btn-sm"
+            class="btn btn-outline-secondary"
             type="button"
             data-mdb-toggle="modal"
             data-mdb-target="#smeta_add"
@@ -58,6 +58,9 @@
 
   <nav aria-label="Page navigation example" class="mt-2" v-if="smeta != ''">
     <ul class="pagination pagination-sm justify-content-end">
+      <li>
+        <Select_data :id="'select_smeta'" />
+      </li>
       <li class="page-item">
         <button
           type="button"
@@ -112,6 +115,7 @@ import Smeta_item from "@/components/smeta/smeta_item.vue";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Swal from "sweetalert2";
 import Header_item from "@/components/header/header_item.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "SmetaItem",
   data() {
@@ -376,7 +380,13 @@ export default {
       this.order_by
     );
   },
-  components: { Smeta_add, Smeta_item, Data_notfound, Header_item },
+  components: {
+    Smeta_add,
+    Smeta_item,
+    Data_notfound,
+    Header_item,
+    Select_data,
+  },
 };
 </script>
 

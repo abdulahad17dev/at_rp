@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive mt-3">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="worker_item">
       <thead class="">
         <tr>
           <th style="width: 8%">№</th>
@@ -33,7 +33,7 @@
               {{ worker_item.specialty_type.specialty }}</span
             >
           </td>
-          <td>
+          <td data-exclude="true">
             <label class="rating-label">
               <input
                 class="rating"
@@ -46,7 +46,7 @@
               />
             </label>
           </td>
-          <td>
+          <td data-exclude="true">
             <button
               class="btn btn-sm btn-warning"
               @click="$emit('item', item)"

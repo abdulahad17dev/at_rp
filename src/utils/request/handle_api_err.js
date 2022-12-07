@@ -4,7 +4,7 @@ export let link = "https://constructionproject.crud.uz/uploaded_files/";
 
 export function catchError(error) {
   console.log(error);
-  if (error.response.status == 401) {
+  if (error?.response.status == 401) {
     console.clear();
     localStorage.removeItem("role");
     localStorage.removeItem("access_token");
@@ -30,7 +30,7 @@ export function catchError(error) {
           window.location.href = "/";
         }
       });
-  } else if (error.message == "Network Error") {
+  } else if (error?.message == "Network Error") {
     return Swal.mixin({
       toast: true,
       position: "top-end",
@@ -45,7 +45,7 @@ export function catchError(error) {
       icon: "warning",
       title: "Интернет билан алоқа мавжуд эмас",
     });
-  } else if (error.response.status == 422) {
+  } else if (error?.response.status == 422) {
     return Swal.mixin({
       toast: true,
       position: "top-end",
@@ -60,7 +60,7 @@ export function catchError(error) {
       icon: "warning",
       title: "Маълумот тўлиқ эмас",
     });
-  } else if (error.response.status == 404) {
+  } else if (error?.response.status == 404) {
     return Swal.mixin({
       toast: true,
       position: "top-end",
@@ -75,7 +75,7 @@ export function catchError(error) {
       icon: "error",
       title: "УРЛ манзил нотўғри !",
     });
-  } else if (error.response.status == 400) {
+  } else if (error?.response.status == 400) {
     return Swal.mixin({
       toast: true,
       position: "top-end",
@@ -88,9 +88,12 @@ export function catchError(error) {
       },
     }).fire({
       icon: "error",
-      title: error.response.data.detail,
+      title: error?.response.data.detail,
     });
-  } else if (error.response.data.detail == "Inactive user") {
+  } else if (
+    error?.response.data.detail == "Inactive user" ||
+    error == "Inactive user"
+  ) {
     console.clear();
     localStorage.clear();
     Swal.mixin({

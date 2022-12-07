@@ -23,9 +23,9 @@
   </div>
 
   <div class="table-responsive smeta mt-2">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="smeta_zakupshik">
       <thead>
-        <tr>
+        <tr data-exclude="true">
           <td style="width: 10%">
             <input
               class="form-check-input"
@@ -39,7 +39,7 @@
           <td style="width: 20%">Ўлчов бирлиги</td>
           <td style="width: 20%">Ҳажм</td>
           <th style="width: 10%">Бошланиш санаси</th>
-          <td style="width: 10%">
+          <td style="width: 10%" data-exclude="true">
             <div class="dropdown">
               <button
                 class="btn btn-light btn-sm dropdown-toggle"
@@ -146,7 +146,7 @@
               </ul>
             </div>
           </td>
-          <td style="width: 10%">
+          <td style="width: 10%" data-exclude="true">
             <select class="form-select form-select-sm" v-model="status">
               <option value=" ">бириктирилмаган</option>
               <option value="wait">бириктирилган</option>
@@ -156,7 +156,7 @@
       </thead>
       <tbody>
         <tr v-for="(item, inc) in smeta" :key="item" class="product">
-          <td class="td_grafik">
+          <td class="td_grafik" data-exclude="true">
             <input
               class="form-check-input"
               type="checkbox"
@@ -214,7 +214,7 @@
             }}
           </td>
           <td>{{ item.building }}</td>
-          <td>
+          <td data-exclude="true">
             <button
               class="btn btn-sm btn-success"
               @click="select_item(item.Smeta.id, item.product_name)"
@@ -258,6 +258,9 @@
 
   <nav aria-label="Page navigation example" class="mt-2" v-if="smeta != ''">
     <ul class="pagination pagination-sm justify-content-end">
+      <li>
+        <Select_data :id="'smeta_zakupshik'" />
+      </li>
       <li class="page-item">
         <button
           type="button"
@@ -449,6 +452,7 @@ import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Accept_smeta_request from "./accept_smeta_request.vue";
 import Format_numbers from "@/utils/format/format_numbers.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "SmetaZakupshik",
   data() {
@@ -687,7 +691,12 @@ export default {
       this.user_id
     );
   },
-  components: { Data_notfound, Accept_smeta_request, Format_numbers },
+  components: {
+    Data_notfound,
+    Accept_smeta_request,
+    Format_numbers,
+    Select_data,
+  },
   computed: {
     checkAll: {
       get: function () {

@@ -1,7 +1,7 @@
 <template>
   <Header_item :name="this.$route.query.name" />
   <div class="table-responsive">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="building_info">
       <thead>
         <tr>
           <th style="width: 10%">№</th>
@@ -13,7 +13,7 @@
           <th style="width: 10%">Техника/Материал</th>
           <th style="width: 10%">Сарфланган соат</th>
           <th style="width: 10%">Прорап</th>
-          <th style="width: 10%">
+          <th style="width: 10%" data-exclude="true">
             <select class="form-select form-select-sm" v-model="type">
               <option :value="this.$route.query.type">
                 {{
@@ -114,6 +114,9 @@
 
   <nav aria-label="Page navigation example" class="mt-2" v-if="info != ''">
     <ul class="pagination pagination-sm justify-content-end">
+      <li>
+        <Select_data :id="'building_info'" />
+      </li>
       <li class="page-item">
         <select
           class="form-control form-control-sm mx-2 form-select"
@@ -172,10 +175,11 @@ import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import { get_spent_items_to_work } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
 import Format_numbers from "@/utils/format/format_numbers.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 
 export default {
   name: "Work_Info",
-  components: { Header_item, Data_notfound, Format_numbers },
+  components: { Header_item, Data_notfound, Format_numbers, Select_data },
   data() {
     return {
       work_id: this.$route.query.id,

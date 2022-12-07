@@ -126,7 +126,10 @@
         v-if="transfer_cashier != ''"
       >
         <ul class="pagination pagination-sm justify-content-end">
-          <div class="page-item">
+          <li>
+            <Select_data :id="'money_to_cashier'" />
+          </li>
+          <li class="page-item">
             <select
               class="form-control form-control-sm form-select mx-1"
               v-model="t_limit"
@@ -135,7 +138,7 @@
               <option value="50">50</option>
               <option value="100">100</option>
             </select>
-          </div>
+          </li>
           <li class="page-item">
             <button
               type="button"
@@ -375,6 +378,7 @@ import { catchError, success } from "@/utils/request/handle_api_err";
 import Header_item from "../../components/header/header_item.vue";
 import Money_to_cashier_items from "@/components/transfer/money_to_cashier_items.vue";
 import Accept_m_in_users_from_cashier from "../../components/transfer/accept_m_in_users_from_cashier.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "TransferFromUserToCashier",
   data() {
@@ -625,6 +629,7 @@ export default {
     Header_item,
     Money_to_cashier_items,
     Accept_m_in_users_from_cashier,
+    Select_data,
   },
 };
 </script>

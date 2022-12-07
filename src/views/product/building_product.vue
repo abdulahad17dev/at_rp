@@ -80,14 +80,14 @@
       </div>
 
       <div class="table-responsive valid mt-3">
-        <table class="table table-sm table-hover">
+        <table class="table table-sm table-hover" id="valid_product">
           <thead class="">
             <tr>
               <th style="width: 10%">№</th>
               <th style="width: 25%">Номи</th>
               <th style="width: 25%">Ўлчов бирлиги</th>
               <th style="width: 25%">Ҳажм</th>
-              <th>
+              <th data-exclude="true">
                 <select class="form-select form-select-sm" v-model="valid_type">
                   <option value="proche">проче</option>
                   <option value="smeta">смета</option>
@@ -110,7 +110,7 @@
               <td>
                 <Format_numbers :number="item.Warehouse_products.quantity" />
               </td>
-              <td>
+              <td data-exclude="true">
                 <form
                   @submit.prevent="
                     share(item.Warehouse_products.id, item.invalid_quantity)
@@ -149,6 +149,9 @@
         v-if="valid_products != ''"
       >
         <ul class="pagination pagination-sm justify-content-end">
+          <li>
+            <Select_data :id="'vali_product'" />
+          </li>
           <li class="page-item">
             <button
               type="button"
@@ -242,7 +245,7 @@
       </div>
 
       <div class="table-responsive valid mt-3">
-        <table class="table table-sm table-hover">
+        <table class="table table-sm table-hover" id="invalid_product">
           <thead class="">
             <tr>
               <th style="width: 10%">№</th>
@@ -250,7 +253,7 @@
               <th style="width: 15%">Ҳажм</th>
               <th style="width: 15%">Сана</th>
               <th style="width: 20%">Ўтказган ҳодим</th>
-              <th>
+              <th data-exclude="true">
                 <select
                   class="form-select form-select-sm"
                   v-model="invalid_type"
@@ -283,7 +286,7 @@
                 }}
               </td>
               <td>{{ item.pto_user }}</td>
-              <td>
+              <td data-exclude="true">
                 <button
                   class="btn btn-sm btn-danger"
                   @click="return_product(item.Invalid_products.id)"
@@ -303,6 +306,9 @@
         v-if="invalid_products != ''"
       >
         <ul class="pagination pagination-sm justify-content-end">
+          <li>
+            <Select_data :id="'invalid_product'" />
+          </li>
           <li class="page-item">
             <button
               type="button"
@@ -381,10 +387,11 @@ import {
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Format_numbers from "@/utils/format/format_numbers.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 
 export default {
   name: "BuildingProducts",
-  components: { Header_item, Data_notfound, Format_numbers },
+  components: { Header_item, Data_notfound, Format_numbers, Select_data },
   data() {
     return {
       valid_type: "proche",

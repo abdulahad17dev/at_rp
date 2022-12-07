@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="market_expense_history">
       <thead>
         <tr>
           <th style="width: 10%">Т/р</th>
@@ -9,7 +9,7 @@
           <th style="width: 20%">Ходим</th>
           <th style="width: 20%">Маҳсулот сотувчи корхона</th>
           <th style="width: 20%">Материал</th>
-          <th>
+          <th data-exclude="true">
             <select class="form-select form-select-sm" v-model="type">
               <option value="market_expense_shot">
                 ҳисоб рақамидан олинган таминот
@@ -81,6 +81,9 @@
     v-if="paid_moneys.length"
   >
     <ul class="pagination pagination-sm justify-content-end">
+      <li>
+        <Select_data :id="'market_expense_history'" />
+      </li>
       <li class="page-item">
         <select
           class="form-control form-control-sm form-select mx-1"
@@ -134,6 +137,7 @@ import { get_market_expenses } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Format_numbers from "@/utils/format/format_numbers.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   data() {
     return {
@@ -193,7 +197,7 @@ export default {
   created() {
     this.get_paid_moneys();
   },
-  components: { Data_notfound, Format_numbers },
+  components: { Data_notfound, Format_numbers, Select_data },
 };
 </script>
 

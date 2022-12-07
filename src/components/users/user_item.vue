@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive mt-3">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="user_item">
       <thead class="">
         <tr>
           <th>№</th>
@@ -8,7 +8,7 @@
           <th>Телефон рақам</th>
           <th>Ихтисослиги</th>
           <th>Статус</th>
-          <th>Ўзгартириш</th>
+          <th data-exclude="true">Ўзгартириш</th>
         </tr>
       </thead>
       <tbody>
@@ -32,7 +32,7 @@
             >
             <span v-else class="badge rounded-pill bg-danger">нофаол</span>
           </td>
-          <td>
+          <td data-exclude="true">
             <button
               class="btn btn-sm btn-warning"
               data-mdb-toggle="modal"

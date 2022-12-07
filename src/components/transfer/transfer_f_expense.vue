@@ -37,14 +37,14 @@
     </div>
   </form>
   <div class="table-responsive m-1">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="transfer_f_expense">
       <thead>
         <tr>
           <th style="width: 5%">№</th>
           <th style="width: 35%">Сумма</th>
           <th style="width: 20%">Сана</th>
           <th style="width: 40%">Изох</th>
-          <th>
+          <th data-exclude="true">
             <div class="dropdown">
               <button
                 class="btn btn-light btn-sm dropdown-toggle"
@@ -176,6 +176,9 @@
     v-if="fixed_history != ''"
   >
     <ul class="pagination pagination-sm justify-content-end">
+      <li>
+        <Select_data :id="'transfer_f_expense'" />
+      </li>
       <li class="page-item">
         <select
           class="form-control form-control-sm form-select mx-1"
@@ -242,6 +245,7 @@
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import { fixed_expence_get, get_fixed_history } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "TransferHistoryExpense",
   data() {
@@ -391,7 +395,7 @@ export default {
       this.search_expense
     );
   },
-  components: { Data_notfound },
+  components: { Data_notfound, Select_data },
 };
 </script>
 

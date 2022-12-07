@@ -35,14 +35,14 @@
   </div>
 
   <div class="table-responsive mt-3">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="product_in_main_w">
       <thead class="">
         <tr>
           <th style="width: 10%">№</th>
           <th style="width: 30%">Номи</th>
           <th style="width: 20%">Ўлчов бирлиги</th>
           <th style="width: 20%">Ҳажм</th>
-          <th style="width: 20%">
+          <th style="width: 20%" data-exclude="true">
             <select class="form-select form-select-sm" v-model="type">
               <option value="proche">проче</option>
               <option value="smeta">смета</option>
@@ -67,7 +67,7 @@
           <td>
             <Format_numbers :number="item.sum_quantity" />
           </td>
-          <td>
+          <td data-exclude="true">
             <button
               v-if="role != 'admin'"
               class="btn btn-sm btn-success mx-1"
@@ -89,6 +89,9 @@
 
   <nav aria-label="Page navigation example" class="mt-2" v-if="products != ''">
     <ul class="pagination pagination-sm justify-content-end">
+      <li>
+        <Select_data :id="'product_in_main_w'" />
+      </li>
       <li class="page-item">
         <button
           type="button"
@@ -314,10 +317,11 @@ import {
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Format_numbers from "@/utils/format/format_numbers.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 
 export default {
   name: "ProductMainWarehouse",
-  components: { Header_item, Data_notfound, Format_numbers },
+  components: { Header_item, Data_notfound, Format_numbers, Select_data },
   data() {
     return {
       type: "proche",

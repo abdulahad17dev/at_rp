@@ -1,13 +1,13 @@
 <template>
   <div class="table-responsive">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="money_to_user">
       <thead>
         <tr>
           <th style="width: 10%">№</th>
           <th style="width: 20%">Сумма</th>
           <th style="width: 20%">Сана</th>
           <th style="width: 20%">Изох</th>
-          <th>
+          <th data-exclude="true">
             <div class="dropdown">
               <button
                 class="btn btn-light btn-sm dropdown-toggle"
@@ -104,7 +104,7 @@
               </ul>
             </div>
           </th>
-          <th style="width: 15%">
+          <th style="width: 15%" data-exclude="true">
             <select
               class="form-control form-control-sm"
               @change="$emit('status', $event.target.value)"
@@ -136,7 +136,7 @@
           <td>
             <b class="text-primary">{{ item.user_for_to_ }}</b>
           </td>
-          <td>
+          <td data-exclude="true">
             <button
               class="btn btn-sm btn-danger"
               v-if="item.Transfers.status == false"

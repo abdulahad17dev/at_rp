@@ -37,7 +37,7 @@
     </div>
   </form>
   <div class="table-responsive mt-1">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="select_money_l_data">
       <thead>
         <tr>
           <th style="width: 5%">№</th>
@@ -75,7 +75,10 @@
     v-if="money_history != ''"
   >
     <ul class="pagination pagination-sm justify-content-end">
-      <div class="page-item">
+      <li>
+        <Select_data :id="'select_money_l_data'" />
+      </li>
+      <li class="page-item">
         <select
           class="form-control form-control-sm form-select mx-1"
           v-model="limit"
@@ -84,7 +87,7 @@
           <option value="50">50</option>
           <option value="100">100</option>
         </select>
-      </div>
+      </li>
       <li class="page-item">
         <button
           type="button"
@@ -131,6 +134,7 @@
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import { money_from_launderer_get } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "MoneyFromMoneyLaundererHistory",
   data() {
@@ -213,7 +217,7 @@ export default {
       this.to_time
     );
   },
-  components: { Data_notfound },
+  components: { Data_notfound, Select_data },
 };
 </script>
 

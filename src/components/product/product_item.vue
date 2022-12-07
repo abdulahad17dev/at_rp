@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive product mt-3">
-    <table class="table table-sm table-hover table_products">
+    <table class="table table-sm table-hover table_products" id="product_item">
       <thead class="">
         <tr>
           <th style="width: 10%">№</th>
@@ -14,7 +14,7 @@
           <td>{{ idx + 1 }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.olchov_birligi }}</td>
-          <td>
+          <td data-exclude="true">
             <button
               class="btn btn-primary btn-sm"
               data-mdb-toggle="modal"
@@ -95,14 +95,19 @@
           </form>
 
           <div class="table-responsive mt-3 table_product_composition">
-            <table class="table table-sm table-hover product_c">
+            <table
+              class="table table-sm table-hover product_c"
+              id="product_composition"
+            >
               <thead>
                 <tr>
                   <th>№</th>
                   <th>Номи</th>
                   <th>Ҳажми</th>
                   <th>Ўлчов бирлиги</th>
-                  <th></th>
+                  <th data-exclude="true">
+                    <Select_data :id="'product_composition'" />
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -113,7 +118,7 @@
                     <Format_numbers :number="item.quantity" />
                   </td>
                   <td style="width: 20%">{{ item.olchov_birligi }}</td>
-                  <td style="width: 10%">
+                  <td style="width: 10%" data-exclude="true">
                     <button
                       class="btn btn-danger btn-sm"
                       @click="remove(item.id)"

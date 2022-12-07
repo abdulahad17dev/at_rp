@@ -37,7 +37,7 @@
     </div>
   </form>
   <div class="table-responsive m-1">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="accept_money">
       <thead>
         <tr>
           <th style="width: 5%">№</th>
@@ -85,7 +85,10 @@
     v-if="hisob_raqamiga_qabul_qilingan_pullar != ''"
   >
     <ul class="pagination pagination-sm justify-content-end">
-      <div class="page-item">
+      <li>
+        <Select_data :id="'accept_money'" />
+      </li>
+      <li class="page-item">
         <select
           class="form-control form-control-sm form-select mx-1"
           v-model="limit"
@@ -94,7 +97,7 @@
           <option value="50">50</option>
           <option value="100">100</option>
         </select>
-      </div>
+      </li>
       <li class="page-item">
         <button
           type="button"
@@ -142,9 +145,10 @@ import { transfer_history_get } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Format_numbers from "@/utils/format/format_numbers.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "AcceptMoney",
-  components: { Data_notfound, Format_numbers },
+  components: { Data_notfound, Format_numbers, Select_data },
   data() {
     return {
       limit: 25,

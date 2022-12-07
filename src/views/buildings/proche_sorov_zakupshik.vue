@@ -74,10 +74,10 @@
         </div>
       </div>
       <div class="table-responsive mt-2">
-        <table class="table table-sm table-hover">
+        <table class="table table-sm table-hover" id="proche_sorov_zakupshik">
           <thead class="">
             <tr>
-              <th style="width: 7%">
+              <th style="width: 7%" data-exclude="true">
                 <input
                   class="form-check-input"
                   type="checkbox"
@@ -93,7 +93,7 @@
               <th style="width: 15%">Ўлчов бирлиги</th>
               <th style="width: 15%">Сана</th>
               <th style="width: 15%">Изох</th>
-              <th style="width: 8%">
+              <th style="width: 8%" data-exclude="true">
                 <div class="dropdown">
                   <button
                     class="btn btn-light btn-sm dropdown-toggle"
@@ -204,7 +204,7 @@
                   </ul>
                 </div>
               </th>
-              <th>
+              <th data-exclude="true">
                 <select class="form-select form-select-sm" v-model="status">
                   <option value="zakupshikda_proche">закупшикда</option>
                   <option value="taminotchida_proche">таминотчида</option>
@@ -218,7 +218,7 @@
           </thead>
           <tbody>
             <tr v-for="(item, inc) in product_requests" :key="item">
-              <td class="td_grafik">
+              <td class="td_grafik" data-exclude="true">
                 <input
                   class="form-check-input"
                   type="checkbox"
@@ -270,7 +270,7 @@
                 {{ item.Proche_sorovlar.comment }}
               </td>
               <td>{{ item.building }}</td>
-              <td>
+              <td data-exclude="true">
                 <button
                   class="btn btn-sm btn-success"
                   @click="select_item(item.Proche_sorovlar)"
@@ -319,6 +319,9 @@
         v-if="product_requests != ''"
       >
         <ul class="pagination pagination-sm justify-content-end">
+          <li>
+            <Select_data :id="'proche_sorov_zakupshik'" />
+          </li>
           <li class="page-item">
             <button
               type="button"
@@ -454,6 +457,7 @@ import { catchError, success } from "@/utils/request/handle_api_err";
 import Accept_request from "@/components/buildings/accept_request.vue";
 import Smeta_zakupshik from "@/components/smeta/smeta_zakupshik.vue";
 import Format_numbers from "@/utils/format/format_numbers.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "ProcheSorovZakupshik",
   data() {
@@ -683,6 +687,7 @@ export default {
     Accept_request,
     Smeta_zakupshik,
     Format_numbers,
+    Select_data,
   },
   computed: {
     checkAll: {

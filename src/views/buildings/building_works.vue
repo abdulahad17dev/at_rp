@@ -91,7 +91,7 @@
         </div>
       </div>
       <div class="table-responsive mt-3" style="overflow: auto">
-        <table class="table table-sm table-hover smeta work">
+        <table class="table table-sm table-hover smeta work" id="sneta_work">
           <thead>
             <tr>
               <th></th>
@@ -179,7 +179,7 @@
                     .slice(0, 10)
                 }}
               </td>
-              <td>
+              <td data-exclude="true">
                 <button
                   class="btn btn-sm btn-success mx-1"
                   v-if="
@@ -246,6 +246,9 @@
         v-if="smeta_works != ''"
       >
         <ul class="pagination pagination-sm justify-content-end">
+          <li>
+            <Select_data :id="'smeta_work'" />
+          </li>
           <li class="page-item">
             <button
               type="button"
@@ -348,7 +351,10 @@
         </div>
       </div>
       <div class="table-responsive mt-3">
-        <table class="table table-sm table-hover smeta other_work">
+        <table
+          class="table table-sm table-hover smeta other_work"
+          id="other_work"
+        >
           <thead>
             <tr>
               <th style="width: 10%">Номи</th>
@@ -418,7 +424,7 @@
                 <hr class="m-0" />
                 {{ item.Other_works.comment }}
               </td>
-              <td>
+              <td data-exclude="true">
                 <button
                   class="btn btn-sm btn-success mx-1"
                   v-if="
@@ -486,6 +492,9 @@
         v-if="other_works != ''"
       >
         <ul class="pagination pagination-sm justify-content-end">
+          <li>
+            <Select_data :id="'other_work'" />
+          </li>
           <li class="page-item">
             <button
               type="button"
@@ -724,10 +733,11 @@ import {
 import { catchError, link, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Format_numbers from "@/utils/format/format_numbers.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 
 export default {
   name: "BuildingWorks",
-  components: { Header_item, Data_notfound, Format_numbers },
+  components: { Header_item, Data_notfound, Format_numbers, Select_data },
   data() {
     return {
       smeta_building_id: this.$route.query.id,

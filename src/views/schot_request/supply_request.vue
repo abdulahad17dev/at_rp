@@ -765,7 +765,10 @@
         </div>
         <div class="modal-body">
           <div class="table-responsive">
-            <table class="table table-sm table-hover">
+            <table
+              class="table table-sm table-hover"
+              id="supply_request_pay_history"
+            >
               <thead>
                 <tr>
                   <th style="width: 10%">Т/р</th>
@@ -803,7 +806,7 @@
                         : ""
                     }}
                   </td>
-                  <td>
+                  <td data-exclude="true">
                     <button
                       class="btn btn-sm btn-danger"
                       v-if="item.Expenses.type == 'market_expense_shot'"
@@ -825,6 +828,9 @@
             v-if="paid_moneys.length"
           >
             <ul class="pagination pagination-sm justify-content-end">
+              <li>
+                <Select_data :id="'supply_request_pay_history'" />
+              </li>
               <li class="page-item">
                 <select
                   class="form-control form-control-sm form-select mx-1"
@@ -908,6 +914,7 @@ import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Format_numbers from "@/utils/format/format_numbers.vue";
 import Pay_for_b_a from "./pay_for_b_a.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "SupplyRequest",
   data() {
@@ -1397,7 +1404,13 @@ export default {
       },
     },
   },
-  components: { Header_item, Data_notfound, Format_numbers, Pay_for_b_a },
+  components: {
+    Header_item,
+    Data_notfound,
+    Format_numbers,
+    Pay_for_b_a,
+    Select_data,
+  },
 };
 </script>
 

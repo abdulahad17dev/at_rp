@@ -132,10 +132,14 @@ export default {
       params.append("password", this.password);
       login(params)
         .then((res) => {
-          localStorage.setItem("access_token", res.data.access_token);
-          localStorage.setItem("role", res.data.role);
-          localStorage.setItem("user_id", res.data.id);
-          window.location.href = "/menu";
+          if (res.data.role != "prorap") {
+            localStorage.setItem("access_token", res.data.access_token);
+            localStorage.setItem("role", res.data.role);
+            localStorage.setItem("user_id", res.data.id);
+            window.location.href = "/menu";
+          } else {
+            catchError("Inactive user");
+          }
         })
         .finally(() => {
           this.loading = false;

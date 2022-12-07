@@ -31,6 +31,9 @@
 
   <nav aria-label="Page navigation example" class="mt-2" v-if="products != ''">
     <ul class="pagination pagination-sm justify-content-end">
+      <li>
+        <select_dataVue :id="'product_item'" />
+      </li>
       <li class="page-item">
         <button
           type="button"

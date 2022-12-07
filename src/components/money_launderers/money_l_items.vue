@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive mt-3">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="select_money_l_items_data">
       <thead class="">
         <tr>
           <th>№</th>
@@ -28,7 +28,7 @@
               +998 {{ format_phone(item.phone) }}</a
             >
           </td>
-          <td>
+          <td data-exclude="true">
             <button
               v-if="role != 'admin'"
               class="btn btn-sm btn-warning"

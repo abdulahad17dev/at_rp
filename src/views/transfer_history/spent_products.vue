@@ -24,7 +24,7 @@
   </div>
 
   <div class="table-responsive mt-3">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="spent_product">
       <thead class="">
         <tr>
           <th style="width: 10%">№</th>
@@ -34,7 +34,7 @@
           <th style="width: 10%">Сана</th>
           <th style="width: 20%">Иш</th>
           <th style="width: 10%">Прорап</th>
-          <th style="width: 10%">
+          <th style="width: 10%" data-exclude="true">
             <div class="dropdown">
               <button
                 class="btn btn-light btn-sm dropdown-toggle"
@@ -171,6 +171,9 @@
 
   <nav aria-label="Page navigation example" class="mt-2" v-if="products != ''">
     <ul class="pagination pagination-sm justify-content-end">
+      <li>
+        <Select_data :id="'spent_product'" />
+      </li>
       <li class="page-item">
         <button type="button" class="page-link" @click="get_spent_products()">
           <i class="fa-solid fa-rotate"></i>
@@ -217,8 +220,9 @@ import {
 import { catchError } from "@/utils/request/handle_api_err";
 import data_notfound from "@/utils/notfound/data_notfound.vue";
 import Format_numbers from "@/utils/format/format_numbers.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
-  components: { data_notfound, Format_numbers },
+  components: { data_notfound, Format_numbers, Select_data },
   name: "SpentProducts",
   data() {
     return {

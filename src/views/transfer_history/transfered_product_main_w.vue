@@ -79,7 +79,7 @@
         </div>
       </div>
       <div class="table-responsive mt-3">
-        <table class="table table-sm table-hover">
+        <table class="table table-sm table-hover" id="transfered_product1">
           <thead>
             <tr>
               <th style="width: 10%">№</th>
@@ -87,7 +87,7 @@
               <th style="width: 10%">Ҳажм</th>
               <th style="width: 15%">Ўлчов бирлиги</th>
               <th style="width: 10%">Сана</th>
-              <th style="width: 20%">
+              <th style="width: 20%" data-exclude="true">
                 <div class="dropdown">
                   <button
                     class="btn btn-light btn-sm dropdown-toggle"
@@ -202,14 +202,14 @@
                   </ul>
                 </div>
               </th>
-              <th style="width: 8%">
+              <th style="width: 8%" data-exclude="true">
                 <select class="form-select form-select-sm" v-model="sh_type">
                   <option value="proche">проче</option>
                   <option value="tarkib">таркиб</option>
                   <option value="smeta">смета</option>
                 </select>
               </th>
-              <th style="width: 12%">
+              <th style="width: 12%" data-exclude="true">
                 <select class="form-select form-select-sm" v-model="sh_status">
                   <option value="true">қаъбул қилинди</option>
                   <option value="false">қаъбул қилинмади</option>
@@ -235,7 +235,7 @@
                 }}
               </td>
               <td>{{ item.for_to }}</td>
-              <td>
+              <td data-exclude="true">
                 <button
                   class="btn btn-sm btn-danger"
                   v-if="item.Product_transfers.status == false"
@@ -257,6 +257,9 @@
         v-if="products_share != ''"
       >
         <ul class="pagination pagination-sm justify-content-end">
+          <li>
+            <Select_data :id="'transfered_product1'" />
+          </li>
           <li class="page-item">
             <button
               type="button"
@@ -351,7 +354,7 @@
         </div>
       </div>
       <div class="table-responsive mt-3">
-        <table class="table table-sm table-hover">
+        <table class="table table-sm table-hover" id="transfered_product2">
           <thead>
             <tr>
               <th style="width: 10%">№</th>
@@ -359,7 +362,7 @@
               <th style="width: 10%">Ҳажм</th>
               <th style="width: 15%">Ўлчов бирлиги</th>
               <th style="width: 10%">Сана</th>
-              <th style="width: 20%">
+              <th style="width: 20%" data-exclude="true">
                 <div class="dropdown">
                   <button
                     class="btn btn-light btn-sm dropdown-toggle"
@@ -474,14 +477,14 @@
                   </ul>
                 </div>
               </th>
-              <th style="width: 8%">
+              <th style="width: 8%" data-exclude="true">
                 <select class="form-select form-select-sm" v-model="a_type">
                   <option value="proche">проче</option>
                   <option value="tarkib">таркиб</option>
                   <option value="smeta">смета</option>
                 </select>
               </th>
-              <th style="width: 12%">
+              <th style="width: 12%" data-exclude="true">
                 <select class="form-select form-select-sm" v-model="a_status">
                   <option value="true">қаъбул қилинди</option>
                   <option value="false">қаъбул қилинмади</option>
@@ -507,7 +510,7 @@
                 }}
               </td>
               <td>{{ item.for_from }}</td>
-              <td>
+              <td data-exclude="true">
                 <button
                   class="btn btn-sm btn-success"
                   v-if="item.Product_transfers.status == false"
@@ -529,6 +532,9 @@
         v-if="products_accept != ''"
       >
         <ul class="pagination pagination-sm justify-content-end">
+          <li>
+            <Select_data :id="'transfered_product2'" />
+          </li>
           <li class="page-item">
             <button
               type="button"
@@ -602,9 +608,10 @@ import {
 } from "@/utils/request/request";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "TransferedProductsMainWarehouse",
-  components: { Header_item, Data_notfound },
+  components: { Header_item, Data_notfound, Select_data },
   data() {
     return {
       products_share: [],

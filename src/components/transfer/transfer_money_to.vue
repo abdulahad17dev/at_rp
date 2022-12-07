@@ -37,14 +37,14 @@
     </div>
   </form>
   <div class="table-responsive m-1">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="transfer_money_to">
       <thead>
         <tr>
           <th style="width: 5%">№</th>
           <th style="width: 25%">Сумма</th>
           <th style="width: 20%">Сана</th>
           <th style="width: 20%">Изох</th>
-          <th style="width: 20%">
+          <th style="width: 20%" data-exclude="true">
             <div class="dropdown">
               <button
                 class="btn btn-light btn-sm dropdown-toggle"
@@ -197,7 +197,10 @@
     v-if="hisob_raqamidan_otkazilgan_pullar != ''"
   >
     <ul class="pagination pagination-sm justify-content-end">
-      <div class="page-item">
+      <li>
+        <Select_data :id="'transfer_money_to'" />
+      </li>
+      <li class="page-item">
         <select
           class="form-control form-control-sm form-select mx-1"
           v-model="limit"
@@ -206,7 +209,7 @@
           <option value="50">50</option>
           <option value="100">100</option>
         </select>
-      </div>
+      </li>
       <li class="page-item">
         <button
           type="button"
@@ -259,6 +262,7 @@ import {
 } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
 import Format_numbers from "@/utils/format/format_numbers.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "TransferMoney",
   data() {
@@ -406,7 +410,7 @@ export default {
       this.to_time
     );
   },
-  components: { Data_notfound, Format_numbers },
+  components: { Data_notfound, Format_numbers, Select_data },
 };
 </script>
 

@@ -54,6 +54,9 @@
 
   <nav aria-label="Page navigation example" class="mt-2" v-if="users != ''">
     <ul class="pagination pagination-sm justify-content-end">
+      <li>
+        <Select_data :id="'user_item'" />
+      </li>
       <li class="page-item">
         <button
           type="button"
@@ -105,6 +108,7 @@ import User_item from "@/components/users/user_item.vue";
 import User_add from "../../components/users/user_add.vue";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Header_item from "@/components/header/header_item.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "UsersPage",
   data() {
@@ -185,7 +189,7 @@ export default {
   created() {
     this.get_users(this.page, this.limit, this.search, this.role);
   },
-  components: { User_item, User_add, Data_notfound, Header_item },
+  components: { User_item, User_add, Data_notfound, Header_item, Select_data },
 };
 </script>
 

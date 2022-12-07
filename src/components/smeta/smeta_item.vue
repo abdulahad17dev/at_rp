@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive mt-3" style="overflow: auto" v-if="data != ''">
-    <table class="table table-sm smeta">
+    <table class="table table-sm smeta" id="select_smeta">
       <tbody v-for="item in data" :key="item">
         <tr v-if="!item.Smeta.grafik_id" class="bg-dark text-white text-center">
           <td colspan="11">{{ item.Smeta.name }}</td>
@@ -59,6 +59,7 @@
           </td>
           <td style="width: 5%">
             <button
+              data-exclude="true"
               v-if="
                 item.Smeta.status !== 'removed' &&
                 item.Smeta.status !== 'finished' &&
@@ -172,7 +173,7 @@ table.smeta {
 }
 
 .table-responsive {
-  max-height: 68vh;
+  max-height: 66vh;
 }
 
 @media (max-width: 500px) {

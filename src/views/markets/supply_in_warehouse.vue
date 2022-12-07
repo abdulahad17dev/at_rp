@@ -206,7 +206,7 @@
           </div>
         </form>
         <div class="table-responsive mt-3">
-          <table class="table table-sm table-hover">
+          <table class="table table-sm table-hover" id="supply_in_warehouse">
             <thead class="">
               <tr>
                 <th style="width: 5%">№</th>
@@ -282,7 +282,7 @@
                       : ""
                   }}
                 </td>
-                <td>
+                <td data-exclude="true">
                   <div class="input-group" v-if="item.Supplies.status == false">
                     <button
                       class="btn btn-outline-primary btn-sm"
@@ -336,6 +336,9 @@
           v-if="requests != ''"
         >
           <ul class="pagination pagination-sm justify-content-end">
+            <li>
+              <Select_data :id="'supply_in_warehouse'" />
+            </li>
             <li class="page-item">
               <select
                 class="form-control form-control-sm form-select mx-1"
@@ -427,6 +430,7 @@ import Header_item from "@/components/header/header_item.vue";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Product_in_warehouse from "@/components/product/product_in_warehouse.vue";
 import Format_numbers from "@/utils/format/format_numbers.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "SupplyInWarehouse",
   data() {
@@ -698,6 +702,7 @@ export default {
     Data_notfound,
     Product_in_warehouse,
     Format_numbers,
+    Select_data,
   },
 };
 </script>

@@ -40,6 +40,9 @@
 
   <nav aria-label="Page navigation example" class="mt-2" v-if="wallets != ''">
     <ul class="pagination pagination-sm justify-content-end">
+      <li>
+        <Select_data :id="'wallet_item'" />
+      </li>
       <li class="page-item">
         <button
           type="button"
@@ -106,6 +109,7 @@ import Wallet_item from "@/components/wallets/wallet_item.vue";
 import Wallet_add from "@/components/wallets/wallet_add.vue";
 import Wallet_put from "@/components/wallets/wallet_put.vue";
 import Take_money_to_wallets from "../../components/wallets/take_money_to_wallets.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "WalletsItem",
   components: {
@@ -115,6 +119,7 @@ export default {
     Wallet_add,
     Wallet_put,
     Take_money_to_wallets,
+    Select_data,
   },
   data() {
     return {

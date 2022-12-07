@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive m-1">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="transfer_v_expense">
       <thead>
         <tr>
           <th style="width: 5%">№</th>
@@ -37,6 +37,9 @@
     v-if="variable_history != ''"
   >
     <ul class="pagination pagination-sm justify-content-end">
+      <li>
+        <Select_data :id="'transfer_v_expense'" />
+      </li>
       <li class="page-item">
         <select
           class="form-control form-control-sm form-select mx-1"
@@ -93,6 +96,7 @@
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import { get_variable_history } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "HistoryExpense",
   data() {
@@ -136,7 +140,7 @@ export default {
   created() {
     this.variable_history_get(this.page, this.limit, this.from, this.user_id);
   },
-  components: { Data_notfound },
+  components: { Data_notfound, Select_data },
 };
 </script>
 

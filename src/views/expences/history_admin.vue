@@ -38,14 +38,14 @@
       aria-labelledby="pills-home-tab"
     >
       <div class="table-responsive mt-3 m-1">
-        <table class="table table-sm table-hover">
+        <table class="table table-sm table-hover" id="history_admin">
           <thead>
             <tr>
               <th style="width: 5%">№</th>
               <th style="width: 20%">Сумма</th>
               <th style="width: 20%">Сана</th>
               <th style="width: 25%">Изох</th>
-              <th>
+              <th data-exclude="true">
                 <div class="dropdown">
                   <button
                     class="btn btn-light btn-sm dropdown-toggle"
@@ -188,6 +188,9 @@
         v-if="fixed_history != ''"
       >
         <ul class="pagination pagination-sm justify-content-end">
+          <li>
+            <Select_data :id="'history_admin'" />
+          </li>
           <li class="page-item">
             <select
               class="form-control form-control-sm form-select mx-1"
@@ -267,10 +270,11 @@ import Header_item from "@/components/header/header_item.vue";
 import { fixed_expence_get, get_fixed_history } from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 
 export default {
   name: "FixedExpenseHistory",
-  components: { Header_item, Data_notfound },
+  components: { Header_item, Data_notfound, Select_data },
   data() {
     return {
       fixed_history: [],

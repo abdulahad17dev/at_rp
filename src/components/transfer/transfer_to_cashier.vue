@@ -37,7 +37,7 @@
     </div>
   </form>
   <div class="table-responsive m-1">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="transfer_to_cashier">
       <thead>
         <tr>
           <th style="width: 5%">№</th>
@@ -45,7 +45,7 @@
           <th style="width: 20%">Сана</th>
           <th style="width: 20%">Изох</th>
           <th style="width: 20%">Кассирлар</th>
-          <th>
+          <th data-exclude="true">
             <div class="dropdown">
               <button
                 class="btn btn-light btn-sm dropdown-toggle"
@@ -149,7 +149,7 @@
               </ul>
             </div>
           </th>
-          <th>
+          <th data-exclude="true">
             <select class="form-control form-control-sm" v-model="status">
               <option value="false">қабул қилинганмаган</option>
               <option value="true">қабул қилинган</option>
@@ -178,7 +178,7 @@
           <td colspan="2">
             <b class="text-primary">{{ item.name }}</b>
           </td>
-          <td>
+          <td data-exclude="true">
             <button
               class="btn btn-danger btn-sm"
               :id="'remove_money' + item.Transfers.id"
@@ -207,7 +207,10 @@
     v-if="transfer_cashier != ''"
   >
     <ul class="pagination pagination-sm justify-content-end">
-      <div class="page-item">
+      <li>
+        <Select_data :id="'transfer_to_cashier'" />
+      </li>
+      <li class="page-item">
         <select
           class="form-control form-control-sm form-select mx-1"
           v-model="limit"
@@ -216,7 +219,7 @@
           <option value="50">50</option>
           <option value="100">100</option>
         </select>
-      </div>
+      </li>
       <li class="page-item">
         <button
           type="button"
@@ -278,6 +281,7 @@ import {
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Format_numbers from "@/utils/format/format_numbers.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "TransferToCashier",
   data() {
@@ -476,7 +480,7 @@ export default {
       this.to_time
     );
   },
-  components: { Data_notfound, Format_numbers },
+  components: { Data_notfound, Format_numbers, Select_data },
 };
 </script>
 

@@ -30,14 +30,14 @@
   </div>
 
   <div class="table-responsive mt-3">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="prduct_in_warehouse">
       <thead class="">
         <tr>
           <th style="width: 10%">№</th>
           <th style="width: 20%">Номи</th>
           <th style="width: 20%">Ўлчов бирлиги</th>
           <th style="width: 20%">Ҳажм</th>
-          <th>
+          <th data-exclude="true">
             <div class="dropdown">
               <button
                 class="btn btn-light btn-sm dropdown-toggle"
@@ -170,7 +170,7 @@
             <Format_numbers :number="item.sum_quantity" />
           </td>
           <td>{{ item.building }}</td>
-          <td>
+          <td data-exclude="true">
             <button
               class="btn btn-sm btn-success mx-1"
               data-mdb-toggle="modal"
@@ -191,6 +191,9 @@
 
   <nav aria-label="Page navigation example" class="mt-2" v-if="products != ''">
     <ul class="pagination pagination-sm justify-content-end">
+      <li>
+        <Select_data :id="'product_in_warehouse'" />
+      </li>
       <li class="page-item">
         <button
           type="button"
@@ -417,6 +420,7 @@ import {
 import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Format_numbers from "@/utils/format/format_numbers.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "ProductInWarehouse",
   data() {
@@ -658,7 +662,7 @@ export default {
       this.limit
     );
   },
-  components: { Data_notfound, Format_numbers },
+  components: { Data_notfound, Format_numbers, Select_data },
 };
 </script>
 

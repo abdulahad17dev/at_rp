@@ -46,6 +46,9 @@
     v-if="money_launderers != ''"
   >
     <ul class="pagination pagination-sm justify-content-end">
+      <li>
+        <Select_data :id="'select_money_l_items_data'" />
+      </li>
       <li class="page-item">
         <button
           type="button"
@@ -105,6 +108,7 @@ import Money_l_items from "../../components/money_launderers/money_l_items.vue";
 import Money_l_add from "@/components/money_launderers/money_l_add.vue";
 import Money_l_update from "../../components/money_launderers/money_l_update.vue";
 import Take_money_to_launderer from "@/components/money_launderers/take_money_to_launderer.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "MoneyLaunderers",
   components: {
@@ -113,6 +117,7 @@ export default {
     Money_l_add,
     Money_l_update,
     Take_money_to_launderer,
+    Select_data,
   },
   data() {
     return {

@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive mt-3">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="wallet_item">
       <thead class="">
         <tr>
           <th style="width: 10%">№</th>
@@ -17,7 +17,7 @@
             <Format_numbers :number="item.balance" />
             сўм
           </td>
-          <td>
+          <td data-exclude="true">
             <button
               v-if="role != 'admin'"
               class="btn btn-sm btn-warning"

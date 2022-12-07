@@ -24,7 +24,7 @@
   </div>
 
   <div class="table-responsive mt-3">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="select_suppliers_data">
       <thead>
         <tr>
           <th style="width: 10%">№</th>
@@ -53,7 +53,7 @@
             <br />
             {{ item.shot_supply - item.shot_expense }} сўм
           </td>
-          <td>
+          <td data-exclude="true">
             <button
               class="btn btn-sm btn-warning"
               @click="get_item(item.Markets)"
@@ -82,6 +82,9 @@
 
   <nav aria-label="Page navigation example" class="mt-2" v-if="markets != ''">
     <ul class="pagination pagination-sm justify-content-end">
+      <li>
+        <Select_data :id="'select_suppliers_data'" />
+      </li>
       <li class="page-item">
         <button
           type="button"
@@ -131,6 +134,7 @@ import Route_map from "@/utils/map/route_map.vue";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import { catchError, success } from "@/utils/request/handle_api_err";
 import { markets_get, market_put } from "@/utils/request/request";
+import Select_data from "@/utils/select_data/select_data.vue";
 import Supplier_put from "./supplier_put.vue";
 export default {
   name: "SupplierItem",
@@ -228,7 +232,7 @@ export default {
   created() {
     this.get_markets(this.page, this.limit, this.search);
   },
-  components: { Data_notfound, Supplier_put, Route_map },
+  components: { Data_notfound, Supplier_put, Route_map, Select_data },
 };
 </script>
 

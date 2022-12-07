@@ -43,6 +43,9 @@
 
   <nav aria-label="Page navigation example" class="mt-2" v-if="workers != ''">
     <ul class="pagination pagination-sm justify-content-end">
+      <li>
+        <Select_data :id="'worker_item'" />
+      </li>
       <li class="page-item">
         <button
           type="button"
@@ -104,6 +107,7 @@ import Worker_item from "../../components/worker/worker_item.vue";
 import Worker_add from "@/components/worker/worker_add.vue";
 import Worker_update from "../../components/worker/worker_update.vue";
 import Worker_speciality from "../../components/worker/worker_speciality.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "BuildingWorkers",
   data() {
@@ -258,6 +262,7 @@ export default {
     Worker_add,
     Worker_update,
     Worker_speciality,
+    Select_data,
   },
 };
 </script>

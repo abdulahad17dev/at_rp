@@ -39,14 +39,14 @@
     </div>
   </form>
   <div class="table-responsive mt-3">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="money_from_bagalter">
       <thead>
         <tr>
           <th style="width: 10%">№</th>
           <th style="width: 30%">Сумма</th>
           <th style="width: 30%">Сана</th>
           <th style="width: 30%">Изох</th>
-          <th>
+          <th data-exclude="true">
             <select class="form-control form-control-sm" v-model="status">
               <option value="false">қабул қилинганмаган</option>
               <option value="true">қабул қилинган</option>
@@ -72,7 +72,7 @@
             }}
           </td>
           <td>{{ item.Transfers.comment }}</td>
-          <td>
+          <td data-exclude="true">
             <button
               v-if="item.Transfers.status == false"
               class="btn btn-sm btn-success"
@@ -94,7 +94,10 @@
     v-if="transfer_cashier != ''"
   >
     <ul class="pagination pagination-sm justify-content-end">
-      <div class="page-item">
+      <li>
+        <Select_data :id="'money_from_bugalter'" />
+      </li>
+      <li class="page-item">
         <select
           class="form-control form-control-sm form-select mx-1"
           v-model="limit"
@@ -103,7 +106,7 @@
           <option value="50">50</option>
           <option value="100">100</option>
         </select>
-      </div>
+      </li>
       <li class="page-item">
         <button
           type="button"
@@ -167,6 +170,7 @@ import { catchError, success } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Header_item from "@/components/header/header_item.vue";
 import Accept_money_in_cashier from "@/components/transfer/accept_money_in_cashier.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "TransferToCashier",
   data() {
@@ -319,7 +323,12 @@ export default {
       this.to_time
     );
   },
-  components: { Data_notfound, Header_item, Accept_money_in_cashier },
+  components: {
+    Data_notfound,
+    Header_item,
+    Accept_money_in_cashier,
+    Select_data,
+  },
 };
 </script>
 

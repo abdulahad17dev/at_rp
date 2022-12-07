@@ -222,7 +222,7 @@
               </div>
             </form>
             <div class="table-responsive mt-3">
-              <table class="table table-sm table-hover">
+              <table class="table table-sm table-hover" id="supply_history1">
                 <thead class="">
                   <tr>
                     <th style="width: 10%">№</th>
@@ -289,6 +289,9 @@
               v-if="requests != ''"
             >
               <ul class="pagination pagination-sm justify-content-end">
+                <li>
+                  <Select_data :id="'supply_history1'" />
+                </li>
                 <li class="page-item">
                   <select
                     class="form-control form-control-sm form-select mx-1"
@@ -439,7 +442,7 @@
               </div>
             </form>
             <div class="table-responsive mt-3">
-              <table class="table table-sm table-hover">
+              <table class="table table-sm table-hover" id="supply_history2">
                 <thead class="">
                   <tr>
                     <th style="width: 10%">№</th>
@@ -501,6 +504,9 @@
               v-if="sh_requests != ''"
             >
               <ul class="pagination pagination-sm justify-content-end">
+                <li>
+                  <Select_data :id="'supply_history2'" />
+                </li>
                 <li class="page-item">
                   <select
                     class="form-control form-control-sm form-select mx-1"
@@ -587,7 +593,7 @@
     >
       <div class="request">
         <div class="table-responsive">
-          <table class="table table-sm table-hover">
+          <table class="table table-sm table-hover" id="supply_history3">
             <thead>
               <tr>
                 <th style="width: 10%">Т/р</th>
@@ -599,7 +605,7 @@
             </thead>
             <tbody>
               <tr v-for="(item, inc) in paid_moneys" :key="item">
-                <td class="td_grafik">
+                <td class="td_grafik" data-exclude="true">
                   {{ inc + 1 }}
                   <button
                     class="btn btn-sm info"
@@ -649,6 +655,9 @@
           v-if="paid_moneys.length"
         >
           <ul class="pagination pagination-sm justify-content-end">
+            <li>
+              <Select_data :id="'supply_history3'" />
+            </li>
             <li class="page-item">
               <select
                 class="form-control form-control-sm form-select mx-1"
@@ -783,6 +792,7 @@ import { catchError } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Header_item from "@/components/header/header_item.vue";
 import Format_numbers from "@/utils/format/format_numbers.vue";
+import Select_data from "@/utils/select_data/select_data.vue";
 export default {
   name: "SupplyHistory",
   data() {
@@ -1166,7 +1176,7 @@ export default {
       this.limit
     );
   },
-  components: { Data_notfound, Header_item, Format_numbers },
+  components: { Data_notfound, Header_item, Format_numbers, Select_data },
 };
 </script>
 
