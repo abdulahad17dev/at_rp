@@ -271,15 +271,6 @@
           <li class="page-item">
             <button
               class="page-link"
-              @click="smeta_page = 0"
-              :disabled="smeta_page == 0"
-            >
-              <i class="fa-solid fa-angles-left text-dark"></i>
-            </button>
-          </li>
-          <li class="page-item">
-            <button
-              class="page-link"
               @click="smeta_page--"
               :disabled="smeta_page == 0"
             >
@@ -295,18 +286,9 @@
             <button
               class="page-link"
               @click="smeta_page++"
-              :disabled="smeta_page == smeta_pages - 1"
+              :disabled="smeta_page == smeta_pages"
             >
               <i class="fa-solid fa-angle-right text-dark"></i>
-            </button>
-          </li>
-          <li class="page-item">
-            <button
-              class="page-link"
-              @click="smeta_page = smeta_pages - 1"
-              :disabled="smeta_page == smeta_pages - 1"
-            >
-              <i class="fa-solid fa-angles-right text-dark"></i>
             </button>
           </li>
         </ul>
@@ -516,15 +498,6 @@
           <li class="page-item">
             <button
               class="page-link"
-              @click="other_page = 0"
-              :disabled="other_page == 0"
-            >
-              <i class="fa-solid fa-angles-left text-dark"></i>
-            </button>
-          </li>
-          <li class="page-item">
-            <button
-              class="page-link"
               @click="other_page--"
               :disabled="other_page == 0"
             >
@@ -540,18 +513,9 @@
             <button
               class="page-link"
               @click="other_page++"
-              :disabled="other_page == other_pages - 1"
+              :disabled="other_page == other_pages"
             >
               <i class="fa-solid fa-angle-right text-dark"></i>
-            </button>
-          </li>
-          <li class="page-item">
-            <button
-              class="page-link"
-              @click="other_page = other_pages - 1"
-              :disabled="other_page == other_pages - 1"
-            >
-              <i class="fa-solid fa-angles-right text-dark"></i>
             </button>
           </li>
         </ul>

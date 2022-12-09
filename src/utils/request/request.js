@@ -207,8 +207,8 @@ export function products_get(page, limit, search) {
 
 // foremans
 
-export function foreman_get(id) {
-  return instance.get("get_foremans?building_id=" + id);
+export function foreman_get(id, user_id) {
+  return instance.get(`get_foremans?building_id=${id}&user_id=${user_id}`);
 }
 
 export function foreman_add(data) {

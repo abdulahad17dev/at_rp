@@ -132,7 +132,7 @@
                           type="button"
                           class="page-link"
                           @click="page_expense++"
-                          :disabled="page_expense == pages_expense - 1"
+                          :disabled="page_expense == pages_expense"
                         >
                           <i class="fa-solid fa-angle-right text-dark"></i>
                         </button>
@@ -209,11 +209,6 @@
         </button>
       </li>
       <li class="page-item">
-        <button class="page-link" @click="page = 0" :disabled="page == 0">
-          <i class="fa-solid fa-angles-left text-dark"></i>
-        </button>
-      </li>
-      <li class="page-item">
         <button class="page-link" @click="page--" :disabled="page == 0">
           <i class="fa-solid fa-angle-left text-dark"></i>
         </button>
@@ -224,17 +219,8 @@
         </button>
       </li>
       <li class="page-item">
-        <button class="page-link" @click="page++" :disabled="page == pages - 1">
+        <button class="page-link" @click="page++" :disabled="page == pages">
           <i class="fa-solid fa-angle-right text-dark"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button
-          class="page-link"
-          @click="page = pages - 1"
-          :disabled="page == pages - 1"
-        >
-          <i class="fa-solid fa-angles-right text-dark"></i>
         </button>
       </li>
     </ul>
@@ -310,22 +296,13 @@ export default {
     page_expense(e) {
       this.expense_get(e, this.limit_expense, this.search_expense);
     },
-    search_expense(e) {
+    search_expense() {
       this.page_expense = 0;
-      if (e.length > 0) {
-        this.expense_get(
-          this.page_expense,
-          this.limit_expense,
-          this.search_expense
-        );
-      } else if (e.length == 0) {
-        this.expense_get(
-          this.page_expense,
-          this.limit_expense,
-          this.search_expense
-        );
-        this.page_expense = 0;
-      }
+      this.expense_get(
+        this.page_expense,
+        this.limit_expense,
+        this.search_expense
+      );
     },
   },
   methods: {

@@ -814,7 +814,7 @@ export default {
       this.building_name = name;
       if (nm == 1) {
         this.$store.dispatch("setLoading", { isLoading: true });
-        foreman_get(id)
+        foreman_get(id, 0)
           .then((res) => {
             this.foremans = res.data;
             this.$store.dispatch("setLoading", { isLoading: false });

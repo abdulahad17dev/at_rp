@@ -105,7 +105,7 @@
                           type="button"
                           class="page-link"
                           @click="page_account++"
-                          :disabled="page_account == pages_account - 1"
+                          :disabled="page_account == pages_account"
                         >
                           <i class="fa-solid fa-angle-right text-dark"></i>
                         </button>

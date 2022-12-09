@@ -173,15 +173,6 @@
           <li class="page-item">
             <button
               class="page-link"
-              @click="valid_page = 0"
-              :disabled="valid_page == 0"
-            >
-              <i class="fa-solid fa-angles-left text-dark"></i>
-            </button>
-          </li>
-          <li class="page-item">
-            <button
-              class="page-link"
               @click="valid_page--"
               :disabled="valid_page == 0"
             >
@@ -197,18 +188,9 @@
             <button
               class="page-link"
               @click="valid_page++"
-              :disabled="valid_page == valid_pages - 1"
+              :disabled="valid_page == valid_pages"
             >
               <i class="fa-solid fa-angle-right text-dark"></i>
-            </button>
-          </li>
-          <li class="page-item">
-            <button
-              class="page-link"
-              @click="valid_page = valid_pages - 1"
-              :disabled="valid_page == valid_pages - 1"
-            >
-              <i class="fa-solid fa-angles-right text-dark"></i>
             </button>
           </li>
         </ul>
@@ -332,15 +314,6 @@
           <li class="page-item">
             <button
               class="page-link"
-              @click="invalid_page = 0"
-              :disabled="invalid_page == 0"
-            >
-              <i class="fa-solid fa-angles-left text-dark"></i>
-            </button>
-          </li>
-          <li class="page-item">
-            <button
-              class="page-link"
               @click="invalid_page--"
               :disabled="invalid_page == 0"
             >
@@ -356,18 +329,9 @@
             <button
               class="page-link"
               @click="invalid_page++"
-              :disabled="invalid_page == invalid_pages - 1"
+              :disabled="invalid_page == invalid_pages"
             >
               <i class="fa-solid fa-angle-right text-dark"></i>
-            </button>
-          </li>
-          <li class="page-item">
-            <button
-              class="page-link"
-              @click="invalid_page = invalid_pages - 1"
-              :disabled="invalid_page == invalid_pages - 1"
-            >
-              <i class="fa-solid fa-angles-right text-dark"></i>
             </button>
           </li>
         </ul>

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import login from "./../utils/template/login/Login.vue";
 import users from "../views/users/users.vue";
+import cashier_history from "../views/users/cashier_history.vue";
 import building from "../views/buildings/buildings.vue";
 import building_inner from "../views/buildings/building_inner_page.vue";
 import workers from "../views/buildings/workers.vue";
@@ -32,6 +33,8 @@ import building_works from "../views/buildings/building_works.vue";
 import warehouse_product from "../views/product/warehouse_product_admin.vue";
 import work_info from "../views/buildings/building_info.vue";
 import building_history from "../views/expences/history_admin.vue";
+import user_info from "../views/transfer_history/user_info.vue";
+import worker_money from "../views/transfer_history/worker_money.vue";
 import menu from "./../utils/main/menu.vue";
 import notfound from "./../utils/notfound/notfound.vue";
 
@@ -433,6 +436,39 @@ let routes = [
       role: ["admin"],
     },
     component: building_history,
+  },
+  {
+    path: "/user_info",
+    name: "user_info",
+    meta: {
+      requiresAuth: true,
+      title: "Таъминотлар",
+      icon: "fa-solid fa-box",
+      role: ["kassir"],
+    },
+    component: user_info,
+  },
+  {
+    path: "/worker_info",
+    name: "worker_info",
+    meta: {
+      requiresAuth: true,
+      title: "Устага берилиши керак бўлган пул",
+      icon: "fa-solid fa-money-bill",
+      role: ["kassir"],
+    },
+    component: worker_money,
+  },
+  {
+    path: "/cashier_history",
+    name: "cashier_history",
+    meta: {
+      requiresAuth: true,
+      title: "Устага берилиши керак бўлган пул",
+      icon: "fa-solid fa-clock-rotate-left",
+      role: ["admin"],
+    },
+    component: cashier_history,
   },
 ];
 

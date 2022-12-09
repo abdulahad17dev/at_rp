@@ -160,11 +160,6 @@
             </button>
           </li>
           <li class="page-item">
-            <button class="page-link" @click="page = 0" :disabled="page == 0">
-              <i class="fa-solid fa-angles-left text-dark"></i>
-            </button>
-          </li>
-          <li class="page-item">
             <button class="page-link" @click="page--" :disabled="page == 0">
               <i class="fa-solid fa-angle-left text-dark"></i>
             </button>
@@ -175,21 +170,8 @@
             </button>
           </li>
           <li class="page-item">
-            <button
-              class="page-link"
-              @click="page++"
-              :disabled="page == pages - 1"
-            >
+            <button class="page-link" @click="page++" :disabled="page == pages">
               <i class="fa-solid fa-angle-right text-dark"></i>
-            </button>
-          </li>
-          <li class="page-item">
-            <button
-              class="page-link"
-              @click="page = pages - 1"
-              :disabled="page == pages - 1"
-            >
-              <i class="fa-solid fa-angles-right text-dark"></i>
             </button>
           </li>
         </ul>
@@ -205,8 +187,8 @@
           <button
             type="button"
             class="btn-close"
-            data-mdb-dismiss="modal"
             aria-label="Close"
+            data-mdb-dismiss="modal"
             id="transfer_close"
           ></button>
         </div>
@@ -215,7 +197,7 @@
             <div class="row m-1 mb-2">
               <div class="col-10 mx-auto my-1">
                 <label for="balance4">
-                  Суммаs:
+                  Сумма:
                   <span class="text-primary"
                     >{{ new Intl.NumberFormat().format(body.money) }} сўм
                   </span></label
@@ -270,7 +252,35 @@
                           :key="item"
                           @click="select(item.id, item.name)"
                         >
-                          <a class="dropdown-item">{{ item.name }}</a>
+                          <a class="dropdown-item">
+                            <button
+                              class="btn btn-sm info p-0"
+                              type="button"
+                              :style="
+                                item.role == 'kassir'
+                                  ? 'visibility: hidden'
+                                  : ''
+                              "
+                              @click="close_modal(item.id, item.role)"
+                            >
+                              <i
+                                class="fa-solid fa-circle-question product"
+                                style="font-size: 17px"
+                              ></i>
+                            </button>
+                            <span class="mx-1">
+                              {{ item.name }}
+                            </span>
+                            <span
+                              v-if="item.role != 'kassir'"
+                              class="float-end align-middle"
+                              style="font-size: 12px"
+                              >{{
+                                Intl.NumberFormat("en-US").format(item.balance)
+                              }}
+                              сўм</span
+                            ></a
+                          >
                         </li>
                       </ul>
                     </li>
@@ -321,7 +331,7 @@
                               type="button"
                               class="page-link"
                               @click="page_user++"
-                              :disabled="page_user == pages_user - 1"
+                              :disabled="page_user == pages_user"
                             >
                               <i class="fa-solid fa-angle-right text-dark"></i>
                             </button>
@@ -466,9 +476,11 @@ export default {
         });
     },
     select(id, name) {
-      this.body.to_ = id;
-      this.text = name;
-      document.getElementById("user_text").click();
+      if (this.$route.path == "/transfer_money_to_users") {
+        this.body.to_ = id;
+        this.text = name;
+        document.getElementById("user_text").click();
+      }
     },
     transfer() {
       document.getElementById("transfer_disabled").disabled = true;
@@ -603,6 +615,14 @@ export default {
           this.$store.dispatch("setLoading", { isLoading: false });
           document.getElementById(e).disabled = false;
         });
+    },
+    close_modal(id, role) {
+      document.getElementById("transfer_close").click();
+      if (role == "taminotchi") {
+        this.$router.push({ path: "/user_info", query: { id: id } });
+      } else {
+        this.$router.push({ path: "/worker_info", query: { id: id } });
+      }
     },
   },
   created() {

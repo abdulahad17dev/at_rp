@@ -6,6 +6,7 @@
           <th>№</th>
           <th>Исм</th>
           <th>Телефон рақам</th>
+          <th>Баланс</th>
           <th>Ихтисослиги</th>
           <th>Статус</th>
           <th data-exclude="true">Ўзгартириш</th>
@@ -13,7 +14,7 @@
       </thead>
       <tbody>
         <tr v-for="(item, inc) in data || []" :key="item">
-          <td>{{ inc }}</td>
+          <td>{{ inc + 1 }}</td>
           <td>{{ item.name }}</td>
           <td>
             <a
@@ -23,6 +24,7 @@
               +998 {{ format_phone(item.phone) }}</a
             >
           </td>
+          <td>{{ Intl.NumberFormat("en-US").format(item.balance) }} сўм</td>
           <td>{{ item.role }}</td>
           <td>
             <span
@@ -41,6 +43,13 @@
             >
               <i class="fa fa-edit text-white"></i>
             </button>
+            <router-link
+              :to="{ name: 'cashier_history', query: { id: item.id } }"
+              class="btn btn-sm btn-secondary mx-1"
+              v-if="item.role == 'kassir'"
+            >
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </router-link>
           </td>
         </tr>
       </tbody>

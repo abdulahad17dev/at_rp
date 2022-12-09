@@ -159,15 +159,6 @@
             </button>
           </li>
           <li class="page-item">
-            <button
-              class="page-link"
-              @click="t_page = 0"
-              :disabled="t_page == 0"
-            >
-              <i class="fa-solid fa-angles-left text-dark"></i>
-            </button>
-          </li>
-          <li class="page-item">
             <button class="page-link" @click="t_page--" :disabled="t_page == 0">
               <i class="fa-solid fa-angle-left text-dark"></i>
             </button>
@@ -181,18 +172,9 @@
             <button
               class="page-link"
               @click="t_page++"
-              :disabled="t_page == t_pages - 1"
+              :disabled="t_page == t_pages"
             >
               <i class="fa-solid fa-angle-right text-dark"></i>
-            </button>
-          </li>
-          <li class="page-item">
-            <button
-              class="page-link"
-              @click="t_page = t_pages - 1"
-              :disabled="t_page == t_pages - 1"
-            >
-              <i class="fa-solid fa-angles-right text-dark"></i>
             </button>
           </li>
         </ul>
@@ -322,7 +304,7 @@
                               type="button"
                               class="page-link"
                               @click="page++"
-                              :disabled="page == pages - 1"
+                              :disabled="page == pages"
                             >
                               <i class="fa-solid fa-angle-right text-dark"></i>
                             </button>

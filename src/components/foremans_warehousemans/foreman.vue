@@ -78,7 +78,7 @@
                       type="button"
                       class="page-link"
                       @click="page++"
-                      :disabled="page == pages - 1"
+                      :disabled="page == pages"
                     >
                       <i class="fa-solid fa-angle-right text-dark"></i>
                     </button>

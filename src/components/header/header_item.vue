@@ -40,6 +40,7 @@
     </div>
     <div class="col">
       <div class="float-end">
+        <Notification v-if="role == 'admin'" />
         <Dark_mode />
         <Currentuser />
         <button class="btn btn-dark btn-floating" @click="logout">
@@ -54,8 +55,9 @@
 <script>
 import Currentuser from "@/views/settings/currentuser.vue";
 import Dark_mode from "@/views/settings/dark_mode.vue";
+import Notification from "../notification/notification.vue";
 export default {
-  components: { Dark_mode, Currentuser },
+  components: { Dark_mode, Currentuser, Notification },
   name: "PageHeaderItem",
   props: ["balance", "data", "name"],
   data() {
