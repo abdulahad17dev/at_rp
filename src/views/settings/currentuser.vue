@@ -70,6 +70,7 @@
                     :type="type"
                     class="form-control"
                     v-model="user.password"
+                    autocomplete="off"
                   />
                   <div
                     class="input-group-text"

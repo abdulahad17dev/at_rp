@@ -88,61 +88,64 @@ export function building_put(data) {
 export function smeta_get(page, limit, search, type, status, id, order_by) {
   if (search && status && type && order_by)
     return instance.get(
-      `get_smeta/${id}?search=${search}&status=${status}&type=${type}&order_by=${order_by}&page=${page}&limit=${limit}`
+      `get_smeta?building_id=${id}&search=${search}&status=${status}&type=${type}&order_by=${order_by}&page=${page}&limit=${limit}`
     );
   else if (search && status && type && !order_by)
     return instance.get(
-      `get_smeta/${id}?search=${search}&status=${status}&type=${type}&page=${page}&limit=${limit}`
+      `get_smeta?building_id=${id}&search=${search}&status=${status}&type=${type}&page=${page}&limit=${limit}`
     );
   else if (search && status && !type && order_by)
     return instance.get(
-      `get_smeta/${id}?search=${search}&status=${status}&order_by=${order_by}&page=${page}&limit=${limit}`
+      `get_smeta?building_id=${id}&search=${search}&status=${status}&order_by=${order_by}&page=${page}&limit=${limit}`
     );
   else if (search && !status && type && order_by)
     return instance.get(
-      `get_smeta/${id}?search=${search}&type=${type}&order_by=${order_by}&page=${page}&limit=${limit}`
+      `get_smeta?building_id=${id}&search=${search}&type=${type}&order_by=${order_by}&page=${page}&limit=${limit}`
     );
   else if (!search && status && type && order_by)
     return instance.get(
-      `get_smeta/${id}?status=${status}&type=${type}&order_by=${order_by}&page=${page}&limit=${limit}`
+      `get_smeta?building_id=${id}&status=${status}&type=${type}&order_by=${order_by}&page=${page}&limit=${limit}`
     );
   else if (search && status && !type && !order_by)
     return instance.get(
-      `get_smeta/${id}?search=${search}&status=${status}&page=${page}&limit=${limit}`
+      `get_smeta?building_id=${id}&search=${search}&status=${status}&page=${page}&limit=${limit}`
     );
   else if (!search && !status && type && order_by)
     return instance.get(
-      `get_smeta/${id}?type=${type}&order_by=${order_by}&page=${page}&limit=${limit}`
+      `get_smeta?building_id=${id}&type=${type}&order_by=${order_by}&page=${page}&limit=${limit}`
     );
   else if (!search && status && !type && order_by)
     return instance.get(
-      `get_smeta/${id}?status=${status}&order_by=${order_by}&page=${page}&limit=${limit}`
+      `get_smeta?building_id=${id}&status=${status}&order_by=${order_by}&page=${page}&limit=${limit}`
     );
   else if (search && !status && type && !order_by)
     return instance.get(
-      `get_smeta/${id}?search=${search}&type=${type}&page=${page}&limit=${limit}`
+      `get_smeta?building_id=${id}&search=${search}&type=${type}&page=${page}&limit=${limit}`
     );
   else if (!search && status && type && !order_by)
     return instance.get(
-      `get_smeta/${id}?status=${status}&type=${type}&page=${page}&limit=${limit}`
+      `get_smeta?building_id=${id}&status=${status}&type=${type}&page=${page}&limit=${limit}`
     );
   else if (search && !status && !type && !order_by)
     return instance.get(
-      `get_smeta/${id}?search=${search}&page=${page}&limit=${limit}`
+      `get_smeta?building_id=${id}&search=${search}&page=${page}&limit=${limit}`
     );
   else if (!search && status && !type && !order_by)
     return instance.get(
-      `get_smeta/${id}?status=${status}&page=${page}&limit=${limit}`
+      `get_smeta?building_id=${id}&status=${status}&page=${page}&limit=${limit}`
     );
   else if (!search && !status && type && !order_by)
     return instance.get(
-      `get_smeta/${id}?type=${type}&page=${page}&limit=${limit}`
+      `get_smeta?building_id=${id}&type=${type}&page=${page}&limit=${limit}`
     );
   else if (!search && !status && !type && order_by)
     return instance.get(
-      `get_smeta/${id}?order_by=${order_by}&page=${page}&limit=${limit}`
+      `get_smeta?building_id=${id}&order_by=${order_by}&page=${page}&limit=${limit}`
     );
-  else return instance.get(`get_smeta/${id}?page=${page}&limit=${limit}`);
+  else
+    return instance.get(
+      `get_smeta?building_id=${id}&page=${page}&limit=${limit}`
+    );
 }
 
 export function smeta_request_get(page, limit, search, status, id, user_id) {
