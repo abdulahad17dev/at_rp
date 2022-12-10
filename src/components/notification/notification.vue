@@ -6,15 +6,13 @@
     data-mdb-target="#notification"
   >
     <span
-      v-if="count > 0"
       style="position: absolute"
       class="top-0 start-100 translate-middle badge rounded-pill badge-danger"
+      id="count"
     >
-      {{ count >= 99 ? "99+" : count }}
       <span class="visually-hidden">unread messages</span>
     </span>
-    <i class="fa-solid fa-bell fa-shake" v-if="count > 0"></i>
-    <i class="fa-solid fa-bell" v-else></i>
+    <i class="fa-solid fa-bell" id="bell"></i>
   </button>
   <div
     class="modal fade"
@@ -34,8 +32,8 @@
           ></button>
         </div>
         <div class="modal-body">
-          <ul class="nav nav-tabs nav-justified" id="pills-tab" role="tablist">
-            <li class="nav-item mx-1" role="presentation">
+          <ul class="nav_tabs" id="pills-tab" role="tablist">
+            <li class="nav_item" role="presentation">
               <a
                 class="nav-link active"
                 id="product-tab"
@@ -218,7 +216,10 @@
                       <button
                         type="button"
                         class="page-link"
-                        @click="get_request('request1')"
+                        @click="
+                          get_request('request1');
+                          counts();
+                        "
                       >
                         <i class="fa-solid fa-rotate"></i>
                       </button>
@@ -316,7 +317,10 @@
                       <button
                         type="button"
                         class="page-link"
-                        @click="get_request('request2')"
+                        @click="
+                          get_request('request2');
+                          counts();
+                        "
                       >
                         <i class="fa-solid fa-rotate"></i>
                       </button>
@@ -449,7 +453,10 @@
                       <button
                         type="button"
                         class="page-link"
-                        @click="get_request('request3')"
+                        @click="
+                          get_request('request3');
+                          counts();
+                        "
                       >
                         <i class="fa-solid fa-rotate"></i>
                       </button>
@@ -569,7 +576,10 @@
                       <button
                         type="button"
                         class="page-link"
-                        @click="get_request('request4')"
+                        @click="
+                          get_request('request4');
+                          counts();
+                        "
                       >
                         <i class="fa-solid fa-rotate"></i>
                       </button>
@@ -731,7 +741,10 @@
                       <button
                         type="button"
                         class="page-link"
-                        @click="get_request('request5')"
+                        @click="
+                          get_request('request5');
+                          counts();
+                        "
                       >
                         <i class="fa-solid fa-rotate"></i>
                       </button>
@@ -877,7 +890,10 @@
                       <button
                         type="button"
                         class="page-link"
-                        @click="get_request('request6')"
+                        @click="
+                          get_request('request6');
+                          counts();
+                        "
                       >
                         <i class="fa-solid fa-rotate"></i>
                       </button>
@@ -1004,7 +1020,10 @@
                       <button
                         type="button"
                         class="page-link"
-                        @click="get_request('request7')"
+                        @click="
+                          get_request('request7');
+                          counts();
+                        "
                       >
                         <i class="fa-solid fa-rotate"></i>
                       </button>
@@ -1102,7 +1121,10 @@
                       <button
                         type="button"
                         class="page-link"
-                        @click="get_request('request8')"
+                        @click="
+                          get_request('request8');
+                          counts();
+                        "
                       >
                         <i class="fa-solid fa-rotate"></i>
                       </button>
@@ -1201,6 +1223,32 @@ export default {
       request_limit8: 25,
       filter_request_7_8: "proche",
     };
+  },
+  watch: {
+    request1() {
+      this.counts();
+    },
+    request2() {
+      this.counts();
+    },
+    request3() {
+      this.counts();
+    },
+    request4() {
+      this.counts();
+    },
+    request5() {
+      this.counts();
+    },
+    request6() {
+      this.counts();
+    },
+    request7() {
+      this.counts();
+    },
+    request8() {
+      this.counts();
+    },
   },
   methods: {
     get_request(e) {
@@ -1348,6 +1396,30 @@ export default {
           });
       }
     },
+    counts() {
+      let e =
+        this.request1.length +
+        this.request2.length +
+        this.request3.length +
+        this.request4.length +
+        this.request5.length +
+        this.request6.length +
+        this.request7.length +
+        this.request8.length;
+      let count = document.getElementById("count");
+      let bell = document.getElementById("bell");
+      if (e > 0) {
+        count.style.display = "block";
+        bell.classList.add("fa-shake");
+        if (e >= 99) {
+          count.innerHTML = "99+";
+        } else {
+          count.innerHTML = e;
+        }
+      } else {
+        count.style.display = "none";
+      }
+    },
   },
   created() {
     this.get_request("request1");
@@ -1367,7 +1439,7 @@ export default {
       this.get_request("request6");
       this.get_request("request7");
       this.get_request("request8");
-    }, 60000);
+    }, 6000);
   },
   computed: {
     filtering_request_5() {
@@ -1376,7 +1448,6 @@ export default {
         let date2 = new Date(this.date);
         const diffTime = date1 - date2;
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        console.log(diffDays);
         return diffDays <= 3;
       });
     },
@@ -1386,17 +1457,37 @@ export default {
         let date2 = new Date(this.date);
         const diffTime = date1 - date2;
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        console.log(diffDays);
         return diffDays <= 3;
       });
-    },
-    count() {
-      return 0;
     },
   },
   components: { Data_notfound, Format_numbers },
 };
 </script>
 
-<!-- <style lang="scss" scoped>
-</style> -->
+<style lang="scss" scoped>
+.nav_tabs {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 0 0;
+}
+
+.nav_tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.item_tabs {
+  align-items: center;
+  display: flex;
+  flex: 0 0 300px;
+  justify-content: center;
+  scroll-snap-align: start;
+}
+
+.nav-link {
+  font-size: 10px !important;
+  padding: 4px 8px;
+}
+</style>
