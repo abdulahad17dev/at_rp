@@ -464,7 +464,7 @@ let routes = [
     name: "cashier_history",
     meta: {
       requiresAuth: true,
-      title: "Устага берилиши керак бўлган пул",
+      title: "Кассир қилган чиқимлар",
       icon: "fa-solid fa-clock-rotate-left",
       role: ["admin"],
     },

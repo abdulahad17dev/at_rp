@@ -909,6 +909,7 @@ export default {
         });
     },
     time() {
+      this.page = 0;
       this.get_supply(
         this.market_id,
         this.status,
@@ -920,11 +921,11 @@ export default {
         this.page,
         this.limit
       );
-      this.page = 0;
     },
     reset() {
       this.from_time = "";
       this.to_time = "";
+      this.page = 0;
       this.get_supply(
         this.market_id,
         this.status,
@@ -936,7 +937,6 @@ export default {
         this.page,
         this.limit
       );
-      this.page = 0;
     },
     get_markets(page_market, limit_market, search_market) {
       this.$store.dispatch("setLoading", { isLoading: true });

@@ -1439,7 +1439,7 @@ export default {
       this.get_request("request6");
       this.get_request("request7");
       this.get_request("request8");
-    }, 6000);
+    }, 60000);
   },
   computed: {
     filtering_request_5() {

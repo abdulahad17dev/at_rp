@@ -10,7 +10,7 @@
       </button>
     </div>
     <div class="col">
-      <h5 class="card-title text-center mb-0">
+      <h5 class="card-title text-center media mb-0">
         <span
           :class="this.$route.meta.icon"
           v-if="this.$route.name != 'building'"
@@ -39,7 +39,14 @@
       </h5>
     </div>
     <div class="col">
-      <div class="float-end">
+      <div class="float-end d-flex">
+        <button
+          v-if="this.$route.name != 'menu'"
+          class="btn btn-dark btn-floating d-none"
+          @click="$router.push({ name: 'menu' })"
+        >
+          <i class="fa-solid fa-home"></i>
+        </button>
         <Notification v-if="role == 'admin'" />
         <Dark_mode />
         <Currentuser />
@@ -80,6 +87,19 @@ export default {
 @media (max-width: 772px) {
   .row {
     zoom: 70%;
+  }
+}
+
+@media (max-width: 500px) {
+  h5.media {
+    width: 200px;
+    text-align: start !important;
+  }
+  .row .col:first-child {
+    display: none;
+  }
+  .float-end button.d-none {
+    display: block !important;
   }
 }
 </style>

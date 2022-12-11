@@ -409,7 +409,7 @@ export default {
       transfer_cashier: [],
       from_time: "",
       to_time: "",
-      from: 0,
+      from: localStorage.getItem("user_id"),
       to: 0,
       status: false,
       page: 0,

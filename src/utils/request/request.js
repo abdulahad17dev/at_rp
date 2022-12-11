@@ -747,7 +747,8 @@ export function get_supplies(
   page,
   limit,
   rel_id,
-  by_b_a
+  by_b_a,
+  user_id
 ) {
   let time_filter = "";
   if (from_time && to_time) {
@@ -777,8 +778,14 @@ export function get_supplies(
   } else {
     by_b_a_filter = "";
   }
+  let user_id_filter = "";
+  if (user_id) {
+    user_id_filter = `&user_id=${user_id}`;
+  } else {
+    user_id_filter = "";
+  }
   return instance.get(
-    `get_supplies?market_id=${market_id}${status_filter}${paid_status_filter}&building_id=${building_id}${type_filter}&related_id=${rel_id}${time_filter}${by_b_a_filter}&page=${page}&limit=${limit}`
+    `get_supplies?market_id=${market_id}${status_filter}${paid_status_filter}&building_id=${building_id}${type_filter}&related_id=${rel_id}${time_filter}${by_b_a_filter}${user_id_filter}&page=${page}&limit=${limit}`
   );
   // if (from_time && to_time && type && status && paid_status) {
   //   return instance.get(
