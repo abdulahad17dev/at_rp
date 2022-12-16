@@ -65,7 +65,7 @@ import Dark_mode from "@/views/settings/dark_mode.vue";
 import Notification from "../notification/notification.vue";
 export default {
   components: { Dark_mode, Currentuser, Notification },
-  name: "PageHeaderItem",
+  name: "HeaderItem",
   props: ["balance", "data", "name"],
   data() {
     return {

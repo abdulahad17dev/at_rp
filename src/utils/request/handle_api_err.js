@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-export let link = "https://constructionproject.crud.uz/uploaded_files/";
+export let link = "https://constructionproject-api.crud.uz/uploaded_files/";
 
 export function catchError(error) {
   console.log(error);

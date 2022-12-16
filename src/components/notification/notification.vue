@@ -8,8 +8,9 @@
     <span
       style="position: absolute"
       class="top-0 start-100 translate-middle badge rounded-pill badge-danger"
-      id="count"
+      v-if="count"
     >
+      {{ count }}
       <span class="visually-hidden">unread messages</span>
     </span>
     <i class="fa-solid fa-bell" id="bell"></i>
@@ -100,8 +101,8 @@
                   class="form-control form-control-sm w-25"
                   v-model="filter_request_1_2"
                 >
-                  <option value="supply">Таъминотлар</option>
-                  <option value="product">Материаллар</option>
+                  <option value="supply">Таъминот орқали</option>
+                  <option value="product">База орқали</option>
                 </select>
               </div>
               <div v-if="filter_request_1_2 == 'supply'">
@@ -266,10 +267,11 @@
                       <tr>
                         <th style="width: 10%">№</th>
                         <th style="width: 20%">Материаллар</th>
-                        <th style="width: 20%">Ҳажм</th>
-                        <th style="width: 20%">Ўлчов бирлиги</th>
+                        <th style="width: 15%">Ҳажм</th>
+                        <th style="width: 15%">Ўлчов бирлиги</th>
                         <th style="width: 10%">Сана</th>
-                        <th style="width: 20%">Объект</th>
+                        <th style="width: 15%">База</th>
+                        <th style="width: 15%">Объект</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -289,6 +291,7 @@
                               .slice(0, 10)
                           }}
                         </td>
+                        <td>{{ item.for_from }}</td>
                         <td>{{ item.for_to }}</td>
                       </tr>
                     </tbody>
@@ -640,10 +643,11 @@
                   >
                     <thead>
                       <tr>
+                        <th style="width: 10%">Ўтиб кетган сана</th>
                         <th style="width: 5%">ШНК</th>
-                        <th style="width: 15%">Номи</th>
+                        <th style="width: 10%">Номи</th>
                         <th style="width: 10%">Ўлчов бирлиги</th>
-                        <th style="width: 15%">Ҳажм</th>
+                        <th style="width: 10%">Ҳажм</th>
                         <th style="width: 10%">Ишчи учун ажратилган вақт</th>
                         <th style="width: 10%">Машина учун ажратилган вақт</th>
                         <th style="width: 10%">Ажратилган сумма</th>
@@ -654,6 +658,7 @@
                     </thead>
                     <tbody>
                       <tr v-for="item in filtering_request_5" :key="item">
+                        <td class="text-danger">{{ item.passed_date }} кун</td>
                         <td>{{ item.Smeta.shnk }}</td>
                         <td>{{ item.Smeta.name }}</td>
                         <td>{{ item.Smeta.olchov_birligi }}</td>
@@ -1222,33 +1227,8 @@ export default {
       request_page8: 0,
       request_limit8: 25,
       filter_request_7_8: "proche",
+      count: "",
     };
-  },
-  watch: {
-    request1() {
-      this.counts();
-    },
-    request2() {
-      this.counts();
-    },
-    request3() {
-      this.counts();
-    },
-    request4() {
-      this.counts();
-    },
-    request5() {
-      this.counts();
-    },
-    request6() {
-      this.counts();
-    },
-    request7() {
-      this.counts();
-    },
-    request8() {
-      this.counts();
-    },
   },
   methods: {
     get_request(e) {
@@ -1269,6 +1249,7 @@ export default {
           .then((res) => {
             this.request1 = res.data.data;
             this.request_pages1 = res.data.pages;
+            this.counts();
           })
           .catch((err) => {
             catchError(err);
@@ -1286,8 +1267,8 @@ export default {
         )
           .then((res) => {
             this.request2 = res.data.data;
-
             this.request_pages2 = res.data.pages;
+            this.counts();
           })
           .catch((err) => {
             catchError(err);
@@ -1305,6 +1286,7 @@ export default {
             this.request3 = res.data.data;
 
             this.request_pages3 = res.data.pages;
+            this.counts();
           })
           .catch((err) => {
             catchError(err);
@@ -1322,6 +1304,7 @@ export default {
             this.request4 = res.data.data;
 
             this.request_pages4 = res.data.pages;
+            this.counts();
           })
           .catch((err) => {
             catchError(err);
@@ -1337,9 +1320,16 @@ export default {
           0
         )
           .then((res) => {
+            res.data.data.forEach((element) => {
+              let date1 = new Date(element.Smeta.end_date);
+              let date2 = new Date(this.date);
+              const diffTime = date1 - date2;
+              const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+              element.passed_date = diffDays;
+            });
             this.request5 = res.data.data;
-
             this.request_pages5 = res.data.pages;
+            this.counts();
           })
           .catch((err) => {
             catchError(err);
@@ -1356,8 +1346,8 @@ export default {
         )
           .then((res) => {
             this.request6 = res.data.data;
-
             this.request_pages6 = res.data.pages;
+            this.counts();
           })
           .catch((err) => {
             catchError(err);
@@ -1374,6 +1364,7 @@ export default {
           .then((res) => {
             this.request7 = res.data.data;
             this.request_pages7 = res.data.pages;
+            this.counts();
           })
           .catch((err) => {
             catchError(err);
@@ -1390,6 +1381,7 @@ export default {
           .then((res) => {
             this.request8 = res.data.data;
             this.request_pages8 = res.data.pages;
+            this.counts();
           })
           .catch((err) => {
             catchError(err);
@@ -1406,18 +1398,14 @@ export default {
         this.request6.length +
         this.request7.length +
         this.request8.length;
-      let count = document.getElementById("count");
       let bell = document.getElementById("bell");
       if (e > 0) {
-        count.style.display = "block";
         bell.classList.add("fa-shake");
         if (e >= 99) {
-          count.innerHTML = "99+";
+          this.count = "99+";
         } else {
-          count.innerHTML = e;
+          this.count = e;
         }
-      } else {
-        count.style.display = "none";
       }
     },
   },

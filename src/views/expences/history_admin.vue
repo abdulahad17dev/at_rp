@@ -24,6 +24,7 @@
         role="tab"
         aria-controls="pills-profile"
         aria-selected="false"
+        @click="supplies.length ? '' : get_supply()"
       >
         Таминотлар тарихи
       </a>
@@ -243,20 +244,322 @@
       id="pills-profile"
       role="tabpanel"
       aria-labelledby="pills-profile-tab"
-    ></div>
+    >
+      <form @submit.prevent="time" class="mt-2">
+        <div class="row">
+          <div class="col">
+            <input
+              type="date"
+              class="form-control form-control-sm"
+              v-model="from_time_"
+              required
+            />
+          </div>
+          <div class="col">
+            <input
+              type="date"
+              class="form-control form-control-sm"
+              v-model="to_time_"
+              required
+            />
+          </div>
+          <div class="col">
+            <div class="btn-group w-100">
+              <button
+                class="btn btn-outline-primary btn-sm w-80"
+                :disabled="from_time_ == '' || to_time_ == ''"
+              >
+                <i class="fa-solid fa-search"></i>
+              </button>
+              <button
+                class="btn btn-outline-danger btn-sm w-20"
+                @click="reset"
+                v-if="from_time_ && to_time_"
+              >
+                <i class="fa-solid fa-circle-xmark"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="row my-1">
+          <div class="col-lg-3 col-md-6 col-sm-6 col-6 mt-1">
+            <div class="dropdown">
+              <button
+                class="btn btn-light btn-sm dropdown-toggle"
+                type="button"
+                id="select_bank_market"
+                data-mdb-toggle="dropdown"
+                data-bs-auto-close="outside"
+                aria-expanded="false"
+                @click="
+                  markets.length
+                    ? ''
+                    : get_markets(page_market, limit_market, search_market)
+                "
+              >
+                {{ text_market }}
+              </button>
+              <ul
+                class="dropdown-menu border-top-0"
+                aria-labelledby="bank_market"
+              >
+                <li>
+                  <input
+                    type="search"
+                    class="form-control form-control-sm"
+                    placeholder="қидириш ..."
+                    v-model="search_market"
+                  />
+                </li>
+                <li>
+                  <ul class="dropdown-items">
+                    <li @click="select(0, 'барчаси', '')">
+                      <a class="dropdown-item">барчаси</a>
+                    </li>
+                    <li
+                      v-for="item in markets"
+                      :key="item"
+                      @click="
+                        select(
+                          item.Markets.id,
+                          item.Markets.name,
+                          item.Markets.phone
+                        )
+                      "
+                    >
+                      <a class="dropdown-item"
+                        >{{ item.Markets.name }} ({{
+                          "+998 " + item.Markets.phone
+                        }})</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li v-if="markets != ''">
+                  <hr class="dropdown-divider m-0" />
+                </li>
+                <li>
+                  <nav
+                    aria-label="Page navigation example"
+                    class="mt-2"
+                    v-if="markets != ''"
+                  >
+                    <ul class="pagination pagination-sm justify-content-end">
+                      <li class="page-item">
+                        <button
+                          type="button"
+                          class="page-link"
+                          @click="
+                            get_markets(
+                              page_market,
+                              limit_market,
+                              search_market
+                            )
+                          "
+                        >
+                          <i class="fa-solid fa-rotate"></i>
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button
+                          type="button"
+                          class="page-link"
+                          @click="page_market--"
+                          :disabled="page_market == 0"
+                        >
+                          <i class="fa-solid fa-angle-left text-dark"></i>
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button
+                          type="button"
+                          class="page-link text-dark"
+                          disabled
+                        >
+                          {{ page_market + 1 }}
+                        </button>
+                      </li>
+                      <li class="page-item">
+                        <button
+                          type="button"
+                          class="page-link"
+                          @click="page_market++"
+                          :disabled="page_market == pages_market"
+                        >
+                          <i class="fa-solid fa-angle-right text-dark"></i>
+                        </button>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 col-sm-6 col-6 mt-1">
+            <select
+              class="form-select form-select-sm"
+              v-model="paid_status_"
+              @change="
+                page_ = 0;
+                get_supply();
+              "
+            >
+              <option value="">барчаси</option>
+              <option value="true">тўланди</option>
+              <option value="false">тўланмади</option>
+            </select>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6 col-6 mt-1">
+            <select
+              class="form-select form-select-sm"
+              v-model="status_"
+              @change="
+                page_ = 0;
+                get_supply();
+              "
+            >
+              <option value="">барчаси</option>
+              <option value="true">қабул қилинди</option>
+              <option value="false">қабул қилинмади</option>
+            </select>
+          </div>
+        </div>
+      </form>
+      <div class="table-responsive supply mt-3">
+        <table class="table table-sm table-hover">
+          <thead class="">
+            <tr>
+              <th style="width: 10%">№</th>
+              <th style="width: 20%">Махсулот</th>
+              <th style="width: 10%">Ҳажм</th>
+              <th style="width: 10%">Ўлчов бирлиги</th>
+              <th style="width: 10%">Сана</th>
+              <th style="width: 15%">Сотувчи корхона</th>
+              <th style="width: 15%">Сумма</th>
+              <th style="width: 10%">
+                <select
+                  class="form-select form-select-sm"
+                  v-model="type_"
+                  @change="
+                    page_ = 0;
+                    get_supply();
+                  "
+                >
+                  <option value="">барчаси</option>
+                  <option value="proche">проче</option>
+                  <option value="smeta">смета</option>
+                  <option value="tarkib">таркиб</option>
+                </select>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, inc) in supplies" :key="item">
+              <td>
+                {{ inc + 1 }}
+              </td>
+              <td>{{ item.product }}</td>
+              <td>
+                <Format_numbers :number="item.Supplies.quantity" />
+              </td>
+              <td>{{ item.Supplies.olchov_birligi }}</td>
+              <td>
+                {{
+                  new Date(item.Supplies.time)
+                    .toLocaleDateString({
+                      year: "numeric",
+                      month: "numeric",
+                      day: "numeric",
+                    })
+                    .slice(0, 10)
+                }}
+              </td>
+              <td>
+                {{ item.market }}(<a
+                  class="text-decoration-none text-dark"
+                  :href="`tel:+998${item.market_phone}`"
+                >
+                  +998 {{ item.market_phone }} </a
+                >)
+              </td>
+              <td>
+                <Format_numbers :number="item.Supplies.price" />
+                <span class="mx-1"> сўм </span>
+              </td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <Data_notfound v-if="supplies == ''" />
+      </div>
+      <nav
+        aria-label="Page navigation example"
+        class="mt-2"
+        v-if="supplies != ''"
+      >
+        <ul class="pagination pagination-sm justify-content-end">
+          <li class="page-item">
+            <select
+              class="form-control form-control-sm form-select mx-1"
+              v-model="limit_"
+              @change="get_supply()"
+            >
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </li>
+          <li class="page-item">
+            <button type="button" class="page-link" @click="get_supply()">
+              <i class="fa-solid fa-rotate"></i>
+            </button>
+          </li>
+          <li class="page-item">
+            <button
+              class="page-link"
+              @click="page_--, get_supply()"
+              :disabled="page_ == 0"
+            >
+              <i class="fa-solid fa-angle-left text-dark"></i>
+            </button>
+          </li>
+          <li class="page-item">
+            <button class="page-link text-dark" disabled>
+              {{ page_ + 1 }}
+            </button>
+          </li>
+          <li class="page-item">
+            <button
+              class="page-link"
+              @click="page_++, get_supply()"
+              :disabled="page_ == pages_"
+            >
+              <i class="fa-solid fa-angle-right text-dark"></i>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </template>
 
 <script>
 import Header_item from "@/components/header/header_item.vue";
-import { fixed_expence_get, get_fixed_history } from "@/utils/request/request";
+import {
+  fixed_expence_get,
+  get_fixed_history,
+  get_supplies,
+  markets_get,
+} from "@/utils/request/request";
 import { catchError } from "@/utils/request/handle_api_err";
 import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import Select_data from "@/utils/select_data/select_data.vue";
+import Format_numbers from "@/utils/format/format_numbers.vue";
 
 export default {
   name: "FixedExpenseHistory",
-  components: { Header_item, Data_notfound, Select_data },
+  components: { Header_item, Data_notfound, Select_data, Format_numbers },
   data() {
     return {
       fixed_history: [],
@@ -274,6 +577,24 @@ export default {
       search_expense: "",
       expenses: [],
       text_expense: "чиқимлар",
+      user_id_: 0,
+      market_id_: 0,
+      status_: "",
+      paid_status_: "",
+      building_id_: this.$route.query.id,
+      type_: "",
+      from_time_: "",
+      to_time_: "",
+      page_: 0,
+      limit_: 25,
+      pages_: null,
+      supplies: [],
+      text_market: "маҳсулот сотувчи",
+      page_market: 0,
+      pages_market: null,
+      limit_market: 25,
+      search_market: "",
+      markets: [],
     };
   },
   watch: {
@@ -310,6 +631,17 @@ export default {
     search_expense(e) {
       this.page_expense = 0;
       this.expenses_get(this.page_expense, this.limit_expense, e);
+    },
+    limit_market(e) {
+      this.page_market = 0;
+      this.get_markets(this.page_market, e, this.search_market);
+    },
+    page_market(e) {
+      this.get_markets(e, this.limit_market, this.search_market);
+    },
+    search_market(e) {
+      this.page_market = 0;
+      this.get_markets(this.page_market, this.limit_market, e);
     },
   },
   methods: {
@@ -362,6 +694,77 @@ export default {
         this.to_time
       );
     },
+    get_supply() {
+      this.$store.dispatch("setLoading", { isLoading: true });
+      get_supplies(
+        this.market_id_,
+        this.status_,
+        this.paid_status_,
+        this.building_id_,
+        this.type_,
+        this.from_time_,
+        this.to_time_,
+        this.page_,
+        this.limit_,
+        0,
+        "",
+        this.user_id_
+      )
+        .then((res) => {
+          res.data.data.forEach((element) => {
+            if (element.Supplies.paid_status == false) {
+              let num =
+                element.Supplies.quantity * element.Supplies.price -
+                element.sum_paid_money;
+              element.total_price = num;
+            }
+          });
+
+          this.supplies = res.data.data;
+          this.pages_ = res.data.pages;
+          this.$store.dispatch("setLoading", { isLoading: false });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        });
+    },
+    get_markets(page_market, limit_market, search_market) {
+      this.$store.dispatch("setLoading", { isLoading: true });
+
+      markets_get(page_market, limit_market, search_market)
+        .then((res) => {
+          this.markets = res.data.data;
+          this.pages_market = res.data.pages;
+          this.$store.dispatch("setLoading", { isLoading: false });
+        })
+        .catch((err) => {
+          catchError(err);
+          this.$store.dispatch("setLoading", { isLoading: false });
+        });
+    },
+    select(id, name, phone) {
+      this.market_id_ = id;
+      this.page_ = 0;
+      this.get_supply();
+      if (phone) {
+        this.text_market = name + " +998 " + phone;
+        document.getElementById("select_bank_market").click();
+      } else {
+        this.text_market = name;
+        document.getElementById("select_bank_market").click();
+      }
+    },
+    time() {
+      this.page_ = 0;
+      this.get_supply();
+    },
+    reset() {
+      this.from_time_ = "";
+      this.to_time_ = "";
+      this.page_ = 0;
+      this.get_supply();
+    },
   },
   created() {
     this.fixed_history_get();
@@ -384,5 +787,21 @@ export default {
 table {
   width: 100%;
   min-width: 900px;
+}
+
+.supply.table-responsive {
+  max-height: 57vh;
+  min-height: 57vh;
+}
+
+@media (max-width: 500px) {
+  .supply.table-responsive {
+    max-height: 80vh;
+    min-height: 80vh;
+  }
+}
+.supply table {
+  min-width: 1000px;
+  width: 100%;
 }
 </style>

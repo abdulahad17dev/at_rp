@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-6 d-flex justify-content-center">
           <img
-            src="https://constructionproject.crud.uz/uploaded_files/frontend_login_bg.gif"
+            :src="img_action"
             alt="Image"
             class="img-fluid"
             style="display: block; margin: auto"
@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import { catchError } from "@/utils/request/handle_api_err";
+import { catchError, link } from "@/utils/request/handle_api_err";
 import { login } from "./../../request/request";
 export default {
   name: "LoginItem",
@@ -152,6 +152,11 @@ export default {
     },
     toggle() {
       this.type = this.type === "password" ? "text" : "password";
+    },
+  },
+  computed: {
+    img_action() {
+      return link + "frontend_login_bg.gif";
     },
   },
   mounted() {

@@ -244,7 +244,7 @@ export default {
   transition: opacity 0.3s ease-out;
 }
 
-.circle svg {
+.circle i {
   z-index: 10000;
   transform: translateZ(0);
 }

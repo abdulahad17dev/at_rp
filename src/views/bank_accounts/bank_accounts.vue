@@ -47,7 +47,7 @@
     v-if="bank_accounts != ''"
   >
     <ul class="pagination pagination-sm justify-content-end">
-      <li>
+      <li v-if="excel">
         <Select_data :id="'select_bank_account_data'" />
       </li>
       <li class="page-item">
@@ -106,6 +106,7 @@ export default {
       search: "",
       item: {},
       role: localStorage.getItem("role"),
+      excel: "",
     };
   },
   watch: {
@@ -162,6 +163,13 @@ export default {
   },
   created() {
     this.bank_accounts_get(this.page, this.limit, this.search);
+  },
+  mounted() {
+    if (document.getElementById("select_bank_account_data")) {
+      this.excel = true;
+    } else {
+      this.excel = false;
+    }
   },
 };
 </script>

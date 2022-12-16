@@ -45,7 +45,7 @@
     v-if="main_warehouses != ''"
   >
     <ul class="pagination pagination-sm justify-content-end">
-      <li>
+      <li v-if="excel">
         <Select_data :id="'select_main_w_data'" />
       </li>
       <li class="page-item">
@@ -218,6 +218,13 @@ export default {
   },
   created() {
     this.get_main_warehouses(this.page, this.limit, this.search);
+  },
+  mounted() {
+    if (document.getElementById("select_main_w_data")) {
+      this.excel = true;
+    } else {
+      this.excel = false;
+    }
   },
 };
 </script>

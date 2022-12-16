@@ -217,13 +217,15 @@
     color: #fff !important;
 }
 
-.dark .nav-link {
-    border-bottom: 2px solid gray !important;
+.dark .nav-link,
+.dark .nav-link:hover {
+    padding: 8px 16px 8px !important;
+    border: 2px solid white !important;
+    border-radius: 8px !important;
+    background: rgb(59, 113, 202, 0.05) !important;
 }
 
-.dark .nav-link:hover,
-.dark .nav-link:active,
-.dark .nav-link:focus,
 .dark .nav-link.active {
-    background: rgb(128, 128, 128, 0.3) !important;
+    border: 2px solid #3b71ca !important;
+    background: rgb(59, 113, 202, 0.5) !important;
 }

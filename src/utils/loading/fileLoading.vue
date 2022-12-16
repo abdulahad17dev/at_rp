@@ -1,19 +1,20 @@
 <template>
   <div class="page-loader2">
     <div id="loader2">
-      <img
-        src="https://constructionproject.crud.uz/uploaded_files/frontend_animate2.gif"
-        alt="notfound"
-        width="200"
-        height="200"
-      />
+      <img :src="img_action" alt="notfound" width="200" height="200" />
     </div>
   </div>
 </template>
 
 <script>
+import { link } from "../request/handle_api_err";
 export default {
   name: "Isloading2Item",
+  computed: {
+    img_action() {
+      return link + "frontend_animate2.gif";
+    },
+  },
 };
 </script>
 
