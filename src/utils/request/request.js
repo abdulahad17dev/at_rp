@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const access_token = localStorage.getItem("access_token");
-const url = "https://constructionproject-api.crud.uz/";
+const url = "https://constructionproject.api-crud.uz/";
 
 export const instance = axios.create({
   baseURL: url,
