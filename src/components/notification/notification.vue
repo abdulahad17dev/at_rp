@@ -4,16 +4,13 @@
     class="btn btn-dark btn-floating mx-1 position-relative"
     data-mdb-toggle="modal"
     data-mdb-target="#notification"
+    @click="
+      get_request('request1');
+      get_request('request2');
+      get_request('request9');
+    "
   >
-    <span
-      style="position: absolute"
-      class="top-0 start-100 translate-middle badge rounded-pill badge-danger"
-      v-if="count"
-    >
-      {{ count }}
-      <span class="visually-hidden">unread messages</span>
-    </span>
-    <i class="fa-solid fa-bell" id="bell"></i>
+    <i class="fa-solid fa-bell fa-shake" id="bell"></i>
   </button>
   <div
     class="modal fade"
@@ -44,8 +41,13 @@
                 role="tab"
                 aria-controls="product"
                 aria-selected="true"
+                @click="
+                  get_request('request1');
+                  get_request('request2');
+                  get_request('request9');
+                "
               >
-                Қабул қилинмаган материаллар
+                Қаъбул қилинмаган материаллар
               </a>
             </li>
             <li class="nav-item mx-1" role="presentation">
@@ -58,7 +60,28 @@
                 role="tab"
                 aria-controls="supplies"
                 aria-selected="false"
+                @click="
+                  get_request('request3');
+                  get_request('request4');
+                "
                 >Олиниши керак бўлган таъминотлар
+              </a>
+            </li>
+            <li class="nav-item mx-1" role="presentation">
+              <a
+                class="nav-link"
+                id="supplies3-tab"
+                data-mdb-toggle="pill"
+                data-mdb-target="#supplies3"
+                type="button"
+                role="tab"
+                aria-controls="supplies3"
+                aria-selected="false"
+                @click="
+                  get_request('request5');
+                  get_request('request6');
+                "
+                >Пули тўланмаган таъминотлар
               </a>
             </li>
             <li class="nav-item mx-1" role="presentation">
@@ -71,6 +94,10 @@
                 role="tab"
                 aria-controls="product2"
                 aria-selected="true"
+                @click="
+                  get_request('request7');
+                  get_request('request8');
+                "
               >
                 Бажарилиши керак бўлган ишлар
               </a>
@@ -85,6 +112,10 @@
                 role="tab"
                 aria-controls="supplies2"
                 aria-selected="false"
+                @click="
+                  get_request('request10');
+                  get_request('request11');
+                "
                 >Тақсимланиши керак бўлган материаллар
               </a>
             </li>
@@ -99,13 +130,14 @@
               <div class="d-flex flex-row-reverse mt-2 m-1">
                 <select
                   class="form-control form-control-sm w-25"
-                  v-model="filter_request_1_2"
+                  v-model="filter_request_1_2_9"
                 >
                   <option value="supply">Таъминот орқали</option>
                   <option value="product">База орқали</option>
+                  <option value="product_w">Омбор орқали</option>
                 </select>
               </div>
-              <div v-if="filter_request_1_2 == 'supply'">
+              <div v-if="filter_request_1_2_9 == 'supply'">
                 <div class="table-responsive mt-2">
                   <table
                     class="table table-sm table-hover"
@@ -217,10 +249,7 @@
                       <button
                         type="button"
                         class="page-link"
-                        @click="
-                          get_request('request1');
-                          counts();
-                        "
+                        @click="get_request('request1')"
                       >
                         <i class="fa-solid fa-rotate"></i>
                       </button>
@@ -238,9 +267,19 @@
                       </button>
                     </li>
                     <li class="page-item">
-                      <button class="page-link text-dark" disabled>
-                        {{ request_page1 + 1 }}
-                      </button>
+                      <select
+                        class="form-control form-control-sm page_select"
+                        v-model="request_page1"
+                        @change="get_request('request1')"
+                      >
+                        <option
+                          :value="item - 1"
+                          v-for="item in request_pages1"
+                          :key="item"
+                        >
+                          {{ item }}
+                        </option>
+                      </select>
                     </li>
                     <li class="page-item">
                       <button
@@ -249,7 +288,117 @@
                           request_page1++;
                           get_request('request1');
                         "
-                        :disabled="request_page1 == request_pages1"
+                        :disabled="request_page1 == request_pages1 - 1"
+                      >
+                        <i class="fa-solid fa-angle-right text-dark"></i>
+                      </button>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+              <div v-else-if="filter_request_1_2_9 == 'product_w'">
+                <div class="table-responsive mt-2">
+                  <table
+                    class="table table-sm table-hover"
+                    id="transfered_product1"
+                  >
+                    <thead>
+                      <tr>
+                        <th style="width: 10%">№</th>
+                        <th style="width: 20%">Материаллар</th>
+                        <th style="width: 15%">Ҳажм</th>
+                        <th style="width: 15%">Ўлчов бирлиги</th>
+                        <th style="width: 10%">Сана</th>
+                        <th style="width: 15%">Объект</th>
+                        <th style="width: 15%">Омбор</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(item, inc) in request9" :key="item">
+                        <td>{{ inc + 1 }}</td>
+                        <td>{{ item.product }}</td>
+                        <td>{{ item.sum_quantity }}</td>
+                        <td>{{ item.olchov_birligi }}</td>
+                        <td>
+                          {{
+                            new Date(item.Product_transfers.time)
+                              .toLocaleDateString({
+                                year: "numeric",
+                                month: "numeric",
+                                day: "numeric",
+                              })
+                              .slice(0, 10)
+                          }}
+                        </td>
+                        <td>{{ item.for_from }}</td>
+                        <td>{{ item.for_to }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <Data_notfound v-if="request9 == ''" />
+                </div>
+
+                <nav
+                  aria-label="Page navigation example"
+                  class="mt-2"
+                  v-if="request9 != ''"
+                >
+                  <ul class="pagination pagination-sm justify-content-end">
+                    <li class="page-item">
+                      <select
+                        class="form-control form-control-sm form-select mx-1"
+                        v-model="request_limit9"
+                        @change="get_request('request9')"
+                      >
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                    </li>
+                    <li class="page-item">
+                      <button
+                        type="button"
+                        class="page-link"
+                        @click="get_request('request9')"
+                      >
+                        <i class="fa-solid fa-rotate"></i>
+                      </button>
+                    </li>
+                    <li class="page-item">
+                      <button
+                        class="page-link"
+                        @click="
+                          request_page9--;
+                          get_request('request9');
+                        "
+                        :disabled="request_page9 == 0"
+                      >
+                        <i class="fa-solid fa-angle-left text-dark"></i>
+                      </button>
+                    </li>
+                    <li class="page-item">
+                      <select
+                        class="form-control form-control-sm page_select"
+                        v-model="request_page9"
+                        @change="get_request('request9')"
+                      >
+                        <option
+                          :value="item - 1"
+                          v-for="item in request_pages9"
+                          :key="item"
+                        >
+                          {{ item }}
+                        </option>
+                      </select>
+                    </li>
+                    <li class="page-item">
+                      <button
+                        class="page-link"
+                        @click="
+                          request_page9++;
+                          get_request('request9');
+                        "
+                        :disabled="request_page9 == request_pages9"
                       >
                         <i class="fa-solid fa-angle-right text-dark"></i>
                       </button>
@@ -320,10 +469,7 @@
                       <button
                         type="button"
                         class="page-link"
-                        @click="
-                          get_request('request2');
-                          counts();
-                        "
+                        @click="get_request('request2')"
                       >
                         <i class="fa-solid fa-rotate"></i>
                       </button>
@@ -341,9 +487,19 @@
                       </button>
                     </li>
                     <li class="page-item">
-                      <button class="page-link text-dark" disabled>
-                        {{ request_page2 + 1 }}
-                      </button>
+                      <select
+                        class="form-control form-control-sm page_select"
+                        v-model="request_page2"
+                        @change="get_request('request2')"
+                      >
+                        <option
+                          :value="item - 1"
+                          v-for="item in request_pages2"
+                          :key="item"
+                        >
+                          {{ item }}
+                        </option>
+                      </select>
                     </li>
                     <li class="page-item">
                       <button
@@ -456,10 +612,7 @@
                       <button
                         type="button"
                         class="page-link"
-                        @click="
-                          get_request('request3');
-                          counts();
-                        "
+                        @click="get_request('request3')"
                       >
                         <i class="fa-solid fa-rotate"></i>
                       </button>
@@ -477,9 +630,19 @@
                       </button>
                     </li>
                     <li class="page-item">
-                      <button class="page-link text-dark" disabled>
-                        {{ request_page3 + 1 }}
-                      </button>
+                      <select
+                        class="form-control form-control-sm page_select"
+                        v-model="request_page3"
+                        @change="get_request('request3')"
+                      >
+                        <option
+                          :value="item - 1"
+                          v-for="item in request_pages3"
+                          :key="item"
+                        >
+                          {{ item }}
+                        </option>
+                      </select>
                     </li>
                     <li class="page-item">
                       <button
@@ -488,7 +651,7 @@
                           request_page3++;
                           get_request('request3');
                         "
-                        :disabled="request_page3 == request_page3"
+                        :disabled="request_page3 == request_page3 - 1"
                       >
                         <i class="fa-solid fa-angle-right text-dark"></i>
                       </button>
@@ -579,10 +742,7 @@
                       <button
                         type="button"
                         class="page-link"
-                        @click="
-                          get_request('request4');
-                          counts();
-                        "
+                        @click="get_request('request4')"
                       >
                         <i class="fa-solid fa-rotate"></i>
                       </button>
@@ -600,9 +760,19 @@
                       </button>
                     </li>
                     <li class="page-item">
-                      <button class="page-link text-dark" disabled>
-                        {{ request_page4 + 1 }}
-                      </button>
+                      <select
+                        class="form-control form-control-sm page_select"
+                        v-model="request_page4"
+                        @change="get_request('request4')"
+                      >
+                        <option
+                          :value="item - 1"
+                          v-for="item in request_pages4"
+                          :key="item"
+                        >
+                          {{ item }}
+                        </option>
+                      </select>
                     </li>
                     <li class="page-item">
                       <button
@@ -611,7 +781,7 @@
                           request_page4++;
                           get_request('request4');
                         "
-                        :disabled="request_page4 == request_pages4"
+                        :disabled="request_page4 == request_pages4 - 1"
                       >
                         <i class="fa-solid fa-angle-right text-dark"></i>
                       </button>
@@ -746,10 +916,7 @@
                       <button
                         type="button"
                         class="page-link"
-                        @click="
-                          get_request('request5');
-                          counts();
-                        "
+                        @click="get_request('request5')"
                       >
                         <i class="fa-solid fa-rotate"></i>
                       </button>
@@ -767,9 +934,19 @@
                       </button>
                     </li>
                     <li class="page-item">
-                      <button class="page-link text-dark" disabled>
-                        {{ request_page5 + 1 }}
-                      </button>
+                      <select
+                        class="form-control form-control-sm page_select"
+                        v-model="request_page5"
+                        @change="get_request('request5')"
+                      >
+                        <option
+                          :value="item - 1"
+                          v-for="item in request_pages5"
+                          :key="item"
+                        >
+                          {{ item }}
+                        </option>
+                      </select>
                     </li>
                     <li class="page-item">
                       <button
@@ -778,7 +955,7 @@
                           request_page5++;
                           get_request('request5');
                         "
-                        :disabled="request_page5 == request_pages5"
+                        :disabled="request_page5 == request_pages5 - 1"
                       >
                         <i class="fa-solid fa-angle-right text-dark"></i>
                       </button>
@@ -895,10 +1072,7 @@
                       <button
                         type="button"
                         class="page-link"
-                        @click="
-                          get_request('request6');
-                          counts();
-                        "
+                        @click="get_request('request6')"
                       >
                         <i class="fa-solid fa-rotate"></i>
                       </button>
@@ -916,9 +1090,19 @@
                       </button>
                     </li>
                     <li class="page-item">
-                      <button class="page-link text-dark" disabled>
-                        {{ request_page6 + 1 }}
-                      </button>
+                      <select
+                        class="form-control form-control-sm page_select"
+                        v-model="request_page6"
+                        @change="get_request('request6')"
+                      >
+                        <option
+                          :value="item - 1"
+                          v-for="item in request_pages6"
+                          :key="item"
+                        >
+                          {{ item }}
+                        </option>
+                      </select>
                     </li>
                     <li class="page-item">
                       <button
@@ -927,7 +1111,7 @@
                           request_page6++;
                           get_request('request6');
                         "
-                        :disabled="request_page6 == request_pages6"
+                        :disabled="request_page6 == request_pages6 - 1"
                       >
                         <i class="fa-solid fa-angle-right text-dark"></i>
                       </button>
@@ -1025,10 +1209,7 @@
                       <button
                         type="button"
                         class="page-link"
-                        @click="
-                          get_request('request7');
-                          counts();
-                        "
+                        @click="get_request('request7')"
                       >
                         <i class="fa-solid fa-rotate"></i>
                       </button>
@@ -1046,9 +1227,19 @@
                       </button>
                     </li>
                     <li class="page-item">
-                      <button class="page-link text-dark" disabled>
-                        {{ request_page7 + 1 }}
-                      </button>
+                      <select
+                        class="form-control form-control-sm page_select"
+                        v-model="request_page7"
+                        @change="get_request('request7')"
+                      >
+                        <option
+                          :value="item - 1"
+                          v-for="item in request_pages7"
+                          :key="item"
+                        >
+                          {{ item }}
+                        </option>
+                      </select>
                     </li>
                     <li class="page-item">
                       <button
@@ -1057,7 +1248,7 @@
                           request_page7++;
                           get_request('request7');
                         "
-                        :disabled="request_page7 == request_pages7"
+                        :disabled="request_page7 == request_pages7 - 1"
                       >
                         <i class="fa-solid fa-angle-right text-dark"></i>
                       </button>
@@ -1126,10 +1317,7 @@
                       <button
                         type="button"
                         class="page-link"
-                        @click="
-                          get_request('request8');
-                          counts();
-                        "
+                        @click="get_request('request8')"
                       >
                         <i class="fa-solid fa-rotate"></i>
                       </button>
@@ -1147,9 +1335,19 @@
                       </button>
                     </li>
                     <li class="page-item">
-                      <button class="page-link text-dark" disabled>
-                        {{ request_page8 + 1 }}
-                      </button>
+                      <select
+                        class="form-control form-control-sm page_select"
+                        v-model="request_page8"
+                        @change="get_request('request8')"
+                      >
+                        <option
+                          :value="item - 1"
+                          v-for="item in request_pages8"
+                          :key="item"
+                        >
+                          {{ item }}
+                        </option>
+                      </select>
                     </li>
                     <li class="page-item">
                       <button
@@ -1158,13 +1356,251 @@
                           request_page8++;
                           get_request('request8');
                         "
-                        :disabled="request_page8 == request_pages8"
+                        :disabled="request_page8 == request_pages8 - 1"
                       >
                         <i class="fa-solid fa-angle-right text-dark"></i>
                       </button>
                     </li>
                   </ul>
                 </nav>
+              </div>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="supplies3"
+              role="tabpanel"
+              aria-labelledby="supplies3-tab"
+            >
+              <div class="d-flex flex-row-reverse mt-2 m-1">
+                <select
+                  class="form-control form-control-sm w-25"
+                  v-model="filter_request_10_11"
+                >
+                  <option value="naxt">нахт тўлов орқали</option>
+                  <option value="hisob">ҳисоб рақам орқали</option>
+                </select>
+              </div>
+              <div v-if="filter_request_10_11 == 'naxt'">
+                <div class="table-responsive mt-2">
+                  <table
+                    class="table table-sm table-hover"
+                    id="supply_in_warehouse"
+                  >
+                    <thead>
+                      <tr>
+                        <th style="width: 5%">№</th>
+                        <th style="width: 10%">Махсулот</th>
+                        <th style="width: 10%">Ҳажм</th>
+                        <th style="width: 10%">Ўлчов бирлиги</th>
+                        <th style="width: 10%">Сана</th>
+                        <th style="width: 10%">Объект</th>
+                        <th style="width: 10%">Таминотчи</th>
+                        <th style="width: 10%">Омборчи</th>
+                        <th style="width: 10%">Тури</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(item, inc) in request10" :key="item">
+                        <td>
+                          {{ inc + 1 }}
+                        </td>
+                        <td>
+                          {{
+                            item.Supplies.type == "qarz_tarkib" ||
+                            item.Supplies.type == "naxt_tarkib" ||
+                            item.Supplies.type == "shot_tarkib"
+                              ? item.product +
+                                ":" +
+                                item.Supplies.product_composition
+                              : item.product
+                          }}
+                        </td>
+                        <td>
+                          <Format_numbers :number="item.Supplies.quantity" />
+                        </td>
+                        <td>{{ item.Supplies.olchov_birligi }}</td>
+                        <td>
+                          {{
+                            new Date(item.Supplies.time)
+                              .toLocaleDateString({
+                                year: "numeric",
+                                month: "numeric",
+                                day: "numeric",
+                              })
+                              .slice(0, 10)
+                          }}
+                        </td>
+                        <td>
+                          {{ item.building }}
+                        </td>
+                        <td>
+                          {{ item.taminotchi }}
+                        </td>
+                        <td>
+                          {{
+                            item.Supplies.status == true
+                              ? item.warehouseman
+                              : ""
+                          }}
+                        </td>
+                        <td>
+                          {{
+                            item.Supplies.type == "shot_proche"
+                              ? "проче"
+                              : "" || item.Supplies.type == "naxt_proche"
+                              ? "проче"
+                              : "" || item.Supplies.type == "qarz_proche"
+                              ? "проче"
+                              : "" || item.Supplies.type == "shot_smeta"
+                              ? "смета"
+                              : "" || item.Supplies.type == "naxt_smeta"
+                              ? "смета"
+                              : "" || item.Supplies.type == "qarz_smeta"
+                              ? "смета"
+                              : "" || item.Supplies.type == "shot_tarkib"
+                              ? "таркиб"
+                              : "" || item.Supplies.type == "naxt_tarkib"
+                              ? "таркиб"
+                              : "" || item.Supplies.type == "qarz_tarkib"
+                              ? "таркиб"
+                              : ""
+                          }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <Data_notfound v-if="request10 == ''" />
+                </div>
+                <nav
+                  aria-label="Page navigation example"
+                  class="mt-2"
+                  v-if="request10 != ''"
+                >
+                  <ul class="pagination pagination-sm justify-content-end">
+                    <li class="page-item">
+                      <select
+                        class="form-control form-control-sm form-select mx-1"
+                        v-model="request_limit10"
+                        @change="get_request('request10')"
+                      >
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                    </li>
+                    <li class="page-item">
+                      <button
+                        type="button"
+                        class="page-link"
+                        @click="get_request('request10')"
+                      >
+                        <i class="fa-solid fa-rotate"></i>
+                      </button>
+                    </li>
+                    <li class="page-item">
+                      <button
+                        class="page-link"
+                        @click="
+                          request_page10--;
+                          get_request('request10');
+                        "
+                        :disabled="request_page10 == 0"
+                      >
+                        <i class="fa-solid fa-angle-left text-dark"></i>
+                      </button>
+                    </li>
+                    <li class="page-item">
+                      <select
+                        class="form-control form-control-sm page_select"
+                        v-model="request_page10"
+                        @change="get_request('request10')"
+                      >
+                        <option
+                          :value="item - 1"
+                          v-for="item in request_pages10"
+                          :key="item"
+                        >
+                          {{ item }}
+                        </option>
+                      </select>
+                    </li>
+                    <li class="page-item">
+                      <button
+                        class="page-link"
+                        @click="
+                          request_page10++;
+                          get_request('request10');
+                        "
+                        :disabled="request_page10 == request_pages10 - 1"
+                      >
+                        <i class="fa-solid fa-angle-right text-dark"></i>
+                      </button>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+              <div v-else>
+                <div class="table-responsive mt-3">
+                  <table class="table table-sm table-hover">
+                    <thead class="">
+                      <tr>
+                        <th style="width: 10%">№</th>
+                        <th style="width: 20%">Махсулот</th>
+                        <th style="width: 20%">Ҳажм</th>
+                        <th style="width: 20%">Ўлчов бирлиги</th>
+                        <th style="width: 10%">Сана</th>
+                        <th style="width: 20%">Сумма</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(item, inc) in request11 || []" :key="item">
+                        <td>
+                          {{ inc + 1 }}
+                        </td>
+                        <td>
+                          {{
+                            item.Supplies_by_bank_account.type == "tarkib"
+                              ? item.product +
+                                ":" +
+                                item.Supplies_by_bank_account
+                                  .product_composition
+                              : item.product
+                          }}
+                        </td>
+                        <td>
+                          <Format_numbers
+                            :number="item.Supplies_by_bank_account.quantity"
+                          />
+                        </td>
+                        <td>
+                          {{ item.Supplies_by_bank_account.olchov_birligi }}
+                        </td>
+                        <td>
+                          {{
+                            new Date(item.Supplies_by_bank_account.time)
+                              .toLocaleDateString({
+                                year: "numeric",
+                                month: "numeric",
+                                day: "numeric",
+                              })
+                              .slice(0, 10)
+                          }}
+                        </td>
+                        <td>
+                          <span class="d-flex">
+                            <Format_numbers
+                              :number="
+                                item.Supplies_by_bank_account.total_price
+                              "
+                            />
+                            <span class="mx-1"> сўм </span>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <Data_notfound v-if="request11 == ''" />
+                </div>
               </div>
             </div>
           </div>
@@ -1179,6 +1615,7 @@ import Data_notfound from "@/utils/notfound/data_notfound.vue";
 import {
   get_supplies,
   proche_s_get,
+  shot_request,
   smeta_get,
   smeta_request_get,
   transfered_products,
@@ -1199,7 +1636,7 @@ export default {
       request_pages2: null,
       request_page2: 0,
       request_limit2: 25,
-      filter_request_1_2: "supply",
+      filter_request_1_2_9: "supply",
       request3: [],
       request_pages3: null,
       request_page3: 0,
@@ -1227,7 +1664,19 @@ export default {
       request_page8: 0,
       request_limit8: 25,
       filter_request_7_8: "proche",
-      count: "",
+      request9: [],
+      request_pages9: null,
+      request_page9: 0,
+      request_limit9: 25,
+      request10: [],
+      request_pages10: null,
+      request_page10: 0,
+      request_limit10: 25,
+      request11: [],
+      request_pages11: null,
+      request_page11: 0,
+      request_limit11: 25,
+      filter_request_10_11: "naxt",
     };
   },
   methods: {
@@ -1249,7 +1698,6 @@ export default {
           .then((res) => {
             this.request1 = res.data.data;
             this.request_pages1 = res.data.pages;
-            this.counts();
           })
           .catch((err) => {
             catchError(err);
@@ -1268,7 +1716,6 @@ export default {
           .then((res) => {
             this.request2 = res.data.data;
             this.request_pages2 = res.data.pages;
-            this.counts();
           })
           .catch((err) => {
             catchError(err);
@@ -1286,7 +1733,6 @@ export default {
             this.request3 = res.data.data;
 
             this.request_pages3 = res.data.pages;
-            this.counts();
           })
           .catch((err) => {
             catchError(err);
@@ -1304,7 +1750,6 @@ export default {
             this.request4 = res.data.data;
 
             this.request_pages4 = res.data.pages;
-            this.counts();
           })
           .catch((err) => {
             catchError(err);
@@ -1329,7 +1774,6 @@ export default {
             });
             this.request5 = res.data.data;
             this.request_pages5 = res.data.pages;
-            this.counts();
           })
           .catch((err) => {
             catchError(err);
@@ -1347,7 +1791,6 @@ export default {
           .then((res) => {
             this.request6 = res.data.data;
             this.request_pages6 = res.data.pages;
-            this.counts();
           })
           .catch((err) => {
             catchError(err);
@@ -1364,7 +1807,6 @@ export default {
           .then((res) => {
             this.request7 = res.data.data;
             this.request_pages7 = res.data.pages;
-            this.counts();
           })
           .catch((err) => {
             catchError(err);
@@ -1381,53 +1823,72 @@ export default {
           .then((res) => {
             this.request8 = res.data.data;
             this.request_pages8 = res.data.pages;
-            this.counts();
+          })
+          .catch((err) => {
+            catchError(err);
+          });
+      } else if (e == "request9") {
+        transfered_products(
+          "to_main_warehouse",
+          "",
+          0,
+          0,
+          false,
+          "",
+          this.request_page9,
+          this.request_limit9
+        )
+          .then((res) => {
+            this.request9 = res.data.data;
+            this.request_pages9 = res.data.pages;
+          })
+          .catch((err) => {
+            catchError(err);
+          });
+      } else if (e == "request10") {
+        get_supplies(
+          0,
+          "",
+          false,
+          0,
+          "",
+          "",
+          "",
+          this.request_page10,
+          this.request_limit10,
+          0,
+          ""
+        )
+          .then((res) => {
+            this.request10 = res.data.data;
+            this.request_pages10 = res.data.pages;
+          })
+          .catch((err) => {
+            catchError(err);
+          });
+      } else if (e == "request11") {
+        shot_request(
+          0,
+          "",
+          false,
+          0,
+          "",
+          "",
+          "",
+          this.request_page11,
+          this.request_limit11,
+          0,
+          ""
+        )
+          .then((res) => {
+            this.request11 = res.data.data;
+            this.request_pages11 = res.data.pages;
           })
           .catch((err) => {
             catchError(err);
           });
       }
     },
-    counts() {
-      let e =
-        this.request1.length +
-        this.request2.length +
-        this.request3.length +
-        this.request4.length +
-        this.request5.length +
-        this.request6.length +
-        this.request7.length +
-        this.request8.length;
-      let bell = document.getElementById("bell");
-      if (e > 0) {
-        bell.classList.add("fa-shake");
-        if (e >= 99) {
-          this.count = "99+";
-        } else {
-          this.count = e;
-        }
-      }
-    },
-  },
-  created() {
-    this.get_request("request1");
-    this.get_request("request2");
-    this.get_request("request3");
-    this.get_request("request4");
-    this.get_request("request5");
-    this.get_request("request6");
-    this.get_request("request7");
-    this.get_request("request8");
-    setInterval(() => {
-      this.get_request("request1");
-      this.get_request("request2");
-      this.get_request("request3");
-      this.get_request("request4");
-      this.get_request("request5");
-      this.get_request("request6");
-      this.get_request("request7");
-      this.get_request("request8");
-    }, 60000);
   },
   computed: {
     filtering_request_5() {

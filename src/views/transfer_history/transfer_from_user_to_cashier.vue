@@ -164,15 +164,20 @@
             </button>
           </li>
           <li class="page-item">
-            <button class="page-link text-dark" disabled>
-              {{ t_page + 1 }}
-            </button>
+            <select
+              class="form-control form-control-sm page_select"
+              v-model="t_page"
+            >
+              <option :value="item - 1" v-for="item in t_pages" :key="item">
+                {{ item }}
+              </option>
+            </select>
           </li>
           <li class="page-item">
             <button
               class="page-link"
               @click="t_page++"
-              :disabled="t_page == t_pages"
+              :disabled="t_page == t_pages - 1"
             >
               <i class="fa-solid fa-angle-right text-dark"></i>
             </button>
@@ -304,7 +309,7 @@
                               type="button"
                               class="page-link"
                               @click="page++"
-                              :disabled="page == pages"
+                              :disabled="page == pages - 1"
                             >
                               <i class="fa-solid fa-angle-right text-dark"></i>
                             </button>

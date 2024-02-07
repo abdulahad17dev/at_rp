@@ -154,15 +154,20 @@
             </button>
           </li>
           <li class="page-item">
-            <button class="page-link text-dark" disabled>
-              {{ valid_page + 1 }}
-            </button>
+            <select
+              class="form-control form-control-sm page_select"
+              v-model="valid_page"
+            >
+              <option :value="item - 1" v-for="item in valid_pages" :key="item">
+                {{ item }}
+              </option>
+            </select>
           </li>
           <li class="page-item">
             <button
               class="page-link"
               @click="valid_page++"
-              :disabled="valid_page == valid_pages"
+              :disabled="valid_page == valid_pages - 1"
             >
               <i class="fa-solid fa-angle-right text-dark"></i>
             </button>
@@ -291,15 +296,24 @@
             </button>
           </li>
           <li class="page-item">
-            <button class="page-link text-dark" disabled>
-              {{ invalid_page + 1 }}
-            </button>
+            <select
+              class="form-control form-control-sm page_select"
+              v-model="invalid_page"
+            >
+              <option
+                :value="item - 1"
+                v-for="item in invalid_pages"
+                :key="item"
+              >
+                {{ item }}
+              </option>
+            </select>
           </li>
           <li class="page-item">
             <button
               class="page-link"
               @click="invalid_page++"
-              :disabled="invalid_page == invalid_pages"
+              :disabled="invalid_page == invalid_pages - 1"
             >
               <i class="fa-solid fa-angle-right text-dark"></i>
             </button>

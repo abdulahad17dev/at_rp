@@ -6,7 +6,7 @@
       :key="item"
     >
       <div
-        class="card"
+        class="card h-100"
         :class="
           item.smeta_work_end_date != null
             ? date < item.smeta_work_end_date &&
@@ -58,11 +58,20 @@
               Intl.NumberFormat("en-US", {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
-                maximumSignificantDigits: item.Buildings.budget.lengthlength,
+                maximumSignificantDigits: item.Buildings.budget.length,
                 minimumSignificantDigits: 1,
               }).format(item.Buildings.budget)
             }}
             сўм
+          </h6>
+          <h6
+            data-mdb-toggle="modal"
+            data-mdb-target="#spented_money"
+            class="cursor-pointer"
+            @click="building_id = item.Buildings.id"
+          >
+            <b>Сарфланган сумма: </b
+            >{{ set_spented_money(item.Buildings.id) }} сўм
           </h6>
           <h6>
             <b>Бошлаш санаси: </b>
@@ -168,6 +177,17 @@
                 <i class="fa-solid fa-clock-rotate-left"></i>
               </router-link>
             </div>
+            <div class="coll mx-1">
+              <router-link
+                :to="{
+                  name: 'building_works',
+                  query: { id: item.Buildings.id, name: item.Buildings.name },
+                }"
+                class="btn btn-sm btn-primary"
+              >
+                <i class="fa-solid fa-clipboard-list"></i>
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -181,7 +201,7 @@
       :key="item"
     >
       <div
-        class="card"
+        class="card h-100"
         :class="
           item.smeta_work_end_date != null
             ? date < item.smeta_work_end_date &&
@@ -233,7 +253,7 @@
               Intl.NumberFormat("en-US", {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
-                maximumSignificantDigits: item.Buildings.budget.lengthlength,
+                maximumSignificantDigits: item.Buildings.budget.length,
                 minimumSignificantDigits: 1,
               }).format(item.Buildings.budget)
             }}
@@ -644,6 +664,88 @@
       </div>
     </div>
   </div>
+  <!-- SPENTED MONEY -->
+  <div
+    class="modal fade"
+    id="spented_money"
+    tabindex="-1"
+    aria-labelledby="spented_money"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header border-bottom-0">
+          <h5 class="modal-title">Сарфланган сумма</h5>
+          <button
+            type="button"
+            class="btn-close float-end"
+            data-mdb-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body h-auto">
+          <h6>
+            Jami chiqimlar:
+            <b>
+              {{
+                Intl.NumberFormat().format(
+                  find_spented_money(building_id)?.sum_variable_expense_price +
+                    find_spented_money(building_id)?.sum_fixed_expense_price
+                )
+              }}</b
+            >
+            сўм
+          </h6>
+          <h6>
+            Taminotchi korxonaga naxt raqamdan o'tkazilgan pullar:
+            <b>
+              {{
+                Intl.NumberFormat().format(
+                  find_spented_money(building_id)
+                    ?.sum_market_expense_naxt_supply
+                )
+              }}</b
+            >
+            сўм
+          </h6>
+          <h6>
+            Taminotchi korxonaga hisob raqamdan o'tkazilgan pullar:
+            <b>
+              {{
+                Intl.NumberFormat().format(
+                  find_spented_money(building_id)
+                    ?.sum_market_expense_shot_supply +
+                    find_spented_money(building_id)
+                      ?.sum_market_expense_supply_by_b_a
+                )
+              }}</b
+            >
+            сўм
+          </h6>
+          <h6>
+            Smetadagi ishlar uchun to'langan pullar:
+            <b>{{
+              Intl.NumberFormat().format(
+                find_spented_money(building_id)?.sum_smeta_work_expense
+              )
+            }}</b>
+            сўм
+          </h6>
+          <h6>
+            Smetadan tashqari ishlar uchun to'langan pullar:
+            <b>
+              {{
+                Intl.NumberFormat().format(
+                  find_spented_money(building_id)?.sum_other_work_expense
+                )
+              }}</b
+            >
+            сўм
+          </h6>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -664,7 +766,7 @@ import Building_documents from "./building_documents.vue";
 import Route_map from "@/utils/map/route_map.vue";
 export default {
   name: "BuildingItem",
-  props: { data: Array },
+  props: { data: Array, spented_money: Array },
   emits: ["get_buildings"],
   data() {
     return {
@@ -907,6 +1009,26 @@ export default {
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
       return Number(diffDays);
+    },
+    find_spented_money(e) {
+      return this.spented_money.find((item) => item.building_id == e);
+    },
+    set_spented_money(e) {
+      let building = this.find_spented_money(e);
+      let summa =
+        building.sum_variable_expense_price + // Jami chiqimlar
+        building.sum_fixed_expense_price + // Jami chiqimlar
+        building.sum_market_expense_naxt_supply + // Taminotchi korxonaga naxt raqamdan o'tkazilgan pullar
+        building.sum_market_expense_shot_supply + // Taminotchi korxonaga hisob raqamdan o'tkazilgan pullar
+        building.sum_market_expense_supply_by_b_a + // Taminotchi korxonaga hisob raqamdan o'tkazilgan pullar
+        building.sum_smeta_work_expense + // Smetadagi ishlar uchun to'langan pullar
+        building.sum_other_work_expense; // Smetadan tashqari ishlar uchun to'langan pullar
+      return Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+        maximumSignificantDigits: summa.length,
+        minimumSignificantDigits: 1,
+      }).format(summa);
     },
   },
   computed: {

@@ -227,12 +227,21 @@
             </button>
           </li>
           <li class="page-item">
-            <button class="page-link text-dark" disabled>
-              {{ page + 1 }}
-            </button>
+            <select
+              class="form-control form-control-sm page_select"
+              v-model="page"
+            >
+              <option :value="item - 1" v-for="item in pages" :key="item">
+                {{ item }}
+              </option>
+            </select>
           </li>
           <li class="page-item">
-            <button class="page-link" @click="page++" :disabled="page == pages">
+            <button
+              class="page-link"
+              @click="page++"
+              :disabled="page == pages - 1"
+            >
               <i class="fa-solid fa-angle-right text-dark"></i>
             </button>
           </li>
@@ -384,7 +393,7 @@
                           type="button"
                           class="page-link"
                           @click="page_market++"
-                          :disabled="page_market == pages_market"
+                          :disabled="page_market == pages_market - 1"
                         >
                           <i class="fa-solid fa-angle-right text-dark"></i>
                         </button>
@@ -525,15 +534,20 @@
             </button>
           </li>
           <li class="page-item">
-            <button class="page-link text-dark" disabled>
-              {{ page_ + 1 }}
-            </button>
+            <select
+              class="form-control form-control-sm page_select"
+              v-model="page_"
+            >
+              <option :value="item - 1" v-for="item in pages_" :key="item">
+                {{ item }}
+              </option>
+            </select>
           </li>
           <li class="page-item">
             <button
               class="page-link"
               @click="page_++, get_supply()"
-              :disabled="page_ == pages_"
+              :disabled="page_ == pages_ - 1"
             >
               <i class="fa-solid fa-angle-right text-dark"></i>
             </button>

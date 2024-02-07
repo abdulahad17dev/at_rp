@@ -105,7 +105,7 @@
                           type="button"
                           class="page-link"
                           @click="page_account++"
-                          :disabled="page_account == pages_account"
+                          :disabled="page_account == pages_account - 1"
                         >
                           <i class="fa-solid fa-angle-right text-dark"></i>
                         </button>
@@ -214,7 +214,7 @@
                           type="button"
                           class="page-link"
                           @click="page_building++"
-                          :disabled="page_building == pages_building"
+                          :disabled="page_building == pages_building - 1"
                         >
                           <i class="fa-solid fa-angle-right text-dark"></i>
                         </button>
@@ -317,7 +317,7 @@
                           type="button"
                           class="page-link"
                           @click="page_expense++"
-                          :disabled="page_expense == pages_expense"
+                          :disabled="page_expense == pages_expense - 1"
                         >
                           <i class="fa-solid fa-angle-right text-dark"></i>
                         </button>

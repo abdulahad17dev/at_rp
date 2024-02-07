@@ -400,7 +400,7 @@ let routes = [
       requiresAuth: true,
       title: "Объект ишлари",
       icon: "fa-solid fa-clipboard-list",
-      role: ["pto"],
+      role: ["pto", "admin"],
     },
     component: building_works,
   },

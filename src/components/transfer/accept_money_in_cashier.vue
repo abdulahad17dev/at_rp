@@ -99,7 +99,7 @@
                               type="button"
                               class="page-link"
                               @click="page++"
-                              :disabled="page == pages"
+                              :disabled="page == pages - 1"
                             >
                               <i class="fa-solid fa-angle-right text-dark"></i>
                             </button>

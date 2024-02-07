@@ -91,10 +91,10 @@
         </div>
       </div>
       <div class="table-responsive mt-3" style="overflow: auto">
-        <table class="table table-sm table-hover smeta work" id="sneta_work">
+        <table class="table table-sm table-hover smeta work" id="smeta_work">
           <thead>
             <tr>
-              <th></th>
+              <th style="width: 5%"></th>
               <th style="width: 5%">ШНК</th>
               <th style="width: 15%">Номи</th>
               <th style="width: 5%">Ўлчов бирлиги</th>
@@ -105,7 +105,7 @@
               <th style="width: 5%">Муддат</th>
               <th style="width: 10%">Изох</th>
               <th style="width: 10%">Сана</th>
-              <th></th>
+              <th v-if="role != 'admin'"></th>
             </tr>
           </thead>
           <tbody>
@@ -179,7 +179,7 @@
                     .slice(0, 10)
                 }}
               </td>
-              <td data-exclude="true">
+              <td data-exclude="true" v-if="role != 'admin'">
                 <button
                   class="btn btn-sm btn-success mx-1"
                   v-if="
@@ -278,15 +278,20 @@
             </button>
           </li>
           <li class="page-item">
-            <button class="page-link text-dark" disabled>
-              {{ smeta_page + 1 }}
-            </button>
+            <select
+              class="form-control form-control-sm page_select"
+              v-model="smeta_page"
+            >
+              <option :value="item - 1" v-for="item in smeta_pages" :key="item">
+                {{ item }}
+              </option>
+            </select>
           </li>
           <li class="page-item">
             <button
               class="page-link"
               @click="smeta_page++"
-              :disabled="smeta_page == smeta_pages"
+              :disabled="smeta_page == smeta_pages - 1"
             >
               <i class="fa-solid fa-angle-right text-dark"></i>
             </button>
@@ -348,7 +353,7 @@
               <th style="width: 10%">Прорап</th>
               <th style="width: 10%">Пто</th>
               <th style="width: 10%">Изох</th>
-              <th></th>
+              <th v-if="role != 'admin'"></th>
             </tr>
           </thead>
           <tbody>
@@ -406,7 +411,7 @@
                 <hr class="m-0" />
                 {{ item.Other_works.comment }}
               </td>
-              <td data-exclude="true">
+              <td data-exclude="true" v-if="role != 'admin'">
                 <button
                   class="btn btn-sm btn-success mx-1"
                   v-if="
@@ -505,15 +510,20 @@
             </button>
           </li>
           <li class="page-item">
-            <button class="page-link text-dark" disabled>
-              {{ other_page + 1 }}
-            </button>
+            <select
+              class="form-control form-control-sm page_select"
+              v-model="other_page"
+            >
+              <option :value="item - 1" v-for="item in other_pages" :key="item">
+                {{ item }}
+              </option>
+            </select>
           </li>
           <li class="page-item">
             <button
               class="page-link"
               @click="other_page++"
-              :disabled="other_page == other_pages"
+              :disabled="other_page == other_pages - 1"
             >
               <i class="fa-solid fa-angle-right text-dark"></i>
             </button>
@@ -739,6 +749,7 @@ export default {
         attached_price: "",
       },
       date: new Date().toISOString().slice(0, 10),
+      role: localStorage.getItem("role"),
     };
   },
   watch: {
@@ -1058,8 +1069,8 @@ table.other_work {
 }
 
 .table-responsive {
-  max-height: 60vh;
-  min-height: 60vh;
+  max-height: 58vh;
+  min-height: 58vh;
 }
 
 @media (max-width: 500px) {

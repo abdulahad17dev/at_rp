@@ -92,7 +92,7 @@
                           type="button"
                           class="page-link"
                           @click="page_user++"
-                          :disabled="page_user == pages_user"
+                          :disabled="page_user == pages_user - 1"
                         >
                           <i class="fa-solid fa-angle-right text-dark"></i>
                         </button>

@@ -25,7 +25,7 @@ export function catchError(error) {
       })
       .then(() => {
         if (window.location.pathname == "/") {
-          console.log();
+          console.log("home");
         } else {
           window.location.href = "/";
         }
@@ -113,7 +113,7 @@ export function catchError(error) {
       })
       .then(() => {
         if (window.location.pathname == "/") {
-          console.log();
+          console.log("home");
         } else {
           window.location.href = "/";
         }

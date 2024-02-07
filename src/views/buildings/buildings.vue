@@ -46,6 +46,7 @@
 
   <Buildings_item
     :data="buildings"
+    :spented_money="spented_money"
     @get_buildings="get_buildings(page, limit, search, status)"
   />
 
@@ -68,12 +69,14 @@
         </button>
       </li>
       <li class="page-item">
-        <button class="page-link text-dark" disabled>
-          {{ page + 1 }}
-        </button>
+        <select class="form-control form-control-sm page_select" v-model="page">
+          <option :value="item - 1" v-for="item in pages" :key="item">
+            {{ item }}
+          </option>
+        </select>
       </li>
       <li class="page-item">
-        <button class="page-link" @click="page++" :disabled="page == pages">
+        <button class="page-link" @click="page++" :disabled="page == pages - 1">
           <i class="fa-solid fa-angle-right text-dark"></i>
         </button>
       </li>
@@ -102,6 +105,7 @@ export default {
       page: 0,
       pages: null,
       buildings: [],
+      spented_money: [],
       search: "",
       lat: "",
       long: "",
@@ -132,6 +136,7 @@ export default {
       building_get(page, limit, search, status)
         .then((res) => {
           this.buildings = res.data.data;
+          this.spented_money = res.data.building_spented_money_data;
           this.pages = res.data.pages;
           this.$store.dispatch("setLoading", { isLoading: false });
         })
@@ -146,7 +151,6 @@ export default {
       const success = (position) => {
         this.lat = String(position.coords.latitude);
         this.long = String(position.coords.longitude);
-        console.log(position);
       };
 
       const error = (err) => {

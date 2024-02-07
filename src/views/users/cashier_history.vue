@@ -264,15 +264,20 @@
             </button>
           </li>
           <li class="page-item">
-            <button class="page-link text-dark" disabled>
-              {{ h_page + 1 }}
-            </button>
+            <select
+              class="form-control form-control-sm page_select"
+              v-model="h_page"
+            >
+              <option :value="item - 1" v-for="item in h_pages" :key="item">
+                {{ item }}
+              </option>
+            </select>
           </li>
           <li class="page-item">
             <button
               class="page-link"
               @click="h_page++"
-              :disabled="h_page == h_pages"
+              :disabled="h_page == h_pages - 1"
             >
               <i class="fa-solid fa-angle-right text-dark"></i>
             </button>
@@ -384,15 +389,24 @@
               </button>
             </li>
             <li class="page-item">
-              <button class="page-link text-dark" disabled>
-                {{ user_page + 1 }}
-              </button>
+              <select
+                class="form-control form-control-sm page_select"
+                v-model="user_page"
+              >
+                <option
+                  :value="item - 1"
+                  v-for="item in user_pages"
+                  :key="item"
+                >
+                  {{ item }}
+                </option>
+              </select>
             </li>
             <li class="page-item">
               <button
                 class="page-link"
                 @click="user_page++"
-                :disabled="user_page == user_pages"
+                :disabled="user_page == user_pages - 1"
               >
                 <i class="fa-solid fa-angle-right text-dark"></i>
               </button>
@@ -484,15 +498,24 @@
               </button>
             </li>
             <li class="page-item">
-              <button class="page-link text-dark" disabled>
-                {{ cashier_page + 1 }}
-              </button>
+              <select
+                class="form-control form-control-sm page_select"
+                v-model="cashier_page"
+              >
+                <option
+                  :value="item - 1"
+                  v-for="item in cashier_pages"
+                  :key="item"
+                >
+                  {{ item }}
+                </option>
+              </select>
             </li>
             <li class="page-item">
               <button
                 class="page-link"
                 @click="cashier_page++"
-                :disabled="cashier_page == cashier_pages"
+                :disabled="cashier_page == cashier_pages - 1"
               >
                 <i class="fa-solid fa-angle-right text-dark"></i>
               </button>
